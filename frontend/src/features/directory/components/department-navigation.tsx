@@ -19,7 +19,11 @@ export function DepartmentNavigation({
         <span>Browse</span>
         <strong>Departments</strong>
       </div>
-      <div className={styles.departmentTabs} role="tablist" aria-orientation="vertical">
+      <div
+        className={styles.departmentTabs}
+        role="tablist"
+        aria-orientation="horizontal"
+      >
         {departments.map((department, index) => {
           const isSelected = selectedId === department.id;
 

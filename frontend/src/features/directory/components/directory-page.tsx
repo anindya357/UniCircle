@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { AppShell } from "@/components/shared/app-shell";
 import { EmptyState } from "@/components/ui/feedback/empty-state";
@@ -17,6 +17,7 @@ export function DirectoryPage() {
   const { departments, isLoading, error, retry } = useDirectory();
   const [selectedId, setSelectedId] = useState<DepartmentCode>("cse");
   const [query, setQuery] = useState("");
+  const departmentPanelRef = useRef<HTMLDivElement>(null);
 
   const selectedDepartment =
     departments.find((department) => department.id === selectedId) ?? departments[0];
@@ -43,6 +44,17 @@ export function DirectoryPage() {
   function selectDepartment(id: DepartmentCode) {
     setSelectedId(id);
     setQuery("");
+
+    window.requestAnimationFrame(() => {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      departmentPanelRef.current?.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    });
   }
 
   return (
@@ -59,7 +71,7 @@ export function DirectoryPage() {
           </p>
           <div className={styles.previewNotice}>
             <span aria-hidden="true">i</span>
-            Prototype directory · faculty names and contacts are mock data
+            CSE names and roles are verified · remaining profiles are prototype data
           </div>
         </div>
 
@@ -68,7 +80,7 @@ export function DirectoryPage() {
           <strong>{isLoading ? "—" : departments.length}</strong>
           <p>engineering, planning, and design departments</p>
           <div className={styles.summaryFooter}>
-            <span>{isLoading ? "—" : totalFaculty} preview profiles</span>
+            <span>{isLoading ? "—" : totalFaculty} directory profiles</span>
             <span>One connected campus</span>
           </div>
         </div>
@@ -97,6 +109,7 @@ export function DirectoryPage() {
 
           <div
             className={styles.departmentPanel}
+            ref={departmentPanelRef}
             id="department-panel"
             role="tabpanel"
             aria-labelledby={"department-tab-" + selectedDepartment.id}
@@ -145,7 +158,7 @@ export function DirectoryPage() {
                   <p className={styles.eyebrow}>People and expertise</p>
                   <h2 id="faculty-title">Faculty directory</h2>
                   <span>
-                    {selectedDepartment.faculty.length} preview profile
+                    {selectedDepartment.faculty.length} directory profile
                     {selectedDepartment.faculty.length === 1 ? "" : "s"}
                   </span>
                 </div>

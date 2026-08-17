@@ -12,5 +12,7 @@ experience.
 - Data is delivered through a typed directory service backed by mock records, ready
   to be replaced by the backend service in a later phase.
 
-Faculty names and contact details in this frontend phase are explicitly prototype
-data and must not be treated as CUET's official directory.
+The three CSE names and roles currently shown were checked against CUET's July 2026
+teacher list. Their areas of expertise follow the approved project content. Other
+department profiles remain explicit prototype data and must not be treated as CUET's
+official directory.
