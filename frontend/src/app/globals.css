@@ -90,7 +90,7 @@ button {
 }
 
 .app-shell {
-  width: min(100% - 2rem, 74rem);
+  width: max(90% - 2rem, 76rem);
   margin-inline: auto;
   padding-block: clamp(2rem, 6vw, 5rem);
 }
