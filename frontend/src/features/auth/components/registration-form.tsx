@@ -21,6 +21,9 @@ import { PasswordRequirements } from "./password-requirements";
 import styles from "./auth.module.css";
 
 type RegistrationFields = Readonly<{
+  firstName?: string;
+  lastName?: string;
+  homeAddress?: string;
   username?: string;
   email?: string;
   password?: string;
@@ -42,6 +45,9 @@ const roleIdLabels: Record<GeneralUserRole, string> = {
 
 export function RegistrationForm() {
   const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [homeAddress, setHomeAddress] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,6 +63,9 @@ export function RegistrationForm() {
     setFormError(null);
 
     const nextErrors: RegistrationFields = {
+      firstName: validateRequired(firstName, "First name"),
+      lastName: validateRequired(lastName, "Last name"),
+      homeAddress: validateRequired(homeAddress, "Home address"),
       username: validateUsername(username),
       email: validateCuetEmail(email),
       password: isPasswordValid(password)
@@ -73,6 +82,9 @@ export function RegistrationForm() {
     setIsSubmitting(true);
     try {
       const result = await authService.register({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        homeAddress: homeAddress.trim(),
         username: username.trim(),
         email: email.trim().toLowerCase(),
         password,
@@ -91,6 +103,40 @@ export function RegistrationForm() {
     <>
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
         {formError ? <div className={styles.formAlert}>{formError}</div> : null}
+
+        <div className={styles.nameFields}>
+          <div className={styles.field}>
+            <label htmlFor="first-name">
+              First Name <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="first-name"
+              name="firstName"
+              autoComplete="given-name"
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+              aria-invalid={Boolean(errors.firstName)}
+              aria-describedby={errors.firstName ? "first-name-error" : undefined}
+            />
+            <FormError id="first-name-error" message={errors.firstName} />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="last-name">
+              Last Name <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="last-name"
+              name="lastName"
+              autoComplete="family-name"
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+              aria-invalid={Boolean(errors.lastName)}
+              aria-describedby={errors.lastName ? "last-name-error" : undefined}
+            />
+            <FormError id="last-name-error" message={errors.lastName} />
+          </div>
+        </div>
 
         <div className={styles.field}>
           <label htmlFor="username">
@@ -167,6 +213,23 @@ export function RegistrationForm() {
             aria-describedby={errors.universityId ? "university-id-error" : undefined}
           />
           <FormError id="university-id-error" message={errors.universityId} />
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="home-address">
+            Home Address <span aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="home-address"
+            name="homeAddress"
+            autoComplete="street-address"
+            rows={3}
+            value={homeAddress}
+            onChange={(event) => setHomeAddress(event.target.value)}
+            aria-invalid={Boolean(errors.homeAddress)}
+            aria-describedby={errors.homeAddress ? "home-address-error" : undefined}
+          />
+          <FormError id="home-address-error" message={errors.homeAddress} />
         </div>
 
         <div className={styles.field}>

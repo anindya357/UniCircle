@@ -176,6 +176,12 @@
   gap: 0.45rem;
 }
 
+.nameFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
 .field label,
 .fieldset legend {
   color: var(--color-text);
@@ -189,6 +195,7 @@
 }
 
 .field input,
+.field textarea,
 .field select {
   width: 100%;
   min-height: 3rem;
@@ -202,12 +209,19 @@
     box-shadow 160ms ease;
 }
 
+.field textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
 .field input:hover,
+.field textarea:hover,
 .field select:hover {
   border-color: #9cafaa;
 }
 
 .field input:focus,
+.field textarea:focus,
 .field select:focus {
   border-color: var(--color-brand);
   outline: 0;
@@ -215,6 +229,7 @@
 }
 
 .field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"],
 .field select[aria-invalid="true"] {
   border-color: var(--color-danger);
 }
@@ -436,6 +451,7 @@
 }
 
 @media (max-width: 34rem) {
+  .nameFields,
   .roleGrid,
   .passwordRequirements {
     grid-template-columns: 1fr;

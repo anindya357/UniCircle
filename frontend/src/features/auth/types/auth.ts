@@ -4,6 +4,9 @@ import type { UserRole } from "@/types/common";
 export type GeneralUserRole = Exclude<UserRole, "admin">;
 
 export type RegistrationInput = Readonly<{
+  firstName: string;
+  lastName: string;
+  homeAddress: string;
   username: string;
   email: string;
   password: string;
