@@ -194,8 +194,7 @@
 .historySection,
 .achievementSection,
 .facilitySection,
-.gallerySection,
-.videoSection {
+.gallerySection {
   margin-top: clamp(4.5rem, 9vw, 8.5rem);
 }
 
@@ -444,6 +443,7 @@
 
 .videoSection {
   display: grid;
+  margin-top: 1rem;
   overflow: hidden;
   border-radius: 1.5rem;
   grid-template-columns: minmax(18rem, 0.7fr) minmax(26rem, 1.3fr);

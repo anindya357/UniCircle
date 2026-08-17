@@ -38,6 +38,29 @@ export function HomePageContent({ overview }: HomePageContentProps) {
         </div>
       </section>
 
+      <section className={styles.videoSection} aria-labelledby="video-title">
+        <div className={styles.videoCopy}>
+          <p className={styles.eyebrow}>Campus in motion</p>
+          <h2 id="video-title">{overview.video.title}</h2>
+          <p>{overview.video.description}</p>
+          <a
+            className={styles.textLinkLight}
+            href={overview.video.src}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {overview.video.fallbackLabel} <span aria-hidden="true">&#8599;</span>
+          </a>
+        </div>
+
+        <div className={styles.videoFrame}>
+          <video controls playsInline preload="metadata" poster={overview.video.poster}>
+            <source src={overview.video.src} type="video/mp4" />
+            <a href={overview.video.src}>{overview.video.fallbackLabel}</a>
+          </video>
+        </div>
+      </section>
+
       <ul className={styles.factGrid} aria-label="CUET at a glance">
         {overview.facts.map((fact) => (
           <li key={fact.id}>
@@ -172,29 +195,6 @@ export function HomePageContent({ overview }: HomePageContentProps) {
               </figcaption>
             </figure>
           ))}
-        </div>
-      </section>
-
-      <section className={styles.videoSection} aria-labelledby="video-title">
-        <div className={styles.videoCopy}>
-          <p className={styles.eyebrow}>Campus in motion</p>
-          <h2 id="video-title">{overview.video.title}</h2>
-          <p>{overview.video.description}</p>
-          <a
-            className={styles.textLinkLight}
-            href={overview.video.src}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {overview.video.fallbackLabel} <span aria-hidden="true">&#8599;</span>
-          </a>
-        </div>
-
-        <div className={styles.videoFrame}>
-          <video controls playsInline preload="metadata" poster={overview.video.poster}>
-            <source src={overview.video.src} type="video/mp4" />
-            <a href={overview.video.src}>{overview.video.fallbackLabel}</a>
-          </video>
         </div>
       </section>
 
