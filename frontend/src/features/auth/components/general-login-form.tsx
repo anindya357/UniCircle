@@ -106,10 +106,6 @@ export function GeneralLoginForm({
       <p className={styles.formFooter}>
         New to UniCircle? <Link href={routes.auth.register}>Create an account</Link>
       </p>
-      <div className={styles.formDivider}>Campus administration</div>
-      <Link className={styles.secondaryAction} href={routes.auth.adminLogin}>
-        Go to Admin login
-      </Link>
     </>
   );
 }
