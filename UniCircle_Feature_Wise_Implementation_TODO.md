@@ -326,24 +326,24 @@ The workflow specifies a post-login Home page with welcome text and CUET informa
 
 ## 4.5 Home page
 
-- [ ] Create Home route.
-- [ ] Add “Welcome to CUET Campus” hero/header area.
-- [ ] Add CUET basic-information section.
-- [ ] Add history section.
-- [ ] Add achievements section.
-- [ ] Add facilities section.
-- [ ] Add image/gallery area.
-- [ ] Add video/embed area.
-- [ ] Ensure every authenticated General User can view it.
-- [ ] Prepare content using mock/static frontend data until backend/content strategy is connected.
-- [ ] Optimize layout for mobile and desktop.
+- [x] Create Home route.
+- [x] Add “Welcome to CUET Campus” hero/header area.
+- [x] Add CUET basic-information section.
+- [x] Add history section.
+- [x] Add achievements section.
+- [x] Add facilities section.
+- [x] Add image/gallery area.
+- [x] Add video/embed area.
+- [x] Ensure every authenticated General User can view it.
+- [x] Prepare content using mock/static frontend data until backend/content strategy is connected.
+- [x] Optimize layout for mobile and desktop.
 
 ### Feature 2 frontend completion
 
-- [ ] All required information categories represented.
-- [ ] Images/videos have proper loading/fallback behavior.
-- [ ] Navigation works.
-- [ ] Page is responsive.
+- [x] All required information categories represented.
+- [x] Images/videos have proper loading/fallback behavior.
+- [x] Navigation works.
+- [x] Page is responsive.
 
 ---
 
@@ -2120,7 +2120,7 @@ Use this as the main execution queue.
 ## B. Complete Frontend — Feature by Feature
 
 1. [x] Authentication.
-2. [ ] Home.
+2. [x] Home.
 3. [ ] Department & Faculty Directory.
 4. [ ] Campus Explorer.
 5. [ ] Club & Event Hub.
