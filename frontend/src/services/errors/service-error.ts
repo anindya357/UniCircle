@@ -1,4 +1,12 @@
-export type ServiceErrorCode = "network" | "not-found" | "unauthorized" | "unknown";
+export type ServiceErrorCode =
+  | "network"
+  | "not-found"
+  | "unauthorized"
+  | "conflict"
+  | "invalid-credentials"
+  | "invalid-otp"
+  | "expired-otp"
+  | "unknown";
 
 export class ServiceError extends Error {
   constructor(

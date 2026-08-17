@@ -1,24 +1,30 @@
-import Link from "next/link";
+import { AuthPage } from "@/features/auth/components/auth-page";
+import { GeneralLoginForm } from "@/features/auth/components/general-login-form";
 
-import { routes } from "@/config/routes";
+type LoginPageProps = Readonly<{
+  searchParams: Promise<{ verified?: string; email?: string }>;
+}>;
 
-import styles from "./login.module.css";
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const { verified, email } = await searchParams;
 
-export default function LoginPlaceholderPage() {
   return (
-    <main className={styles.page} id="main-content">
-      <section className={styles.card} aria-labelledby="login-title">
-        <span className={styles.mark} aria-hidden="true">
-          U
-        </span>
-        <p className="eyebrow">Authentication preview</p>
-        <h1 id="login-title">You signed out of the mock session</h1>
-        <p>
-          Registration, OTP verification, and real login behavior will be added in the
-          Authentication frontend phase.
-        </p>
-        <Link href={routes.home}>Continue with mock user</Link>
-      </section>
-    </main>
+    <AuthPage
+      eyebrow="Welcome back"
+      title="Sign in to UniCircle"
+      description="Use your username or CUET email to continue to the campus platform."
+      panelTitle="Your campus, always connected."
+      panelDescription="Return to your personalized CUET hub for community updates, navigation, and collaboration."
+      panelItems={[
+        "Campus-wide information in one place",
+        "Personalized notifications and updates",
+        "Secure role-aware navigation",
+      ]}
+    >
+      <GeneralLoginForm
+        initialIdentifier={email}
+        registrationVerified={verified === "1"}
+      />
+    </AuthPage>
   );
 }

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { Navbar } from "@/features/shell/components/navbar";
-import { notificationService, sessionService } from "@/services";
+import { AuthenticatedShell } from "@/features/auth/components/authenticated-shell";
+import { notificationService } from "@/services";
 
 type AuthenticatedLayoutProps = Readonly<{
   children: ReactNode;
@@ -10,15 +10,11 @@ type AuthenticatedLayoutProps = Readonly<{
 export default async function AuthenticatedLayout({
   children,
 }: AuthenticatedLayoutProps) {
-  const [user, notifications] = await Promise.all([
-    sessionService.getCurrentUser(),
-    notificationService.list(),
-  ]);
+  const notifications = await notificationService.list();
 
   return (
-    <>
-      <Navbar user={user} initialNotifications={notifications} />
+    <AuthenticatedShell initialNotifications={notifications}>
       {children}
-    </>
+    </AuthenticatedShell>
   );
 }

@@ -255,68 +255,68 @@ The workflow requires General User registration with CUET email, role selection,
 
 ## 4.1 Registration page
 
-- [ ] Create registration route/page.
-- [ ] Add username field.
-- [ ] Add CUET email field.
-- [ ] Add password field.
-- [ ] Add password confirmation field.
-- [ ] Add role selection:
-  - [ ] Student
-  - [ ] Teacher
-  - [ ] Staff
-- [ ] Dynamically show the required role-specific ID field:
-  - [ ] Student ID
-  - [ ] Teacher ID
-  - [ ] Staff ID
-- [ ] Validate required fields on frontend.
-- [ ] Validate CUET email format/domain according to the finalized requirement.
-- [ ] Add password validation feedback.
-- [ ] Add submit/loading state.
-- [ ] Add registration error state.
-- [ ] Mock successful registration response.
+- [x] Create registration route/page.
+- [x] Add username field.
+- [x] Add CUET email field.
+- [x] Add password field.
+- [x] Add password confirmation field.
+- [x] Add role selection:
+  - [x] Student
+  - [x] Teacher
+  - [x] Staff
+- [x] Dynamically show the required role-specific ID field:
+  - [x] Student ID
+  - [x] Teacher ID
+  - [x] Staff ID
+- [x] Validate required fields on frontend.
+- [x] Validate CUET email format/domain according to the finalized requirement.
+- [x] Add password validation feedback.
+- [x] Add submit/loading state.
+- [x] Add registration error state.
+- [x] Mock successful registration response.
 
 ## 4.2 OTP verification page
 
-- [ ] Create OTP verification screen.
-- [ ] Show the verified email target.
-- [ ] Create OTP input.
-- [ ] Add submit state.
-- [ ] Add invalid OTP state.
-- [ ] Add expired OTP state.
-- [ ] Add resend OTP UI.
-- [ ] Add resend cooldown UI if required by final design.
-- [ ] Mock successful verification.
-- [ ] Navigate verified user to login or logged-in destination according to final auth flow.
+- [x] Create OTP verification screen.
+- [x] Show the verified email target.
+- [x] Create OTP input.
+- [x] Add submit state.
+- [x] Add invalid OTP state.
+- [x] Add expired OTP state.
+- [x] Add resend OTP UI.
+- [x] Add resend cooldown UI if required by final design.
+- [x] Mock successful verification.
+- [x] Navigate verified user to login or logged-in destination according to final auth flow.
 
 ## 4.3 Login page
 
-- [ ] Create General User login.
-- [ ] Allow username or CUET email identifier.
-- [ ] Add password input.
-- [ ] Add validation errors.
-- [ ] Add invalid-credential state.
-- [ ] Add loading state.
-- [ ] Mock successful authentication.
-- [ ] Redirect successful General User login to Home.
+- [x] Create General User login.
+- [x] Allow username or CUET email identifier.
+- [x] Add password input.
+- [x] Add validation errors.
+- [x] Add invalid-credential state.
+- [x] Add loading state.
+- [x] Mock successful authentication.
+- [x] Redirect successful General User login to Home.
 
 ## 4.4 Admin login UI
 
-- [ ] Decide whether Admin uses the same login screen or a dedicated route according to the approved design.
-- [ ] Support Admin ID.
-- [ ] Support Admin password.
-- [ ] Mock Admin session.
-- [ ] Redirect Admin to Admin Page.
-- [ ] Prevent normal-user mock session from entering Admin pages.
+- [x] Decide whether Admin uses the same login screen or a dedicated route according to the approved design.
+- [x] Support Admin ID.
+- [x] Support Admin password.
+- [x] Mock Admin session.
+- [x] Redirect Admin to Admin Page.
+- [x] Prevent normal-user mock session from entering Admin pages.
 
 ### Feature 1 frontend completion
 
-- [ ] Registration UI complete.
-- [ ] Role-dependent fields complete.
-- [ ] OTP UI complete.
-- [ ] General User login complete.
-- [ ] Admin login complete.
-- [ ] Protected-route mock behavior complete.
-- [ ] Responsive behavior checked.
+- [x] Registration UI complete.
+- [x] Role-dependent fields complete.
+- [x] OTP UI complete.
+- [x] General User login complete.
+- [x] Admin login complete.
+- [x] Protected-route mock behavior complete.
+- [x] Responsive behavior checked.
 
 ---
 
@@ -2119,7 +2119,7 @@ Use this as the main execution queue.
 
 ## B. Complete Frontend — Feature by Feature
 
-1. [ ] Authentication.
+1. [x] Authentication.
 2. [ ] Home.
 3. [ ] Department & Faculty Directory.
 4. [ ] Campus Explorer.
