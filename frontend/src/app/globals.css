@@ -144,6 +144,25 @@ button {
   margin-top: clamp(3rem, 7vw, 6rem);
 }
 
+.page-heading {
+  max-width: 46rem;
+}
+
+.page-heading h1 {
+  margin-top: 0.45rem;
+  font-size: clamp(2.25rem, 6vw, 4.8rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.page-heading > p:last-child {
+  max-width: 40rem;
+  margin-top: 1rem;
+  color: var(--color-text-muted);
+  font-size: 1.04rem;
+  line-height: 1.7;
+}
+
 .section-heading {
   display: grid;
   gap: 1rem 2rem;

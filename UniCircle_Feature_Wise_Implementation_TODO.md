@@ -211,23 +211,23 @@ Tasks:
 
 The workflow requires navigation across all pages and a notification button.
 
-- [ ] Create the top Navbar/Navmenu.
-- [ ] Add links for all General User pages.
-- [ ] Add user/profile area.
-- [ ] Add notification button.
-- [ ] Add active-route indication.
-- [ ] Add responsive/mobile navigation.
-- [ ] Hide Admin links from normal users.
-- [ ] Add logout control.
-- [ ] Prepare Navbar to consume authenticated-user data later.
+- [x] Create the top Navbar/Navmenu.
+- [x] Add links for all General User pages.
+- [x] Add user/profile area.
+- [x] Add notification button.
+- [x] Add active-route indication.
+- [x] Add responsive/mobile navigation.
+- [x] Hide Admin links from normal users.
+- [x] Add logout control.
+- [x] Prepare Navbar to consume authenticated-user data later.
 
 ### Frontend acceptance check
 
-- [ ] Every main page can be reached from navigation.
-- [ ] Navigation works on desktop.
-- [ ] Navigation works on mobile.
-- [ ] Admin-only navigation is visually separated.
-- [ ] Notification control is globally available after login.
+- [x] Every main page can be reached from navigation.
+- [x] Navigation works on desktop.
+- [x] Navigation works on mobile.
+- [x] Admin-only navigation is visually separated.
+- [x] Notification control is globally available after login.
 
 ---
 
@@ -235,15 +235,15 @@ The workflow requires navigation across all pages and a notification button.
 
 Notifications will later support event state changes and campus announcements/updates.
 
-- [ ] Create notification dropdown/page.
-- [ ] Create notification item component.
-- [ ] Support unread/read visual state.
-- [ ] Support notification timestamp.
-- [ ] Support notification type.
-- [ ] Prepare mock event notifications.
-- [ ] Prepare mock campus-news/announcement notifications.
-- [ ] Add “mark as read” UI behavior using mock state.
-- [ ] Add empty notification state.
+- [x] Create notification dropdown/page.
+- [x] Create notification item component.
+- [x] Support unread/read visual state.
+- [x] Support notification timestamp.
+- [x] Support notification type.
+- [x] Prepare mock event notifications.
+- [x] Prepare mock campus-news/announcement notifications.
+- [x] Add “mark as read” UI behavior using mock state.
+- [x] Add empty notification state.
 
 ---
 

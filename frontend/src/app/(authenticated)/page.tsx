@@ -11,7 +11,7 @@ export default async function HomePage() {
         <p className="eyebrow">CUET digital campus</p>
         <h1 id="foundation-title">{overview.platformName}</h1>
         <p className="hero-copy">{overview.tagline}</p>
-        <span className="status-badge">Frontend foundation ready</span>
+        <span className="status-badge">Shared frontend shell ready</span>
       </section>
 
       <section className="section" aria-labelledby="modules-title">
