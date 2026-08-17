@@ -30,8 +30,8 @@ export function HomePageContent({ overview }: HomePageContentProps) {
 
         <div className={styles.heroVisual}>
           <CampusImage
-            src={overview.gallery[1].src}
-            alt={overview.gallery[1].alt}
+            src={overview.gallery[0].src}
+            alt={overview.gallery[0].alt}
             eager
           />
           <span className={styles.heroLocation}>Raozan · Chattogram</span>
@@ -162,10 +162,7 @@ export function HomePageContent({ overview }: HomePageContentProps) {
 
         <div className={styles.galleryGrid}>
           {overview.gallery.map((image, index) => (
-            <figure
-              className={index === 0 ? styles.galleryFeatured : ""}
-              key={image.id}
-            >
+            <figure key={image.id}>
               <div className={styles.galleryImage}>
                 <CampusImage src={image.src} alt={image.alt} />
               </div>
@@ -185,26 +182,19 @@ export function HomePageContent({ overview }: HomePageContentProps) {
           <p>{overview.video.description}</p>
           <a
             className={styles.textLinkLight}
-            href={overview.video.watchUrl}
+            href={overview.video.src}
             target="_blank"
             rel="noreferrer"
           >
-            Open video on YouTube <span aria-hidden="true">&#8599;</span>
+            {overview.video.fallbackLabel} <span aria-hidden="true">&#8599;</span>
           </a>
         </div>
 
         <div className={styles.videoFrame}>
-          <iframe
-            src={overview.video.embedUrl}
-            title={overview.video.title}
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
-          <noscript>
-            <a href={overview.video.watchUrl}>{overview.video.sourceLabel}</a>
-          </noscript>
+          <video controls playsInline preload="metadata" poster={overview.video.poster}>
+            <source src={overview.video.src} type="video/mp4" />
+            <a href={overview.video.src}>{overview.video.fallbackLabel}</a>
+          </video>
         </div>
       </section>
 

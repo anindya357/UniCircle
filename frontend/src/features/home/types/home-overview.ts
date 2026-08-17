@@ -30,9 +30,9 @@ export type HomeGalleryImage = Readonly<{
 export type HomeVideo = Readonly<{
   title: string;
   description: string;
-  embedUrl: string;
-  watchUrl: string;
-  sourceLabel: string;
+  src: string;
+  poster: string;
+  fallbackLabel: string;
 }>;
 
 export type HomeSource = Readonly<{

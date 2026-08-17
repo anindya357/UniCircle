@@ -415,26 +415,18 @@
   display: grid;
   margin-top: 2.5rem;
   gap: 1rem;
-  grid-template-columns: 1.25fr 1fr;
+  grid-template-columns: 1.2fr 0.8fr;
 }
 
 .galleryGrid figure {
   min-width: 0;
 }
 
-.galleryFeatured {
-  grid-row: span 2;
-}
-
 .galleryImage {
-  height: 19rem;
+  height: 31rem;
   overflow: hidden;
   border-radius: 1rem;
   background: var(--color-surface-muted);
-}
-
-.galleryFeatured .galleryImage {
-  height: 41rem;
 }
 
 .galleryGrid figcaption {
@@ -485,12 +477,13 @@
   background: #0b1e17;
 }
 
-.videoFrame iframe {
+.videoFrame video {
   position: absolute;
   width: 100%;
   height: 100%;
   border: 0;
   inset: 0;
+  object-fit: contain;
 }
 
 .sourceNote {
@@ -613,12 +606,7 @@
     border-bottom: 0;
   }
 
-  .galleryFeatured {
-    grid-row: auto;
-  }
-
-  .galleryImage,
-  .galleryFeatured .galleryImage {
+  .galleryImage {
     height: 17rem;
   }
 

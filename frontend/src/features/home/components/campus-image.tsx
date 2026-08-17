@@ -27,8 +27,8 @@ export function CampusImage({ src, alt, eager = false }: CampusImageProps) {
   }
 
   return (
-    // The source is a verified CUET-owned media URL and the explicit error UI is
-    // required to keep the gallery usable when that external host is unavailable.
+    // These are project-provided CUET assets. The explicit error UI keeps the
+    // gallery understandable if an asset is missing or cannot be decoded.
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}

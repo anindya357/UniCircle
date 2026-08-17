@@ -127,30 +127,24 @@ export const mockHomeOverview = {
   gallery: [
     {
       id: "cuet-landmark",
-      src: "https://cuet.ac.bd/assets/images/about/about.jpg",
+      src: "/media/home/cuet-gate.jpg",
       alt: "CUET landmark built from white structural forms and a golden gear",
       caption: "A familiar CUET landmark",
     },
     {
-      id: "campus-transport",
-      src: "https://app.cuet.ac.bd/storage/Sliders/68d52626b7887.png",
-      alt: "A CUET university bus travelling through the green campus",
-      caption: "Campus movement beneath the trees",
-    },
-    {
-      id: "campus-roundabout",
-      src: "https://app.cuet.ac.bd/storage/Sliders/68d5264080db4.png",
-      alt: "A sculpture at a green roundabout inside the CUET campus",
-      caption: "Open spaces across the hillside campus",
+      id: "it-business-incubator",
+      src: "/media/home/cuet-it-business-incubator.png",
+      alt: "The rounded blue and white IT Business Incubator building at CUET",
+      caption: "CUET IT Business Incubator",
     },
   ],
   video: {
     title: "Take a virtual walk through CUET",
     description:
-      "See academic buildings, green spaces, landmarks, and everyday campus life in this independently produced campus tour.",
-    embedUrl: "https://www.youtube-nocookie.com/embed/Mv2diU4IyT0",
-    watchUrl: "https://www.youtube.com/watch?v=Mv2diU4IyT0",
-    sourceLabel: "Campus tour on YouTube",
+      "See academic buildings, green spaces, landmarks, and everyday campus life in this CUET introduction video.",
+    src: "/media/home/cuet-introduction.mp4",
+    poster: "/media/home/cuet-gate.jpg",
+    fallbackLabel: "Open the CUET introduction video",
   },
   sources: [
     { label: "Official CUET website", url: "https://cuet.ac.bd/" },
