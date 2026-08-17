@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { DirectoryPage } from "@/features/directory/components/directory-page";
 import { FeaturePlaceholder } from "@/features/shell/components/feature-placeholder";
 import { featurePages, getFeaturePage } from "@/features/shell/config/feature-pages";
 
@@ -17,6 +18,10 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
 
   if (!content) {
     notFound();
+  }
+
+  if (feature === "directory") {
+    return <DirectoryPage />;
   }
 
   return <FeaturePlaceholder content={content} />;

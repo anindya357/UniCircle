@@ -353,41 +353,41 @@ The workflow specifies a post-login Home page with welcome text and CUET informa
 
 Create entries for the departments specified in the workflow:
 
-- [ ] CSE
-- [ ] EEE
-- [ ] ME
-- [ ] CE
-- [ ] ETE
-- [ ] BME
-- [ ] MME
-- [ ] MIE
-- [ ] PME
-- [ ] Architecture
-- [ ] URP
+- [x] CSE
+- [x] EEE
+- [x] ME
+- [x] CE
+- [x] ETE
+- [x] BME
+- [x] MME
+- [x] MIE
+- [x] PME
+- [x] Architecture
+- [x] URP
 
 ## 4.7 Department details
 
-- [ ] Create department tab/list component.
-- [ ] Create department details view.
-- [ ] Display department description/information.
-- [ ] Add loading state.
-- [ ] Add no-data state.
+- [x] Create department tab/list component.
+- [x] Create department details view.
+- [x] Display department description/information.
+- [x] Add loading state.
+- [x] Add no-data state.
 
 ## 4.8 Faculty directory
 
-- [ ] Display teachers/faculty belonging to selected department.
-- [ ] Create faculty card/list.
-- [ ] Show required contact information.
-- [ ] Add faculty-detail presentation if included in approved UI design.
-- [ ] Use typed mock department/faculty data.
+- [x] Display teachers/faculty belonging to selected department.
+- [x] Create faculty card/list.
+- [x] Show required contact information.
+- [x] Add faculty-detail presentation if included in approved UI design.
+- [x] Use typed mock department/faculty data.
 
 ### Feature 3 frontend completion
 
-- [ ] Every listed department can be selected.
-- [ ] Correct department data appears.
-- [ ] Faculty data changes with department.
-- [ ] Contact information is readable.
-- [ ] Empty-state behavior exists.
+- [x] Every listed department can be selected.
+- [x] Correct department data appears.
+- [x] Faculty data changes with department.
+- [x] Contact information is readable.
+- [x] Empty-state behavior exists.
 
 ---
 

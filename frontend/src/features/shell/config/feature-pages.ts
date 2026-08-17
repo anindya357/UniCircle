@@ -11,7 +11,7 @@ export const featurePages = [
     eyebrow: "Department and faculty directory",
     title: "Find CUET departments and faculty",
     description:
-      "Department tabs, details, and faculty contacts will be implemented in the directory frontend phase.",
+      "Browse CUET departments, explore their academic focus, and find faculty contact information.",
   },
   {
     slug: "campus-explorer",
