@@ -36,7 +36,7 @@ The project is being implemented incrementally from the approved project context
 
 ## Prerequisites
 
-- Node.js 20.9 or newer and npm
+- Node.js 20.19 or newer and npm
 - Python 3.12 or newer (required when backend development starts)
 - PostgreSQL (required when backend development starts)
 - Git
@@ -44,8 +44,9 @@ The project is being implemented incrementally from the approved project context
 ## Local setup
 
 1. Clone the repository.
-2. Copy `.env.example` to `.env` and replace only the values needed for local development. Never commit `.env`.
-3. Install and run the frontend:
+2. Copy `.env.example` to `.env` for the future full-stack runtime. Never commit `.env`.
+3. Copy `frontend/.env.example` to `frontend/.env.local` for the browser-safe frontend configuration.
+4. Install and run the frontend:
 
    ```bash
    cd frontend
@@ -53,7 +54,7 @@ The project is being implemented incrementally from the approved project context
    npm run dev
    ```
 
-4. Open `http://localhost:3000`.
+5. Open `http://localhost:3000`.
 
 Backend and full-stack Docker commands will be documented when those phases are implemented.
 

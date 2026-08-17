@@ -46,22 +46,22 @@ Use this sequence for the whole project:
 
 ## 1.1 Create the GitHub repository
 
-- [ ] Create the project repository.
-- [ ] Add a meaningful repository description.
-- [ ] Add `.gitignore`.
-- [ ] Create `README.md`.
-- [ ] Create `.env.example`.
-- [ ] Protect sensitive values from Git.
-- [ ] Decide branch strategy.
-- [ ] Recommended branches:
-  - [ ] `main` — production-ready code.
-  - [ ] `develop` — integrated development branch, if the team wants one.
-  - [ ] `feature/<feature-name>` — feature development.
-  - [ ] `fix/<issue-name>` — fixes.
-- [ ] Decide pull-request rules.
-- [ ] Require review before merging important branches.
-- [ ] Add issue templates if useful.
-- [ ] Add pull-request template with testing checklist.
+- [x] Create the project repository.
+- [x] Add a meaningful repository description.
+- [x] Add `.gitignore`.
+- [x] Create `README.md`.
+- [x] Create `.env.example`.
+- [x] Protect sensitive values from Git.
+- [x] Decide branch strategy.
+- [x] Recommended branches:
+  - [x] `main` — production-ready code.
+  - [x] `develop` — intentionally deferred; the team does not need a long-lived integration branch yet.
+  - [x] `feature/<feature-name>` — feature development.
+  - [x] `fix/<issue-name>` — fixes.
+- [x] Decide pull-request rules.
+- [x] Require review before merging important branches.
+- [x] Add issue templates if useful.
+- [x] Add pull-request template with testing checklist.
 
 ---
 
@@ -90,13 +90,13 @@ unicircle/
 
 Tasks:
 
-- [ ] Create `frontend/`.
-- [ ] Create `backend/`.
-- [ ] Create `docs/`.
-- [ ] Create `docker/`.
-- [ ] Create `.github/workflows/`.
-- [ ] Add project setup instructions to `README.md`.
-- [ ] Add architecture/design documents already created during the system-design phase under `docs/design/`.
+- [x] Create `frontend/`.
+- [x] Create `backend/`.
+- [x] Create `docs/`.
+- [x] Create `docker/`.
+- [x] Create `.github/workflows/`.
+- [x] Add project setup instructions to `README.md`.
+- [x] Prepare `docs/design/` for approved artifacts; no separate approved design files were provided in this workspace.
 
 ---
 
@@ -129,12 +129,12 @@ Additional storage/vector-database variables can be added after the correspondin
 
 Tasks:
 
-- [ ] Create `.env.example`.
-- [ ] Never commit `.env`.
-- [ ] Document every environment variable.
-- [ ] Decide which variables belong to frontend.
-- [ ] Decide which variables belong only to backend.
-- [ ] Ensure secrets never become public Next.js environment variables.
+- [x] Create `.env.example`.
+- [x] Never commit `.env`.
+- [x] Document every environment variable.
+- [x] Decide which variables belong to frontend.
+- [x] Decide which variables belong only to backend.
+- [x] Ensure secrets never become public Next.js environment variables.
 
 ---
 
@@ -145,18 +145,18 @@ Tasks:
 
 ## 2.1 Initialize Next.js
 
-- [ ] Create the Next.js application.
-- [ ] Enable TypeScript.
-- [ ] Configure linting.
-- [ ] Configure formatting.
-- [ ] Define import aliases.
-- [ ] Create environment configuration.
-- [ ] Create the application route structure.
-- [ ] Create shared layouts.
-- [ ] Create a global error UI.
-- [ ] Create loading UI conventions.
-- [ ] Create empty-state conventions.
-- [ ] Create reusable form-error presentation.
+- [x] Create the Next.js application.
+- [x] Enable TypeScript.
+- [x] Configure linting.
+- [x] Configure formatting.
+- [x] Define import aliases.
+- [x] Create environment configuration.
+- [x] Create the application route structure.
+- [x] Create shared layouts.
+- [x] Create a global error UI.
+- [x] Create loading UI conventions.
+- [x] Create empty-state conventions.
+- [x] Create reusable form-error presentation.
 
 ---
 
@@ -196,12 +196,12 @@ frontend/
 
 Tasks:
 
-- [ ] Keep feature-specific components inside their feature modules.
-- [ ] Keep truly reusable UI inside shared/UI folders.
-- [ ] Create TypeScript domain types.
-- [ ] Create a mock repository/service layer.
-- [ ] Make mock service interfaces similar to the expected future API service interfaces.
-- [ ] Avoid importing mock JSON directly inside page components.
+- [x] Keep feature-specific components inside their feature modules.
+- [x] Keep truly reusable UI inside shared/UI folders.
+- [x] Create TypeScript domain types.
+- [x] Create a mock repository/service layer.
+- [x] Make mock service interfaces similar to the expected future API service interfaces.
+- [x] Avoid importing mock JSON directly inside page components.
 
 ---
 

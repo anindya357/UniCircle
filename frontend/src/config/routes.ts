@@ -1,0 +1,21 @@
+export const routes = {
+  home: "/",
+  auth: {
+    register: "/register",
+    verifyOtp: "/verify-otp",
+    login: "/login",
+    adminLogin: "/admin/login",
+  },
+  directory: "/directory",
+  campusExplorer: "/campus-explorer",
+  clubs: "/clubs",
+  events: "/events",
+  resources: "/resources",
+  chat: "/chat",
+  transport: "/transport",
+  forum: "/forum",
+  news: "/news",
+  assistant: "/assistant",
+  notifications: "/notifications",
+  admin: "/admin",
+} as const;
