@@ -1,3 +1,4 @@
 # Campus Explorer feature
 
-Campus map, location list, and location-detail UI will live here.
+Interactive demo campus map, typed mock location data, scrollable location cards,
+and responsive location-detail UI live here.

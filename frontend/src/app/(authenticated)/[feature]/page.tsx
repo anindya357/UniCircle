@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { CampusExplorerPage } from "@/features/campus-explorer/components/campus-explorer-page";
 import { DirectoryPage } from "@/features/directory/components/directory-page";
 import { FeaturePlaceholder } from "@/features/shell/components/feature-placeholder";
 import { featurePages, getFeaturePage } from "@/features/shell/config/feature-pages";
@@ -22,6 +23,10 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
 
   if (feature === "directory") {
     return <DirectoryPage />;
+  }
+
+  if (feature === "campus-explorer") {
+    return <CampusExplorerPage />;
   }
 
   return <FeaturePlaceholder content={content} />;
