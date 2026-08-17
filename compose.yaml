@@ -1,0 +1,6 @@
+name: unicircle
+
+# Services will be added in Phase 10 after the integrated application has been
+# tested. Keeping this valid scaffold reserves the documented repository entry.
+services: {}
+
