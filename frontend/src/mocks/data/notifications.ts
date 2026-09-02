@@ -34,7 +34,7 @@ export const mockNotifications = [
     type: "event-finished",
     title: "Robotics Systems Workshop has finished",
     message:
-      "The Robotics Society workshop has concluded. Event details remain available in the event hub.",
+      "The Andromeda Space and Robotics Research Org workshop has concluded. Event details remain available in the event hub.",
     createdAt: "2026-08-28T17:30:00+06:00",
     isRead: true,
     href: "/events#event-robotics-workshop",

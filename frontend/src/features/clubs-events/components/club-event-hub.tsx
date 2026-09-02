@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState, type CSSProperties } from "react";
 
 import { AppShell } from "@/components/shared/app-shell";
 import { EmptyState } from "@/components/ui/feedback/empty-state";
+import { routes } from "@/config/routes";
 import type {
   AttendanceStatus,
   CampusClub,
@@ -24,12 +26,6 @@ type ClubEventHubProps = Readonly<{
   events: readonly CampusEvent[];
 }>;
 
-const eventSections = [
-  { status: "ongoing", label: "Happening now" },
-  { status: "upcoming", label: "Coming up" },
-  { status: "finished", label: "Recently finished" },
-] as const satisfies readonly { status: EventStatus; label: string }[];
-
 const eventFilters = [
   { id: "all", label: "All events" },
   { id: "ongoing", label: "Ongoing" },
@@ -37,35 +33,11 @@ const eventFilters = [
   { id: "finished", label: "Finished" },
 ] as const satisfies readonly { id: EventFilter; label: string }[];
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
 export function ClubEventHub({ view, clubs, events }: ClubEventHubProps) {
-  const [selectedClubId, setSelectedClubId] = useState(clubs[0]?.id ?? "");
   const [attendance, setAttendance] = useState<
     Readonly<Record<string, AttendanceStatus>>
   >({});
   const [eventFilter, setEventFilter] = useState<EventFilter>("all");
-
-  const selectedClub = clubs.find((club) => club.id === selectedClubId) ?? clubs[0];
-
-  const eventsByClub = useMemo(() => {
-    const grouped = new Map<string, CampusEvent[]>();
-
-    for (const event of events) {
-      const current = grouped.get(event.clubId) ?? [];
-      current.push(event);
-      grouped.set(event.clubId, current);
-    }
-
-    return grouped;
-  }, [events]);
 
   const clubNames = useMemo(
     () => new Map(clubs.map((club) => [club.id, club.name])),
@@ -134,14 +106,7 @@ export function ClubEventHub({ view, clubs, events }: ClubEventHubProps) {
       <HubNavigation activeView={view} />
 
       {view === "clubs" ? (
-        <ClubDirectory
-          attendance={attendance}
-          clubs={clubs}
-          eventsByClub={eventsByClub}
-          onAttendanceChange={changeAttendance}
-          onClubSelect={setSelectedClubId}
-          selectedClub={selectedClub}
-        />
+        <ClubDirectory clubs={clubs} />
       ) : (
         <CampusEventDirectory
           attendance={attendance}
@@ -158,185 +123,49 @@ export function ClubEventHub({ view, clubs, events }: ClubEventHubProps) {
 }
 
 type ClubDirectoryProps = Readonly<{
-  attendance: Readonly<Record<string, AttendanceStatus>>;
   clubs: readonly CampusClub[];
-  eventsByClub: ReadonlyMap<string, readonly CampusEvent[]>;
-  onAttendanceChange: (eventId: string, status: AttendanceStatus) => void;
-  onClubSelect: (clubId: string) => void;
-  selectedClub: CampusClub | undefined;
 }>;
 
-function ClubDirectory({
-  attendance,
-  clubs,
-  eventsByClub,
-  onAttendanceChange,
-  onClubSelect,
-  selectedClub,
-}: ClubDirectoryProps) {
-  if (!selectedClub) {
-    return (
-      <EmptyState
-        title="No clubs available"
-        description="CUET club profiles will appear here when club data is available."
-      />
-    );
-  }
-
-  const selectedClubEvents = eventsByClub.get(selectedClub.id) ?? [];
-  const accentStyle = {
-    "--club-accent": selectedClub.accent,
-  } as CSSProperties;
-
+function ClubDirectory({ clubs }: ClubDirectoryProps) {
   return (
-    <div className={styles.clubDirectory}>
-      <section className={styles.sectionHeading}>
+    <section className={styles.clubDirectory} aria-labelledby="club-directory-title">
+      <div className={styles.sectionHeading}>
         <div>
           <p className={styles.eyebrow}>Club directory</p>
-          <h2>Choose a campus community</h2>
+          <h2 id="club-directory-title">Choose a campus community</h2>
         </div>
         <p>
-          Select a club to see its purpose, leadership, regular activities, and event
-          calendar.
+          Open any club to see its purpose, leadership, regular activities, and upcoming
+          event calendar.
         </p>
-      </section>
+      </div>
 
-      <div className={styles.clubTabs} role="tablist" aria-label="CUET clubs">
-        {clubs.map((club, index) => {
-          const isSelected = club.id === selectedClub.id;
-
-          return (
-            <button
-              aria-controls="selected-club-panel"
-              aria-selected={isSelected}
+      {clubs.length === 0 ? (
+        <EmptyState
+          title="No clubs available"
+          description="CUET club profiles will appear here when club data is available."
+        />
+      ) : (
+        <div className={styles.clubTabs} aria-label="CUET clubs">
+          {clubs.map((club, index) => (
+            <Link
               className={styles.clubTab}
+              href={`${routes.clubs}/${club.id}`}
               key={club.id}
-              onClick={() => onClubSelect(club.id)}
-              role="tab"
               style={{ "--club-accent": club.accent } as CSSProperties}
-              type="button"
             >
               <span>{String(index + 1).padStart(2, "0")}</span>
               <strong>{club.shortName}</strong>
-              <small>{club.name}</small>
-            </button>
-          );
-        })}
-      </div>
-
-      <section
-        aria-label={`${selectedClub.name} details`}
-        className={styles.clubPanel}
-        id="selected-club-panel"
-        role="tabpanel"
-        style={accentStyle}
-      >
-        <div className={styles.clubOverview}>
-          <div className={styles.clubIdentity}>
-            <span aria-hidden="true">{selectedClub.shortName}</span>
-            <div>
-              <p>{selectedClub.category}</p>
-              <h2>{selectedClub.name}</h2>
-            </div>
-          </div>
-
-          <p className={styles.clubTagline}>{selectedClub.tagline}</p>
-          <p className={styles.clubDescription}>{selectedClub.description}</p>
-
-          <dl className={styles.clubMetrics}>
-            <div>
-              <dt>Community</dt>
-              <dd>{selectedClub.memberCount} members</dd>
-            </div>
-            <div>
-              <dt>Listed events</dt>
-              <dd>{selectedClubEvents.length} this season</dd>
-            </div>
-          </dl>
+              <h3>{club.name}</h3>
+              <p>{club.tagline}</p>
+              <b>
+                View club <span aria-hidden="true">→</span>
+              </b>
+            </Link>
+          ))}
         </div>
-
-        <div className={styles.clubDetailsGrid}>
-          <section aria-labelledby="activities-title">
-            <div className={styles.subsectionHeading}>
-              <span>What they do</span>
-              <h3 id="activities-title">Regular activities</h3>
-            </div>
-            <ol className={styles.activityList}>
-              {selectedClub.activities.map((activity, index) => (
-                <li key={activity}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  {activity}
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section aria-labelledby="leadership-title">
-            <div className={styles.subsectionHeading}>
-              <span>Member information</span>
-              <h3 id="leadership-title">Club leadership</h3>
-            </div>
-            <div className={styles.leaderList}>
-              {selectedClub.leaders.map((member) => (
-                <article key={member.id}>
-                  <span aria-hidden="true">{getInitials(member.name)}</span>
-                  <div>
-                    <strong>{member.name}</strong>
-                    <p>{member.role}</p>
-                    <small>{member.department}</small>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        </div>
-
-        <section className={styles.clubEvents} aria-labelledby="club-events-title">
-          <div className={styles.sectionHeading}>
-            <div>
-              <p className={styles.eyebrow}>Club calendar</p>
-              <h2 id="club-events-title">Events from {selectedClub.shortName}</h2>
-            </div>
-            <p>{selectedClubEvents.length} event listings connected to this club.</p>
-          </div>
-
-          <div className={styles.clubEventSections}>
-            {eventSections.map((section) => {
-              const sectionEvents = selectedClubEvents.filter(
-                (event) => event.status === section.status,
-              );
-
-              return (
-                <section key={section.status} className={styles.clubEventSection}>
-                  <div className={styles.eventGroupHeading}>
-                    <h3>{section.label}</h3>
-                    <span>{sectionEvents.length}</span>
-                  </div>
-                  {sectionEvents.length === 0 ? (
-                    <p className={styles.inlineEmpty}>
-                      No {section.label.toLowerCase()} events for this club.
-                    </p>
-                  ) : (
-                    <div className={styles.compactEventGrid}>
-                      {sectionEvents.map((event) => (
-                        <EventCard
-                          attendance={attendance[event.id] ?? "none"}
-                          clubName={selectedClub.name}
-                          compact
-                          event={event}
-                          key={event.id}
-                          onAttendanceChange={onAttendanceChange}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </section>
-              );
-            })}
-          </div>
-        </section>
-      </section>
-    </div>
+      )}
+    </section>
   );
 }
 
