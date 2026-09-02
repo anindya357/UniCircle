@@ -1,6 +1,7 @@
 # UniCircle — Feature-wise Implementation TODO Plan
 
 > **Basis:** This implementation plan follows the supplied **Project Workflow Description** and the agreed technology stack:
+>
 > - **Frontend:** Next.js + TypeScript
 > - **Backend:** FastAPI
 > - **Database:** PostgreSQL
@@ -562,40 +563,40 @@ The workflow allows text-only community posts, comments, and reporting. There ar
 
 ## 4.16 Post creation
 
-- [ ] Create Community Forum route.
-- [ ] Create post composer at top of page.
-- [ ] Accept text only.
-- [ ] Do not add image/video upload.
-- [ ] Add validation for empty post.
-- [ ] Add submit state.
-- [ ] Mock new post creation.
+- [x] Create Community Forum route.
+- [x] Create post composer at top of page.
+- [x] Accept text only.
+- [x] Do not add image/video upload.
+- [x] Add validation for empty post.
+- [x] Add submit state.
+- [x] Mock new post creation.
 
 ## 4.17 Feed
 
-- [ ] Create scrollable community post feed.
-- [ ] Display author.
-- [ ] Display post text.
-- [ ] Display timestamp.
-- [ ] Do not add reaction buttons.
-- [ ] Add comments section.
-- [ ] Add text-comment input.
-- [ ] Add comment list.
-- [ ] Mock comment creation.
+- [x] Create scrollable community post feed.
+- [x] Display author.
+- [x] Display post text.
+- [x] Display timestamp.
+- [x] Do not add reaction buttons.
+- [x] Add comments section.
+- [x] Add text-comment input.
+- [x] Add comment list.
+- [x] Mock comment creation.
 
 ## 4.18 Reporting
 
-- [ ] Add “Report to Admin” option.
-- [ ] Add report confirmation UI.
-- [ ] Mock reported state.
-- [ ] Prevent accidental repeated reporting if that matches final design.
+- [x] Add “Report to Admin” option.
+- [x] Add report confirmation UI.
+- [x] Mock reported state.
+- [x] Prevent accidental repeated reporting if that matches final design.
 
 ### Feature 8 frontend completion
 
-- [ ] Text posts can be mocked.
-- [ ] Comments work in mock state.
-- [ ] No reaction UI exists.
-- [ ] No image/video post UI exists.
-- [ ] Report action is available.
+- [x] Text posts can be mocked.
+- [x] Comments work in mock state.
+- [x] No reaction UI exists.
+- [x] No image/video post UI exists.
+- [x] Report action is available.
 
 ---
 

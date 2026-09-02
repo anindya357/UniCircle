@@ -60,7 +60,7 @@ export const featurePages = [
     eyebrow: "Community discussion",
     title: "Join CUET community conversations",
     description:
-      "Text posts, comments, and reporting controls will be implemented in the forum frontend phase.",
+      "Create text discussions, exchange helpful comments, and report inappropriate posts for Admin review.",
   },
   {
     slug: "news",
