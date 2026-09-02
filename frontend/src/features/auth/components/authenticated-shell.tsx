@@ -5,6 +5,7 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import { LoadingState } from "@/components/ui/feedback/loading-state";
 import { routes } from "@/config/routes";
+import { AuthenticatedUserProvider } from "@/features/auth/context/authenticated-user-context";
 import type { SessionUser } from "@/features/auth/types/session-user";
 import { NotificationProvider } from "@/features/notifications/hooks/use-notifications";
 import type { AppNotification } from "@/features/notifications/types/notification";
@@ -64,9 +65,11 @@ export function AuthenticatedShell({
   }
 
   return (
-    <NotificationProvider initialNotifications={initialNotifications}>
-      <Navbar user={user} />
-      {children}
-    </NotificationProvider>
+    <AuthenticatedUserProvider initialUser={user}>
+      <NotificationProvider initialNotifications={initialNotifications}>
+        <Navbar />
+        {children}
+      </NotificationProvider>
+    </AuthenticatedUserProvider>
   );
 }

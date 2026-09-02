@@ -16,6 +16,7 @@ export const routes = {
   forum: "/forum",
   news: "/news",
   assistant: "/assistant",
+  profile: "/profile",
   notifications: "/notifications",
   admin: "/admin",
 } as const;

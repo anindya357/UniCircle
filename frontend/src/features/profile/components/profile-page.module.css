@@ -1,0 +1,529 @@
+.pageShell {
+  width: min(calc(100% - 2rem), 76rem);
+}
+
+.profileHero {
+  position: relative;
+  display: flex;
+  min-height: 14.5rem;
+  padding: clamp(1.4rem, 3vw, 2.35rem);
+  gap: 1.5rem;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 85% 0%, rgb(232 189 79 / 30%), transparent 20rem),
+    linear-gradient(135deg, #032f20, #075c3c 68%, #06472f);
+  box-shadow: 0 24px 60px rgb(3 69 44 / 17%);
+}
+
+.profileHero::after {
+  position: absolute;
+  right: -8rem;
+  bottom: -17rem;
+  width: 30rem;
+  height: 30rem;
+  border: 1px solid rgb(255 255 255 / 9%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 4rem rgb(255 255 255 / 2.5%),
+    0 0 0 8rem rgb(255 255 255 / 1.5%);
+  content: "";
+}
+
+.heroIdentity,
+.profileHero > button {
+  position: relative;
+  z-index: 1;
+}
+
+.heroIdentity {
+  display: flex;
+  min-width: 0;
+  gap: clamp(1rem, 2.5vw, 1.6rem);
+  align-items: center;
+}
+
+.heroAvatar {
+  display: grid;
+  width: clamp(5.25rem, 9vw, 7rem);
+  height: clamp(5.25rem, 9vw, 7rem);
+  flex: 0 0 auto;
+  border: 0.35rem solid rgb(255 255 255 / 15%);
+  border-radius: 1.65rem;
+  place-items: center;
+  color: #17462f;
+  background: #e8bd4f;
+  box-shadow: 0 14px 30px rgb(0 0 0 / 18%);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 880;
+}
+
+.heroIdentity > div > p,
+.detailsCard > header p,
+.identityCardHeading p {
+  color: #f1c75c;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.heroIdentity h1 {
+  margin-top: 0.42rem;
+  font-size: clamp(2.25rem, 4.7vw, 4rem);
+  line-height: 0.96;
+  letter-spacing: -0.06em;
+}
+
+.identityMeta {
+  display: flex;
+  margin-top: 0.8rem;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.identityMeta span {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 999px;
+  color: rgb(255 255 255 / 76%);
+  background: rgb(255 255 255 / 8%);
+  font-size: 0.58rem;
+  font-weight: 720;
+}
+
+.profileHero > button {
+  min-height: 2.85rem;
+  padding: 0.7rem 0.95rem;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 0.72rem;
+  flex: 0 0 auto;
+  color: #173320;
+  background: #f1c75c;
+  font-size: 0.68rem;
+  font-weight: 820;
+}
+
+.profileHero > button:hover:not(:disabled) {
+  background: #f7d77f;
+}
+
+.profileHero > button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.successBanner {
+  display: grid;
+  margin-top: 1rem;
+  padding: 0.75rem 0.9rem;
+  gap: 0.7rem;
+  border: 1px solid #a7cfb9;
+  border-radius: 0.75rem;
+  align-items: center;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  color: #075c3c;
+  background: #ecf8f1;
+}
+
+.successBanner strong {
+  padding: 0.32rem 0.5rem;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--color-brand);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+}
+
+.successBanner p {
+  font-size: 0.68rem;
+  font-weight: 720;
+}
+
+.successBanner button {
+  padding: 0.4rem 0.55rem;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 0.58rem;
+  font-weight: 780;
+}
+
+.profileLayout {
+  display: grid;
+  margin-top: 1rem;
+  gap: 1rem;
+  align-items: start;
+  grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.55fr);
+}
+
+.detailsCard,
+.identityCard {
+  border: 1px solid var(--color-border);
+  border-radius: 1.1rem;
+  background: var(--color-surface);
+  box-shadow: 0 12px 34px rgb(20 50 35 / 6%);
+}
+
+.detailsCard {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.detailsCard > header {
+  display: flex;
+  min-height: 5.35rem;
+  padding: 1rem 1.2rem;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #ffffff, #f7faf8);
+}
+
+.detailsCard > header p,
+.identityCardHeading p {
+  color: var(--color-brand);
+}
+
+.detailsCard > header h2,
+.identityCardHeading h2 {
+  margin-top: 0.2rem;
+  font-size: 1.2rem;
+  letter-spacing: -0.03em;
+}
+
+.detailsCard > header > span {
+  padding: 0.34rem 0.5rem;
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+  font-size: 0.54rem;
+  font-weight: 750;
+}
+
+.profileDetails {
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.profileDetails dl {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.profileDetails dl > div {
+  min-width: 0;
+  padding: 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  background: var(--color-canvas);
+}
+
+.profileDetails dl > div[data-wide="true"] {
+  grid-column: 1 / -1;
+}
+
+.profileDetails dt,
+.identityCard dt {
+  color: var(--color-text-muted);
+  font-size: 0.54rem;
+  font-weight: 780;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.profileDetails dd {
+  margin-top: 0.32rem;
+  overflow-wrap: anywhere;
+  font-size: 0.76rem;
+  font-weight: 720;
+  line-height: 1.5;
+}
+
+.bioBlock {
+  margin-top: 0.8rem;
+  padding: 1rem;
+  border-left: 0.25rem solid var(--color-accent);
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: #fffaf0;
+}
+
+.bioBlock span {
+  color: #7b570d;
+  font-size: 0.55rem;
+  font-weight: 820;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bioBlock p {
+  margin-top: 0.45rem;
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
+  line-height: 1.65;
+}
+
+.profileForm {
+  display: grid;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  gap: 1rem;
+}
+
+.formAlert {
+  padding: 0.75rem;
+  border: 1px solid #e4a59e;
+  border-radius: 0.65rem;
+  color: #852c23;
+  background: #fff4f2;
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.twoColumnFields {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  min-width: 0;
+}
+
+.field label,
+.labelRow {
+  color: var(--color-text);
+  font-size: 0.63rem;
+  font-weight: 780;
+}
+
+.field > input,
+.field > textarea,
+.prefixedInput {
+  width: 100%;
+  margin-top: 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  color: var(--color-text);
+  background: var(--color-canvas);
+}
+
+.field > input,
+.field > textarea {
+  padding: 0.72rem 0.75rem;
+  font-size: 0.72rem;
+}
+
+.field > textarea {
+  min-height: 5.5rem;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.field > input:focus,
+.field > textarea:focus,
+.prefixedInput:focus-within {
+  border-color: var(--color-brand);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgb(7 92 60 / 11%);
+}
+
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.prefixedInput {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+.prefixedInput > span {
+  padding-left: 0.75rem;
+  color: var(--color-brand);
+  font-size: 0.75rem;
+  font-weight: 820;
+}
+
+.prefixedInput input {
+  min-width: 0;
+  min-height: 2.65rem;
+  padding: 0.65rem;
+  border: 0;
+  outline: 0;
+  flex: 1;
+  color: var(--color-text);
+  background: transparent;
+  font-size: 0.72rem;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.labelRow > span {
+  color: var(--color-text-muted);
+  font-size: 0.52rem;
+  font-weight: 600;
+}
+
+.formActions {
+  display: flex;
+  padding-top: 0.25rem;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+
+.formActions button {
+  min-width: 7.5rem;
+  min-height: 2.7rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.formActions button:last-child {
+  border-color: var(--color-brand);
+  color: #ffffff;
+  background: var(--color-brand);
+}
+
+.formActions button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.identityCard {
+  padding: 1rem;
+}
+
+.identityCardHeading {
+  display: flex;
+  padding: 0.2rem 0.1rem 0.9rem;
+  gap: 0.7rem;
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+}
+
+.identityCardHeading > span {
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.75rem;
+  place-items: center;
+  color: #ffffff;
+  background: var(--color-brand);
+  font-size: 0.65rem;
+  font-weight: 850;
+}
+
+.identityCard dl > div {
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.identityCard dd {
+  margin-top: 0.3rem;
+  overflow-wrap: anywhere;
+  font-size: 0.7rem;
+  font-weight: 720;
+  line-height: 1.45;
+}
+
+.identityNotice {
+  display: grid;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  gap: 0.55rem;
+  border-radius: 0.65rem;
+  align-items: start;
+  grid-template-columns: auto minmax(0, 1fr);
+  color: var(--color-brand);
+  background: var(--color-surface-muted);
+}
+
+.identityNotice > span {
+  display: grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 1px solid currentcolor;
+  border-radius: 50%;
+  place-items: center;
+  font-family: Georgia, serif;
+  font-size: 0.58rem;
+  font-weight: 850;
+}
+
+.identityNotice p {
+  color: var(--color-text-muted);
+  font-size: 0.6rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 56rem) {
+  .profileLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .identityCard dl {
+    display: grid;
+    gap: 0 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 40rem) {
+  .pageShell {
+    width: min(calc(100% - 1rem), 76rem);
+  }
+
+  .profileHero {
+    min-height: 0;
+    padding: 1.2rem;
+    border-radius: 1.2rem;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .heroIdentity {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profileHero > button {
+    width: 100%;
+  }
+
+  .profileDetails dl,
+  .twoColumnFields,
+  .identityCard dl {
+    grid-template-columns: 1fr;
+  }
+
+  .profileDetails dl > div[data-wide="true"] {
+    grid-column: auto;
+  }
+
+  .detailsCard > header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .formActions {
+    flex-direction: column-reverse;
+  }
+
+  .formActions button {
+    width: 100%;
+  }
+}

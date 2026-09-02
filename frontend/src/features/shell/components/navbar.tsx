@@ -10,15 +10,12 @@ import {
   type NavigationItem,
 } from "@/config/navigation";
 import { routes } from "@/config/routes";
+import { useAuthenticatedUser } from "@/features/auth/context/authenticated-user-context";
 import type { SessionUser } from "@/features/auth/types/session-user";
 import { NotificationMenu } from "@/features/notifications/components/notification-menu";
 import { sessionService } from "@/services";
 
 import styles from "./navbar.module.css";
-
-type NavbarProps = Readonly<{
-  user: SessionUser;
-}>;
 
 function isActiveRoute(pathname: string, href: string): boolean {
   if (href === routes.home) {
@@ -41,7 +38,8 @@ function roleLabel(role: SessionUser["role"]): string {
   return role.charAt(0).toUpperCase() + role.slice(1);
 }
 
-export function Navbar({ user }: NavbarProps) {
+export function Navbar() {
+  const { user } = useAuthenticatedUser();
   const pathname = usePathname();
   const router = useRouter();
   const menuId = useId();
@@ -100,7 +98,13 @@ export function Navbar({ user }: NavbarProps) {
         <div className={styles.accountArea}>
           <NotificationMenu />
 
-          <div className={styles.profile}>
+          <Link
+            aria-current={pathname === routes.profile ? "page" : undefined}
+            aria-label={`View ${user.displayName}'s profile`}
+            className={`${styles.profile} ${pathname === routes.profile ? styles.profileActive : ""}`}
+            href={routes.profile}
+            onNavigate={() => setIsMobileOpen(false)}
+          >
             <span className={styles.avatar} aria-hidden="true">
               {getInitials(user.displayName)}
             </span>
@@ -108,7 +112,7 @@ export function Navbar({ user }: NavbarProps) {
               <strong>{user.displayName}</strong>
               <small>{roleLabel(user.role)}</small>
             </span>
-          </div>
+          </Link>
 
           <button
             className={styles.logout}

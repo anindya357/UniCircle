@@ -17,11 +17,18 @@ const mockLatencyMilliseconds = 650;
 
 const mockAdminUser = {
   id: "admin-unicircle-001",
+  firstName: "UniCircle",
+  lastName: "Admin",
   displayName: "UniCircle Admin",
   username: "admin",
   email: "admin@cuet.ac.bd",
   role: "admin",
   universityId: "ADMIN-001",
+  department: "University Administration",
+  phone: "+880 31-714946",
+  homeAddress: "CUET Campus, Raozan, Chattogram",
+  bio: "UniCircle application administrator.",
+  memberSince: "2026-01-01T09:00:00+06:00",
 } as const satisfies SessionUser;
 
 export class MockAuthService implements AuthService {
