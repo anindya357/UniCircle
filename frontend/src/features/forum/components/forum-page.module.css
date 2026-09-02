@@ -327,14 +327,8 @@
 
 .feedList {
   display: grid;
-  max-height: 80rem;
   margin-top: 1.25rem;
-  padding-right: 0.6rem;
   gap: 1rem;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-color: #9db4a8 transparent;
-  scrollbar-gutter: stable;
 }
 
 .postCard {
@@ -750,12 +744,6 @@
 
   .forumLayout {
     grid-template-columns: 1fr;
-  }
-
-  .feedList {
-    max-height: none;
-    padding-right: 0;
-    overflow: visible;
   }
 
   .communitySidebar {
