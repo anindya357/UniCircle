@@ -472,49 +472,49 @@ The workflow describes a people-discovery style list where users request physica
 
 ## 4.12 User/resource discovery UI
 
-- [ ] Create Resource Sharing route.
-- [ ] Create “people you may know”-style user list.
-- [ ] Create user resource/request card.
-- [ ] Support resource request categories/examples such as:
-  - [ ] Notebook
-  - [ ] Lab report
-  - [ ] T-scale
-  - [ ] Bicycle
-  - [ ] Other approved resource
-- [ ] Create resource request form/modal.
-- [ ] Add request message/details field if included in approved design.
-- [ ] Add request submit UI.
-- [ ] Display request status:
-  - [ ] Pending
-  - [ ] Accepted
-  - [ ] Rejected
-- [ ] Create received-request UI.
-- [ ] Create accept action.
-- [ ] Create reject action.
-- [ ] Mock all request-state transitions.
+- [x] Create Resource Sharing route.
+- [x] Create “people you may know”-style user list.
+- [x] Create user resource/request card.
+- [x] Support resource request categories/examples such as:
+  - [x] Notebook
+  - [x] Lab report
+  - [x] T-scale
+  - [x] Bicycle
+  - [x] Other approved resource
+- [x] Create resource request form/modal.
+- [x] Add request message/details field if included in approved design.
+- [x] Add request submit UI.
+- [x] Display request status:
+  - [x] Pending
+  - [x] Accepted
+  - [x] Rejected
+- [x] Create received-request UI.
+- [x] Create accept action.
+- [x] Create reject action.
+- [x] Mock all request-state transitions.
 
 ## 4.13 User-to-user chat frontend
 
 > The workflow wording “end to end chat system” is treated here as a chat between the two users. Do not assume cryptographic end-to-end encryption unless that is separately added as a formal requirement.
 
-- [ ] Create conversation list.
-- [ ] Create chat screen.
-- [ ] Create message list.
-- [ ] Create message input.
-- [ ] Add message send behavior using mock state.
-- [ ] Add timestamps.
-- [ ] Add current-user vs other-user message presentation.
-- [ ] Disable/prevent chat before resource request is accepted.
-- [ ] Show chat access after accepted request.
-- [ ] Add empty conversation state.
+- [x] Create conversation list.
+- [x] Create chat screen.
+- [x] Create message list.
+- [x] Create message input.
+- [x] Add message send behavior using mock state.
+- [x] Add timestamps.
+- [x] Add current-user vs other-user message presentation.
+- [x] Disable/prevent chat before resource request is accepted.
+- [x] Show chat access after accepted request.
+- [x] Add empty conversation state.
 
 ### Feature 6 frontend completion
 
-- [ ] Users can be browsed.
-- [ ] Resource request can be composed.
-- [ ] Pending/accepted/rejected UI works.
-- [ ] Accepted request unlocks chat UI.
-- [ ] Chat UI is usable and responsive.
+- [x] Users can be browsed.
+- [x] Resource request can be composed.
+- [x] Pending/accepted/rejected UI works.
+- [x] Accepted request unlocks chat UI.
+- [x] Chat UI is usable and responsive.
 
 ---
 

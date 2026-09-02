@@ -39,14 +39,14 @@ export const featurePages = [
     eyebrow: "Resource sharing",
     title: "Request resources from the CUET community",
     description:
-      "User discovery and resource-request workflows will be implemented in the resource sharing frontend phase.",
+      "Discover students, compose resource requests, and manage sent or received request states.",
   },
   {
     slug: "chat",
     eyebrow: "Resource coordination",
     title: "Coordinate accepted resource requests",
     description:
-      "Conversation and message interfaces will be implemented in the chat frontend phase.",
+      "Use private mock conversations to coordinate resource exchanges after a request is accepted.",
   },
   {
     slug: "transport",
