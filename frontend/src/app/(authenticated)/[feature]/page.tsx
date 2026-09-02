@@ -5,7 +5,8 @@ import { ClubEventHub } from "@/features/clubs-events/components/club-event-hub"
 import { DirectoryPage } from "@/features/directory/components/directory-page";
 import { FeaturePlaceholder } from "@/features/shell/components/feature-placeholder";
 import { featurePages, getFeaturePage } from "@/features/shell/config/feature-pages";
-import { clubEventService } from "@/services";
+import { TransportPage } from "@/features/transport/components/transport-page";
+import { clubEventService, transportService } from "@/services";
 
 type FeaturePageProps = Readonly<{
   params: Promise<{ feature: string }>;
@@ -38,6 +39,12 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
     ]);
 
     return <ClubEventHub clubs={clubs} events={events} view={feature} />;
+  }
+
+  if (feature === "transport") {
+    const snapshot = await transportService.getSnapshot();
+
+    return <TransportPage snapshot={snapshot} />;
   }
 
   return <FeaturePlaceholder content={content} />;

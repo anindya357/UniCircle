@@ -53,7 +53,7 @@ export const featurePages = [
     eyebrow: "Campus transport",
     title: "View bus schedules and drivers",
     description:
-      "Date-based schedules, route information, and driver contacts will be implemented in the transport frontend phase.",
+      "Choose a current or future day, inspect assigned buses and routes, and find driver contact information.",
   },
   {
     slug: "forum",

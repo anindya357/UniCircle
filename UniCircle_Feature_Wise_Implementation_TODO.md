@@ -522,37 +522,37 @@ The workflow describes a people-discovery style list where users request physica
 
 ## 4.14 Schedule interface
 
-- [ ] Create Transport route.
-- [ ] Display one selected day’s schedule within one page/view.
-- [ ] Add date/day selector.
-- [ ] Prevent past schedules from appearing in normal user UI.
-- [ ] Display:
-  - [ ] Date
-  - [ ] Bus Name
-  - [ ] Driver
-  - [ ] Bus Type
-  - [ ] Route information
-  - [ ] Schedule/times
-- [ ] Support bus types defined by requirements:
-  - [ ] Student Bus
-  - [ ] Teacher Bus
-  - [ ] Staff Bus
-- [ ] Add no-schedule state.
-- [ ] Use future/current mock schedule data.
+- [x] Create Transport route.
+- [x] Display one selected day’s schedule within one page/view.
+- [x] Add date/day selector.
+- [x] Prevent past schedules from appearing in normal user UI.
+- [x] Display:
+  - [x] Date
+  - [x] Bus Name
+  - [x] Driver
+  - [x] Bus Type
+  - [x] Route information
+  - [x] Schedule/times
+- [x] Support bus types defined by requirements:
+  - [x] Student Bus
+  - [x] Teacher Bus
+  - [x] Staff Bus
+- [x] Add no-schedule state.
+- [x] Use future/current mock schedule data.
 
 ## 4.15 Bus Drivers tab
 
-- [ ] Create “Bus Drivers” tab.
-- [ ] List driver names.
-- [ ] Display contact numbers.
-- [ ] Add empty state.
+- [x] Create “Bus Drivers” tab.
+- [x] List driver names.
+- [x] Display contact numbers.
+- [x] Add empty state.
 
 ### Feature 7 frontend completion
 
-- [ ] User can change date/day.
-- [ ] Selected day shows correct mocked schedule.
-- [ ] Past schedules are hidden.
-- [ ] Driver list is accessible.
+- [x] User can change date/day.
+- [x] Selected day shows correct mocked schedule.
+- [x] Past schedules are hidden.
+- [x] Driver list is accessible.
 
 ---
 
