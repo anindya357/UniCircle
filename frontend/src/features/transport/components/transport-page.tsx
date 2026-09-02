@@ -41,14 +41,6 @@ export function TransportPage({ snapshot }: TransportPageProps) {
   const [driverQuery, setDriverQuery] = useState("");
   const [busTypeFilter, setBusTypeFilter] = useState<BusTypeFilter>("all");
 
-  const busesById = useMemo(
-    () => new Map(snapshot.buses.map((bus) => [bus.id, bus])),
-    [snapshot.buses],
-  );
-  const driversById = useMemo(
-    () => new Map(snapshot.drivers.map((driver) => [driver.id, driver])),
-    [snapshot.drivers],
-  );
   const busesByDriverId = useMemo(
     () => new Map(snapshot.buses.map((bus) => [bus.driverId, bus])),
     [snapshot.buses],
@@ -202,8 +194,6 @@ export function TransportPage({ snapshot }: TransportPageProps) {
                 <div className={styles.scheduleGrid}>
                   {selectedTrips.map((trip, index) => (
                     <ScheduleCard
-                      busesById={busesById}
-                      driversById={driversById}
                       key={trip.id}
                       routesById={routesById}
                       sequence={index + 1}

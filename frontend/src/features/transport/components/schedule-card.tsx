@@ -1,6 +1,6 @@
+import Link from "next/link";
+
 import type {
-  BusDriver,
-  TransportBus,
   TransportRoute,
   TransportTrip,
 } from "@/features/transport/types/transport";
@@ -11,24 +11,10 @@ import styles from "./transport-page.module.css";
 type ScheduleCardProps = Readonly<{
   trip: TransportTrip;
   sequence: number;
-  busesById: ReadonlyMap<string, TransportBus>;
-  driversById: ReadonlyMap<string, BusDriver>;
   routesById: ReadonlyMap<string, TransportRoute>;
 }>;
 
-const busTypeLabels = {
-  student: "Student Bus",
-  teacher: "Teacher Bus",
-  staff: "Staff Bus",
-} as const satisfies Record<TransportBus["type"], string>;
-
-export function ScheduleCard({
-  trip,
-  sequence,
-  busesById,
-  driversById,
-  routesById,
-}: ScheduleCardProps) {
+export function ScheduleCard({ trip, sequence, routesById }: ScheduleCardProps) {
   const busCount = trip.assignments.reduce(
     (total, assignment) => total + assignment.busIds.length,
     0,
@@ -80,47 +66,13 @@ export function ScheduleCard({
         })}
       </div>
 
-      <details className={styles.assignmentDetails} open={sequence === 1}>
-        <summary>View assigned buses and drivers</summary>
-        <div className={styles.assignmentGroups}>
-          {trip.assignments.map((assignment) => {
-            const route = routesById.get(assignment.routeId);
-
-            return (
-              <section key={assignment.routeId}>
-                <header>
-                  <h4>{route?.name ?? "Route"}</h4>
-                  <span>{assignment.busIds.length} assigned</span>
-                </header>
-                <div className={styles.assignmentTable}>
-                  <div className={styles.assignmentTableHeader} aria-hidden="true">
-                    <span>Bus</span>
-                    <span>Type</span>
-                    <span>Driver</span>
-                  </div>
-                  {assignment.busIds.map((busId) => {
-                    const bus = busesById.get(busId);
-                    const driver = bus ? driversById.get(bus.driverId) : undefined;
-
-                    return (
-                      <div className={styles.assignmentRow} key={busId}>
-                        <div>
-                          <strong>{bus?.name ?? "Bus pending"}</strong>
-                          <small>{bus?.registration}</small>
-                        </div>
-                        <span data-bus-type={bus?.type}>
-                          {bus ? busTypeLabels[bus.type] : "Not assigned"}
-                        </span>
-                        <p>{driver?.name ?? "Driver pending"}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </section>
-            );
-          })}
-        </div>
-      </details>
+      <Link className={styles.assignmentTab} href={`/transport/${trip.id}`}>
+        <span>
+          <small>Schedule assignments</small>
+          <strong>View assigned buses and drivers</strong>
+        </span>
+        <b aria-hidden="true">→</b>
+      </Link>
     </article>
   );
 }
