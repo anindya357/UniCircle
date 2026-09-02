@@ -4,10 +4,16 @@ import { CampusExplorerPage } from "@/features/campus-explorer/components/campus
 import { ClubEventHub } from "@/features/clubs-events/components/club-event-hub";
 import { DirectoryPage } from "@/features/directory/components/directory-page";
 import { ForumPage } from "@/features/forum/components/forum-page";
+import { NewsPage } from "@/features/news/components/news-page";
 import { FeaturePlaceholder } from "@/features/shell/components/feature-placeholder";
 import { featurePages, getFeaturePage } from "@/features/shell/config/feature-pages";
 import { TransportPage } from "@/features/transport/components/transport-page";
-import { clubEventService, forumService, transportService } from "@/services";
+import {
+  clubEventService,
+  forumService,
+  newsService,
+  transportService,
+} from "@/services";
 
 type FeaturePageProps = Readonly<{
   params: Promise<{ feature: string }>;
@@ -52,6 +58,12 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
     const snapshot = await forumService.getSnapshot();
 
     return <ForumPage initialSnapshot={snapshot} />;
+  }
+
+  if (feature === "news") {
+    const items = await newsService.listItems();
+
+    return <NewsPage items={items} />;
   }
 
   return <FeaturePlaceholder content={content} />;

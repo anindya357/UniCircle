@@ -604,30 +604,30 @@ The workflow allows text-only community posts, comments, and reporting. There ar
 
 ## 4.19 News/announcement page
 
-- [ ] Create News & Announcements route.
-- [ ] Display latest items in serial/list order.
-- [ ] Differentiate content types if desired:
-  - [ ] News
-  - [ ] Update
-  - [ ] Announcement
-- [ ] Add title.
-- [ ] Add content/summary.
-- [ ] Add publication date/time.
-- [ ] Add details view if required.
-- [ ] Add empty state.
-- [ ] Mock newest-first ordering.
+- [x] Create News & Announcements route.
+- [x] Display latest items in serial/list order.
+- [x] Differentiate content types if desired:
+  - [x] News
+  - [x] Update
+  - [x] Announcement
+- [x] Add title.
+- [x] Add content/summary.
+- [x] Add publication date/time.
+- [x] Add details view if required.
+- [x] Add empty state.
+- [x] Mock newest-first ordering.
 
 ## 4.20 Notification connection
 
-- [ ] Generate mock notification when a new update/announcement is inserted into mock state.
-- [ ] Display it in notification area.
-- [ ] Link notification to relevant item where appropriate.
+- [x] Generate mock notification when a new update/announcement is inserted into mock state.
+- [x] Display it in notification area.
+- [x] Link notification to relevant item where appropriate.
 
 ### Feature 9 frontend completion
 
-- [ ] List ordering is correct.
-- [ ] News/updates/announcements are readable.
-- [ ] Notification UI supports these items.
+- [x] List ordering is correct.
+- [x] News/updates/announcements are readable.
+- [x] Notification UI supports these items.
 
 ---
 

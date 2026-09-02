@@ -67,7 +67,7 @@ export const featurePages = [
     eyebrow: "Campus news and announcements",
     title: "Stay current with campus updates",
     description:
-      "News, updates, and announcements will be implemented in the news frontend phase.",
+      "Read the latest campus news, service updates, and official announcements in publication order.",
   },
   {
     slug: "assistant",

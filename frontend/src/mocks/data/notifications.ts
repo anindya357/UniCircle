@@ -1,6 +1,7 @@
 import type { AppNotification } from "@/features/notifications/types/notification";
+import { mockCampusNews } from "@/mocks/data/news";
 
-export const mockNotifications = [
+const mockEventNotifications = [
   {
     id: "notification-event-started",
     type: "event-started",
@@ -10,24 +11,6 @@ export const mockNotifications = [
     createdAt: "2026-09-02T09:00:00+06:00",
     isRead: false,
     href: "/events#event-inter-university-programming-contest",
-  },
-  {
-    id: "notification-announcement",
-    type: "campus-announcement",
-    title: "Academic calendar update",
-    message: "A revised academic calendar has been published for the current term.",
-    createdAt: "2026-08-17T10:15:00+06:00",
-    isRead: false,
-    href: "/news",
-  },
-  {
-    id: "notification-campus-update",
-    type: "campus-update",
-    title: "Central library hours extended",
-    message: "The central library will remain open until 9:00 PM on weekdays.",
-    createdAt: "2026-08-16T16:45:00+06:00",
-    isRead: true,
-    href: "/news",
   },
   {
     id: "notification-event-finished",
@@ -40,3 +23,28 @@ export const mockNotifications = [
     href: "/events#event-robotics-workshop",
   },
 ] as const satisfies readonly AppNotification[];
+
+const initiallyReadNewsIds = new Set([
+  "freshers-orientation-schedule",
+  "water-supply-maintenance",
+]);
+
+const mockNewsNotifications: readonly AppNotification[] = mockCampusNews
+  .filter((item) => item.type === "update" || item.type === "announcement")
+  .map((item) => ({
+    id: `notification-news-${item.id}`,
+    type: item.type === "announcement" ? "campus-announcement" : "campus-update",
+    title: item.title,
+    message: item.summary,
+    createdAt: item.publishedAt,
+    isRead: initiallyReadNewsIds.has(item.id),
+    href: `/news/${item.id}`,
+  }));
+
+export const mockNotifications = [
+  ...mockEventNotifications,
+  ...mockNewsNotifications,
+].toSorted(
+  (first, second) =>
+    new Date(second.createdAt).getTime() - new Date(first.createdAt).getTime(),
+);
