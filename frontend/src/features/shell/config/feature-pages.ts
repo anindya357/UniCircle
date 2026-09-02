@@ -25,14 +25,14 @@ export const featurePages = [
     eyebrow: "Club and Event Hub",
     title: "Explore CUET clubs",
     description:
-      "Club profiles, members, activities, and related events will be implemented in the club frontend phase.",
+      "Explore CUET club profiles, leadership, regular activities, and club-specific events.",
   },
   {
     slug: "events",
     eyebrow: "Club and Event Hub",
     title: "Browse campus events",
     description:
-      "Upcoming and ongoing events with Interested and Going controls will be implemented in the event frontend phase.",
+      "Browse ongoing, upcoming, and recently finished events with Interested and Going controls.",
   },
   {
     slug: "resources",

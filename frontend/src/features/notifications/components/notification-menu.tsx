@@ -6,20 +6,14 @@ import { useEffect, useId, useRef, useState } from "react";
 import { routes } from "@/config/routes";
 import { NotificationItem } from "@/features/notifications/components/notification-item";
 import { useNotifications } from "@/features/notifications/hooks/use-notifications";
-import type { AppNotification } from "@/features/notifications/types/notification";
 
 import styles from "./notification-menu.module.css";
 
-type NotificationMenuProps = Readonly<{
-  initialNotifications: readonly AppNotification[];
-}>;
-
-export function NotificationMenu({ initialNotifications }: NotificationMenuProps) {
+export function NotificationMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
-  const { notifications, unreadCount, markAsRead, markAllAsRead } =
-    useNotifications(initialNotifications);
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
   useEffect(() => {
     if (!isOpen) {

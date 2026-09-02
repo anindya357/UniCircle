@@ -1,0 +1,272 @@
+import type { CampusClub, CampusEvent } from "@/features/clubs-events/types/club-event";
+
+export const mockCampusClubs = [
+  {
+    id: "cuet-computer-club",
+    shortName: "CCC",
+    name: "CUET Computer Club",
+    category: "Technology & innovation",
+    tagline: "Learn together. Build what matters.",
+    description:
+      "A collaborative home for programming, software development, competitive problem solving, and peer-led technical learning across CUET.",
+    memberCount: 486,
+    accent: "#0d6a45",
+    activities: [
+      "Weekly problem-solving sessions",
+      "Web and app development workshops",
+      "Inter-university programming contests",
+      "Peer mentorship for new programmers",
+    ],
+    leaders: [
+      {
+        id: "ccc-lead-01",
+        name: "Nafis Ahmed",
+        role: "President",
+        department: "CSE · Level 4",
+      },
+      {
+        id: "ccc-lead-02",
+        name: "Tasnia Karim",
+        role: "General Secretary",
+        department: "CSE · Level 3",
+      },
+      {
+        id: "ccc-lead-03",
+        name: "Samin Chowdhury",
+        role: "Technical Lead",
+        department: "ETE · Level 3",
+      },
+    ],
+  },
+  {
+    id: "cuet-robotics-society",
+    shortName: "CRS",
+    name: "CUET Robotics Society",
+    category: "Robotics & automation",
+    tagline: "Ideas in motion, engineered by students.",
+    description:
+      "Students from different disciplines explore embedded systems, autonomous machines, industrial automation, and competitive robotics through hands-on teams.",
+    memberCount: 274,
+    accent: "#9a6710",
+    activities: [
+      "Line-follower and maze-solving challenges",
+      "Embedded systems bootcamps",
+      "Robotics research showcases",
+      "Interdisciplinary hardware project teams",
+    ],
+    leaders: [
+      {
+        id: "crs-lead-01",
+        name: "Farhan Kabir",
+        role: "President",
+        department: "MIE · Level 4",
+      },
+      {
+        id: "crs-lead-02",
+        name: "Nusrat Tabassum",
+        role: "Vice President",
+        department: "EEE · Level 4",
+      },
+      {
+        id: "crs-lead-03",
+        name: "Raiyan Hossain",
+        role: "Project Coordinator",
+        department: "ME · Level 3",
+      },
+    ],
+  },
+  {
+    id: "cuet-debating-society",
+    shortName: "CDS",
+    name: "CUET Debating Society",
+    category: "Debate & public speaking",
+    tagline: "Question clearly. Speak courageously.",
+    description:
+      "A platform for thoughtful argument, parliamentary debate, public speaking, and the exchange of ideas through regular practice and tournaments.",
+    memberCount: 198,
+    accent: "#355c8a",
+    activities: [
+      "Bangla and English debate practice",
+      "Public speaking masterclasses",
+      "Inter-department debate tournaments",
+      "Adjudication and argument workshops",
+    ],
+    leaders: [
+      {
+        id: "cds-lead-01",
+        name: "Mahin Islam",
+        role: "President",
+        department: "CE · Level 4",
+      },
+      {
+        id: "cds-lead-02",
+        name: "Anika Sultana",
+        role: "General Secretary",
+        department: "Architecture · Level 4",
+      },
+      {
+        id: "cds-lead-03",
+        name: "Sakib Rahman",
+        role: "Training Secretary",
+        department: "EEE · Level 3",
+      },
+    ],
+  },
+  {
+    id: "cuet-cultural-club",
+    shortName: "CCCult",
+    name: "CUET Cultural Club",
+    category: "Music, theatre & culture",
+    tagline: "A campus alive with expression.",
+    description:
+      "The club brings performers, organizers, and creative students together through music, theatre, dance, and celebrations of the campus's cultural diversity.",
+    memberCount: 352,
+    accent: "#8a3d55",
+    activities: [
+      "Music and theatre rehearsals",
+      "Campus cultural evenings",
+      "Festival production teams",
+      "Open-stage performances",
+    ],
+    leaders: [
+      {
+        id: "culture-lead-01",
+        name: "Raisa Noor",
+        role: "President",
+        department: "Architecture · Level 4",
+      },
+      {
+        id: "culture-lead-02",
+        name: "Adnan Mahmud",
+        role: "General Secretary",
+        department: "ME · Level 3",
+      },
+      {
+        id: "culture-lead-03",
+        name: "Tanjila Haque",
+        role: "Program Coordinator",
+        department: "URP · Level 3",
+      },
+    ],
+  },
+] as const satisfies readonly CampusClub[];
+
+export const mockCampusEvents = [
+  {
+    id: "inter-university-programming-contest",
+    clubId: "cuet-computer-club",
+    title: "Inter-University Programming Contest",
+    category: "Programming contest",
+    summary:
+      "Teams solve algorithmic challenges in a focused day of competitive programming and collaboration.",
+    location: "CSE Building · Programming Labs",
+    startsAt: "2026-09-02T09:00:00+06:00",
+    endsAt: "2026-09-02T18:00:00+06:00",
+    status: "ongoing",
+    attendeeCount: 186,
+  },
+  {
+    id: "open-source-sprint",
+    clubId: "cuet-computer-club",
+    title: "Open Source Sprint 2026",
+    category: "Development sprint",
+    summary:
+      "A beginner-friendly evening for making first contributions and collaborating on student-led open-source projects.",
+    location: "IT Business Incubator · Level 4",
+    startsAt: "2026-09-08T15:00:00+06:00",
+    endsAt: "2026-09-08T20:00:00+06:00",
+    status: "upcoming",
+    attendeeCount: 94,
+  },
+  {
+    id: "web-foundations-bootcamp",
+    clubId: "cuet-computer-club",
+    title: "Web Foundations Bootcamp",
+    category: "Workshop",
+    summary:
+      "A practical introduction to accessible interfaces, modern CSS, and building a first responsive web project.",
+    location: "CSE Seminar Room",
+    startsAt: "2026-08-22T10:00:00+06:00",
+    endsAt: "2026-08-22T16:30:00+06:00",
+    status: "finished",
+    attendeeCount: 128,
+  },
+  {
+    id: "robotics-showdown",
+    clubId: "cuet-robotics-society",
+    title: "Campus Robotics Showdown",
+    category: "Robotics competition",
+    summary:
+      "Student teams put autonomous navigation, control, and mechanical design to the test in three challenge arenas.",
+    location: "TSC Multipurpose Hall",
+    startsAt: "2026-09-12T09:30:00+06:00",
+    endsAt: "2026-09-12T17:00:00+06:00",
+    status: "upcoming",
+    attendeeCount: 213,
+  },
+  {
+    id: "robotics-workshop",
+    clubId: "cuet-robotics-society",
+    title: "Robotics Systems Workshop",
+    category: "Technical workshop",
+    summary:
+      "Participants assembled a sensor-driven mobile robot and learned the foundations of motion control.",
+    location: "MIE Automation Lab",
+    startsAt: "2026-08-28T10:00:00+06:00",
+    endsAt: "2026-08-28T17:30:00+06:00",
+    status: "finished",
+    attendeeCount: 76,
+  },
+  {
+    id: "parliamentary-debate-open",
+    clubId: "cuet-debating-society",
+    title: "CUET Parliamentary Debate Open",
+    category: "Debate tournament",
+    summary:
+      "An open tournament that welcomes emerging speakers for preliminary rounds, feedback, and a campus final.",
+    location: "Central Auditorium",
+    startsAt: "2026-09-06T10:00:00+06:00",
+    endsAt: "2026-09-06T19:00:00+06:00",
+    status: "upcoming",
+    attendeeCount: 145,
+  },
+  {
+    id: "public-speaking-clinic",
+    clubId: "cuet-debating-society",
+    title: "Public Speaking Clinic",
+    category: "Skills session",
+    summary:
+      "A live coaching session on structure, clarity, delivery, and handling questions with confidence.",
+    location: "Academic Building 1 · Room 205",
+    startsAt: "2026-08-25T14:00:00+06:00",
+    endsAt: "2026-08-25T17:00:00+06:00",
+    status: "finished",
+    attendeeCount: 83,
+  },
+  {
+    id: "campus-cultural-evening",
+    clubId: "cuet-cultural-club",
+    title: "Campus Cultural Evening",
+    category: "Live performance",
+    summary:
+      "An evening of student music, theatre, recitation, and collaborative performances under the open sky.",
+    location: "Central Field Stage",
+    startsAt: "2026-09-02T17:30:00+06:00",
+    endsAt: "2026-09-02T21:00:00+06:00",
+    status: "ongoing",
+    attendeeCount: 328,
+  },
+  {
+    id: "freshers-open-stage",
+    clubId: "cuet-cultural-club",
+    title: "Freshers' Open Stage",
+    category: "Open stage",
+    summary:
+      "New students can share music, poetry, theatre, or any short performance in a welcoming campus showcase.",
+    location: "TSC Courtyard",
+    startsAt: "2026-09-18T16:30:00+06:00",
+    endsAt: "2026-09-18T20:30:00+06:00",
+    status: "upcoming",
+    attendeeCount: 174,
+  },
+] as const satisfies readonly CampusEvent[];

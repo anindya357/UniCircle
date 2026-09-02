@@ -3,17 +3,11 @@
 import { EmptyState } from "@/components/ui/feedback/empty-state";
 import { NotificationItem } from "@/features/notifications/components/notification-item";
 import { useNotifications } from "@/features/notifications/hooks/use-notifications";
-import type { AppNotification } from "@/features/notifications/types/notification";
 
 import styles from "./notification-list.module.css";
 
-type NotificationListProps = Readonly<{
-  initialNotifications: readonly AppNotification[];
-}>;
-
-export function NotificationList({ initialNotifications }: NotificationListProps) {
-  const { notifications, unreadCount, markAsRead, markAllAsRead } =
-    useNotifications(initialNotifications);
+export function NotificationList() {
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
   if (notifications.length === 0) {
     return (

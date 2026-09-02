@@ -12,14 +12,12 @@ import {
 import { routes } from "@/config/routes";
 import type { SessionUser } from "@/features/auth/types/session-user";
 import { NotificationMenu } from "@/features/notifications/components/notification-menu";
-import type { AppNotification } from "@/features/notifications/types/notification";
 import { sessionService } from "@/services";
 
 import styles from "./navbar.module.css";
 
 type NavbarProps = Readonly<{
   user: SessionUser;
-  initialNotifications: readonly AppNotification[];
 }>;
 
 function isActiveRoute(pathname: string, href: string): boolean {
@@ -43,7 +41,7 @@ function roleLabel(role: SessionUser["role"]): string {
   return role.charAt(0).toUpperCase() + role.slice(1);
 }
 
-export function Navbar({ user, initialNotifications }: NavbarProps) {
+export function Navbar({ user }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const menuId = useId();
@@ -100,7 +98,7 @@ export function Navbar({ user, initialNotifications }: NavbarProps) {
         </Link>
 
         <div className={styles.accountArea}>
-          <NotificationMenu initialNotifications={initialNotifications} />
+          <NotificationMenu />
 
           <div className={styles.profile}>
             <span className={styles.avatar} aria-hidden="true">

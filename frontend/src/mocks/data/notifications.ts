@@ -4,12 +4,12 @@ export const mockNotifications = [
   {
     id: "notification-event-started",
     type: "event-started",
-    title: "Programming contest has started",
+    title: "Inter-University Programming Contest has started",
     message:
       "The CUET Inter-University Programming Contest is now underway at the CSE building.",
-    createdAt: "2026-08-17T14:30:00+06:00",
+    createdAt: "2026-09-02T09:00:00+06:00",
     isRead: false,
-    href: "/events",
+    href: "/events#event-inter-university-programming-contest",
   },
   {
     id: "notification-announcement",
@@ -32,11 +32,11 @@ export const mockNotifications = [
   {
     id: "notification-event-finished",
     type: "event-finished",
-    title: "Robotics workshop has finished",
+    title: "Robotics Systems Workshop has finished",
     message:
       "The Robotics Society workshop has concluded. Event details remain available in the event hub.",
-    createdAt: "2026-08-15T18:00:00+06:00",
+    createdAt: "2026-08-28T17:30:00+06:00",
     isRead: true,
-    href: "/events",
+    href: "/events#event-robotics-workshop",
   },
 ] as const satisfies readonly AppNotification[];

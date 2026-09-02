@@ -431,38 +431,38 @@ The workflow describes a demo map image and sequential information for key campu
 
 ## 4.10 Club section
 
-- [ ] Create Club & Event Hub route.
-- [ ] Create club tabs/list.
-- [ ] Create club details view.
-- [ ] Show club information.
-- [ ] Show member information.
-- [ ] Show activities.
-- [ ] Show ongoing events.
-- [ ] Show upcoming events.
-- [ ] Show recently finished events.
+- [x] Create Club & Event Hub route.
+- [x] Create club tabs/list.
+- [x] Create club details view.
+- [x] Show club information.
+- [x] Show member information.
+- [x] Show activities.
+- [x] Show ongoing events.
+- [x] Show upcoming events.
+- [x] Show recently finished events.
 
 ## 4.11 Events section
 
-- [ ] Create separate events section/tab.
-- [ ] Display ongoing events.
-- [ ] Display upcoming events.
-- [ ] Create event details view/card.
-- [ ] Add `Interested` action.
-- [ ] Add `Going` action.
-- [ ] Show selected interest state.
-- [ ] Add event start date/time.
-- [ ] Add event end date/time/status.
-- [ ] Mock event-start notification.
-- [ ] Mock event-finish notification.
-- [ ] Connect mock notifications to the global notification UI.
+- [x] Create separate events section/tab.
+- [x] Display ongoing events.
+- [x] Display upcoming events.
+- [x] Create event details view/card.
+- [x] Add `Interested` action.
+- [x] Add `Going` action.
+- [x] Show selected interest state.
+- [x] Add event start date/time.
+- [x] Add event end date/time/status.
+- [x] Mock event-start notification.
+- [x] Mock event-finish notification.
+- [x] Connect mock notifications to the global notification UI.
 
 ### Feature 5 frontend completion
 
-- [ ] Clubs are selectable.
-- [ ] Club-specific events are visible.
-- [ ] Global event list is available.
-- [ ] Interested/Going UI works with mock state.
-- [ ] Notification UI can represent start/end event notifications.
+- [x] Clubs are selectable.
+- [x] Club-specific events are visible.
+- [x] Global event list is available.
+- [x] Interested/Going UI works with mock state.
+- [x] Notification UI can represent start/end event notifications.
 
 ---
 
