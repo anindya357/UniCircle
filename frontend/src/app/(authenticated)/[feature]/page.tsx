@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { CampusAssistantPage } from "@/features/assistant/components/campus-assistant-page";
 import { CampusExplorerPage } from "@/features/campus-explorer/components/campus-explorer-page";
 import { ClubEventHub } from "@/features/clubs-events/components/club-event-hub";
 import { DirectoryPage } from "@/features/directory/components/directory-page";
@@ -64,6 +65,10 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
     const items = await newsService.listItems();
 
     return <NewsPage items={items} />;
+  }
+
+  if (feature === "assistant") {
+    return <CampusAssistantPage />;
   }
 
   return <FeaturePlaceholder content={content} />;

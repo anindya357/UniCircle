@@ -1,4 +1,5 @@
 import { MockAuthService } from "@/mocks/services/mock-auth-service";
+import { MockCampusAssistantService } from "@/mocks/services/mock-campus-assistant-service";
 import { MockClubEventService } from "@/mocks/services/mock-club-event-service";
 import { MockDirectoryService } from "@/mocks/services/mock-directory-service";
 import { MockForumService } from "@/mocks/services/mock-forum-service";
@@ -9,6 +10,7 @@ import { MockResourceSharingService } from "@/mocks/services/mock-resource-shari
 import { MockSessionService } from "@/mocks/services/mock-session-service";
 import { MockTransportService } from "@/mocks/services/mock-transport-service";
 import type { AuthService } from "@/services/contracts/auth-service";
+import type { CampusAssistantService } from "@/services/contracts/campus-assistant-service";
 import type { ClubEventService } from "@/services/contracts/club-event-service";
 import type { DirectoryService } from "@/services/contracts/directory-service";
 import type { ForumService } from "@/services/contracts/forum-service";
@@ -20,6 +22,8 @@ import type { SessionService } from "@/services/contracts/session-service";
 import type { TransportService } from "@/services/contracts/transport-service";
 
 export const authService: AuthService = new MockAuthService();
+export const campusAssistantService: CampusAssistantService =
+  new MockCampusAssistantService();
 export const clubEventService: ClubEventService = new MockClubEventService();
 export const directoryService: DirectoryService = new MockDirectoryService();
 export const forumService: ForumService = new MockForumService();

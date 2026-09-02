@@ -635,24 +635,24 @@ The workflow allows text-only community posts, comments, and reporting. There ar
 
 ## 4.21 Chatbot UI
 
-- [ ] Create Campus AI Assistant route.
-- [ ] Create chat-style interface.
-- [ ] Add question input.
-- [ ] Add send button.
-- [ ] Add user message bubble.
-- [ ] Add assistant response bubble.
-- [ ] Add loading/“thinking” state.
-- [ ] Add API-error state.
-- [ ] Add “information not found” response state.
-- [ ] Prepare a source/reference display area if the approved RAG design returns source information.
-- [ ] Use mocked campus-related responses for frontend implementation.
-- [ ] Do not call OpenAI directly from frontend.
+- [x] Create Campus AI Assistant route.
+- [x] Create chat-style interface.
+- [x] Add question input.
+- [x] Add send button.
+- [x] Add user message bubble.
+- [x] Add assistant response bubble.
+- [x] Add loading/“thinking” state.
+- [x] Add API-error state.
+- [x] Add “information not found” response state.
+- [x] Prepare a source/reference display area if the approved RAG design returns source information.
+- [x] Use mocked campus-related responses for frontend implementation.
+- [x] Do not call OpenAI directly from frontend.
 
 ### Feature 10 frontend completion
 
-- [ ] Complete chatbot interaction can be demonstrated with mock service.
-- [ ] Loading/error/no-answer states exist.
-- [ ] UI is ready to connect to FastAPI RAG endpoint later.
+- [x] Complete chatbot interaction can be demonstrated with mock service.
+- [x] Loading/error/no-answer states exist.
+- [x] UI is ready to connect to FastAPI RAG endpoint later.
 
 ---
 

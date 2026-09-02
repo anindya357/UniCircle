@@ -74,7 +74,7 @@ export const featurePages = [
     eyebrow: "Campus AI assistant",
     title: "Ask questions about CUET",
     description:
-      "The RAG assistant conversation and source interface will be implemented in the assistant frontend phase.",
+      "Ask CUET-related questions through a source-ready assistant with clear fallback and service states.",
   },
   {
     slug: "admin",
