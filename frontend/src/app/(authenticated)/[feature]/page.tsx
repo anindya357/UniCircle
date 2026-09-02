@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { AdminPage } from "@/features/admin/components/admin-page";
 import { CampusAssistantPage } from "@/features/assistant/components/campus-assistant-page";
 import { CampusExplorerPage } from "@/features/campus-explorer/components/campus-explorer-page";
 import { ClubEventHub } from "@/features/clubs-events/components/club-event-hub";
@@ -10,6 +11,7 @@ import { FeaturePlaceholder } from "@/features/shell/components/feature-placehol
 import { featurePages, getFeaturePage } from "@/features/shell/config/feature-pages";
 import { TransportPage } from "@/features/transport/components/transport-page";
 import {
+  adminService,
   clubEventService,
   forumService,
   newsService,
@@ -69,6 +71,12 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
 
   if (feature === "assistant") {
     return <CampusAssistantPage />;
+  }
+
+  if (feature === "admin") {
+    const snapshot = await adminService.getSnapshot();
+
+    return <AdminPage initialSnapshot={snapshot} />;
   }
 
   return <FeaturePlaceholder content={content} />;

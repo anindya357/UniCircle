@@ -81,7 +81,7 @@ export const featurePages = [
     eyebrow: "Administration",
     title: "Manage centrally controlled campus information",
     description:
-      "Admin transport, announcement, and community-moderation interfaces will be implemented in the Admin frontend phase.",
+      "Manage transport operations, campus announcements, and community reports through the protected Admin workspace.",
   },
 ] as const satisfies readonly FeaturePageContent[];
 

@@ -5,6 +5,7 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import { LoadingState } from "@/components/ui/feedback/loading-state";
 import { routes } from "@/config/routes";
+import { UnauthorizedAdminState } from "@/features/admin/components/unauthorized-admin-state";
 import { AuthenticatedUserProvider } from "@/features/auth/context/authenticated-user-context";
 import type { SessionUser } from "@/features/auth/types/session-user";
 import { NotificationProvider } from "@/features/notifications/hooks/use-notifications";
@@ -50,17 +51,22 @@ export function AuthenticatedShell({
   const isUnauthorizedAdminRoute =
     user !== null && user !== undefined && isAdminRoute && user.role !== "admin";
 
-  useEffect(() => {
-    if (isUnauthorizedAdminRoute) {
-      router.replace(routes.home);
-    }
-  }, [isUnauthorizedAdminRoute, router]);
-
-  if (!user || isUnauthorizedAdminRoute) {
+  if (!user) {
     return (
       <main className="app-shell" id="main-content">
         <LoadingState label="Checking your UniCircle session" />
       </main>
+    );
+  }
+
+  if (isUnauthorizedAdminRoute) {
+    return (
+      <AuthenticatedUserProvider initialUser={user}>
+        <NotificationProvider initialNotifications={initialNotifications}>
+          <Navbar />
+          <UnauthorizedAdminState />
+        </NotificationProvider>
+      </AuthenticatedUserProvider>
     );
   }
 

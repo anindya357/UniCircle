@@ -662,11 +662,11 @@ The Admin Page is visible only to the App Admin and controls information require
 
 ## 4.22 Admin shell
 
-- [ ] Create protected Admin route/layout.
-- [ ] Create Admin dashboard.
-- [ ] Create Admin-only navigation.
-- [ ] Add unauthorized-access page/state.
-- [ ] Prepare role guard using mock auth.
+- [x] Create protected Admin route/layout.
+- [x] Create Admin dashboard.
+- [x] Create Admin-only navigation.
+- [x] Add unauthorized-access page/state.
+- [x] Prepare role guard using mock auth.
 
 ## 4.23 Admin management sections
 
@@ -674,39 +674,39 @@ Implement admin UI for workflow-defined responsibilities.
 
 ### Transport management
 
-- [ ] Create schedule list.
-- [ ] Create schedule form.
-- [ ] Create route-management UI.
-- [ ] Create driver-management UI.
-- [ ] Support add/edit/remove UI states.
-- [ ] Support weekly/monthly schedule entry workflow.
+- [x] Create schedule list.
+- [x] Create schedule form.
+- [x] Create route-management UI.
+- [x] Create driver-management UI.
+- [x] Support add/edit/remove UI states.
+- [x] Support weekly/monthly schedule entry workflow.
 
 ### News/updates/announcements
 
-- [ ] Create list.
-- [ ] Create add form.
-- [ ] Create edit UI.
-- [ ] Create delete UI.
-- [ ] Create publish state if included in approved design.
+- [x] Create list.
+- [x] Create add form.
+- [x] Create edit UI.
+- [x] Create delete UI.
+- [x] Create publish state if included in approved design.
 
 ### Community reports
 
-- [ ] Create reported-post queue.
-- [ ] Show report/post information.
-- [ ] Add remove-post action.
-- [ ] Add dismiss/resolve-report action if included in approved design.
+- [x] Create reported-post queue.
+- [x] Show report/post information.
+- [x] Add remove-post action.
+- [x] Add dismiss/resolve-report action if included in approved design.
 
 ### Other centrally managed information
 
-- [ ] Add admin sections for other content only where the finalized overall system design explicitly assigns management responsibility to Admin.
-- [ ] Do not add unapproved administrative capabilities simply because CRUD is technically possible.
+- [x] Add admin sections for other content only where the finalized overall system design explicitly assigns management responsibility to Admin.
+- [x] Do not add unapproved administrative capabilities simply because CRUD is technically possible.
 
 ### Admin frontend completion
 
-- [ ] Admin-only route behavior works with mock auth.
-- [ ] Transport management screens complete.
-- [ ] News/announcement management screens complete.
-- [ ] Community-report moderation screens complete.
+- [x] Admin-only route behavior works with mock auth.
+- [x] Transport management screens complete.
+- [x] News/announcement management screens complete.
+- [x] Community-report moderation screens complete.
 
 ---
 
