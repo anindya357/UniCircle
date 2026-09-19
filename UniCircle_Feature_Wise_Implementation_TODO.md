@@ -323,11 +323,16 @@ The workflow requires General User registration with CUET email, role selection,
 
 # Feature 2 — Home Page Frontend
 
-The workflow specifies a post-login Home page with welcome text and CUET information such as history, achievements, facilities, images, and videos.
+The Home page is the public landing page and remains the first main-app page after login. Before authentication it exposes only Login and Sign up as application-entry actions; every other feature remains protected.
 
 ## 4.5 Home page
 
 - [x] Create Home route.
+- [x] Make the existing Home page the public landing route.
+- [x] Show only Login and Sign up as application-entry navigation before authentication.
+- [x] Keep all non-Home feature pages protected by authentication.
+- [x] Show the authenticated Navbar on Home after login.
+- [x] Redirect successful user authentication to Home.
 - [x] Add “Welcome to CUET Campus” hero/header area.
 - [x] Add CUET basic-information section.
 - [x] Add history section.
@@ -430,6 +435,8 @@ The workflow describes a demo map image and sequential information for key campu
 
 # Feature 5 — Club and Event Hub Frontend
 
+During the frontend-only prototype, club requests, admin edits, and event registrations use mock state retained for the current browser tab so the student-to-App-Admin review flow can be demonstrated. This is not the production data store; Phase 7 replaces it with authenticated backend persistence.
+
 ## 4.10 Club section
 
 - [x] Create Club & Event Hub route.
@@ -441,6 +448,27 @@ The workflow describes a demo map image and sequential information for key campu
 - [x] Show ongoing events.
 - [x] Show upcoming events.
 - [x] Show recently finished events.
+
+### Club ownership and student-admin controls
+
+- [x] Model club-to-admin membership with registered student user IDs.
+- [x] Support one student administering multiple clubs.
+- [x] Support one club having multiple student admins.
+- [x] Visually identify clubs administered by the current student.
+- [x] Show club-management controls only to mapped admins of that club.
+- [x] Allow a club admin to update club information and activities.
+- [x] Allow a club admin to add another registered student as club admin.
+- [x] Allow a club admin to remove an admin while preserving at least one admin.
+- [x] Keep App Admin and Club Admin permissions separate.
+
+### New club creation requests
+
+- [x] Add a “Create a new club” action for registered students.
+- [x] Create the club-request form.
+- [x] Collect club name, short name, category, tagline, description, and planned activities.
+- [x] Collect the reason, purpose, campus need, and expected impact for the proposed club.
+- [x] Show the requesting student their mock request status.
+- [x] Keep requested clubs hidden from the public directory until App Admin approval.
 
 ## 4.11 Events section
 
@@ -456,6 +484,25 @@ The workflow describes a demo map image and sequential information for key campu
 - [x] Mock event-start notification.
 - [x] Mock event-finish notification.
 - [x] Connect mock notifications to the global notification UI.
+
+### Club-admin event management
+
+- [x] Allow only a mapped admin of the corresponding club to add events.
+- [x] Allow only a mapped admin of the corresponding club to edit events.
+- [x] Allow only a mapped admin of the corresponding club to delete events.
+- [x] Let the club admin enable or disable registration per event.
+- [x] For paid events, let the club admin configure the fee and bKash number.
+
+### Event registration frontend
+
+- [x] Create an event details and registration route.
+- [x] Show the configured bKash number above paid-event registration forms.
+- [x] Collect participant name, CUET email, Student ID, and department.
+- [x] Collect bKash transaction ID only for paid events.
+- [x] Show states for free, paid, unavailable, closed, and completed registration.
+- [x] Prevent duplicate mock registration by the same user for the same event.
+- [x] Display the total number of registered users for each registration-enabled event.
+- [x] Keep event registration separate from Interested/Going state.
 
 ### Feature 5 frontend completion
 
@@ -696,6 +743,14 @@ Implement admin UI for workflow-defined responsibilities.
 - [x] Add remove-post action.
 - [x] Add dismiss/resolve-report action if included in approved design.
 
+### Club creation requests
+
+- [x] Create a club-request review queue for the main App Admin.
+- [x] Show requester, Student ID, club information, activities, and purpose.
+- [x] Add approve and reject actions.
+- [x] On mock approval, publish the club and assign the requester as initial club admin.
+- [x] On rejection, retain the reviewed request without creating a club.
+
 ### Other centrally managed information
 
 - [x] Add admin sections for other content only where the finalized overall system design explicitly assigns management responsibility to Admin.
@@ -719,10 +774,19 @@ Do not begin feature backend implementation until the complete UI can be navigat
 - [ ] Register using mock flow.
 - [ ] Verify mock OTP.
 - [ ] Login.
+- [ ] Confirm `/` is the public Home landing page with only Login/Sign up navigation while signed out.
+- [ ] Confirm every non-public route redirects signed-out visitors to authentication.
 - [ ] Visit Home.
 - [ ] Visit every department.
 - [ ] Visit Campus Explorer.
 - [ ] Browse clubs/events.
+- [ ] Submit a mock club-creation request as a student.
+- [ ] Open a club administered by the current student.
+- [ ] Add and remove a mock student club admin.
+- [ ] Add, edit, and delete a club event as a Club Admin.
+- [ ] Configure free and paid event registration.
+- [ ] Submit a free and paid mock event registration.
+- [ ] Verify the displayed event registration count updates.
 - [ ] Mark event Interested/Going.
 - [ ] Check mock notification.
 - [ ] Send mock resource request.
@@ -737,6 +801,10 @@ Do not begin feature backend implementation until the complete UI can be navigat
 - [ ] Manage mock transport data.
 - [ ] Manage mock announcements.
 - [ ] Review mock reported post.
+- [ ] Approve and reject mock club-creation requests as App Admin.
+- [ ] Verify an approved club becomes public with the requester as initial admin.
+- [ ] Verify a request survives student logout and App Admin login in the mock flow.
+- [ ] Verify a club admin cannot manage a different club or remove the last admin.
 
 ## 5.2 Frontend cleanup
 
@@ -903,6 +971,7 @@ Tasks:
 - [ ] Implement authenticated-user endpoint.
 - [ ] Implement logout behavior according to chosen JWT/session design.
 - [ ] Implement Admin authentication using the approved superuser/admin strategy.
+- [ ] Keep Club Admin as per-club membership for a student User ID, not as a separate global login role or a client-trusted JWT claim.
 - [ ] Never hard-code production Admin secrets in repository source.
 
 ## 7.5 Connect Authentication frontend
@@ -913,6 +982,8 @@ Tasks:
 - [ ] Connect login.
 - [ ] Store authentication state according to approved security design.
 - [ ] Connect protected-route logic.
+- [ ] Keep Home public with Login/Sign up entry links and redirect authenticated General Users back to Home after login.
+- [ ] Protect every non-public feature route with backend/session-aware checks, not only client-side hiding.
 - [ ] Connect Admin route protection.
 - [ ] Connect logout.
 - [ ] Verify expired/invalid token behavior.
@@ -1012,6 +1083,13 @@ If intentionally static:
 
 - [ ] Create Club model.
 - [ ] Create club-member information model/relationship according to ERD.
+- [ ] Create a many-to-many Club Admin relationship between Club and registered Student User IDs.
+- [ ] Support one student administering multiple clubs and one club having multiple admins.
+- [ ] Add constraints preventing a club from losing its final admin.
+- [ ] Create Club Creation Request model with requester, proposed club data, purpose, activities, status, and review timestamps.
+- [ ] Define request states: Pending, Approved, and Rejected.
+- [ ] On approval, atomically create the Club and assign the requester as its initial Club Admin.
+- [ ] Prevent unapproved club requests from appearing in the public club list.
 - [ ] Create activity/event relationships.
 - [ ] Create migrations.
 
@@ -1025,6 +1103,14 @@ If intentionally static:
   - [ ] Interested
   - [ ] Going
 - [ ] Add uniqueness rules so a user does not create duplicate status entries for the same event.
+- [ ] Add per-event registration settings: enabled/disabled, free/paid, fee, and bKash number.
+- [ ] Create Event Registration model linked to Event and User.
+- [ ] Store participant name, CUET email, Student ID, department, and optional bKash transaction ID.
+- [ ] Keep registration records private to their club admins and authorized backend staff; expose only totals publicly.
+- [ ] Decide how paid registrations are reviewed or verified; a submitted bKash transaction ID must not be treated as confirmed payment automatically.
+- [ ] Require a transaction ID only when the event is paid.
+- [ ] Add uniqueness rules preventing duplicate registration by one user for the same event.
+- [ ] Define how the total registration count is calculated efficiently and consistently.
 
 ## 7.13 Club/Event API
 
@@ -1038,6 +1124,20 @@ If intentionally static:
 - [ ] Set/update Interested status.
 - [ ] Set/update Going status.
 - [ ] Return current user’s event status.
+- [ ] Submit a club-creation request as a registered student.
+- [ ] Return the current student's club-request history/status.
+- [ ] Expose a paginated pending/reviewed club-request queue to the main App Admin only.
+- [ ] Let the main App Admin approve or reject a pending club request exactly once; record reviewer and review time.
+- [ ] Make approval idempotent and transactional so retries cannot create duplicate clubs.
+- [ ] Return clubs administered by the current student.
+- [ ] Update club details only when the current user is a mapped admin of that club.
+- [ ] Add/remove club admins only when the current user is a mapped admin of that club.
+- [ ] Create/update/delete club events only when the current user is a mapped admin of that club.
+- [ ] Return event registration configuration and total registration count.
+- [ ] Submit event registration and return the current user's registration state.
+- [ ] Restrict registration to authenticated students and validate all participant fields, including the CUET email domain.
+- [ ] Validate paid-event bKash configuration and registration transaction IDs.
+- [ ] Prevent registrations after the event or registration window closes.
 
 ## 7.14 Event notifications
 
@@ -1053,6 +1153,11 @@ If intentionally static:
 - [ ] Replace club mocks.
 - [ ] Replace event mocks.
 - [ ] Connect Interested/Going buttons.
+- [ ] Connect Club Admin membership and permission-aware controls.
+- [ ] Connect club detail/admin update actions.
+- [ ] Connect new-club request submission and request-status UI.
+- [ ] Connect event create/edit/delete actions.
+- [ ] Connect optional free/paid event registration and registration totals.
 - [ ] Connect event-status rendering.
 - [ ] Connect real notification list.
 - [ ] Verify event start/finish notification behavior.
@@ -1339,6 +1444,8 @@ Notification sources currently required:
 - [ ] Protect all Admin endpoints server-side.
 - [ ] Never rely only on hidden frontend buttons.
 - [ ] Connect every Admin page to its actual API.
+- [ ] Connect the club-request review queue, approve/reject actions, and reviewed history to App Admin APIs.
+- [ ] Ensure a club admin cannot access another club's management endpoints.
 - [ ] Add audit/logging strategy for sensitive Admin operations if approved.
 - [ ] Verify normal General User receives `403`/appropriate denial for Admin endpoints.
 
@@ -1357,6 +1464,7 @@ After all feature backend integrations are complete:
 
 ## 8.2 Complete user journey
 
+- [ ] Land on public Home before authentication; only Login/Sign up is available.
 - [ ] Register.
 - [ ] Receive OTP email.
 - [ ] Verify account.
@@ -1365,6 +1473,10 @@ After all feature backend integrations are complete:
 - [ ] Browse departments/faculty.
 - [ ] Browse campus locations.
 - [ ] Browse clubs/events.
+- [ ] Submit a club-creation request; see its pending status.
+- [ ] After App Admin approval, see the new club in the public directory and manage it as initial admin.
+- [ ] Add a second registered student as club admin and verify both students can manage it.
+- [ ] Create free and paid events, register once for each, and see the registration totals update.
 - [ ] Set Interested/Going.
 - [ ] Receive event notification.
 - [ ] Request resource.
@@ -1389,6 +1501,7 @@ After all feature backend integrations are complete:
 - [ ] Publish news/announcement.
 - [ ] Verify user receives notification.
 - [ ] Review reported forum post.
+- [ ] Approve one club request and reject another; only the approved club becomes public.
 - [ ] Remove inappropriate reported post.
 - [ ] Verify normal user cannot access Admin API or page.
 
@@ -1411,6 +1524,9 @@ Suggested targets:
 - [ ] Notification unread/read UI.
 - [ ] Department tabs.
 - [ ] Event Interested/Going controls.
+- [ ] Club request form and status UI.
+- [ ] Club-admin membership editor and permission-aware controls.
+- [ ] Free/paid event-registration form validation and count UI.
 - [ ] Resource request status controls.
 - [ ] Chat input behavior.
 - [ ] Transport date selection.
@@ -1439,6 +1555,13 @@ Authentication:
 
 Club/Event:
 
+- [ ] Club request approval is transactional and creates one club with its requester as initial admin.
+- [ ] Rejecting a club request leaves no public club.
+- [ ] Final club admin cannot be removed.
+- [ ] Event management requires membership in that specific club.
+- [ ] Paid event configuration requires a fee and bKash number.
+- [ ] Paid registration requires a bKash transaction ID; free registration does not.
+- [ ] Duplicate event registration by the same student is rejected.
 - [ ] Upcoming/ongoing/finished classification.
 - [ ] Interested/Going transition logic.
 - [ ] Notification deduplication.
@@ -1506,6 +1629,13 @@ Clubs/Events:
 
 - [ ] List clubs.
 - [ ] List events.
+- [ ] Student submits club request and sees only their own request history.
+- [ ] General User cannot use App Admin request-review endpoints.
+- [ ] App Admin approves/rejects once; approval publishes club with requester as initial admin.
+- [ ] Club admin can add/remove only registered student admins for their own club.
+- [ ] Non-admin and another club's admin cannot create/edit/delete this club's events.
+- [ ] Free and paid registration validate fields and enforce one registration per student/event.
+- [ ] Public event response exposes the registration total but not private participant data.
 - [ ] Set Interested.
 - [ ] Set Going.
 - [ ] Prevent unauthorized action.
@@ -1551,6 +1681,8 @@ AI:
 
 # 9.4 Database integration tests
 
+- [ ] Club-admin many-to-many relation supports multiple admins per club and multiple clubs per student.
+- [ ] Concurrent club approvals and event registrations remain unique and consistent.
 - [ ] Test migrations on clean test database.
 - [ ] Test required unique constraints.
 - [ ] Test foreign-key constraints.
@@ -1590,6 +1722,29 @@ User selects Going
 ```
 
 - [ ] Test full event-notification chain.
+
+Club creation integration:
+
+```text
+Student submits proposal
+→ App Admin approves
+→ club becomes public
+→ requester becomes initial club admin
+→ requester adds another student admin
+```
+
+- [ ] Test full club-request and administration chain, including rejection and unauthorized attempts.
+
+Event registration integration:
+
+```text
+Club admin enables paid registration and sets bKash number
+→ student submits details and transaction ID
+→ one registration is stored
+→ public total increases without exposing participant details
+```
+
+- [ ] Test free/paid registration, duplicate prevention, and registration total consistency.
 
 Resource integration:
 
@@ -1633,6 +1788,9 @@ Automate the most important user journeys, not every visual detail.
 
 - [ ] Registration → OTP test flow using test email strategy.
 - [ ] Login → Home.
+- [ ] Public Home → Login/Sign up → authenticated Home; signed-out protected-route redirect.
+- [ ] Student club request → App Admin approval → new public club → requester admin controls.
+- [ ] Club admin event creation → optional free/paid registration → student submission → total update.
 - [ ] Directory navigation.
 - [ ] Club/event → Going.
 - [ ] Resource request → acceptance → chat.
@@ -1651,6 +1809,9 @@ Automate the most important user journeys, not every visual detail.
 - [ ] SMTP password is not committed.
 - [ ] OpenAI API key is backend-only.
 - [ ] Admin endpoints enforce server-side authorization.
+- [ ] Club-management endpoints enforce per-club student-admin membership server-side.
+- [ ] Club-request review endpoints require main App Admin authority server-side.
+- [ ] Event registration records and bKash transaction IDs are not exposed in public responses or logs.
 - [ ] Users cannot read another user’s private chat without authorization.
 - [ ] Users cannot accept/reject requests addressed to another user.
 - [ ] Users cannot mark another user’s notifications.

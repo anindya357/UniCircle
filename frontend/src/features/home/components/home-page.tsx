@@ -8,9 +8,13 @@ import styles from "./home-page.module.css";
 
 type HomePageContentProps = Readonly<{
   overview: HomeOverview;
+  authenticated?: boolean;
 }>;
 
-export function HomePageContent({ overview }: HomePageContentProps) {
+export function HomePageContent({
+  overview,
+  authenticated = true,
+}: HomePageContentProps) {
   return (
     <>
       <section className={styles.hero} aria-labelledby="home-title">
@@ -19,12 +23,25 @@ export function HomePageContent({ overview }: HomePageContentProps) {
           <h1 id="home-title">{overview.hero.title}</h1>
           <p>{overview.hero.description}</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryAction} href={routes.campusExplorer}>
-              Explore the campus <span aria-hidden="true">&#8599;</span>
-            </Link>
-            <a className={styles.secondaryAction} href="#cuet-story">
-              Discover the story
-            </a>
+            {authenticated ? (
+              <>
+                <Link className={styles.primaryAction} href={routes.campusExplorer}>
+                  Explore the campus <span aria-hidden="true">&#8599;</span>
+                </Link>
+                <a className={styles.secondaryAction} href="#cuet-story">
+                  Discover the story
+                </a>
+              </>
+            ) : (
+              <>
+                <Link className={styles.primaryAction} href={routes.auth.login}>
+                  Login to explore <span aria-hidden="true">&#8599;</span>
+                </Link>
+                <Link className={styles.secondaryAction} href={routes.auth.register}>
+                  Create an account
+                </Link>
+              </>
+            )}
           </div>
         </div>
 

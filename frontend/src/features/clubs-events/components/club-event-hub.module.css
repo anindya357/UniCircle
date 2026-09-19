@@ -950,6 +950,617 @@
   background: var(--color-brand);
 }
 
+.clubCreationActions {
+  display: grid;
+  max-width: 34rem;
+  gap: 0.8rem;
+  justify-items: start;
+}
+
+.clubCreationActions > p,
+.clubCreationActions > small {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.clubCreationActions button,
+.formActions button:last-child,
+.clubEventManager > header > button {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 0.65rem;
+  color: #ffffff;
+  background: var(--color-brand);
+  font-weight: 780;
+}
+
+.ownRequestList {
+  display: grid;
+  margin-top: 1.25rem;
+  gap: 0.7rem;
+}
+
+.ownRequestList article {
+  display: flex;
+  padding: 0.85rem 1rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ecd99f;
+  border-radius: 0.85rem;
+  background: #fff9e8;
+}
+
+.ownRequestList article > div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.ownRequestList span {
+  color: #795d15;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ownRequestList b {
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  color: #6d571e;
+  background: #f5e6b4;
+  font-size: 0.68rem;
+  text-transform: capitalize;
+}
+
+.clubTab em {
+  width: fit-content;
+  margin-top: 0.5rem;
+  padding: 0.28rem 0.5rem;
+  border-radius: 999px;
+  color: var(--club-accent);
+  background: color-mix(in srgb, var(--club-accent) 10%, #ffffff);
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 820;
+}
+
+.eventParticipationCounts {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.eventRegistrationAction {
+  display: flex;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  gap: 0.7rem;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-border);
+}
+
+.eventRegistrationAction a {
+  color: var(--color-brand);
+  font-size: 0.72rem;
+  font-weight: 820;
+}
+
+.eventRegistrationAction a span {
+  margin-left: 0.25rem;
+}
+
+.eventRegistrationAction small {
+  color: var(--color-text-muted);
+  font-size: 0.61rem;
+  text-align: right;
+}
+
+.modalBackdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  padding: 1.5rem;
+  overflow-y: auto;
+  place-items: center;
+  background: rgb(3 28 19 / 72%);
+  backdrop-filter: blur(8px);
+}
+
+.clubRequestModal {
+  width: min(100%, 54rem);
+  max-height: calc(100vh - 3rem);
+  padding: clamp(1.2rem, 3vw, 2rem);
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  background: var(--color-surface);
+  box-shadow: 0 28px 80px rgb(0 0 0 / 28%);
+}
+
+.clubRequestModal > header,
+.eventManagementForm > header {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.clubRequestModal > header p,
+.eventManagementForm > header p,
+.clubAdminHeader p {
+  color: var(--color-brand);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.clubRequestModal h2,
+.clubAdminHeader h2 {
+  margin-top: 0.25rem;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  letter-spacing: -0.045em;
+}
+
+.clubRequestModal > header > button,
+.eventManagementForm > header > button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-canvas);
+}
+
+.modalIntro {
+  max-width: 44rem;
+  margin-top: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.managementForm,
+.eventManagementForm {
+  margin-top: 1.25rem;
+}
+
+.formGrid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.formGrid label,
+.managementForm > label,
+.clubAdminDirectory label {
+  display: grid;
+  gap: 0.38rem;
+}
+
+.formGrid label > span,
+.managementForm label > span,
+.clubAdminDirectory label > span {
+  font-size: 0.7rem;
+  font-weight: 780;
+}
+
+.formGrid input,
+.formGrid textarea,
+.formGrid select,
+.managementForm textarea,
+.clubAdminDirectory select {
+  width: 100%;
+  min-height: 2.85rem;
+  padding: 0.68rem 0.78rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.62rem;
+  color: var(--color-text);
+  background: #ffffff;
+}
+
+.formGrid textarea,
+.managementForm textarea {
+  resize: vertical;
+}
+
+.wideField {
+  grid-column: 1 / -1;
+}
+
+.formActions {
+  display: flex;
+  margin-top: 1rem;
+  gap: 0.65rem;
+  justify-content: flex-end;
+}
+
+.formActions button {
+  min-height: 2.7rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  background: var(--color-surface);
+  font-size: 0.72rem;
+  font-weight: 780;
+}
+
+.formActions button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.formError {
+  margin-top: 1rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #efb9b4;
+  border-radius: 0.65rem;
+  color: #7c211a;
+  background: #fff1ef;
+  font-size: 0.75rem;
+}
+
+.clubAdminWorkspace {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  padding: clamp(1.1rem, 3vw, 1.8rem);
+  border: 1px solid #b8d1c4;
+  border-radius: 1.2rem;
+  background:
+    radial-gradient(circle at top right, rgb(215 166 47 / 12%), transparent 18rem),
+    #f8fcfa;
+  box-shadow: 0 18px 45px rgb(20 50 35 / 8%);
+}
+
+.clubAdminHeader {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.clubAdminHeader span {
+  display: block;
+  max-width: 44rem;
+  margin-top: 0.45rem;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.clubAdminHeader > b {
+  padding: 0.45rem 0.65rem;
+  border-radius: 999px;
+  color: var(--color-brand);
+  background: var(--color-surface-muted);
+  font-size: 0.65rem;
+}
+
+.clubAdminNavigation {
+  display: grid;
+  margin-top: 1.2rem;
+  padding: 0.35rem;
+  gap: 0.35rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.85rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: #ffffff;
+}
+
+.clubAdminNavigation button {
+  min-height: 2.8rem;
+  border: 0;
+  border-radius: 0.62rem;
+  color: var(--color-text-muted);
+  background: transparent;
+  font-size: 0.72rem;
+  font-weight: 780;
+}
+
+.clubAdminNavigation button[aria-pressed="true"] {
+  color: #ffffff;
+  background: var(--color-brand);
+}
+
+.clubAdminDirectory {
+  margin-top: 1.2rem;
+}
+
+.clubAdminDirectory > form {
+  display: grid;
+  padding: 1rem;
+  gap: 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.85rem;
+  align-items: end;
+  grid-template-columns: minmax(0, 1fr) auto;
+  background: #ffffff;
+}
+
+.clubAdminDirectory > form > button {
+  min-height: 2.85rem;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  border-radius: 0.62rem;
+  color: #ffffff;
+  background: var(--color-brand);
+  font-weight: 780;
+}
+
+.clubAdminDirectory > div {
+  display: grid;
+  margin-top: 0.8rem;
+  gap: 0.7rem;
+}
+
+.clubAdminDirectory article,
+.managedEventList article {
+  display: flex;
+  padding: 0.9rem 1rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color-border);
+  border-radius: 0.8rem;
+  background: #ffffff;
+}
+
+.clubAdminDirectory article p,
+.managedEventList article p {
+  margin-top: 0.2rem;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+
+.clubAdminDirectory article small {
+  color: var(--color-text-muted);
+  font-size: 0.65rem;
+}
+
+.clubAdminDirectory article button,
+.managedEventList article button {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.55rem;
+  color: var(--color-danger);
+  background: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 760;
+}
+
+.clubEventManager {
+  margin-top: 1.2rem;
+}
+
+.clubEventManager > header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.clubEventManager > header p {
+  margin-top: 0.25rem;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+}
+
+.eventManagementForm {
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.9rem;
+  background: #ffffff;
+}
+
+.eventManagementForm h3 {
+  margin-top: 0.2rem;
+}
+
+.registrationSettings {
+  display: grid;
+  margin-top: 1rem;
+  padding: 1rem;
+  gap: 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.8rem;
+}
+
+.registrationSettings legend {
+  padding-inline: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 820;
+}
+
+.checkField {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 720;
+}
+
+.checkField input {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.managedEventList {
+  display: grid;
+  margin-top: 0.9rem;
+  gap: 0.65rem;
+}
+
+.managedEventList article > div:last-child {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.managedEventList article > div:last-child button:first-child {
+  color: var(--color-brand);
+}
+
+.eventDetailHero {
+  display: grid;
+  min-height: 16rem;
+  padding: clamp(1.4rem, 4vw, 2.5rem);
+  gap: 2rem;
+  border-radius: 1.35rem;
+  align-items: end;
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+  color: #ffffff;
+  background: linear-gradient(135deg, #033c29, #08704b);
+}
+
+.eventDetailHero > div > p {
+  color: #f1c75c;
+  font-size: 0.7rem;
+  font-weight: 820;
+  text-transform: uppercase;
+}
+
+.eventDetailHero h1 {
+  max-width: 46rem;
+  margin-top: 0.45rem;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.eventDetailHero > div > span {
+  display: block;
+  max-width: 42rem;
+  margin-top: 0.8rem;
+  color: rgb(255 255 255 / 72%);
+  line-height: 1.6;
+}
+
+.eventDetailHero dl {
+  display: grid;
+  padding: 0.9rem 1rem;
+  gap: 0.7rem;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 0.9rem;
+  background: rgb(255 255 255 / 8%);
+}
+
+.eventDetailHero dt {
+  color: rgb(255 255 255 / 58%);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.eventDetailHero dd {
+  margin-top: 0.16rem;
+  font-size: 0.74rem;
+  font-weight: 730;
+}
+
+.eventDetailLayout {
+  display: grid;
+  margin-top: 1.2rem;
+  gap: 1rem;
+  align-items: start;
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+}
+
+.registrationPanel,
+.registrationSummary {
+  padding: clamp(1.1rem, 3vw, 1.7rem);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgb(20 50 35 / 6%);
+}
+
+.registrationPanel > header {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.registrationPanel > header p,
+.registrationSummary > span {
+  color: var(--color-brand);
+  font-size: 0.65rem;
+  font-weight: 820;
+  text-transform: uppercase;
+}
+
+.registrationPanel > header h2,
+.registrationSummary h2 {
+  margin-top: 0.25rem;
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+  letter-spacing: -0.04em;
+}
+
+.registrationPanel > header > span {
+  padding: 0.4rem 0.6rem;
+  border-radius: 999px;
+  color: var(--color-brand);
+  background: var(--color-surface-muted);
+  font-size: 0.68rem;
+  font-weight: 780;
+}
+
+.paymentNotice,
+.freeNotice,
+.registrationUnavailable,
+.registrationSuccess {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #ecd99f;
+  border-radius: 0.8rem;
+  color: #654d10;
+  background: #fff9e8;
+}
+
+.paymentNotice {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.paymentNotice span,
+.paymentNotice p,
+.registrationUnavailable p,
+.registrationSuccess p {
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.registrationSuccess {
+  border-color: #b8ddc9;
+  color: #075c3c;
+  background: #e9f7ef;
+}
+
+.registrationSummary > p {
+  margin-top: 0.6rem;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.registrationSummary dl {
+  display: grid;
+  margin-top: 1rem;
+  gap: 0.65rem;
+}
+
+.registrationSummary dl > div {
+  display: flex;
+  padding-top: 0.65rem;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.7rem;
+}
+
+.registrationSummary dd {
+  font-weight: 780;
+  text-transform: capitalize;
+}
+
 @media (max-width: 68rem) {
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.5fr);
@@ -1079,5 +1690,67 @@
     grid-template-columns: auto minmax(0, 1fr);
     border-right: 0;
     border-bottom: 1px solid rgb(255 255 255 / 13%);
+  }
+}
+
+@media (max-width: 52rem) {
+  .clubAdminHeader,
+  .eventDetailLayout,
+  .eventDetailHero {
+    grid-template-columns: 1fr;
+  }
+
+  .clubAdminHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .eventDetailHero {
+    align-items: start;
+  }
+}
+
+@media (max-width: 40rem) {
+  .formGrid,
+  .clubAdminNavigation,
+  .clubAdminDirectory > form {
+    grid-template-columns: 1fr;
+  }
+
+  .wideField {
+    grid-column: auto;
+  }
+
+  .clubAdminDirectory article,
+  .managedEventList article,
+  .clubEventManager > header,
+  .eventRegistrationAction,
+  .registrationPanel > header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .managedEventList article > div:last-child,
+  .formActions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .managedEventList article button,
+  .formActions button,
+  .clubEventManager > header > button {
+    width: 100%;
+  }
+
+  .eventRegistrationAction small {
+    text-align: left;
+  }
+
+  .modalBackdrop {
+    padding: 0.5rem;
+  }
+
+  .clubRequestModal {
+    max-height: calc(100vh - 1rem);
   }
 }

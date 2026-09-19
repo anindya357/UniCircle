@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+import { routes } from "@/config/routes";
 import type {
   AttendanceStatus,
   CampusEvent,
@@ -73,7 +76,12 @@ export function EventCard({
       </dl>
 
       <footer className={styles.eventCardFooter}>
-        <span>{displayedAttendance} going</span>
+        <div className={styles.eventParticipationCounts}>
+          <span>{displayedAttendance} going</span>
+          {event.registration.enabled ? (
+            <span>{event.registeredCount} registered</span>
+          ) : null}
+        </div>
         {event.status === "finished" ? (
           <strong>Event concluded</strong>
         ) : (
@@ -95,6 +103,22 @@ export function EventCard({
           </div>
         )}
       </footer>
+
+      <div className={styles.eventRegistrationAction}>
+        <Link href={`${routes.events}/${event.id}`}>
+          {event.registration.enabled && event.status !== "finished"
+            ? "View details & register"
+            : "View event details"}
+          <span aria-hidden="true">→</span>
+        </Link>
+        {event.registration.enabled && event.registration.isPaid ? (
+          <small>Paid registration · BDT {event.registration.feeAmount}</small>
+        ) : event.registration.enabled ? (
+          <small>Free registration available</small>
+        ) : (
+          <small>No registration form for this event</small>
+        )}
+      </div>
     </article>
   );
 }

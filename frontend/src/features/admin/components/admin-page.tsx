@@ -4,9 +4,11 @@ import { useState, type Dispatch, type SetStateAction } from "react";
 
 import { AppShell } from "@/components/shared/app-shell";
 import { AdminAnnouncementManager } from "@/features/admin/components/admin-announcement-manager";
+import { AdminClubRequestManager } from "@/features/admin/components/admin-club-request-manager";
 import { AdminReportManager } from "@/features/admin/components/admin-report-manager";
 import { AdminTransportManager } from "@/features/admin/components/admin-transport-manager";
 import type { AdminSectionId, AdminSnapshot } from "@/features/admin/types/admin";
+import { useClubEvents } from "@/features/clubs-events/context/club-event-context";
 
 import styles from "./admin-page.module.css";
 
@@ -24,6 +26,11 @@ const sections = [
     label: "Announcements",
     hint: "Campus publishing",
   },
+  {
+    id: "club-requests",
+    label: "Club requests",
+    hint: "Review student proposals",
+  },
   { id: "reports", label: "Reports", hint: "Community moderation" },
 ] as const satisfies readonly {
   id: AdminSectionId;
@@ -32,6 +39,7 @@ const sections = [
 }[];
 
 export function AdminPage({ initialSnapshot }: AdminPageProps) {
+  const { snapshot: clubSnapshot } = useClubEvents();
   const [snapshot, setSnapshot] = useState(initialSnapshot);
   const [activeSection, setActiveSection] = useState<AdminSectionId>("overview");
 
@@ -40,6 +48,9 @@ export function AdminPage({ initialSnapshot }: AdminPageProps) {
   ).length;
   const publishedItems = snapshot.announcements.filter(
     (item) => item.status === "published",
+  ).length;
+  const pendingClubRequests = clubSnapshot.clubRequests.filter(
+    (request) => request.status === "pending",
   ).length;
 
   return (
@@ -51,8 +62,8 @@ export function AdminPage({ initialSnapshot }: AdminPageProps) {
             Campus operations, <span>one controlled workspace.</span>
           </h1>
           <p>
-            Maintain transport information, publish campus updates, and review reported
-            community discussions through role-protected mock workflows.
+            Maintain transport information, publish campus updates, review new club
+            proposals, and moderate reported community discussions.
           </p>
         </div>
         <dl>
@@ -67,6 +78,10 @@ export function AdminPage({ initialSnapshot }: AdminPageProps) {
           <div>
             <dt>Open reports</dt>
             <dd>{String(openReports).padStart(2, "0")}</dd>
+          </div>
+          <div>
+            <dt>Club requests</dt>
+            <dd>{String(pendingClubRequests).padStart(2, "0")}</dd>
           </div>
         </dl>
       </section>
@@ -97,6 +112,7 @@ export function AdminPage({ initialSnapshot }: AdminPageProps) {
       {activeSection === "reports" ? (
         <AdminReportManager snapshot={snapshot} setSnapshot={setSnapshot} />
       ) : null}
+      {activeSection === "club-requests" ? <AdminClubRequestManager /> : null}
     </AppShell>
   );
 }
@@ -108,6 +124,7 @@ function AdminOverview({
   snapshot: AdminSnapshot;
   onSelectSection: (section: AdminSectionId) => void;
 }>) {
+  const { snapshot: clubSnapshot } = useClubEvents();
   const cards = [
     {
       id: "transport" as const,
@@ -122,6 +139,14 @@ function AdminOverview({
       title: `${snapshot.announcements.length} campus information items`,
       description: `${snapshot.announcements.filter((item) => item.status === "draft").length} draft items are waiting for review or publication.`,
       action: "Manage announcements",
+    },
+    {
+      id: "club-requests" as const,
+      eyebrow: "Club governance",
+      title: `${clubSnapshot.clubRequests.filter((request) => request.status === "pending").length} club proposals awaiting review`,
+      description:
+        "Approve a student proposal to publish the club and assign its requester as the initial club admin.",
+      action: "Review club requests",
     },
     {
       id: "reports" as const,
@@ -158,8 +183,9 @@ function AdminOverview({
       <div className={styles.scopeNote}>
         <strong>Approved Admin scope</strong>
         <p>
-          This workspace intentionally contains only transport, announcement, and
-          community-moderation controls defined in the project workflow.
+          This workspace contains transport, announcement, club-request approval, and
+          community-moderation controls defined in the project workflow. Club event
+          editing remains with mapped student club admins.
         </p>
       </div>
     </section>

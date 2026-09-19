@@ -1,6 +1,7 @@
 import type { CampusNewsType } from "@/features/news/types/campus-news";
 
-export type AdminSectionId = "overview" | "transport" | "announcements" | "reports";
+export type AdminSectionId =
+  "overview" | "transport" | "announcements" | "club-requests" | "reports";
 export type ScheduleRecurrence = "once" | "weekly" | "monthly";
 export type PublishStatus = "draft" | "published";
 export type ReportStatus = "open" | "resolved" | "post-removed";

@@ -6,6 +6,9 @@ import { useMemo, useState, type CSSProperties } from "react";
 import { AppShell } from "@/components/shared/app-shell";
 import { EmptyState } from "@/components/ui/feedback/empty-state";
 import { routes } from "@/config/routes";
+import { useAuthenticatedUser } from "@/features/auth/context/authenticated-user-context";
+import { ClubCreationRequestForm } from "@/features/clubs-events/components/club-creation-request-form";
+import { useClubEvents } from "@/features/clubs-events/context/club-event-context";
 import type {
   AttendanceStatus,
   CampusClub,
@@ -22,8 +25,6 @@ type EventFilter = "all" | EventStatus;
 
 type ClubEventHubProps = Readonly<{
   view: HubView;
-  clubs: readonly CampusClub[];
-  events: readonly CampusEvent[];
 }>;
 
 const eventFilters = [
@@ -33,11 +34,15 @@ const eventFilters = [
   { id: "finished", label: "Finished" },
 ] as const satisfies readonly { id: EventFilter; label: string }[];
 
-export function ClubEventHub({ view, clubs, events }: ClubEventHubProps) {
+export function ClubEventHub({ view }: ClubEventHubProps) {
+  const { user } = useAuthenticatedUser();
+  const { snapshot, submitClubRequest } = useClubEvents();
+  const { clubs, events } = snapshot;
   const [attendance, setAttendance] = useState<
     Readonly<Record<string, AttendanceStatus>>
   >({});
   const [eventFilter, setEventFilter] = useState<EventFilter>("all");
+  const [isRequestingClub, setIsRequestingClub] = useState(false);
 
   const clubNames = useMemo(
     () => new Map(clubs.map((club) => [club.id, club.name])),
@@ -106,7 +111,13 @@ export function ClubEventHub({ view, clubs, events }: ClubEventHubProps) {
       <HubNavigation activeView={view} />
 
       {view === "clubs" ? (
-        <ClubDirectory clubs={clubs} />
+        <ClubDirectory
+          clubs={clubs}
+          currentUserId={user.id}
+          isStudent={user.role === "student"}
+          onCreateClub={() => setIsRequestingClub(true)}
+          requests={snapshot.clubRequests}
+        />
       ) : (
         <CampusEventDirectory
           attendance={attendance}
@@ -118,15 +129,36 @@ export function ClubEventHub({ view, clubs, events }: ClubEventHubProps) {
           onFilterChange={setEventFilter}
         />
       )}
+
+      {isRequestingClub ? (
+        <ClubCreationRequestForm
+          onClose={() => setIsRequestingClub(false)}
+          onSubmit={submitClubRequest}
+        />
+      ) : null}
     </AppShell>
   );
 }
 
 type ClubDirectoryProps = Readonly<{
   clubs: readonly CampusClub[];
+  currentUserId: string;
+  isStudent: boolean;
+  onCreateClub: () => void;
+  requests: ReturnType<typeof useClubEvents>["snapshot"]["clubRequests"];
 }>;
 
-function ClubDirectory({ clubs }: ClubDirectoryProps) {
+function ClubDirectory({
+  clubs,
+  currentUserId,
+  isStudent,
+  onCreateClub,
+  requests,
+}: ClubDirectoryProps) {
+  const ownRequests = requests.filter(
+    (request) => request.requestedByUserId === currentUserId,
+  );
+
   return (
     <section className={styles.clubDirectory} aria-labelledby="club-directory-title">
       <div className={styles.sectionHeading}>
@@ -134,11 +166,34 @@ function ClubDirectory({ clubs }: ClubDirectoryProps) {
           <p className={styles.eyebrow}>Club directory</p>
           <h2 id="club-directory-title">Choose a campus community</h2>
         </div>
-        <p>
-          Open any club to see its purpose, leadership, regular activities, and upcoming
-          event calendar.
-        </p>
+        <div className={styles.clubCreationActions}>
+          <p>
+            Open any club to see its purpose, leadership, regular activities, and
+            upcoming event calendar.
+          </p>
+          {isStudent ? (
+            <button onClick={onCreateClub} type="button">
+              Create a new club
+            </button>
+          ) : (
+            <small>New club proposals must be submitted by a registered student.</small>
+          )}
+        </div>
       </div>
+
+      {ownRequests.length > 0 ? (
+        <div className={styles.ownRequestList} aria-label="Your club requests">
+          {ownRequests.map((request) => (
+            <article key={request.id} data-status={request.status}>
+              <div>
+                <span>Your club request</span>
+                <strong>{request.name}</strong>
+              </div>
+              <b>{request.status}</b>
+            </article>
+          ))}
+        </div>
+      ) : null}
 
       {clubs.length === 0 ? (
         <EmptyState
@@ -158,6 +213,7 @@ function ClubDirectory({ clubs }: ClubDirectoryProps) {
               <strong>{club.shortName}</strong>
               <h3>{club.name}</h3>
               <p>{club.tagline}</p>
+              {club.adminUserIds.includes(currentUserId) ? <em>Club admin</em> : null}
               <b>
                 View club <span aria-hidden="true">→</span>
               </b>

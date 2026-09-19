@@ -153,6 +153,18 @@ Staff → Staff ID
 
 All General Users use the normal application after authentication.
 
+### Student Club Admin
+
+A Club Admin is not a separate global account role. It is a registered General User
+with the `student` role whose user ID is mapped to one or more clubs.
+
+- One student may administer multiple clubs.
+- One club may have multiple student admins.
+- Club-admin permissions apply only to clubs mapped to that user ID.
+- A club admin may update that club, manage its student admins, and add, edit, or
+  remove that club's events.
+- The backend must enforce club-admin authorization for every mutation.
+
 ## 4.2 App Admin
 
 The App Admin manages the application and centrally controlled information.
@@ -166,6 +178,7 @@ The Admin:
 - Can manage transport information.
 - Can manage campus news, updates, and announcements.
 - Can moderate reported community posts.
+- Can approve or reject student club-creation requests.
 - Can manage other application information only where explicitly assigned by approved requirements/design.
 
 Important:
@@ -499,7 +512,10 @@ Do not hard-code real production Admin credentials in committed source code.
 
 # 11. Feature 2 — Home Page
 
-After login, the user arrives at the Home page.
+The Home page is the public landing page. Before authentication it shows the current
+CUET Home content with Login and Sign up as the application-entry actions; other
+feature pages remain protected. After authentication, the same Home page is the first
+main-app page and displays the authenticated Navbar.
 
 The page should contain:
 
@@ -584,6 +600,18 @@ The proposal explicitly excludes real-time location tracking from scope.
 
 Users can browse different clubs.
 
+Club administration is a many-to-many relationship between registered student user
+IDs and clubs:
+
+- One student may administer multiple clubs.
+- One club may have multiple student admins.
+- A mapped club admin may update club details, add another registered student as an
+  admin, or remove an admin while preserving at least one admin.
+- Any registered student may submit a new-club request with the proposed club details,
+  planned activities, purpose, campus need, and expected impact.
+- The App Admin reviews each request. Approval creates the public club and maps the
+  requester as its initial club admin; rejection does not create a club.
+
 Club details may contain:
 
 - Club information.
@@ -603,6 +631,14 @@ Users can indicate:
 
 - Interested
 - Going
+
+Only mapped admins of the event's club may create, update, or delete that event.
+
+A club admin decides per event whether registration is enabled. When enabled, the
+registration form collects the participant's name, CUET email, Student ID, department
+name, and bKash transaction ID for a paid event. For a paid event, the configured fee
+and bKash number appear above the form. The event UI shows the total number of
+registrations. Event registration and Interested/Going remain separate states.
 
 The exact state model should follow the approved ERD/API design.
 
@@ -855,6 +891,14 @@ Required current areas include:
 
 - View reported posts.
 - Remove reported posts where appropriate.
+
+## Club Request Governance
+
+- Review pending student club-creation requests.
+- Approve a request to create the club and assign its requester as initial Club Admin.
+- Reject a request without creating a club.
+- Do not use the App Admin role for routine club or event editing; those mutations
+  belong to mapped student Club Admins.
 
 ## Other Information
 

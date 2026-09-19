@@ -1,6 +1,15 @@
-import type { CampusClub, CampusEvent } from "@/features/clubs-events/types/club-event";
+import type {
+  CampusClub,
+  CampusEvent,
+  ClubCreationRequest,
+  EventRegistration,
+  RegisteredStudent,
+} from "@/features/clubs-events/types/club-event";
 
-export const mockCampusClubs = [
+type ClubSeed = Omit<CampusClub, "adminUserIds">;
+type EventSeed = Omit<CampusEvent, "registeredCount" | "registration">;
+
+const mockClubSeeds = [
   {
     id: "cuet-computer-club",
     shortName: "CCC",
@@ -371,9 +380,27 @@ export const mockCampusClubs = [
       },
     ],
   },
-] as const satisfies readonly CampusClub[];
+] as const satisfies readonly ClubSeed[];
 
-export const mockCampusEvents = [
+const clubAdminAssignments: Readonly<Record<string, readonly string[]>> = {
+  "cuet-computer-club": ["user-anika-001", "user-nafis-002"],
+  "andromeda-space-robotics": ["user-tahmid-003", "user-nusrat-004"],
+  "robo-mechatronics-association": ["user-farhan-005", "user-raiyan-006"],
+  joyoddhoni: ["user-anika-001", "user-nusrat-004"],
+  "cuet-debating-society": ["user-nafis-002", "user-anika-001"],
+  "cuet-fitness-club": ["user-farhan-005", "user-nusrat-004"],
+  "ieee-cuet-sb": ["user-tahmid-003", "user-nusrat-004"],
+  "ieee-computer-society": ["user-anika-001", "user-nabila-014"],
+  "asme-cuet": ["user-farhan-005", "user-raiyan-006"],
+  "cuet-mun": ["user-nusrat-004", "user-tahmid-003"],
+};
+
+export const mockCampusClubs: readonly CampusClub[] = mockClubSeeds.map((club) => ({
+  ...club,
+  adminUserIds: clubAdminAssignments[club.id] ?? [],
+}));
+
+const mockEventSeeds = [
   {
     id: "inter-university-programming-contest",
     clubId: "cuet-computer-club",
@@ -634,4 +661,157 @@ export const mockCampusEvents = [
     status: "upcoming",
     attendeeCount: 204,
   },
-] as const satisfies readonly CampusEvent[];
+] as const satisfies readonly EventSeed[];
+
+const eventRegistrationConfiguration: Readonly<
+  Record<string, Pick<CampusEvent, "registeredCount" | "registration">>
+> = {
+  "open-source-sprint": {
+    registeredCount: 68,
+    registration: { enabled: true, isPaid: false },
+  },
+  "cansat-mission-lab": {
+    registeredCount: 54,
+    registration: {
+      enabled: true,
+      isPaid: true,
+      feeAmount: 250,
+      bkashNumber: "01700-112233",
+    },
+  },
+  "mechatronics-design-challenge": {
+    registeredCount: 91,
+    registration: { enabled: true, isPaid: false },
+  },
+  "freshers-open-stage": {
+    registeredCount: 126,
+    registration: { enabled: true, isPaid: false },
+  },
+  "parliamentary-debate-open": {
+    registeredCount: 97,
+    registration: {
+      enabled: true,
+      isPaid: true,
+      feeAmount: 150,
+      bkashNumber: "01800-445566",
+    },
+  },
+  "strength-foundations": {
+    registeredCount: 73,
+    registration: { enabled: true, isPaid: false },
+  },
+  "engineering-career-connect": {
+    registeredCount: 142,
+    registration: { enabled: true, isPaid: false },
+  },
+  "applied-ai-bootcamp": {
+    registeredCount: 112,
+    registration: {
+      enabled: true,
+      isPaid: true,
+      feeAmount: 300,
+      bkashNumber: "01900-778899",
+    },
+  },
+  "sustainable-machine-challenge": {
+    registeredCount: 61,
+    registration: { enabled: true, isPaid: false },
+  },
+  "cuet-model-united-nations": {
+    registeredCount: 176,
+    registration: {
+      enabled: true,
+      isPaid: true,
+      feeAmount: 500,
+      bkashNumber: "01600-223344",
+    },
+  },
+};
+
+export const mockCampusEvents: readonly CampusEvent[] = mockEventSeeds.map((event) => ({
+  ...event,
+  registeredCount: eventRegistrationConfiguration[event.id]?.registeredCount ?? 0,
+  registration: eventRegistrationConfiguration[event.id]?.registration ?? {
+    enabled: false,
+    isPaid: false,
+  },
+}));
+
+export const mockRegisteredStudents = [
+  {
+    userId: "user-anika-001",
+    name: "Anika Rahman",
+    email: "anika.rahman@cuet.ac.bd",
+    studentId: "2004001",
+    department: "Computer Science & Engineering",
+  },
+  {
+    userId: "user-nafis-002",
+    name: "Nafis Ahmed",
+    email: "nafis.ahmed@cuet.ac.bd",
+    studentId: "1904007",
+    department: "Computer Science & Engineering",
+  },
+  {
+    userId: "user-tahmid-003",
+    name: "Tahmid Hasan",
+    email: "tahmid.hasan@cuet.ac.bd",
+    studentId: "1902008",
+    department: "Electrical & Electronic Engineering",
+  },
+  {
+    userId: "user-nusrat-004",
+    name: "Nusrat Jahan",
+    email: "nusrat.jahan@cuet.ac.bd",
+    studentId: "2005004",
+    department: "Electronics & Telecommunication Engineering",
+  },
+  {
+    userId: "user-farhan-005",
+    name: "Farhan Kabir",
+    email: "farhan.kabir@cuet.ac.bd",
+    studentId: "1908005",
+    department: "Mechatronics & Industrial Engineering",
+  },
+  {
+    userId: "user-raiyan-006",
+    name: "Raiyan Hossain",
+    email: "raiyan.hossain@cuet.ac.bd",
+    studentId: "2003006",
+    department: "Mechanical Engineering",
+  },
+  {
+    userId: "user-nabila-014",
+    name: "Nabila Ahmed",
+    email: "nabila.ahmed@cuet.ac.bd",
+    studentId: "2004014",
+    department: "Computer Science & Engineering",
+  },
+] as const satisfies readonly RegisteredStudent[];
+
+export const mockClubCreationRequests = [
+  {
+    id: "club-request-green-campus",
+    requestedByUserId: "user-nusrat-004",
+    requestedByName: "Nusrat Jahan",
+    requestedByStudentId: "2005004",
+    name: "CUET Green Campus Collective",
+    shortName: "CGCC",
+    category: "Environment & sustainability",
+    tagline: "Small campus actions, lasting environmental impact.",
+    description:
+      "A proposed student community for practical sustainability projects, awareness, and greener campus habits.",
+    purpose:
+      "We want to coordinate recycling drives, tree care, and student-led sustainability learning across departments.",
+    activities: [
+      "Campus clean-up drives",
+      "Waste sorting awareness",
+      "Tree care and planting",
+    ],
+    status: "pending",
+    submittedAt: "2026-09-12T14:20:00+06:00",
+  },
+] as const satisfies readonly ClubCreationRequest[];
+
+export const mockEventRegistrations =
+  [] as const satisfies readonly EventRegistration[];

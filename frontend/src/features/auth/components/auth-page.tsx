@@ -29,7 +29,7 @@ export function AuthPage({
   return (
     <main className={styles.page} id="main-content">
       <section className={`${styles.contextPanel} ${admin ? styles.adminPanel : ""}`}>
-        <Link className={styles.brand} href={routes.auth.login}>
+        <Link className={styles.brand} href={routes.home}>
           <span aria-hidden="true">U</span>
           <strong>UniCircle</strong>
         </Link>

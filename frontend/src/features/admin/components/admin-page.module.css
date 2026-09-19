@@ -114,7 +114,7 @@
   gap: 0.4rem;
   border: 1px solid var(--color-border);
   border-radius: 1rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   background: var(--color-surface);
   box-shadow: 0 10px 28px rgb(20 50 35 / 5%);
 }
@@ -795,6 +795,136 @@
   background: var(--color-surface);
 }
 
+.clubRequestQueue {
+  display: grid;
+  margin-top: 1.15rem;
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.clubRequestQueue > article {
+  padding: 1.15rem;
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: var(--color-surface);
+  box-shadow: 0 10px 28px rgb(20 50 35 / 5%);
+}
+
+.clubRequestQueue > article[data-status="approved"] {
+  border-color: #b8ddc9;
+  background: #f8fcfa;
+}
+
+.clubRequestQueue > article[data-status="rejected"] {
+  opacity: 0.72;
+}
+
+.clubRequestQueue article > header {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.clubRequestQueue header span {
+  color: var(--color-brand);
+  font-size: 0.6rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.clubRequestQueue h3 {
+  margin-top: 0.25rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.025em;
+}
+
+.clubRequestQueue header p,
+.clubRequestQueue time {
+  margin-top: 0.22rem;
+  color: var(--color-text-muted);
+  font-size: 0.63rem;
+}
+
+.clubRequestTagline {
+  margin-top: 0.85rem;
+  font-weight: 720;
+  line-height: 1.5;
+}
+
+.clubRequestDescription {
+  margin-top: 0.45rem;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.clubRequestActivities {
+  margin-top: 0.8rem;
+}
+
+.clubRequestActivities strong {
+  font-size: 0.65rem;
+}
+
+.clubRequestActivities ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+  padding: 0;
+  gap: 0.4rem;
+  list-style: none;
+}
+
+.clubRequestActivities li {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-size: 0.63rem;
+}
+
+.clubRequestPurpose {
+  margin-top: 0.8rem;
+  padding: 0.8rem;
+  border-radius: 0.7rem;
+  background: var(--color-canvas);
+}
+
+.clubRequestPurpose strong {
+  font-size: 0.65rem;
+}
+
+.clubRequestPurpose p {
+  margin-top: 0.3rem;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.clubRequestQueue dl {
+  display: grid;
+  margin-top: 0.8rem;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.clubRequestQueue dl > div {
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.clubRequestQueue dt {
+  color: var(--color-text-muted);
+  font-size: 0.57rem;
+}
+
+.clubRequestQueue dd {
+  margin-top: 0.16rem;
+  font-size: 0.67rem;
+  font-weight: 760;
+}
+
 @media (max-width: 60rem) {
   .hero {
     min-height: auto;
@@ -804,7 +934,7 @@
   }
 
   .hero > dl {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .hero > dl > div {
@@ -821,10 +951,6 @@
   .scheduleGrid,
   .overviewGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .overviewGrid article:last-child {
-    grid-column: 1 / -1;
   }
 
   .transportDirectories {
@@ -854,8 +980,14 @@
   .scheduleGrid,
   .overviewGrid,
   .formGrid,
-  .reportList dl {
+  .reportList dl,
+  .clubRequestQueue,
+  .clubRequestQueue dl {
     grid-template-columns: 1fr;
+  }
+
+  .hero > dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .overviewGrid article:last-child,

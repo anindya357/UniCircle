@@ -1,6 +1,40 @@
-import type { CampusClub, CampusEvent } from "@/features/clubs-events/types/club-event";
+import type {
+  CampusClub,
+  CampusEvent,
+  CampusEventInput,
+  ClubCreationRequest,
+  ClubCreationRequestInput,
+  ClubEventSnapshot,
+  ClubProfileInput,
+  ClubRequestStatus,
+  EventRegistration,
+  EventRegistrationInput,
+  RegisteredStudent,
+} from "@/features/clubs-events/types/club-event";
 
 export interface ClubEventService {
+  getSnapshot(): Promise<ClubEventSnapshot>;
   listClubs(): Promise<readonly CampusClub[]>;
   listEvents(): Promise<readonly CampusEvent[]>;
+  submitClubRequest(
+    input: ClubCreationRequestInput,
+    requester: RegisteredStudent,
+  ): Promise<ClubCreationRequest>;
+  reviewClubRequest(
+    request: ClubCreationRequest,
+    status: Exclude<ClubRequestStatus, "pending">,
+  ): Promise<{ request: ClubCreationRequest; club?: CampusClub }>;
+  saveClub(input: ClubProfileInput, current: CampusClub): Promise<CampusClub>;
+  setClubAdmins(club: CampusClub, adminUserIds: readonly string[]): Promise<CampusClub>;
+  saveEvent(
+    input: CampusEventInput,
+    clubId: string,
+    current?: CampusEvent,
+  ): Promise<CampusEvent>;
+  deleteEvent(eventId: string): Promise<void>;
+  registerForEvent(
+    eventId: string,
+    userId: string,
+    input: EventRegistrationInput,
+  ): Promise<EventRegistration>;
 }

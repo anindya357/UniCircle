@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { AuthenticatedShell } from "@/features/auth/components/authenticated-shell";
-import { notificationService } from "@/services";
+import { clubEventService, notificationService } from "@/services";
 
 type AuthenticatedLayoutProps = Readonly<{
   children: ReactNode;
@@ -10,10 +10,16 @@ type AuthenticatedLayoutProps = Readonly<{
 export default async function AuthenticatedLayout({
   children,
 }: AuthenticatedLayoutProps) {
-  const notifications = await notificationService.list();
+  const [notifications, clubEventSnapshot] = await Promise.all([
+    notificationService.list(),
+    clubEventService.getSnapshot(),
+  ]);
 
   return (
-    <AuthenticatedShell initialNotifications={notifications}>
+    <AuthenticatedShell
+      initialClubEventSnapshot={clubEventSnapshot}
+      initialNotifications={notifications}
+    >
       {children}
     </AuthenticatedShell>
   );

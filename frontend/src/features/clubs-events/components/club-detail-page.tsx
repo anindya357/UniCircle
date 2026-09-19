@@ -4,7 +4,10 @@ import Link from "next/link";
 import { useState, type CSSProperties } from "react";
 
 import { AppShell } from "@/components/shared/app-shell";
+import { EmptyState } from "@/components/ui/feedback/empty-state";
 import { routes } from "@/config/routes";
+import { ClubAdminWorkspace } from "@/features/clubs-events/components/club-admin-workspace";
+import { useClubEvents } from "@/features/clubs-events/context/club-event-context";
 import type {
   AttendanceStatus,
   CampusClub,
@@ -37,10 +40,22 @@ function getInitials(name: string) {
 }
 
 export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
+  const { isClubAdmin, snapshot } = useClubEvents();
   const [attendance, setAttendance] = useState<
     Readonly<Record<string, AttendanceStatus>>
   >({});
   const accentStyle = { "--club-accent": club.accent } as CSSProperties;
+  const leaders =
+    club.leaders.length > 0
+      ? club.leaders
+      : snapshot.students
+          .filter((student) => club.adminUserIds.includes(student.userId))
+          .map((student) => ({
+            id: student.userId,
+            name: student.name,
+            role: "Club admin",
+            department: student.department,
+          }));
 
   function changeAttendance(eventId: string, status: AttendanceStatus) {
     setAttendance((current) => ({
@@ -87,6 +102,8 @@ export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
 
       <HubNavigation activeView="clubs" />
 
+      {isClubAdmin(club) ? <ClubAdminWorkspace club={club} /> : null}
+
       <div className={styles.clubDetailContent} style={accentStyle}>
         <div className={styles.clubDetailsGrid}>
           <section aria-labelledby="activities-title">
@@ -110,7 +127,7 @@ export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
               <h2 id="leadership-title">Club leadership</h2>
             </div>
             <div className={styles.leaderList}>
-              {club.leaders.map((member) => (
+              {leaders.map((member) => (
                 <article key={member.id}>
                   <span aria-hidden="true">{getInitials(member.name)}</span>
                   <div>
@@ -120,6 +137,11 @@ export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
                   </div>
                 </article>
               ))}
+              {leaders.length === 0 ? (
+                <p className={styles.inlineEmpty}>
+                  Club leadership details are coming soon.
+                </p>
+              ) : null}
             </div>
           </section>
         </div>
@@ -170,5 +192,31 @@ export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
         </section>
       </div>
     </AppShell>
+  );
+}
+
+export function ClubDetailRoute({ clubId }: Readonly<{ clubId: string }>) {
+  const { snapshot } = useClubEvents();
+  const club = snapshot.clubs.find((item) => item.id === clubId);
+
+  if (!club) {
+    return (
+      <AppShell className={styles.pageShell}>
+        <Link className={styles.backLink} href={routes.clubs}>
+          <span aria-hidden="true">←</span> All clubs
+        </Link>
+        <EmptyState
+          title="Club not found"
+          description="This club may still be awaiting approval or is no longer available."
+        />
+      </AppShell>
+    );
+  }
+
+  return (
+    <ClubDetailPage
+      club={club}
+      events={snapshot.events.filter((event) => event.clubId === club.id)}
+    />
   );
 }
