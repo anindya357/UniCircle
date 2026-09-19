@@ -890,17 +890,21 @@ The approved ERD is not in this repository, so Phase 6 establishes infrastructur
 
 ## 6.3 Common backend services
 
-- [ ] Authentication/security utilities.
-- [ ] JWT utilities.
-- [ ] Password hashing.
-- [ ] Current-user dependency.
-- [ ] Admin authorization dependency.
-- [ ] SMTP/email service.
-- [ ] OTP service.
-- [ ] Notification service foundation.
-- [ ] Pagination utilities where needed.
-- [ ] Common validation/error utilities.
-- [ ] Shared test fixtures.
+The shared services are implemented as storage-agnostic foundations. Phase 7
+must connect them to approved user, OTP, and notification models/repositories;
+the test-only in-memory stores are not production persistence.
+
+- [x] Authentication/security utilities.
+- [x] JWT utilities.
+- [x] Password hashing.
+- [x] Current-user dependency (identity lookup is supplied in Phase 7).
+- [x] Admin authorization dependency (checks the current persisted role).
+- [x] SMTP/email service (requires configured TLS credentials).
+- [x] OTP service (requires atomic persistent store in Phase 7).
+- [x] Notification service foundation (requires repository in Phase 7).
+- [x] Pagination utilities where needed.
+- [x] Common validation/error utilities.
+- [x] Shared test fixtures.
 
 ---
 

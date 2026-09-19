@@ -1,8 +1,9 @@
 # UniCircle backend foundation
 
-Phase 6.1/6.2 provides a FastAPI app, a PostgreSQL connection, SQLAlchemy 2
-metadata and sessions, and Alembic migration tooling. It does **not** implement
-feature APIs or domain tables; those depend on the approved ERD in Phase 7.
+Phases 6.1–6.3 provide a FastAPI app, PostgreSQL/SQLAlchemy and Alembic tooling,
+plus common authentication, email verification, notification, pagination, and
+validation services. They do **not** implement feature APIs or domain tables;
+those depend on the approved ERD in Phase 7.
 
 ## Python setup
 
@@ -29,6 +30,21 @@ commit actual credentials. `APP_ENV` is `development`, `testing`, or
 URL. `FRONTEND_URL` controls the allowed CORS origin. Development also permits
 the equivalent localhost/127.0.0.1 origin at the same port. There is no wildcard
 CORS origin.
+
+The Phase 6.3 security services need a distinct `JWT_SECRET` and `OTP_PEPPER`,
+each at least 32 bytes. Authentication and OTP operations fail closed when
+their keys are absent; production startup additionally requires SMTP settings.
+Configure `JWT_ISSUER`, `JWT_AUDIENCE`, and `JWT_ACCESS_TOKEN_MINUTES` consistently
+across deployments. SMTP supports `starttls` or `ssl` only. Never use real
+mailbox credentials in committed files or test fixtures.
+
+The current-user dependency verifies the token and then queries an identity
+repository for the latest active, verified account and role. Phase 7 must
+provide that repository; roles inside tokens are never trusted for admin
+authorization. Phase 7 must also provide durable, cross-worker atomic OTP and
+notification repositories when their database models are approved. The
+in-memory stores under `tests/` are test fixtures only. No OTP email is sent
+until SMTP is configured and a feature route uses the service.
 
 The default development URL is
 `postgresql+psycopg://unicircle_dev@localhost:5432/unicircle_dev`. On a local

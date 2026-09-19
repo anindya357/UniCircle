@@ -11,6 +11,7 @@ from app.core.logging import configure_logging
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
+    supplied_settings = settings
     settings = settings or get_settings()
     configure_logging(settings)
     application = FastAPI(
@@ -25,6 +26,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=["Authorization", "Content-Type", "Accept"],
     )
+    if supplied_settings is not None:
+        application.dependency_overrides[get_settings] = lambda: settings
     install_exception_handlers(application)
 
     @application.get("/health", response_model=ApiResponse[HealthStatus])
