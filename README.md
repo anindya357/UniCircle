@@ -20,7 +20,7 @@ The project is being implemented incrementally from the approved project context
 ```text
 .
 |-- frontend/              # Next.js application
-|-- backend/               # FastAPI application (added in the backend phase)
+|-- backend/               # FastAPI app, PostgreSQL ORM, and Alembic foundation
 |-- docs/
 |   |-- api/               # API contracts and reference material
 |   |-- design/            # Approved architecture and design artifacts
@@ -37,8 +37,8 @@ The project is being implemented incrementally from the approved project context
 ## Prerequisites
 
 - Node.js 20.19 or newer and npm
-- Python 3.12 or newer (required when backend development starts)
-- PostgreSQL (required when backend development starts)
+- Python 3.12 or newer
+- PostgreSQL 17 or compatible server
 - Git
 
 ## Local setup
@@ -56,7 +56,9 @@ The project is being implemented incrementally from the approved project context
 
 5. Open `http://localhost:3000`.
 
-Backend and full-stack Docker commands will be documented when those phases are implemented.
+The backend setup, local PostgreSQL role/database, and migration commands are in
+[backend/README.md](./backend/README.md). Full-stack Docker commands will be
+documented in the Dockerization phase.
 
 ## Quality checks
 
@@ -67,6 +69,14 @@ npm run format:check
 npm run lint
 npm run typecheck
 npm run build
+```
+
+From `backend/`, after installing `.[dev]`, run:
+
+```bash
+python -m pytest
+python -m ruff check app tests migrations
+python -m ruff format --check app tests migrations
 ```
 
 ## Project references
