@@ -83,6 +83,7 @@ python -m ruff format --check app tests migrations
 
 - [AI project context](./UniCircle_AI_Project_Context.md)
 - [Feature-wise implementation plan](./UniCircle_Feature_Wise_Implementation_TODO.md)
+- [Project ERD and authentication design](./docs/design/ERD.md)
 - [Environment configuration](./docs/development/environment.md)
 - [Git workflow](./docs/development/git-workflow.md)
 

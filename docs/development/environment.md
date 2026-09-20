@@ -30,3 +30,4 @@ UniCircle uses separate development, testing, and production configuration. The 
 - Production values come from the chosen platform's secret manager, not files committed to Git or baked into images.
 - Only variables deliberately prefixed with `NEXT_PUBLIC_` may be read by browser code.
 - Add vector-store or object-storage variables only after those technologies are approved.
+- The root `.env` is ignored and may contain local dummy placeholders. Replace `JWT_SECRET` and `OTP_PEPPER` with two distinct, random signing keys before using authentication or OTP; a JWT access token is issued by the server and must **not** be pasted into `JWT_SECRET`.
