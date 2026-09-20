@@ -2270,14 +2270,17 @@ Include:
 
 Complete:
 
-- [ ] System Architecture.
-- [ ] HLD.
-- [ ] LLD.
-- [ ] DFDs.
+- [x] System Architecture ([working HLD](docs/design/HLD.md)).
+- [x] HLD ([working design](docs/design/HLD.md)).
+- [x] LLD ([working design](docs/design/LLD.md); refine feature contracts during implementation).
+- [x] DFDs ([logical data flows](docs/design/Data_Flow_Diagram.md)).
 - [x] ERD ([working design](docs/design/ERD.md); refine through reviewed migrations).
+- [x] Document flow diagram ([business and development records](docs/design/Document_Flow_Diagram.md)).
+- [x] Sequence diagrams ([critical feature journeys](docs/design/Sequence_Diagram.md)).
+- [x] Use-case diagrams ([actors and permissions](docs/design/Use_Case_Diagram.md)).
 - [ ] API documentation.
-- [ ] Authentication flow.
-- [ ] RAG flow.
+- [x] Authentication flow ([sequence and LLD](docs/design/Sequence_Diagram.md#registration-verification-and-login)).
+- [x] RAG flow ([assistant sequence](docs/design/Sequence_Diagram.md#campus-assistant-query); provider choices pending).
 - [ ] Docker documentation.
 - [ ] Testing strategy/results.
 - [ ] CI/CD documentation.

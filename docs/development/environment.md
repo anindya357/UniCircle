@@ -9,7 +9,7 @@ UniCircle uses separate development, testing, and production configuration. The 
 | `APP_ENV` | Backend/runtime | No | Selects development, testing, or production behavior. |
 | `FRONTEND_URL` | Backend/runtime | No | Canonical frontend origin for links and CORS configuration. |
 | `BACKEND_URL` | Runtime | No | Canonical backend origin for server-side integration. |
-| `NEXT_PUBLIC_API_URL` | Frontend | Yes | Public API base URL used by browser code. It must never contain credentials. |
+| `NEXT_PUBLIC_API_URL` | Frontend | Yes | Existing public API URL placeholder; currently unused by feature services. The Phase 7 BFF design will not use it for authenticated browser calls. It must never contain credentials. |
 | `DATABASE_URL` | Backend | No | PostgreSQL connection string. |
 | `JWT_SECRET` | Backend | No | Signs/verifies authentication tokens. |
 | `JWT_ISSUER`, `JWT_AUDIENCE`, `JWT_ACCESS_TOKEN_MINUTES` | Backend | No | Required token context and bounded access-token lifetime. |
