@@ -1,6 +1,7 @@
 import type { HomeOverview } from "@/features/home/types/home-overview";
 
-export const mockHomeOverview = {
+// Stable CUET landing content, deployed with the frontend rather than fetched from an API.
+export const homeOverview = {
   hero: {
     eyebrow: "Discover your university",
     title: "Welcome to CUET Campus",

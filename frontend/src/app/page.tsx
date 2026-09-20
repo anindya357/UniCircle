@@ -1,11 +1,9 @@
 import { HomeEntry } from "@/features/home/components/home-entry";
-import { homeService, notificationService } from "@/services";
+import { homeOverview } from "@/features/home/content/home-overview";
+import { notificationService } from "@/services";
 
 export default async function LandingPage() {
-  const [overview, notifications] = await Promise.all([
-    homeService.getOverview(),
-    notificationService.list(),
-  ]);
+  const notifications = await notificationService.list();
 
-  return <HomeEntry notifications={notifications} overview={overview} />;
+  return <HomeEntry notifications={notifications} overview={homeOverview} />;
 }

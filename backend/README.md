@@ -5,6 +5,11 @@ Authentication Feature 1: persisted General Users, OTP challenges, revocable
 sessions, App Admin login/provisioning, and profile updates. Other feature APIs
 and domain tables remain future work.
 
+Backend Feature 2 is intentionally static: the public Home page reads reviewed
+content from `frontend/src/features/home/content`, with media shipped from
+`frontend/public/media/home`. It has no Home database tables, seed, or FastAPI
+endpoint, and no Admin editing API unless a future CMS decision changes the design.
+
 ## Python setup
 
 Use Python 3.12 or newer. From `backend/`:

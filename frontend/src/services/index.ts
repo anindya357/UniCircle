@@ -3,7 +3,6 @@ import { MockCampusAssistantService } from "@/mocks/services/mock-campus-assista
 import { MockClubEventService } from "@/mocks/services/mock-club-event-service";
 import { MockDirectoryService } from "@/mocks/services/mock-directory-service";
 import { MockForumService } from "@/mocks/services/mock-forum-service";
-import { MockHomeService } from "@/mocks/services/mock-home-service";
 import { MockNotificationService } from "@/mocks/services/mock-notification-service";
 import { MockNewsService } from "@/mocks/services/mock-news-service";
 import { MockResourceSharingService } from "@/mocks/services/mock-resource-sharing-service";
@@ -17,7 +16,6 @@ import type { CampusAssistantService } from "@/services/contracts/campus-assista
 import type { ClubEventService } from "@/services/contracts/club-event-service";
 import type { DirectoryService } from "@/services/contracts/directory-service";
 import type { ForumService } from "@/services/contracts/forum-service";
-import type { HomeService } from "@/services/contracts/home-service";
 import type { NotificationService } from "@/services/contracts/notification-service";
 import type { NewsService } from "@/services/contracts/news-service";
 import type { ProfileService } from "@/services/contracts/profile-service";
@@ -32,7 +30,6 @@ export const campusAssistantService: CampusAssistantService =
 export const clubEventService: ClubEventService = new MockClubEventService();
 export const directoryService: DirectoryService = new MockDirectoryService();
 export const forumService: ForumService = new MockForumService();
-export const homeService: HomeService = new MockHomeService();
 export const notificationService: NotificationService = new MockNotificationService();
 export const newsService: NewsService = new MockNewsService();
 export const profileService: ProfileService = new ApiProfileService();

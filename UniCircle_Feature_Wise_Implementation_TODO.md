@@ -1025,7 +1025,12 @@ real CUET inbox cannot receive an OTP until valid provider settings are supplied
 
 First decide from the approved design whether Home content is static frontend content or database-managed content.
 
-If database-managed:
+Decision: Home content is intentionally static and ships with the frontend. No
+Home database model, seed, read API, or Admin editing API is needed unless a
+future product decision introduces a CMS. The database-managed path below is
+therefore not applicable to this implementation.
+
+If database-managed in a future CMS phase:
 
 - [ ] Create Home content model(s).
 - [ ] Add seed/default content.
@@ -1036,9 +1041,9 @@ If database-managed:
 
 If intentionally static:
 
-- [ ] Document that decision.
-- [ ] Keep stable static content in frontend/content files.
-- [ ] Ensure media assets are handled according to production asset strategy.
+- [x] Document that decision.
+- [x] Keep stable static content in frontend/content files.
+- [x] Ensure media assets are handled according to production asset strategy.
 
 ---
 

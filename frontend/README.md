@@ -36,9 +36,12 @@ npm run format       # apply Prettier formatting
 - `src/components/shared` contains application-wide composition components.
 - `src/services/contracts` defines interfaces implemented by real authentication
   adapters and mock services for the remaining features.
-- `src/mocks` contains typed mock repositories, services, and data.
+- `src/mocks` contains typed mock repositories, services, and data for features
+  not yet connected to their backend.
+- `src/features/home/content` contains the reviewed static Home content; the
+  public Home route reads it directly because it has no API or CMS.
 - `src/config` owns public environment access and route constants.
 
-Route components call service interfaces through `src/services`; they do not
-import mock data directly. The auth adapters call same-origin BFF handlers,
+Other route components call service interfaces through `src/services`; they do
+not import mock data directly. The auth adapters call same-origin BFF handlers,
 which keep tokens out of browser JavaScript.
