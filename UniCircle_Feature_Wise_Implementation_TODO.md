@@ -931,6 +931,12 @@ the test-only in-memory stores are not production persistence.
 
 # Backend Feature 1 — Authentication
 
+Implementation started: backend request schemas now validate the existing
+frontend registration, OTP, and login inputs, and registration preparation
+hashes passwords without persisting plaintext. The approved ERD, Admin
+provisioning, and browser JWT/session storage decisions are still needed before
+creating tables, endpoints, or replacing the frontend auth mocks.
+
 ## 7.1 Database
 
 - [ ] Create user/account model according to final ERD.
@@ -946,13 +952,13 @@ the test-only in-memory stores are not production persistence.
 
 ## 7.2 Registration service
 
-- [ ] Validate registration payload.
-- [ ] Reject non-CUET email addresses.
-- [ ] Validate role.
-- [ ] Validate required role-specific ID.
+- [x] Validate registration payload.
+- [x] Reject non-CUET email addresses.
+- [x] Validate role.
+- [x] Validate required role-specific ID (format awaits approved design).
 - [ ] Check username uniqueness.
 - [ ] Check email uniqueness.
-- [ ] Hash password.
+- [x] Hash password during registration preparation; database save is pending.
 - [ ] Create pending/unverified account.
 - [ ] Generate OTP.
 - [ ] Apply OTP expiry.
