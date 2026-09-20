@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ScheduleDetailPage } from "@/features/transport/components/schedule-detail-page";
+import { requireServerSessionUser } from "@/features/auth/lib/server-session";
 import { transportService } from "@/services";
 
 type ScheduleDetailsRouteProps = Readonly<{
@@ -34,6 +35,7 @@ export async function generateMetadata({
 export default async function ScheduleDetailsRoute({
   params,
 }: ScheduleDetailsRouteProps) {
+  await requireServerSessionUser();
   const [{ scheduleId }, snapshot] = await Promise.all([
     params,
     transportService.getSnapshot(),

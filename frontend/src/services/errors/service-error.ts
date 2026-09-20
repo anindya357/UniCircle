@@ -6,6 +6,7 @@ export type ServiceErrorCode =
   | "invalid-credentials"
   | "invalid-otp"
   | "expired-otp"
+  | "email-unavailable"
   | "unknown";
 
 export class ServiceError extends Error {

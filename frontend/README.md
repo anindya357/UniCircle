@@ -15,6 +15,9 @@ npm run dev
 Open `http://localhost:3000`.
 
 On Windows PowerShell, use `Copy-Item .env.example .env.local` instead of `cp`.
+Set `BACKEND_API_URL` in that local file to the server-side FastAPI origin.
+Authentication requires the backend database migration, JWT/OTP secrets, and
+working SMTP credentials. No JWT or password belongs in a `NEXT_PUBLIC_*` value.
 
 ## Commands
 
@@ -31,8 +34,11 @@ npm run format       # apply Prettier formatting
 - `src/features` owns feature-specific components and types.
 - `src/components/ui` contains genuinely reusable presentation primitives.
 - `src/components/shared` contains application-wide composition components.
-- `src/services/contracts` defines interfaces that mock and future API services implement.
+- `src/services/contracts` defines interfaces implemented by real authentication
+  adapters and mock services for the remaining features.
 - `src/mocks` contains typed mock repositories, services, and data.
 - `src/config` owns public environment access and route constants.
 
-Route components should call a service interface through `src/services`; they must not import mock data directly. When backend integration begins, each mock implementation can be replaced without rewriting its page components.
+Route components call service interfaces through `src/services`; they do not
+import mock data directly. The auth adapters call same-origin BFF handlers,
+which keep tokens out of browser JavaScript.

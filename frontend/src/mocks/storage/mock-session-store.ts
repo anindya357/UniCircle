@@ -1,4 +1,7 @@
-import type { SessionUser } from "@/features/auth/types/session-user";
+import type {
+  GeneralSessionUser,
+  SessionUser,
+} from "@/features/auth/types/session-user";
 
 const mockSessionStorageKey = "unicircle.mock.session";
 
@@ -23,31 +26,29 @@ export function readMockSession(): SessionUser | null {
     if (
       !storedUser.id ||
       !storedUser.displayName ||
-      !storedUser.username ||
-      !storedUser.email ||
       !storedUser.role ||
-      !storedUser.universityId
+      (storedUser.role !== "admin" &&
+        (!("username" in storedUser) || !("email" in storedUser)))
     ) {
       window.sessionStorage.removeItem(mockSessionStorageKey);
       return null;
     }
 
+    if (storedUser.role === "admin") return storedUser as SessionUser;
+
+    const general = storedUser as Partial<GeneralSessionUser>;
     const nameParts = storedUser.displayName.trim().split(/\s+/);
-    const firstName = storedUser.firstName ?? nameParts[0] ?? "CUET";
-    const lastName = storedUser.lastName ?? (nameParts.slice(1).join(" ") || "User");
+    const firstName = general.firstName ?? nameParts[0] ?? "CUET";
+    const lastName = general.lastName ?? (nameParts.slice(1).join(" ") || "User");
 
     return {
       ...storedUser,
       firstName,
       lastName,
-      department:
-        storedUser.department ??
-        (storedUser.role === "admin"
-          ? "University Administration"
-          : "Computer Science & Engineering"),
-      phone: storedUser.phone ?? "",
-      homeAddress: storedUser.homeAddress ?? "Chattogram, Bangladesh",
-      bio: storedUser.bio ?? "",
+      department: general.department ?? "Computer Science & Engineering",
+      phone: general.phone ?? "",
+      homeAddress: general.homeAddress ?? "Chattogram, Bangladesh",
+      bio: general.bio ?? "",
       memberSince: storedUser.memberSince ?? "2026-01-15T10:00:00+06:00",
     } as SessionUser;
   } catch {

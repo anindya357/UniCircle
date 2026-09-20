@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 
 import { FormError } from "@/components/ui/forms/form-error";
@@ -21,7 +20,6 @@ export function GeneralLoginForm({
   initialIdentifier = "",
   registrationVerified = false,
 }: GeneralLoginFormProps) {
-  const router = useRouter();
   const [identifier, setIdentifier] = useState(initialIdentifier);
   const [password, setPassword] = useState("");
   const [identifierError, setIdentifierError] = useState<string | null>(null);
@@ -41,8 +39,7 @@ export function GeneralLoginForm({
     setIsSubmitting(true);
     try {
       await authService.loginGeneral({ identifier: identifier.trim(), password });
-      router.push(routes.home);
-      router.refresh();
+      window.location.assign(routes.home);
     } catch (error) {
       setFormError(getAuthErrorMessage(error));
     } finally {
@@ -91,11 +88,6 @@ export function GeneralLoginForm({
             aria-describedby={passwordError ? "login-password-error" : undefined}
           />
           <FormError id="login-password-error" message={passwordError} />
-        </div>
-
-        <div className={styles.mockHint}>
-          Mock preview: any non-empty credentials sign in. Use “invalid” or
-          “wrong-password” to preview an error.
         </div>
 
         <button className={styles.submitButton} type="submit" disabled={isSubmitting}>

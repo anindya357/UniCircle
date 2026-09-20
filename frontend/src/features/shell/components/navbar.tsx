@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useId, useState } from "react";
 
 import {
@@ -41,10 +41,10 @@ function roleLabel(role: SessionUser["role"]): string {
 export function Navbar() {
   const { user } = useAuthenticatedUser();
   const pathname = usePathname();
-  const router = useRouter();
   const menuId = useId();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState("");
   const canAccessAdmin = user.role === "admin";
 
   function renderLinks(items: readonly NavigationItem[], isAdmin = false) {
@@ -67,10 +67,13 @@ export function Navbar() {
 
   async function handleLogout() {
     setIsLoggingOut(true);
+    setLogoutError("");
 
     try {
       await sessionService.logout();
-      router.push(routes.auth.login);
+      window.location.assign(routes.auth.login);
+    } catch {
+      setLogoutError("Could not sign out. Please try again.");
     } finally {
       setIsLoggingOut(false);
       setIsMobileOpen(false);
@@ -79,6 +82,7 @@ export function Navbar() {
 
   return (
     <header className={styles.header}>
+      {logoutError ? <p role="alert">{logoutError}</p> : null}
       <div className={styles.topRow}>
         <Link
           className={styles.brand}
@@ -154,7 +158,8 @@ export function Navbar() {
 
         <div className={styles.mobileAccount}>
           <p>
-            Signed in as <strong>{user.username}</strong>
+            Signed in as{" "}
+            <strong>{user.role === "admin" ? user.adminId : user.username}</strong>
           </p>
           <button type="button" onClick={handleLogout} disabled={isLoggingOut}>
             {isLoggingOut ? "Signing out…" : "Logout"}

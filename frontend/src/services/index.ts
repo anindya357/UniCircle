@@ -1,5 +1,4 @@
 import { MockAdminService } from "@/mocks/services/mock-admin-service";
-import { MockAuthService } from "@/mocks/services/mock-auth-service";
 import { MockCampusAssistantService } from "@/mocks/services/mock-campus-assistant-service";
 import { MockClubEventService } from "@/mocks/services/mock-club-event-service";
 import { MockDirectoryService } from "@/mocks/services/mock-directory-service";
@@ -7,9 +6,10 @@ import { MockForumService } from "@/mocks/services/mock-forum-service";
 import { MockHomeService } from "@/mocks/services/mock-home-service";
 import { MockNotificationService } from "@/mocks/services/mock-notification-service";
 import { MockNewsService } from "@/mocks/services/mock-news-service";
-import { MockProfileService } from "@/mocks/services/mock-profile-service";
 import { MockResourceSharingService } from "@/mocks/services/mock-resource-sharing-service";
-import { MockSessionService } from "@/mocks/services/mock-session-service";
+import { ApiAuthService } from "@/services/api/api-auth-service";
+import { ApiProfileService } from "@/services/api/api-profile-service";
+import { ApiSessionService } from "@/services/api/api-session-service";
 import { MockTransportService } from "@/mocks/services/mock-transport-service";
 import type { AdminService } from "@/services/contracts/admin-service";
 import type { AuthService } from "@/services/contracts/auth-service";
@@ -26,7 +26,7 @@ import type { SessionService } from "@/services/contracts/session-service";
 import type { TransportService } from "@/services/contracts/transport-service";
 
 export const adminService: AdminService = new MockAdminService();
-export const authService: AuthService = new MockAuthService();
+export const authService: AuthService = new ApiAuthService();
 export const campusAssistantService: CampusAssistantService =
   new MockCampusAssistantService();
 export const clubEventService: ClubEventService = new MockClubEventService();
@@ -35,8 +35,8 @@ export const forumService: ForumService = new MockForumService();
 export const homeService: HomeService = new MockHomeService();
 export const notificationService: NotificationService = new MockNotificationService();
 export const newsService: NewsService = new MockNewsService();
-export const profileService: ProfileService = new MockProfileService();
+export const profileService: ProfileService = new ApiProfileService();
 export const resourceSharingService: ResourceSharingService =
   new MockResourceSharingService();
-export const sessionService: SessionService = new MockSessionService();
+export const sessionService: SessionService = new ApiSessionService();
 export const transportService: TransportService = new MockTransportService();

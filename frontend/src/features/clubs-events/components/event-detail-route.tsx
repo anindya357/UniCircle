@@ -25,9 +25,9 @@ export function EventDetailRoute({ eventId }: Readonly<{ eventId: string }>) {
     : undefined;
   const [values, setValues] = useState<EventRegistrationInput>({
     name: user.displayName,
-    email: user.email,
-    studentId: user.universityId,
-    department: user.department,
+    email: user.role === "student" ? user.email : "",
+    studentId: user.role === "student" ? user.universityId : "",
+    department: user.role === "student" ? user.department : "",
     bkashTransactionId: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -939,24 +939,24 @@ real secrets and Admin credentials are not committed.
 
 # Backend Feature 1 — Authentication
 
-Implementation started: backend request schemas validate the existing frontend
-registration, OTP, and login inputs, and registration preparation hashes
-passwords without persisting plaintext. The [working ERD](docs/design/ERD.md)
-now defines the initial tables, Admin provisioning, and browser JWT/session
-strategy. Models, migrations, routes, and frontend connection remain to build.
+Implementation completed in code with migration `20260921_0002`, FastAPI auth
+routes, PostgreSQL-backed OTP/session storage, restricted Admin provisioning, and
+the same-origin Next.js auth BFF. Automated route tests use a fake mailer and pass.
+**Live completion remains unverified:** local SMTP is not configured yet, so a
+real CUET inbox cannot receive an OTP until valid provider settings are supplied.
 
 ## 7.1 Database
 
-- [ ] Create user/account model according to final ERD.
-- [ ] Store username.
-- [ ] Store CUET email.
-- [ ] Store hashed password only.
-- [ ] Store role.
-- [ ] Store appropriate Student/Teacher/Staff identifier according to approved model.
-- [ ] Store verification state.
-- [ ] Create required unique constraints.
-- [ ] Create OTP-related persistence only if required by approved OTP design.
-- [ ] Create migration.
+- [x] Create user/account model according to final ERD.
+- [x] Store username.
+- [x] Store CUET email.
+- [x] Store hashed password only.
+- [x] Store role.
+- [x] Store appropriate Student/Teacher/Staff identifier according to approved model.
+- [x] Store verification state.
+- [x] Create required unique constraints.
+- [x] Create OTP-related persistence only if required by approved OTP design.
+- [x] Create migration.
 
 ## 7.2 Registration service
 
@@ -964,60 +964,60 @@ strategy. Models, migrations, routes, and frontend connection remain to build.
 - [x] Reject non-CUET email addresses.
 - [x] Validate role.
 - [x] Validate required role-specific ID (format awaits approved design).
-- [ ] Check username uniqueness.
-- [ ] Check email uniqueness.
-- [x] Hash password during registration preparation; database save is pending.
-- [ ] Create pending/unverified account.
-- [ ] Generate OTP.
-- [ ] Apply OTP expiry.
-- [ ] Send OTP through configured Python SMTP/email service.
-- [ ] Prevent OTP from being logged in production.
-- [ ] Implement resend rules.
+- [x] Check username uniqueness.
+- [x] Check email uniqueness.
+- [x] Hash password during registration preparation and store only its hash.
+- [x] Create pending/unverified account.
+- [x] Generate OTP.
+- [x] Apply OTP expiry.
+- [x] Send OTP through configured Python SMTP/email service (fake-mailer test; live SMTP pending).
+- [x] Prevent OTP from being logged in production.
+- [x] Implement resend rules.
 
 ## 7.3 OTP verification
 
-- [ ] Verify OTP.
-- [ ] Reject invalid OTP.
-- [ ] Reject expired OTP.
-- [ ] Mark user as verified.
-- [ ] Prevent/restrict login before verification according to final auth design.
+- [x] Verify OTP.
+- [x] Reject invalid OTP.
+- [x] Reject expired OTP.
+- [x] Mark user as verified.
+- [x] Prevent/restrict login before verification according to final auth design.
 
 ## 7.4 Login/JWT
 
-- [ ] Support username or CUET email login for General Users.
-- [ ] Validate password.
-- [ ] Issue JWT according to approved token strategy.
-- [ ] Implement token expiry.
-- [ ] Implement authenticated-user endpoint.
-- [ ] Implement logout behavior according to chosen JWT/session design.
-- [ ] Implement Admin authentication using the approved superuser/admin strategy.
-- [ ] Keep Club Admin as per-club membership for a student User ID, not as a separate global login role or a client-trusted JWT claim.
-- [ ] Never hard-code production Admin secrets in repository source.
+- [x] Support username or CUET email login for General Users.
+- [x] Validate password.
+- [x] Issue JWT according to approved token strategy.
+- [x] Implement token expiry.
+- [x] Implement authenticated-user endpoint.
+- [x] Implement logout behavior according to chosen JWT/session design.
+- [x] Implement Admin authentication using the approved superuser/admin strategy.
+- [x] Keep Club Admin as per-club membership for a student User ID, not as a separate global login role or a client-trusted JWT claim.
+- [x] Never hard-code production Admin secrets in repository source.
 
 ## 7.5 Connect Authentication frontend
 
-- [ ] Replace mock registration call.
-- [ ] Connect OTP submission.
-- [ ] Connect resend OTP.
-- [ ] Connect login.
-- [ ] Store authentication state according to approved security design.
-- [ ] Connect protected-route logic.
-- [ ] Keep Home public with Login/Sign up entry links and redirect authenticated General Users back to Home after login.
-- [ ] Protect every non-public feature route with backend/session-aware checks, not only client-side hiding.
-- [ ] Connect Admin route protection.
-- [ ] Connect logout.
-- [ ] Verify expired/invalid token behavior.
+- [x] Replace mock registration call.
+- [x] Connect OTP submission.
+- [x] Connect resend OTP.
+- [x] Connect login.
+- [x] Store authentication state according to approved security design.
+- [x] Connect protected-route logic.
+- [x] Keep Home public with Login/Sign up entry links and redirect authenticated General Users back to Home after login.
+- [x] Protect every non-public feature route with backend/session-aware checks, not only client-side hiding.
+- [x] Connect Admin route protection.
+- [x] Connect logout.
+- [x] Verify expired/invalid token behavior.
 
 ### Feature 1 backend/integration done when
 
 - [ ] Real user can register.
-- [ ] CUET email restriction works.
+- [x] CUET email restriction works.
 - [ ] OTP email is delivered.
-- [ ] OTP verification works.
-- [ ] Verified user can login.
-- [ ] JWT-protected API works.
-- [ ] Admin authorization works.
-- [ ] Frontend no longer uses auth mocks.
+- [x] OTP verification works with the test mailer.
+- [x] Verified user can login in integration tests.
+- [x] JWT-protected API works in integration tests.
+- [x] Admin authorization works in integration tests.
+- [x] Frontend no longer uses auth mocks.
 
 ---
 

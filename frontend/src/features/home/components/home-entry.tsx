@@ -27,9 +27,14 @@ export function HomeEntry({
 
   useEffect(() => {
     let isCurrent = true;
-    void sessionService.getCurrentUser().then((currentUser) => {
-      if (isCurrent) setUser(currentUser);
-    });
+    void sessionService
+      .getCurrentUser()
+      .then((currentUser) => {
+        if (isCurrent) setUser(currentUser);
+      })
+      .catch(() => {
+        if (isCurrent) setUser(null);
+      });
     return () => {
       isCurrent = false;
     };

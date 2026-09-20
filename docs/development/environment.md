@@ -8,8 +8,8 @@ UniCircle uses separate development, testing, and production configuration. The 
 | --- | --- | --- | --- |
 | `APP_ENV` | Backend/runtime | No | Selects development, testing, or production behavior. |
 | `FRONTEND_URL` | Backend/runtime | No | Canonical frontend origin for links and CORS configuration. |
-| `BACKEND_URL` | Runtime | No | Canonical backend origin for server-side integration. |
-| `NEXT_PUBLIC_API_URL` | Frontend | Yes | Existing public API URL placeholder; currently unused by feature services. The Phase 7 BFF design will not use it for authenticated browser calls. It must never contain credentials. |
+| `BACKEND_URL` | Runtime | No | Canonical backend origin for future deployment wiring. |
+| `BACKEND_API_URL` | Next.js server | No | FastAPI origin used by the same-origin authentication BFF; set in `frontend/.env.local` or deployment environment. |
 | `DATABASE_URL` | Backend | No | PostgreSQL connection string. |
 | `JWT_SECRET` | Backend | No | Signs/verifies authentication tokens. |
 | `JWT_ISSUER`, `JWT_AUDIENCE`, `JWT_ACCESS_TOKEN_MINUTES` | Backend | No | Required token context and bounded access-token lifetime. |
@@ -31,3 +31,6 @@ UniCircle uses separate development, testing, and production configuration. The 
 - Only variables deliberately prefixed with `NEXT_PUBLIC_` may be read by browser code.
 - Add vector-store or object-storage variables only after those technologies are approved.
 - The root `.env` is ignored and may contain local dummy placeholders. Replace `JWT_SECRET` and `OTP_PEPPER` with two distinct, random signing keys before using authentication or OTP; a JWT access token is issued by the server and must **not** be pasted into `JWT_SECRET`.
+- The auth BFF does not use `NEXT_PUBLIC_API_URL`. Browser code calls same-origin
+  `/api/auth/*` and `/api/profile`, and never receives a JWT. `BACKEND_API_URL`
+  defaults to `http://127.0.0.1:8000` for local development.

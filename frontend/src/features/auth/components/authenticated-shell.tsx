@@ -17,43 +17,54 @@ import { sessionService } from "@/services";
 
 type AuthenticatedShellProps = Readonly<{
   children: ReactNode;
+  initialUser: SessionUser;
   initialNotifications: readonly AppNotification[];
   initialClubEventSnapshot: ClubEventSnapshot;
 }>;
 
 export function AuthenticatedShell({
   children,
+  initialUser,
   initialNotifications,
   initialClubEventSnapshot,
 }: AuthenticatedShellProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [user, setUser] = useState<SessionUser | null | undefined>(undefined);
+  const [user, setUser] = useState<SessionUser | null>(initialUser);
+  const [sessionError, setSessionError] = useState(false);
 
   useEffect(() => {
     let isCurrent = true;
 
-    void sessionService.getCurrentUser().then((currentUser) => {
-      if (!isCurrent) {
-        return;
-      }
-
-      setUser(currentUser);
-
-      if (!currentUser) {
-        router.replace(routes.auth.login);
-      }
-    });
+    void sessionService
+      .getCurrentUser()
+      .then((currentUser) => {
+        if (!isCurrent) return;
+        setUser(currentUser);
+        setSessionError(false);
+        if (!currentUser) router.replace(routes.auth.login);
+      })
+      .catch(() => {
+        if (isCurrent) setSessionError(true);
+      });
 
     return () => {
       isCurrent = false;
     };
-  }, [router]);
+  }, [pathname, router]);
 
   const isAdminRoute =
     pathname === routes.admin || pathname.startsWith(`${routes.admin}/`);
   const isUnauthorizedAdminRoute =
-    user !== null && user !== undefined && isAdminRoute && user.role !== "admin";
+    user !== null && isAdminRoute && user.role !== "admin";
+
+  if (sessionError) {
+    return (
+      <main className="app-shell" id="main-content" role="alert">
+        Session check failed. Please refresh the page and try again.
+      </main>
+    );
+  }
 
   if (!user) {
     return (

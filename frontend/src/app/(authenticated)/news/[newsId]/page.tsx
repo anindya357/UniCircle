@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { NewsDetailPage } from "@/features/news/components/news-detail-page";
+import { requireServerSessionUser } from "@/features/auth/lib/server-session";
 import { newsService } from "@/services";
 
 type NewsDetailsRouteProps = Readonly<{
@@ -27,6 +28,7 @@ export async function generateMetadata({
 }
 
 export default async function NewsDetailsRoute({ params }: NewsDetailsRouteProps) {
+  await requireServerSessionUser();
   const [{ newsId }, items] = await Promise.all([params, newsService.listItems()]);
   const item = items.find((candidate) => candidate.id === newsId);
 

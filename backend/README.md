@@ -1,9 +1,9 @@
 # UniCircle backend foundation
 
-Phases 6.1–6.3 provide a FastAPI app, PostgreSQL/SQLAlchemy and Alembic tooling,
-plus common authentication, email verification, notification, pagination, and
-validation services. They do **not** implement feature APIs or domain tables;
-those depend on the approved ERD in Phase 7.
+Phases 6.1–6.3 provide the FastAPI and database foundation. Phase 7 now includes
+Authentication Feature 1: persisted General Users, OTP challenges, revocable
+sessions, App Admin login/provisioning, and profile updates. Other feature APIs
+and domain tables remain future work.
 
 ## Python setup
 
@@ -16,8 +16,9 @@ py -3.12 -m venv .venv
 ```
 
 On macOS/Linux, use `python3.12 -m venv .venv` and `.venv/bin/python`.
-`GET /health` is the unversioned liveness endpoint; feature routes will live
-under `/api/v1`. OpenAPI JSON is at `/api/v1/openapi.json` and interactive docs
+`GET /health` is the unversioned liveness endpoint; auth routes live under
+`/api/v1/auth` and profile updates at `/api/v1/users/me`. OpenAPI JSON is at
+`/api/v1/openapi.json` and interactive docs
 at `/docs`. The health check does not require a database connection.
 
 ## Configuration
@@ -38,13 +39,12 @@ Configure `JWT_ISSUER`, `JWT_AUDIENCE`, and `JWT_ACCESS_TOKEN_MINUTES` consisten
 across deployments. SMTP supports `starttls` or `ssl` only. Never use real
 mailbox credentials in committed files or test fixtures.
 
-The current-user dependency verifies the token and then queries an identity
-repository for the latest active, verified account and role. Phase 7 must
-provide that repository; roles inside tokens are never trusted for admin
-authorization. Phase 7 must also provide durable, cross-worker atomic OTP and
-notification repositories when their database models are approved. The
-in-memory stores under `tests/` are test fixtures only. No OTP email is sent
-until SMTP is configured and a feature route uses the service.
+The current-user dependency verifies the JWT, checks its unrevoked database
+session, then loads the latest active, verified account and role. Roles inside
+tokens are never trusted. OTP challenges and login throttles are stored in the
+database; the in-memory stores under `tests/` are test fixtures only. Registration
+fails closed if SMTP is not configured. Real SMTP delivery must be validated
+with the selected provider before production use.
 
 The default development URL is
 `postgresql+psycopg://unicircle_dev@localhost:5432/unicircle_dev`. On a local
@@ -71,9 +71,9 @@ Run from `backend/` with the configured environment:
 .\.venv\Scripts\python -m alembic current
 ```
 
-The reviewed first revision (`20260920_0001`) is intentionally empty. It
-establishes migration history without inventing tables before the ERD is
-approved. Future feature work should add ORM models, import them from
+The reviewed first revision (`20260920_0001`) is intentionally empty. Revision
+`20260921_0002` creates authentication tables and can be applied with the command
+above. Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with
 `alembic revision --autogenerate -m "description"`, then **review and edit**
 its operations, constraints, indexes, nullability, data migrations, and
@@ -85,10 +85,21 @@ opt-in for future models; no primary-key type or domain relationship is chosen
 until the approved ERD is available. The request-scoped `get_db` dependency
 closes sessions; future feature services own transaction commits and rollbacks.
 
-There are no development seed rows yet because there are no domain tables.
-When Phase 7 defines those tables, add explicit, idempotent development-only
-seed commands using approved sample content; never seed production implicitly
-at app startup or in a schema migration.
+No passwords or Admin accounts are seeded. To create an App Admin after applying
+the migration, run this interactive command from `backend/`:
+
+```powershell
+.\.venv\Scripts\python -m app.modules.auth.provision_admin --admin-id YOUR_ADMIN_ID
+```
+
+It prompts twice for a password without putting it in shell history. Public
+registration cannot create Admins. Existing General Users register with a CUET
+email, verify the emailed code, then sign in. If mail delivery fails after the
+pending account is saved, use the resend-code flow when SMTP is working.
+
+The FastAPI login responses contain JWTs for the trusted Next.js BFF only. The
+BFF places them in HttpOnly cookies and strips them from browser-facing JSON.
+Sessions expire after `JWT_ACCESS_TOKEN_MINUTES`; there is no refresh token.
 
 ## Quality checks
 

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 
 import { FormError } from "@/components/ui/forms/form-error";
@@ -13,7 +12,6 @@ import { authService } from "@/services";
 import styles from "./auth.module.css";
 
 export function AdminLoginForm() {
-  const router = useRouter();
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
   const [adminIdError, setAdminIdError] = useState<string | null>(null);
@@ -33,8 +31,7 @@ export function AdminLoginForm() {
     setIsSubmitting(true);
     try {
       await authService.loginAdmin({ adminId: adminId.trim(), password });
-      router.push(routes.admin);
-      router.refresh();
+      window.location.assign(routes.admin);
     } catch (error) {
       setFormError(getAuthErrorMessage(error));
     } finally {
@@ -78,11 +75,6 @@ export function AdminLoginForm() {
             aria-describedby={passwordError ? "admin-password-error" : undefined}
           />
           <FormError id="admin-password-error" message={passwordError} />
-        </div>
-
-        <div className={styles.mockHint}>
-          Mock preview only. Any non-empty Admin ID and password open the Admin page;
-          “invalid” and “wrong-password” demonstrate failure states.
         </div>
 
         <button className={styles.submitButton} type="submit" disabled={isSubmitting}>

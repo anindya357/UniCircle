@@ -60,7 +60,9 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
       setOtp("");
       setOtpError(null);
       setCooldown(authPolicy.otpResendCooldownSeconds);
-      setStatusMessage("A new verification code has been sent.");
+      setStatusMessage(
+        "If your account is pending, a new code will be sent when email delivery is available.",
+      );
     } catch (error) {
       setFormError(getAuthErrorMessage(error));
     } finally {
@@ -107,10 +109,9 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
           <FormError id="otp-error" message={otpError} />
         </div>
 
-        <div className={styles.mockHint} id="otp-hint">
-          Mock preview: any six digits succeed except 000000 (invalid) and 999999
-          (expired).
-        </div>
+        <p className={styles.mockHint} id="otp-hint">
+          Enter the six-digit code sent to your CUET email. Codes expire shortly.
+        </p>
 
         <button
           className={styles.submitButton}

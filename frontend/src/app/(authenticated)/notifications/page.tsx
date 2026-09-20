@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 
 import { AppShell } from "@/components/shared/app-shell";
+import { requireServerSessionUser } from "@/features/auth/lib/server-session";
 import { NotificationList } from "@/features/notifications/components/notification-list";
 
 export const metadata: Metadata = {
   title: "Notifications",
 };
 
-export default function NotificationsPage() {
+export default async function NotificationsPage() {
+  await requireServerSessionUser();
   return (
     <AppShell>
       <header className="page-heading">

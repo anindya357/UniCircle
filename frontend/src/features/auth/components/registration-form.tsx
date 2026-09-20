@@ -16,6 +16,7 @@ import {
 } from "@/features/auth/lib/auth-validation";
 import type { GeneralUserRole } from "@/features/auth/types/auth";
 import { authService } from "@/services";
+import { ServiceError } from "@/services/errors/service-error";
 
 import { PasswordRequirements } from "./password-requirements";
 import styles from "./auth.module.css";
@@ -56,11 +57,13 @@ export function RegistrationForm() {
   const [universityId, setUniversityId] = useState("");
   const [errors, setErrors] = useState<RegistrationFields>({});
   const [formError, setFormError] = useState<string | null>(null);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormError(null);
+    setPendingEmail(null);
 
     const nextErrors: RegistrationFields = {
       firstName: validateRequired(firstName, "First name"),
@@ -94,6 +97,9 @@ export function RegistrationForm() {
       router.push(`${routes.auth.verifyOtp}?email=${encodeURIComponent(result.email)}`);
     } catch (error) {
       setFormError(getAuthErrorMessage(error));
+      if (error instanceof ServiceError && error.code === "email-unavailable") {
+        setPendingEmail(email.trim().toLowerCase());
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -103,6 +109,17 @@ export function RegistrationForm() {
     <>
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
         {formError ? <div className={styles.formAlert}>{formError}</div> : null}
+        {pendingEmail ? (
+          <p>
+            Your account is pending verification.{" "}
+            <Link
+              href={`${routes.auth.verifyOtp}?email=${encodeURIComponent(pendingEmail)}`}
+            >
+              Open code entry
+            </Link>{" "}
+            to request another code when email is available.
+          </p>
+        ) : null}
 
         <div className={styles.nameFields}>
           <div className={styles.field}>

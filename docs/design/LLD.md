@@ -1,6 +1,9 @@
 # UniCircle low-level design (LLD)
 
-Status: **planned Phase 7 contracts and invariants**. The [ERD](ERD.md) defines logical storage; the [HLD](HLD.md) defines runtime boundaries. Existing frontend interfaces under `frontend/src/services/contracts/` are mock-era view contracts. The routes below are proposed implementation targets and must be reflected in FastAPI OpenAPI and integration tests as each feature is built; they do not exist yet.
+Status: **planned Phase 7 contracts and invariants**. Authentication and
+`PATCH /users/me` are implemented in migration `20260921_0002` and the FastAPI
+auth/profile routers; other feature routes below remain proposed. The
+[ERD](ERD.md) defines storage and the [HLD](HLD.md) defines runtime boundaries.
 
 ## Standard request path
 

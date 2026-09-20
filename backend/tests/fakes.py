@@ -13,7 +13,7 @@ class FakeIdentityLookup:
     def __init__(self) -> None:
         self.identities: dict[str, AuthIdentity] = {}
 
-    def get_by_id(self, user_id: str) -> AuthIdentity | None:
+    def get_by_id(self, user_id: str, _token_id: str) -> AuthIdentity | None:
         return self.identities.get(user_id)
 
 

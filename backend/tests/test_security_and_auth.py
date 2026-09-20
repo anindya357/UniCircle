@@ -121,7 +121,7 @@ def test_protected_routes_check_live_identity_and_admin_role(
     assert disabled.status_code == 401
 
 
-def test_identity_dependency_fails_closed_without_repository(
+def test_identity_dependency_fails_closed_for_unknown_subject(
     settings: Settings,
 ) -> None:
     application = create_app(settings)
@@ -134,5 +134,4 @@ def test_identity_dependency_fails_closed_without_repository(
     with TestClient(application) as client:
         response = client.get("/test/me", headers=headers)
 
-    assert response.status_code == 503
-    assert response.json()["error"]["code"] == "identity_store_unavailable"
+    assert response.status_code == 401

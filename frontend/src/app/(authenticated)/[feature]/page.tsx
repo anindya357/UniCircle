@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { AdminPage } from "@/features/admin/components/admin-page";
+import { requireServerSessionUser } from "@/features/auth/lib/server-session";
 import { CampusAssistantPage } from "@/features/assistant/components/campus-assistant-page";
 import { CampusExplorerPage } from "@/features/campus-explorer/components/campus-explorer-page";
 import { ClubEventHub } from "@/features/clubs-events/components/club-event-hub";
@@ -21,6 +22,7 @@ export function generateStaticParams() {
 }
 
 export default async function FeaturePage({ params }: FeaturePageProps) {
+  const user = await requireServerSessionUser();
   const { feature } = await params;
   const content = getFeaturePage(feature);
 
@@ -63,6 +65,7 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
   }
 
   if (feature === "admin") {
+    if (user.role !== "admin") notFound();
     const snapshot = await adminService.getSnapshot();
 
     return <AdminPage initialSnapshot={snapshot} />;

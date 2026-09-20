@@ -9,11 +9,12 @@ from enum import StrEnum
 from typing import Annotated, Protocol
 
 from fastapi import Depends
+from sqlalchemy.orm import Session
 
 from app.core.config import Settings, get_settings
 from app.core.email import VerificationEmailSender, get_verification_email_sender
-from app.core.errors import AppError
 from app.core.validation import normalize_cuet_email
+from app.db.session import get_db
 
 
 @dataclass(frozen=True)
@@ -113,12 +114,10 @@ class OtpService:
         return hmac.new(key, message, hashlib.sha256).hexdigest()
 
 
-def get_otp_store() -> OtpStore:
-    raise AppError(
-        status_code=503,
-        code="otp_store_unavailable",
-        message="Email verification storage is not configured yet.",
-    )
+def get_otp_store(db: Annotated[Session, Depends(get_db)]) -> OtpStore:
+    from app.modules.auth.persistence import DatabaseOtpStore
+
+    return DatabaseOtpStore(db)
 
 
 def get_otp_service(

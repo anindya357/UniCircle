@@ -34,6 +34,7 @@ erDiagram
         string first_name
         string last_name
         string home_address
+        string department_name
         string phone
         string bio
         datetime verified_at
@@ -47,6 +48,13 @@ erDiagram
         datetime issued_at
         datetime expires_at
         datetime revoked_at
+    }
+    AUTH_RATE_LIMIT {
+        uuid id PK
+        string scope
+        string key_digest
+        datetime window_started_at
+        int attempt_count
     }
     OTP_CHALLENGE {
         uuid id PK
@@ -137,6 +145,13 @@ erDiagram
 - `USER.role` is `student`, `teacher`, `staff`, or `admin`. Public registration accepts only the first three. General users require `username`, a canonical `@cuet.ac.bd` email, names, home address, and `university_id`; Admin accounts instead require `admin_id` and are created only by a restricted provisioning command. `password_hash` is Argon2; no plaintext password column exists. `verified_at` is null until CUET email verification. Admin accounts are provisioned as verified. `is_active` gates all protected access. The existing `AuthIdentity.is_verified` is derived from `verified_at IS NOT NULL`.
 - Uniqueness: case-insensitive `username`, canonical `email`, `admin_id`, and `(role, university_id)` for general users. Add `CHECK` constraints for role-dependent nullability and valid roles. Do not treat a client role or JWT role claim as authority.
 - `OTP_CHALLENGE` has a unique `(recipient_email, purpose)` key for the current challenge. Store only a keyed digest, not the code. Issuance, cooldown, attempt decrement, expiry, consumption, and replacement must use a transaction/row lock. `AUTH_SESSION` stores a digest of the JWT `jti`, never the JWT itself; logout revokes the row. Every authenticated request verifies the JWT, the unrevoked session, and the current user record.
+- `AUTH_RATE_LIMIT` keeps fixed-window counters keyed by a digest of action plus
+  account identifier or network peer, rather than storing raw identifiers or IPs.
+  Unique `(scope, key_digest)` prevents duplicate counters. The initial auth
+  implementation is migration `20260921_0002`.
+- `USER.department_name` temporarily holds the free-text department/unit field
+  used by the existing profile editor. It is not a trusted academic affiliation;
+  `department_id` can be added when the directory model is implemented.
 - `CLUB_ADMIN` is a student-only many-to-many mapping, independent of global App Admin. A club must retain at least one admin; enforce this in a locked transaction when removing admins. Club-request approval locks the pending request, creates exactly one club and its initial admin, and records the reviewer atomically. Existing CUET clubs may have null `creation_request_id` and must be seeded with at least one admin before club management opens.
 - Club short name, category, tagline, and activities are needed by the current frontend. A request must also capture purpose and the planned campus need/impact required by the workflow; the existing mock form will need those additional fields when connected.
 - `CLUB_MEMBER` is optional general membership information, not a grant of management privileges. Do not infer club-admin status from it.

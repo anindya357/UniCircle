@@ -110,15 +110,7 @@ export function ClubEventProvider({
     return () => {
       active = false;
     };
-  }, [
-    initialSnapshot,
-    user.id,
-    user.role,
-    user.displayName,
-    user.email,
-    user.universityId,
-    user.department,
-  ]);
+  }, [initialSnapshot, user]);
 
   useEffect(() => {
     if (!isRestored) return;

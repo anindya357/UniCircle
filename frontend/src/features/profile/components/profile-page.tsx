@@ -5,7 +5,10 @@ import { useState, type FormEvent } from "react";
 import { AppShell } from "@/components/shared/app-shell";
 import { FormError } from "@/components/ui/forms/form-error";
 import { useAuthenticatedUser } from "@/features/auth/context/authenticated-user-context";
-import type { SessionUser } from "@/features/auth/types/session-user";
+import type {
+  GeneralSessionUser,
+  SessionUser,
+} from "@/features/auth/types/session-user";
 import type { UpdateProfileInput } from "@/features/profile/types/profile";
 import { profileService } from "@/services";
 
@@ -34,7 +37,7 @@ function getRoleIdLabel(role: SessionUser["role"]) {
   return "Admin ID";
 }
 
-function toEditableProfile(user: SessionUser): UpdateProfileInput {
+function toEditableProfile(user: GeneralSessionUser): UpdateProfileInput {
   return {
     firstName: user.firstName,
     lastName: user.lastName,
@@ -69,7 +72,50 @@ function validateProfile(values: UpdateProfileInput): ProfileErrors {
 }
 
 export function ProfilePage() {
-  const { user, replaceUser } = useAuthenticatedUser();
+  const { user } = useAuthenticatedUser();
+  if (user.role === "admin") {
+    return (
+      <AppShell className={styles.pageShell}>
+        <section className={styles.profileHero} aria-labelledby="profile-title">
+          <div className={styles.heroIdentity}>
+            <span className={styles.heroAvatar} aria-hidden="true">
+              AD
+            </span>
+            <div>
+              <p>App administrator</p>
+              <h1 id="profile-title">{user.displayName}</h1>
+              <div className={styles.identityMeta}>
+                <span>Admin ID: {user.adminId}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className={styles.detailsCard}>
+          <header>
+            <div>
+              <p>Verified account</p>
+              <h2>Administrator access</h2>
+            </div>
+          </header>
+          <div className={styles.profileDetails}>
+            <dl>
+              <ProfileDetail label="Admin ID" value={user.adminId} />
+              <ProfileDetail label="Campus role" value="App Admin" />
+              <ProfileDetail
+                label="Member since"
+                value={memberSinceFormatter.format(new Date(user.memberSince))}
+              />
+            </dl>
+          </div>
+        </section>
+      </AppShell>
+    );
+  }
+  return <GeneralProfilePage user={user} />;
+}
+
+function GeneralProfilePage({ user }: Readonly<{ user: GeneralSessionUser }>) {
+  const { replaceUser } = useAuthenticatedUser();
   const [isEditing, setIsEditing] = useState(false);
   const [values, setValues] = useState<UpdateProfileInput>(() =>
     toEditableProfile(user),

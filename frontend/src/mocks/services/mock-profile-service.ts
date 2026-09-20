@@ -11,7 +11,7 @@ export class MockProfileService implements ProfileService {
     await delay(mockLatencyMilliseconds);
 
     const currentUser = readMockSession();
-    if (!currentUser) {
+    if (!currentUser || currentUser.role === "admin") {
       throw new ServiceError(
         "Your session has expired. Please sign in again.",
         "unauthorized",
