@@ -20,6 +20,10 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
+On Windows, after the virtual environment is set up, you can use `.\run`
+from `backend/` as the short start command. It always uses this project's
+Python 3.12 virtual environment, even if your global `uvicorn` uses Python 3.10.
+
 On macOS/Linux, use `python3.12 -m venv .venv` and `.venv/bin/python`.
 `GET /health` is the unversioned liveness endpoint; auth routes live under
 `/api/v1/auth` and profile updates at `/api/v1/users/me`. OpenAPI JSON is at
