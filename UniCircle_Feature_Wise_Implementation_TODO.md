@@ -253,6 +253,8 @@ Notifications will later support event state changes and campus announcements/up
 # Feature 1 — Authentication Frontend
 
 The workflow requires General User registration with CUET email, role selection, role-specific ID, OTP verification, normal-user login, and separate Admin credentials.
+Accepted CUET mailbox domains are exactly `cuet.ac.bd` and `student.cuet.ac.bd`;
+the second is used by student addresses. Other subdomains are not assumed valid.
 
 ## 4.1 Registration page
 
@@ -942,8 +944,9 @@ real secrets and Admin credentials are not committed.
 Implementation completed in code with migration `20260921_0002`, FastAPI auth
 routes, PostgreSQL-backed OTP/session storage, restricted Admin provisioning, and
 the same-origin Next.js auth BFF. Automated route tests use a fake mailer and pass.
-**Live completion remains unverified:** local SMTP is not configured yet, so a
-real CUET inbox cannot receive an OTP until valid provider settings are supplied.
+**Live completion remains unverified:** SMTP configuration and authentication
+have passed local checks, but delivery to a real CUET inbox and a live
+registration-to-login journey have not yet been confirmed.
 
 ## 7.1 Database
 
@@ -962,6 +965,7 @@ real CUET inbox cannot receive an OTP until valid provider settings are supplied
 
 - [x] Validate registration payload.
 - [x] Reject non-CUET email addresses.
+- [x] Accept `@cuet.ac.bd` and `@student.cuet.ac.bd` for registration, OTP, and login.
 - [x] Validate role.
 - [x] Validate required role-specific ID (format awaits approved design).
 - [x] Check username uniqueness.

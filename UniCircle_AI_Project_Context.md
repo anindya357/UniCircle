@@ -467,9 +467,10 @@ The workflow requires **CUET email only**.
 
 No non-CUET email should be accepted.
 
-The exact allowed CUET email-domain rule should come from the approved validation requirement.
-
-Do not guess a domain pattern if it has not been documented.
+The approved email-domain rule accepts exactly `@cuet.ac.bd` and
+`@student.cuet.ac.bd`. CUET student addresses can use the latter; reject
+unlisted subdomains and lookalike domains. OTP delivery still proves control
+of the supplied address before login.
 
 ## 10.2 OTP Email Verification
 
@@ -1368,7 +1369,6 @@ An AI agent should not invent answers when the project documents have not define
 
 Examples currently requiring approved design/requirements if encountered:
 
-- Exact CUET email domain validation rule.
 - Exact Admin provisioning method.
 - Exact JWT storage strategy in the browser.
 - Access-token/refresh-token design.

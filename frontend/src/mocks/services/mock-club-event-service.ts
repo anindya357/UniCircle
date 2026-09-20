@@ -1,3 +1,4 @@
+import { validateCuetEmail } from "@/features/auth/lib/auth-validation";
 import type {
   CampusClub,
   CampusEvent,
@@ -182,8 +183,9 @@ export class MockClubEventService implements ClubEventService {
     if (!input.name.trim() || !input.studentId.trim() || !input.department.trim()) {
       throw new Error("Complete your name, student ID, and department.");
     }
-    if (!/^[^\s@]+@cuet\.ac\.bd$/i.test(input.email.trim())) {
-      throw new Error("Enter a valid CUET email address.");
+    const emailError = validateCuetEmail(input.email);
+    if (emailError) {
+      throw new Error(emailError);
     }
     return {
       ...input,

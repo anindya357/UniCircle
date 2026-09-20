@@ -11,8 +11,19 @@ from tests.fakes import FakeNotificationRepository
 
 def test_cuet_email_validation_and_normalization() -> None:
     assert normalize_cuet_email(" Anika@CUET.AC.BD ") == "anika@cuet.ac.bd"
+    assert (
+        normalize_cuet_email(" Anika@STUDENT.CUET.AC.BD ")
+        == "anika@student.cuet.ac.bd"
+    )
     with pytest.raises(ValueError, match="cuet.ac.bd"):
         normalize_cuet_email("anika@example.com")
+    for address in (
+        "anika@demo.cuet.ac.bd",
+        "anika@student.cuet.ac.bd.example.com",
+        "anika@fakecuet.ac.bd",
+    ):
+        with pytest.raises(ValueError, match="cuet.ac.bd"):
+            normalize_cuet_email(address)
     with pytest.raises(ValueError, match="valid CUET email"):
         normalize_cuet_email("not an email")
 

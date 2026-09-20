@@ -54,8 +54,8 @@ export function validateCuetEmail(email: string): string | undefined {
 
   const domain = value.slice(value.lastIndexOf("@") + 1);
 
-  if (domain !== authPolicy.cuetEmailDomain) {
-    return `Use your @${authPolicy.cuetEmailDomain} email address.`;
+  if (!authPolicy.cuetEmailDomains.some((allowedDomain) => domain === allowedDomain)) {
+    return "Use your @cuet.ac.bd or @student.cuet.ac.bd email address.";
   }
 
   return undefined;

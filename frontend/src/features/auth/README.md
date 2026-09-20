@@ -6,7 +6,7 @@ Next.js route handlers. Start FastAPI and set `BACKEND_API_URL` in
 
 - `/register` collects first name, last name, home address, username, role, and the
   corresponding Student/Teacher/Staff ID. It validates all required fields, the exact
-  `@cuet.ac.bd` domain, and password strength.
+  `@cuet.ac.bd` or `@student.cuet.ac.bd` domain, and password strength.
 - `/verify-otp` submits the emailed code and supports resend/cooldown feedback.
 - `/login` signs in a verified General User and redirects to Home.
 - `/admin/login` signs in a separately provisioned App Admin.

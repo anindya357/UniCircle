@@ -108,6 +108,34 @@ def test_registration_verification_login_logout_and_profile(auth_stack) -> None:
     assert client.get("/api/v1/auth/me", headers=headers).status_code == 401
 
 
+def test_student_subdomain_registration_otp_and_email_login(auth_stack) -> None:
+    client, db, sender = auth_stack
+    email = "anika@student.cuet.ac.bd"
+    registration = client.post(
+        "/api/v1/auth/register",
+        json=registration_payload(
+            email="Anika@STUDENT.CUET.AC.BD",
+            username="anika_student",
+            universityId="2204001",
+        ),
+    )
+    assert registration.status_code == 201
+    assert registration.json()["data"] == {"email": email}
+    assert sender.sent[0][0] == email
+    assert db.scalar(select(User).where(User.email == email)).verified_at is None
+
+    verified = client.post(
+        "/api/v1/auth/verify-otp", json={"email": email, "otp": sender.sent[0][1]}
+    )
+    assert verified.status_code == 204
+    signed_in = client.post(
+        "/api/v1/auth/login",
+        json={"identifier": "ANIKA@STUDENT.CUET.AC.BD", "password": "StrongPass123"},
+    )
+    assert signed_in.status_code == 200
+    assert signed_in.json()["data"]["user"]["email"] == email
+
+
 def test_duplicate_cuet_account_resend_and_one_time_challenge(auth_stack) -> None:
     client, db, sender = auth_stack
     assert (

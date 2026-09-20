@@ -180,14 +180,19 @@ export function RegistrationForm() {
             name="email"
             type="email"
             autoComplete="email"
-            placeholder={`name@${authPolicy.cuetEmailDomain}`}
+            placeholder={
+              role === "student"
+                ? `your-id@${authPolicy.cuetEmailDomains[1]}`
+                : `name@${authPolicy.cuetEmailDomains[0]}`
+            }
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "email-error" : "email-hint"}
           />
           <span className={styles.fieldHint} id="email-hint">
-            Only @{authPolicy.cuetEmailDomain} addresses are accepted.
+            Use an @{authPolicy.cuetEmailDomains[0]} or @
+            {authPolicy.cuetEmailDomains[1]} address.
           </span>
           <FormError id="email-error" message={errors.email} />
         </div>

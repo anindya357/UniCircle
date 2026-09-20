@@ -103,8 +103,9 @@ the migration, run this interactive command from `backend/`:
 
 It prompts twice for a password without putting it in shell history. Public
 registration cannot create Admins. Existing General Users register with a CUET
-email, verify the emailed code, then sign in. If mail delivery fails after the
-pending account is saved, use the resend-code flow when SMTP is working.
+email at `@cuet.ac.bd` or `@student.cuet.ac.bd`, verify the emailed code, then
+sign in. If mail delivery fails after the pending account is saved, use the
+resend-code flow when SMTP is working.
 
 The FastAPI login responses contain JWTs for the trusted Next.js BFF only. The
 BFF places them in HttpOnly cookies and strips them from browser-facing JSON.

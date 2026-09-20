@@ -42,6 +42,20 @@ def test_registration_accepts_current_frontend_fields_and_prepares_hash() -> Non
     assert "StrongPass123" not in repr(request)
 
 
+def test_student_subdomain_registration_and_otp_requests() -> None:
+    email = "anika@student.cuet.ac.bd"
+    request = RegistrationRequest.model_validate(
+        registration_payload(email=" Anika@STUDENT.CUET.AC.BD ")
+    )
+    assert request.email == email
+    assert OtpVerificationRequest(email=email, otp="123456").email == email
+    assert ResendOtpRequest(email=email).email == email
+    assert (
+        GeneralLoginRequest(identifier=email, password="any-password").identifier
+        == email
+    )
+
+
 @pytest.mark.parametrize("role", ["student", "teacher", "staff"])
 def test_registration_allows_only_general_roles(role: str) -> None:
     request = RegistrationRequest.model_validate(registration_payload(role=role))
@@ -52,6 +66,8 @@ def test_registration_allows_only_general_roles(role: str) -> None:
     ("field", "value"),
     [
         ("email", "anika@example.com"),
+        ("email", "anika@other.cuet.ac.bd"),
+        ("email", "anika@student.cuet.ac.bd.evil.example"),
         ("role", "admin"),
         ("universityId", "  "),
         ("username", "invalid name"),
