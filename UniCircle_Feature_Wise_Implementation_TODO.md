@@ -1108,72 +1108,72 @@ The snapshot is campus-only; map tiles need network access in the browser.
 
 ## 7.11 Club data
 
-- [ ] Create Club model.
-- [ ] Create club-member information model/relationship according to ERD.
-- [ ] Create a many-to-many Club Admin relationship between Club and registered Student User IDs.
-- [ ] Support one student administering multiple clubs and one club having multiple admins.
-- [ ] Add constraints preventing a club from losing its final admin.
-- [ ] Create Club Creation Request model with requester, proposed club data, purpose, activities, status, and review timestamps.
-- [ ] Define request states: Pending, Approved, and Rejected.
-- [ ] On approval, atomically create the Club and assign the requester as its initial Club Admin.
-- [ ] Prevent unapproved club requests from appearing in the public club list.
-- [ ] Create activity/event relationships.
-- [ ] Create migrations.
+- [x] Create Club model.
+- [x] Create club-member information model/relationship according to ERD.
+- [x] Create a many-to-many Club Admin relationship between Club and registered Student User IDs.
+- [x] Support one student administering multiple clubs and one club having multiple admins.
+- [x] Add constraints preventing a club from losing its final admin (transactional API guard).
+- [x] Create Club Creation Request model with requester, proposed club data, purpose, activities, status, and review timestamps.
+- [x] Define request states: Pending, Approved, and Rejected.
+- [x] On approval, atomically create the Club and assign the requester as its initial Club Admin.
+- [x] Prevent unapproved club requests from appearing in the public club list.
+- [x] Create activity/event relationships.
+- [x] Create migrations.
 
 ## 7.12 Event data
 
-- [ ] Create Event model.
-- [ ] Store start/end dates.
-- [ ] Store status or derive it consistently.
-- [ ] Link event to club where appropriate.
-- [ ] Create user-event interest/attendance-intention relationship for:
-  - [ ] Interested
-  - [ ] Going
-- [ ] Add uniqueness rules so a user does not create duplicate status entries for the same event.
-- [ ] Add per-event registration settings: enabled/disabled, free/paid, fee, and bKash number.
-- [ ] Create Event Registration model linked to Event and User.
-- [ ] Store participant name, CUET email, Student ID, department, and optional bKash transaction ID.
-- [ ] Keep registration records private to their club admins and authorized backend staff; expose only totals publicly.
-- [ ] Decide how paid registrations are reviewed or verified; a submitted bKash transaction ID must not be treated as confirmed payment automatically.
-- [ ] Require a transaction ID only when the event is paid.
-- [ ] Add uniqueness rules preventing duplicate registration by one user for the same event.
-- [ ] Define how the total registration count is calculated efficiently and consistently.
+- [x] Create Event model.
+- [x] Store start/end dates.
+- [x] Store status or derive it consistently.
+- [x] Link event to club where appropriate.
+- [x] Create user-event interest/attendance-intention relationship for:
+  - [x] Interested
+  - [x] Going
+- [x] Add uniqueness rules so a user does not create duplicate status entries for the same event.
+- [x] Add per-event registration settings: enabled/disabled, free/paid, fee, and bKash number.
+- [x] Create Event Registration model linked to Event and User.
+- [x] Store participant name, CUET email, Student ID, department, and optional bKash transaction ID.
+- [x] Keep registration records private to their club admins and authorized backend staff; expose only totals publicly.
+- [x] Decide how paid registrations are reviewed or verified; a submitted bKash transaction ID must not be treated as confirmed payment automatically.
+- [x] Require a transaction ID only when the event is paid.
+- [x] Add uniqueness rules preventing duplicate registration by one user for the same event.
+- [x] Define how the total registration count is calculated efficiently and consistently.
 
 ## 7.13 Club/Event API
 
-- [ ] List clubs.
-- [ ] Club details.
-- [ ] Club members/details required by frontend.
-- [ ] Club events.
-- [ ] List ongoing events.
-- [ ] List upcoming events.
-- [ ] List recently finished events.
-- [ ] Set/update Interested status.
-- [ ] Set/update Going status.
-- [ ] Return current user’s event status.
-- [ ] Submit a club-creation request as a registered student.
-- [ ] Return the current student's club-request history/status.
-- [ ] Expose a paginated pending/reviewed club-request queue to the main App Admin only.
-- [ ] Let the main App Admin approve or reject a pending club request exactly once; record reviewer and review time.
-- [ ] Make approval idempotent and transactional so retries cannot create duplicate clubs.
-- [ ] Return clubs administered by the current student.
-- [ ] Update club details only when the current user is a mapped admin of that club.
-- [ ] Add/remove club admins only when the current user is a mapped admin of that club.
-- [ ] Create/update/delete club events only when the current user is a mapped admin of that club.
-- [ ] Return event registration configuration and total registration count.
-- [ ] Submit event registration and return the current user's registration state.
-- [ ] Restrict registration to authenticated students and validate all participant fields, including the CUET email domain.
-- [ ] Validate paid-event bKash configuration and registration transaction IDs.
-- [ ] Prevent registrations after the event or registration window closes.
+- [x] List clubs.
+- [x] Club details.
+- [x] Club members/details required by frontend.
+- [x] Club events.
+- [x] List ongoing events.
+- [x] List upcoming events.
+- [x] List recently finished events.
+- [x] Set/update Interested status.
+- [x] Set/update Going status.
+- [x] Return current user’s event status.
+- [x] Submit a club-creation request as a registered student.
+- [x] Return the current student's club-request history/status.
+- [x] Expose a paginated pending/reviewed club-request queue to the main App Admin only.
+- [x] Let the main App Admin approve or reject a pending club request exactly once; record reviewer and review time.
+- [x] Make approval idempotent and transactional so retries cannot create duplicate clubs.
+- [x] Return clubs administered by the current student.
+- [x] Update club details only when the current user is a mapped admin of that club.
+- [x] Add/remove club admins only when the current user is a mapped admin of that club.
+- [x] Create/update/delete club events only when the current user is a mapped admin of that club.
+- [x] Return event registration configuration and total registration count.
+- [x] Submit event registration and return the current user's registration state.
+- [x] Restrict registration to authenticated students and validate all participant fields, including the CUET email domain.
+- [x] Validate paid-event bKash configuration and registration transaction IDs.
+- [x] Prevent registrations after the event or registration window closes.
 
 ## 7.14 Event notifications
 
-- [ ] Define how “event started” is detected.
-- [ ] Define how “event finished” is detected.
-- [ ] Create notification records for relevant users.
-- [ ] Prevent duplicate start/end notifications.
-- [ ] Decide scheduler/background execution mechanism during detailed implementation.
-- [ ] Test boundary times.
+- [x] Define how “event started” is detected.
+- [x] Define how “event finished” is detected.
+- [x] Create notification records for relevant users.
+- [x] Prevent duplicate start/end notifications.
+- [x] Decide scheduler/background execution mechanism during detailed implementation (external scheduled job; deployment scheduling still required).
+- [x] Test boundary times.
 
 ## 7.15 Frontend connection
 

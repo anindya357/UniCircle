@@ -2,7 +2,8 @@
 
 Phases 6.1–6.3 provide the FastAPI and database foundation. Phase 7 includes
 Authentication Feature 1, the Department and Faculty Directory, and the
-Campus Explorer read API. Other feature APIs and domain tables remain future work.
+Campus Explorer read API, and the Club & Event Hub backend. Other feature APIs
+and domain tables remain future work.
 
 Backend Feature 2 is intentionally static: the public Home page reads reviewed
 content from `frontend/src/features/home/content`, with media shipped from
@@ -115,6 +116,49 @@ mapped CUET boundary (OSM way 681604170). The protected read endpoints are
 boundary and attributed tile URL; locations include coordinates and their OSM
 source links. This is a reviewed snapshot, not a live OSM sync or route planner.
 No campus Admin editing API is enabled.
+
+## Club & Event Hub
+
+Revision `ddcf224a1d10` adds club membership/admin, club-creation request,
+event, interest, registration, and event-notification tables. Apply migrations
+before starting the backend. To create the ten existing clubs and assign the
+sole active, verified student as their initial admin, run once from `backend/`:
+
+```powershell
+.\.venv\Scripts\python -m app.modules.clubs.seed
+```
+
+The seed is idempotent. It refuses to guess if there is not exactly one eligible
+student; pass `--student-id UUID` to select one explicitly. It does not create
+demo events, fake members, or fake leaders. Future students are not automatically
+made admins. Club Admins may add another verified student admin, but cannot
+remove the last admin. App Admins review club-creation requests; approval
+atomically creates a club and grants the requester initial admin access.
+
+Protected endpoints are under `/api/v1`: `GET /clubs`, `GET /clubs/{id}`,
+`GET /clubs/{id}/members`, `GET /clubs/{id}/events`, `GET /events`,
+`GET /events/{id}`, `PUT /events/{id}/interest`, `POST /events/{id}/registrations`,
+and `GET /notifications/events/me`. Students use `/clubs/requests` and
+`/clubs/requests/mine`; App Admins use `/admin/club-requests` and
+`/admin/club-requests/{id}/review`. Club Admins use `/clubs/administered`,
+`PUT /clubs/{id}`, `/clubs/{id}/admins`, and club/event write routes. The
+OpenAPI page at `/docs` shows request/response details. Registration records
+and payment review are visible only to that club's admins or App Admins.
+Public event responses expose counts, not participant details. Paid submissions
+start as `pending_review`; a transaction ID alone never confirms payment.
+
+Event status is derived from UTC start/end times. To create start/finish
+notifications, run this idempotent job every minute with an external scheduler
+(for example Windows Task Scheduler or cron):
+
+```powershell
+.\.venv\Scripts\python -m app.modules.clubs.notifications
+```
+
+The job notifies interested, going, or registered users. A unique constraint
+prevents duplicate state notifications. No in-process scheduler is started by
+the API. The frontend currently still uses its mock club/event service;
+replacing those mocks is a separate frontend-connection step in the plan.
 
 Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with

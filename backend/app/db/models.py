@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
+    JSON,
     BigInteger,
     Boolean,
     CheckConstraint,
@@ -203,3 +204,183 @@ class CampusLocation(Base, TimestampMixin):
     osm_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
     image_url: Mapped[str | None] = mapped_column(String(500))
     sort_order: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
+
+
+class Club(Base, TimestampMixin):
+    __tablename__ = "clubs"
+
+    id: Mapped[str] = mapped_column(String(80), primary_key=True)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    short_name: Mapped[str] = mapped_column(String(40), nullable=False)
+    category: Mapped[str] = mapped_column(String(100), nullable=False)
+    tagline: Mapped[str] = mapped_column(String(240), nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=False)
+    activities: Mapped[list[str]] = mapped_column(JSON, nullable=False)
+
+
+class ClubMember(Base):
+    __tablename__ = "club_members"
+
+    club_id: Mapped[str] = mapped_column(
+        ForeignKey("clubs.id", ondelete="CASCADE"), primary_key=True
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
+    joined_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class ClubAdmin(Base):
+    __tablename__ = "club_admins"
+
+    club_id: Mapped[str] = mapped_column(
+        ForeignKey("clubs.id", ondelete="CASCADE"), primary_key=True
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
+    appointed_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class ClubCreationRequest(Base, TimestampMixin):
+    __tablename__ = "club_creation_requests"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('pending','approved','rejected')", name="valid_status"
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    requester_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id"), nullable=False, index=True
+    )
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    short_name: Mapped[str] = mapped_column(String(40), nullable=False)
+    category: Mapped[str] = mapped_column(String(100), nullable=False)
+    tagline: Mapped[str] = mapped_column(String(240), nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=False)
+    purpose: Mapped[str] = mapped_column(Text, nullable=False)
+    activities: Mapped[list[str]] = mapped_column(JSON, nullable=False)
+    status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="pending"
+    )
+    reviewer_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    review_note: Mapped[str | None] = mapped_column(Text)
+    approved_club_id: Mapped[str | None] = mapped_column(
+        ForeignKey("clubs.id"), unique=True
+    )
+
+
+class ClubEvent(Base, TimestampMixin):
+    __tablename__ = "club_events"
+    __table_args__ = (
+        CheckConstraint("ends_at > starts_at", name="valid_time_range"),
+        CheckConstraint("fee >= 0", name="valid_fee"),
+        CheckConstraint(
+            "(is_paid = false) OR (registration_enabled = true "
+            "AND fee > 0 AND bkash_number IS NOT NULL)",
+            name="valid_paid_setup",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    club_id: Mapped[str] = mapped_column(
+        ForeignKey("clubs.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    category: Mapped[str] = mapped_column(String(100), nullable=False)
+    summary: Mapped[str] = mapped_column(Text, nullable=False)
+    location: Mapped[str] = mapped_column(String(250), nullable=False)
+    starts_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, index=True
+    )
+    ends_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, index=True
+    )
+    registration_enabled: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    registration_closes_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True)
+    )
+    is_paid: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    fee: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
+    bkash_number: Mapped[str | None] = mapped_column(String(24))
+
+
+class EventInterest(Base):
+    __tablename__ = "event_interests"
+    __table_args__ = (
+        CheckConstraint("status IN ('interested','going')", name="valid_status"),
+    )
+
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("club_events.id", ondelete="CASCADE"), primary_key=True
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
+    status: Mapped[str] = mapped_column(String(16), nullable=False)
+
+
+class EventRegistration(Base, TimestampMixin):
+    __tablename__ = "event_registrations"
+    __table_args__ = (
+        UniqueConstraint("event_id", "user_id", name="uq_event_registration_user"),
+        CheckConstraint(
+            "payment_status IN ('not_required','pending_review','verified','rejected')",
+            name="valid_payment_status",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("club_events.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    participant_name: Mapped[str] = mapped_column(String(200), nullable=False)
+    email: Mapped[str] = mapped_column(String(254), nullable=False)
+    student_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    department_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    bkash_trx_id: Mapped[str | None] = mapped_column(String(100))
+    payment_status: Mapped[str] = mapped_column(String(20), nullable=False)
+
+
+class EventNotification(Base):
+    __tablename__ = "event_notifications"
+    __table_args__ = (
+        UniqueConstraint(
+            "event_id", "user_id", "kind", name="uq_event_notification_state"
+        ),
+        CheckConstraint("kind IN ('started','finished')", name="valid_kind"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("club_events.id", ondelete="CASCADE"), nullable=False
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    kind: Mapped[str] = mapped_column(String(16), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    read_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
