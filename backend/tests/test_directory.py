@@ -154,4 +154,9 @@ def test_faculty_profile_falls_back_when_cuet_profile_is_unavailable(
     assert response.status_code == 200
     assert response.json()["data"]["source_status"] == "unavailable"
     assert response.json()["data"]["email"] == "debkaushik99@cuet.ac.bd"
+    eee_response = client.get("/api/v1/faculty/eee-6193/profile")
+    assert eee_response.status_code == 200
+    assert eee_response.json()["data"]["name"] == "Dr. Tofael Ahmed"
+    assert eee_response.json()["data"]["email"] == "tofael@cuet.ac.bd"
+    assert eee_response.json()["data"]["source_status"] == "unavailable"
     assert client.get("/api/v1/faculty/cse-99999/profile").status_code == 404

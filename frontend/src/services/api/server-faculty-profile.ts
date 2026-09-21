@@ -33,10 +33,68 @@ type ApiProfile = {
   social_links: ProfileEntry[];
 };
 
+type ApiFaculty = Pick<
+  ApiProfile,
+  "id" | "department_code" | "name" | "designation" | "email" | "phone" | "office"
+>;
+
 export type FacultyProfileResult =
   | { kind: "ok"; profile: FacultyProfile }
   | { kind: "not-found" }
   | { kind: "unavailable" };
+
+async function getSavedFacultyProfile(
+  entryId: string,
+  backendBase: string,
+  token: string,
+): Promise<FacultyProfileResult> {
+  try {
+    const response = await fetch(new URL(`/api/v1/faculty/${entryId}`, backendBase), {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+      signal: AbortSignal.timeout(12_000),
+    });
+    if (response.status === 404) return { kind: "not-found" };
+    if (!response.ok) return { kind: "unavailable" };
+
+    const result: { data?: ApiFaculty } = await response.json();
+    const data = result.data;
+    if (!data || data.id !== entryId || !data.name || !data.department_code) {
+      return { kind: "unavailable" };
+    }
+
+    return {
+      kind: "ok",
+      profile: {
+        id: data.id,
+        departmentCode: data.department_code,
+        departmentName: `${data.department_code.toUpperCase()} department`,
+        name: data.name,
+        designation: data.designation ?? "Faculty member",
+        email: data.email ?? null,
+        phone: data.phone ?? null,
+        office: data.office ?? null,
+        avatarUrl: null,
+        biography: null,
+        researchInterests: null,
+        educationOverview: null,
+        additionalInformation: null,
+        personalWebsite: null,
+        sourceStatus: "unavailable",
+        education: [],
+        experience: [],
+        supervisions: [],
+        publications: [],
+        research: [],
+        courses: [],
+        awards: [],
+        socialLinks: [],
+      },
+    };
+  } catch {
+    return { kind: "unavailable" };
+  }
+}
 
 export async function getFacultyProfile(
   entryId: string,
@@ -55,11 +113,15 @@ export async function getFacultyProfile(
         signal: AbortSignal.timeout(12_000),
       },
     );
-    if (response.status === 404) return { kind: "not-found" };
+    if (response.status === 404 || response.status >= 500) {
+      return getSavedFacultyProfile(entryId, backendBase, token);
+    }
     if (!response.ok) return { kind: "unavailable" };
     const result: { data?: ApiProfile } = await response.json();
     const data = result.data;
-    if (!data || data.id !== entryId) return { kind: "unavailable" };
+    if (!data || data.id !== entryId) {
+      return getSavedFacultyProfile(entryId, backendBase, token);
+    }
     return {
       kind: "ok",
       profile: {
@@ -89,6 +151,7 @@ export async function getFacultyProfile(
       },
     };
   } catch {
-    return { kind: "unavailable" };
+    const backendBase = process.env.BACKEND_API_URL ?? "http://127.0.0.1:8000";
+    return getSavedFacultyProfile(entryId, backendBase, token);
   }
 }
