@@ -33,6 +33,7 @@ include = ["app*"]
 
 [tool.setuptools.package-data]
 "app.modules.directory" = ["cuet_directory.json"]
+"app.modules.campus" = ["cuet_campus.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

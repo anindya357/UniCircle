@@ -1,5 +1,17 @@
 export type CampusLocationCategory =
-  "Landmark" | "Recreation" | "Student life" | "Academic";
+  "Landmark" | "Recreation" | "Student life" | "Academic" | "Service" | "Residence";
+
+export type MapCoordinate = readonly [latitude: number, longitude: number];
+
+export type CampusMapData = Readonly<{
+  name: string;
+  sourceUrl: string;
+  tileUrl: string;
+  attribution: string;
+  center: MapCoordinate;
+  bounds: readonly [MapCoordinate, MapCoordinate];
+  boundary: readonly MapCoordinate[];
+}>;
 
 export type CampusLocation = Readonly<{
   id: string;
@@ -9,5 +21,13 @@ export type CampusLocation = Readonly<{
   address: string;
   description: string;
   details: string;
-  mapPosition: Readonly<{ x: number; y: number }>;
+  latitude: number;
+  longitude: number;
+  sourceUrl: string;
+  imageUrl: string | null;
+}>;
+
+export type CampusExplorerSnapshot = Readonly<{
+  map: CampusMapData;
+  locations: readonly CampusLocation[];
 }>;

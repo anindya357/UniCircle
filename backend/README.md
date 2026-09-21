@@ -1,9 +1,8 @@
 # UniCircle backend foundation
 
-Phases 6.1–6.3 provide the FastAPI and database foundation. Phase 7 now includes
-Authentication Feature 1: persisted General Users, OTP challenges, revocable
-sessions, App Admin login/provisioning, and profile updates. Other feature APIs
-and domain tables remain future work.
+Phases 6.1–6.3 provide the FastAPI and database foundation. Phase 7 includes
+Authentication Feature 1, the Department and Faculty Directory, and the
+Campus Explorer read API. Other feature APIs and domain tables remain future work.
 
 Backend Feature 2 is intentionally static: the public Home page reads reviewed
 content from `frontend/src/features/home/content`, with media shipped from
@@ -101,6 +100,21 @@ and `GET /api/v1/faculty/{entry_id}/profile`. The profile route fetches that
 faculty member's public CUET details on demand, returns only an explicit
 allowlist of academic/contact fields, and falls back to the saved listing when
 CUET is unavailable. CUET's private response fields are never exposed.
+
+Campus Explorer uses reviewed OpenStreetMap data for CUET's Raozan campus.
+Revision `20260921_0004` adds `campus_locations`; after upgrading, seed it with:
+
+```powershell
+.\.venv\Scripts\python -m app.modules.campus.seed
+```
+
+The seed is idempotent and contains 24 named places, all checked against the
+mapped CUET boundary (OSM way 681604170). The protected read endpoints are
+`GET /api/v1/campus/map`, `GET /api/v1/campus/locations`, and
+`GET /api/v1/campus/locations/{location_id}`. The map response includes the
+boundary and attributed tile URL; locations include coordinates and their OSM
+source links. This is a reviewed snapshot, not a live OSM sync or route planner.
+No campus Admin editing API is enabled.
 
 Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with

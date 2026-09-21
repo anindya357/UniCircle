@@ -402,37 +402,31 @@ Create entries for the departments specified in the workflow:
 
 # Feature 4 — Campus Explorer Frontend
 
-The workflow describes a demo map image and sequential information for key campus locations.
+The implementation uses the mapped CUET Raozan campus boundary and campus-only
+OpenStreetMap points. It no longer uses the original illustrative demo map.
 
 ## 4.9 Explorer layout
 
-- [ ] Create Campus Explorer route.
-- [ ] Add campus/demo map image area.
-- [ ] Create location list/cards.
-- [ ] Include approved locations such as:
-  - [ ] Gol Chottor
-  - [ ] TSC
-  - [ ] Basketball Ground
-  - [ ] Central Field
-  - [ ] Gymnasium
-  - [ ] Stores
-  - [ ] Halls
-  - [ ] Academic Buildings
-  - [ ] Research Centres
-- [ ] Add location name.
-- [ ] Add address/location description.
-- [ ] Add detailed information.
-- [ ] Implement scrolling list.
-- [ ] Implement “tap/click for details”.
-- [ ] Add selected-location state.
-- [ ] Use typed mock location data.
+- [x] Create Campus Explorer route.
+- [x] Show a real map clipped to CUET's Raozan campus outline, with no off-campus markers.
+- [x] Create location list/cards.
+- [x] Include mapped TSC, Basketball Ground, Central Field, Gymnasium,
+      campus store, individual halls, academic buildings, research institute,
+      and Teachers Goal Chattor (the OSM-labeled northern junction).
+- [x] Add location name.
+- [x] Add address/location description.
+- [x] Add detailed information.
+- [x] Implement scrolling list.
+- [x] Implement “tap/click for details”.
+- [x] Add selected-location state.
+- [x] Use typed API-backed campus location data instead of illustrative mock data.
 
 ### Feature 4 frontend completion
 
-- [ ] Map is visible.
-- [ ] Locations are browsable.
-- [ ] User can open each location’s details.
-- [ ] Mobile interaction works.
+- [x] Map is visible when OpenStreetMap tiles are available.
+- [x] Locations are browsable.
+- [x] User can open each location’s details.
+- [x] Responsive layout and touch selection are implemented.
 
 ---
 
@@ -1085,26 +1079,28 @@ If intentionally static:
 
 # Backend Feature 4 — Campus Explorer
 
+Source: OpenStreetMap CUET boundary (way 681604170) and reviewed mapped POIs.
+The snapshot is campus-only; map tiles need network access in the browser.
+
 ## 7.9 Data/API
 
-- [ ] Create Campus Location model.
-- [ ] Store name.
-- [ ] Store address/location description.
-- [ ] Store details.
-- [ ] Store map-related/reference information required by final design.
-- [ ] Store image/media reference if database-managed.
-- [ ] Create migration.
-- [ ] Create list endpoint.
-- [ ] Create details endpoint.
-- [ ] Add Admin CRUD only if approved design requires it.
+- [x] Create Campus Location model.
+- [x] Store name.
+- [x] Store address/location description.
+- [x] Store details.
+- [x] Store latitude/longitude and OpenStreetMap source references.
+- [x] Use OpenStreetMap tiles; optional image reference is modeled but none is seeded.
+- [x] Create migration.
+- [x] Create protected map, list, and details endpoints.
+- [x] Keep Admin CRUD out of scope; no approved editing design exists.
 
 ## 7.10 Frontend connection
 
-- [ ] Replace location mocks.
-- [ ] Connect explorer list.
-- [ ] Connect location details.
-- [ ] Connect image/media URL strategy.
-- [ ] Verify selected-location behavior.
+- [x] Replace location mocks.
+- [x] Connect explorer list.
+- [x] Connect location details.
+- [x] Use attributed OpenStreetMap tiles and a campus-only polygon mask.
+- [x] Verify selected-location state and backend API behavior.
 
 ---
 
@@ -2318,7 +2314,7 @@ Use this as the main execution queue.
 1. [x] Authentication.
 2. [x] Home.
 3. [ ] Department & Faculty Directory.
-4. [ ] Campus Explorer.
+4. [x] Campus Explorer.
 5. [ ] Club & Event Hub.
 6. [ ] Resource Sharing.
 7. [ ] Chat UI.
@@ -2348,7 +2344,7 @@ Use this as the main execution queue.
 1. [ ] Authentication + OTP + JWT → connect frontend.
 2. [ ] Home content strategy/API → connect frontend if required.
 3. [ ] Department & Faculty Directory → connect frontend.
-4. [ ] Campus Explorer → connect frontend.
+4. [x] Campus Explorer → connect frontend.
 5. [ ] Club & Event Hub → connect frontend.
 6. [ ] Event Interested/Going + notifications → connect frontend.
 7. [ ] Resource Requests → connect frontend.

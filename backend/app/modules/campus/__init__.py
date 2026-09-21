@@ -1,0 +1,1 @@
+"""CUET Raozan campus explorer."""

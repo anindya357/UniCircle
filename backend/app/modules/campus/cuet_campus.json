@@ -1,0 +1,172 @@
+{
+  "map": {
+    "name": "CUET Raozan Campus",
+    "source_url": "https://www.openstreetmap.org/way/681604170",
+    "tile_url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "attribution": "© OpenStreetMap contributors",
+    "boundary": [
+      [22.4597791, 91.9689310], [22.4599845, 91.9708591],
+      [22.4600166, 91.9712810], [22.4601526, 91.9734735],
+      [22.4602126, 91.9740042], [22.4603443, 91.9743116],
+      [22.4609058, 91.9742989], [22.4617830, 91.9746648],
+      [22.4623836, 91.9747938], [22.4627619, 91.9747749],
+      [22.4632158, 91.9745097], [22.4633031, 91.9745145],
+      [22.4635904, 91.9743697], [22.4646160, 91.9741871],
+      [22.4653924, 91.9742131], [22.4656262, 91.9741807],
+      [22.4703438, 91.9735405], [22.4701371, 91.9708693],
+      [22.4699252, 91.9682752], [22.4690622, 91.9682991],
+      [22.4690686, 91.9684365], [22.4686930, 91.9684590],
+      [22.4675464, 91.9683888], [22.4674725, 91.9683840],
+      [22.4668103, 91.9685246], [22.4652709, 91.9686392],
+      [22.4639260, 91.9687582], [22.4632075, 91.9687774],
+      [22.4625895, 91.9687939], [22.4621429, 91.9688058],
+      [22.4603681, 91.9688916], [22.4597791, 91.9689310]
+    ]
+  },
+  "locations": [
+    {
+      "id": "teachers-gol-chottor", "name": "Teachers Goal Chattor", "short_name": "GC", "category": "Landmark",
+      "address": "Northern CUET campus, Raozan", "description": "A named campus junction in the northern area.",
+      "details": "Use this mapped junction as a reference point for the northern campus area.",
+      "latitude": 22.4681469, "longitude": 91.9709827, "osm_type": "node", "osm_id": 6376692685
+    },
+    {
+      "id": "tsc", "name": "TSC", "short_name": "TSC", "category": "Student life",
+      "address": "Central CUET campus, Raozan", "description": "The campus Teacher-Student Centre.",
+      "details": "The TSC is marked beside the central campus paths and nearby community facilities.",
+      "latitude": 22.4624011, "longitude": 91.9705519, "osm_type": "node", "osm_id": 4504342693
+    },
+    {
+      "id": "basketball-ground", "name": "Basket Ball Ground", "short_name": "BB", "category": "Recreation",
+      "address": "Central CUET campus, Raozan", "description": "A mapped outdoor basketball ground.",
+      "details": "Find the basketball ground southwest of the academic area, near the TSC.",
+      "latitude": 22.4618472, "longitude": 91.9706524, "osm_type": "node", "osm_id": 4634235820
+    },
+    {
+      "id": "central-field", "name": "CUET Central Field", "short_name": "CF", "category": "Recreation",
+      "address": "Western CUET campus, Raozan", "description": "The central open sports field.",
+      "details": "This marker is placed within the mapped CUET Central Field pitch.",
+      "latitude": 22.464882, "longitude": 91.970066, "osm_type": "way", "osm_id": 119816744
+    },
+    {
+      "id": "gymnasium", "name": "CUET Gymnasium", "short_name": "GYM", "category": "Recreation",
+      "address": "Western CUET campus, Raozan", "description": "The mapped indoor sports facility.",
+      "details": "The gymnasium is west of the academic buildings and south of the central field.",
+      "latitude": 22.464122, "longitude": 91.969808, "osm_type": "way", "osm_id": 1373392734
+    },
+    {
+      "id": "central-library", "name": "CUET Central Library", "short_name": "LIB", "category": "Academic",
+      "address": "Academic area, CUET campus", "description": "The central university library.",
+      "details": "The library sits among CUET's academic buildings and study facilities.",
+      "latitude": 22.4623475, "longitude": 91.9731809, "osm_type": "node", "osm_id": 4634235836
+    },
+    {
+      "id": "central-mosque", "name": "CUET Central Mosque", "short_name": "MOS", "category": "Student life",
+      "address": "Central CUET campus, Raozan", "description": "The campus central mosque.",
+      "details": "This marker identifies the mapped central mosque close to the TSC.",
+      "latitude": 22.462764, "longitude": 91.9705934, "osm_type": "node", "osm_id": 4634235842
+    },
+    {
+      "id": "auditorium", "name": "CUET Auditorium", "short_name": "AUD", "category": "Student life",
+      "address": "Eastern CUET campus, Raozan", "description": "The campus auditorium building.",
+      "details": "The auditorium is marked at the eastern end of the academic area.",
+      "latitude": 22.4620153, "longitude": 91.9741514, "osm_type": "node", "osm_id": 4634235823
+    },
+    {
+      "id": "medical-centre", "name": "CUET Medical Centre", "short_name": "MED", "category": "Service",
+      "address": "Southern CUET campus, Raozan", "description": "The campus medical centre.",
+      "details": "Find the medical centre near the southern residential and campus-service area.",
+      "latitude": 22.46083, "longitude": 91.970741, "osm_type": "way", "osm_id": 681609361
+    },
+    {
+      "id": "cse-building", "name": "CSE Building", "short_name": "CSE", "category": "Academic",
+      "address": "Academic area, CUET campus", "description": "The Computer Science and Engineering building.",
+      "details": "This marker is placed on the mapped CSE building in the eastern academic area.",
+      "latitude": 22.46378, "longitude": 91.974008, "osm_type": "way", "osm_id": 450286753
+    },
+    {
+      "id": "civil-building", "name": "Civil Building", "short_name": "CE", "category": "Academic",
+      "address": "Academic area, CUET campus", "description": "The mapped Civil Engineering building.",
+      "details": "The Civil Building is close to the central library and other teaching buildings.",
+      "latitude": 22.462501, "longitude": 91.973648, "osm_type": "way", "osm_id": 119803550
+    },
+    {
+      "id": "architecture-urp-building", "name": "Architecture and URP Building", "short_name": "A+U", "category": "Academic",
+      "address": "Eastern academic area, CUET campus", "description": "The building mapped for Architecture and URP.",
+      "details": "Find the Architecture and Urban & Regional Planning building near the campus's eastern edge.",
+      "latitude": 22.462476, "longitude": 91.974443, "osm_type": "way", "osm_id": 621242345
+    },
+    {
+      "id": "pme-building", "name": "PME Building", "short_name": "PME", "category": "Academic",
+      "address": "Southeastern CUET campus, Raozan", "description": "The Petroleum and Mining Engineering building.",
+      "details": "The PME building is marked toward the southern end of the academic area.",
+      "latitude": 22.460422, "longitude": 91.973706, "osm_type": "way", "osm_id": 680962406
+    },
+    {
+      "id": "ieer", "name": "Institute of Earthquake Engineering Research", "short_name": "IEER", "category": "Academic",
+      "address": "Eastern CUET campus, Raozan", "description": "A mapped campus research institute.",
+      "details": "This institute is marked within CUET's eastern academic and research area.",
+      "latitude": 22.46279, "longitude": 91.974295, "osm_type": "way", "osm_id": 681234052
+    },
+    {
+      "id": "qk-hall", "name": "Dr. Q K Hall", "short_name": "QK", "category": "Residence",
+      "address": "Western residential area, CUET campus", "description": "A mapped student hall of residence.",
+      "details": "Dr. Q K Hall is in the western residential zone, near other halls and the central mosque.",
+      "latitude": 22.462764, "longitude": 91.969325, "osm_type": "way", "osm_id": 125357845
+    },
+    {
+      "id": "tareq-huda-hall", "name": "Shaheed Tareq Huda Hall", "short_name": "TH", "category": "Residence",
+      "address": "Western residential area, CUET campus", "description": "A mapped student hall of residence.",
+      "details": "This hall is in CUET's western residential area near Dr. Q K Hall.",
+      "latitude": 22.462202, "longitude": 91.969479, "osm_type": "way", "osm_id": 450286751
+    },
+    {
+      "id": "sufia-kamal-hall", "name": "Sufia Kamal Hall", "short_name": "SK", "category": "Residence",
+      "address": "Northern residential area, CUET campus", "description": "A mapped student hall of residence.",
+      "details": "Sufia Kamal Hall is situated north of the main academic buildings.",
+      "latitude": 22.4648385, "longitude": 91.9722347, "osm_type": "node", "osm_id": 4634235853
+    },
+    {
+      "id": "taposi-rabeya-hall", "name": "Taposi Rabeya Hall", "short_name": "TR", "category": "Residence",
+      "address": "Northern residential area, CUET campus", "description": "A mapped student hall of residence.",
+      "details": "This hall is marked near the northern group of student residences.",
+      "latitude": 22.465571, "longitude": 91.97286, "osm_type": "way", "osm_id": 1052395224
+    },
+    {
+      "id": "campus-store", "name": "Dormatory store", "short_name": "ST", "category": "Service",
+      "address": "Northern CUET campus, Raozan", "description": "A mapped store in the northern campus area.",
+      "details": "This store is shown in OpenStreetMap near the northern residential area.",
+      "latitude": 22.4690012, "longitude": 91.9703836, "osm_type": "node", "osm_id": 6383180333
+    },
+    {
+      "id": "it-incubator", "name": "Sheikh Kamal IT Business Incubator", "short_name": "IT", "category": "Academic",
+      "address": "Southern CUET campus, Raozan", "description": "The campus IT business incubator.",
+      "details": "The incubator is marked along the southeastern side of the campus.",
+      "latitude": 22.460822, "longitude": 91.9726751, "osm_type": "node", "osm_id": 11389783321
+    },
+    {
+      "id": "shaheed-minar", "name": "CUET Shaeed Minar", "short_name": "SM", "category": "Landmark",
+      "address": "Southern CUET campus, Raozan", "description": "The mapped campus memorial.",
+      "details": "The Shaheed Minar is a landmark near CUET's southern campus entrance area.",
+      "latitude": 22.4601845, "longitude": 91.9707019, "osm_type": "node", "osm_id": 2432640084
+    },
+    {
+      "id": "hatasha-chottor", "name": "Hatasha Chottor", "short_name": "HC", "category": "Landmark",
+      "address": "Central CUET campus, Raozan", "description": "A mapped campus junction and meeting point.",
+      "details": "Hatasha Chottor is marked between the western recreation area and academic buildings.",
+      "latitude": 22.4639419, "longitude": 91.9710223, "osm_type": "node", "osm_id": 12716230750
+    },
+    {
+      "id": "canteen-3", "name": "CUET Canteen 3", "short_name": "C3", "category": "Student life",
+      "address": "Eastern CUET campus, Raozan", "description": "A mapped campus canteen.",
+      "details": "Canteen 3 is marked along the eastern campus roads near the academic area.",
+      "latitude": 22.462786, "longitude": 91.974547, "osm_type": "way", "osm_id": 681234053
+    },
+    {
+      "id": "me-workshop", "name": "ME Workshop", "short_name": "ME", "category": "Academic",
+      "address": "Academic area, CUET campus", "description": "The Mechanical Engineering workshop building.",
+      "details": "The workshop is mapped close to CUET's other eastern academic buildings.",
+      "latitude": 22.463743, "longitude": 91.972935, "osm_type": "way", "osm_id": 119804981
+    }
+  ]
+}

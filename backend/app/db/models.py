@@ -4,9 +4,11 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
+    BigInteger,
     Boolean,
     CheckConstraint,
     DateTime,
+    Float,
     ForeignKey,
     Index,
     Integer,
@@ -176,3 +178,28 @@ class FacultyDirectoryEntry(Base, TimestampMixin):
     sort_order: Mapped[int] = mapped_column(Integer, nullable=False)
 
     department: Mapped[Department] = relationship(back_populates="faculty")
+
+
+class CampusLocation(Base, TimestampMixin):
+    """A reviewed point of interest inside CUET's Raozan campus boundary."""
+
+    __tablename__ = "campus_locations"
+    __table_args__ = (
+        CheckConstraint("latitude BETWEEN -90 AND 90", name="valid_latitude"),
+        CheckConstraint("longitude BETWEEN -180 AND 180", name="valid_longitude"),
+        UniqueConstraint("osm_type", "osm_id", name="uq_campus_location_osm_ref"),
+    )
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    short_name: Mapped[str] = mapped_column(String(12), nullable=False)
+    category: Mapped[str] = mapped_column(String(40), nullable=False)
+    address: Mapped[str] = mapped_column(String(300), nullable=False)
+    description: Mapped[str] = mapped_column(String(500), nullable=False)
+    details: Mapped[str] = mapped_column(Text, nullable=False)
+    latitude: Mapped[float] = mapped_column(Float, nullable=False)
+    longitude: Mapped[float] = mapped_column(Float, nullable=False)
+    osm_type: Mapped[str] = mapped_column(String(8), nullable=False)
+    osm_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
+    image_url: Mapped[str | None] = mapped_column(String(500))
+    sort_order: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
