@@ -49,7 +49,7 @@ The table lists a compact API surface, not a promise to build all endpoints at o
 
 | Module | Proposed FastAPI routes | Access and response rule |
 | --- | --- | --- |
-| Directory | `GET /departments`, `GET /departments/{code}`, `GET /departments/{code}/faculty`, `GET /faculty/{id}` | U; only readable directory fields; 12 department codes (including MME and WRE) seeded |
+| Directory | `GET /departments`, `GET /departments/{code}`, `GET /departments/{code}/faculty`, `GET /faculty/{id}`, `GET /faculty/{id}/profile` | U; 12 seeded department codes; profile details fetched from CUET on demand with a public-field allowlist and saved-listing fallback |
 | Campus explorer | `GET /campus-locations`, `GET /campus-locations/{id}` | U; public asset/map references only |
 | Clubs | `GET /clubs`, `GET /clubs/{id}`, `GET /clubs/{id}/events` | U; no private member/admin IDs in public list DTO |
 | Club requests | `POST /club-requests`, `GET /club-requests/mine` | S; request owner from session |

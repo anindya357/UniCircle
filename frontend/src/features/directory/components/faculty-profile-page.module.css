@@ -1,0 +1,231 @@
+.page {
+  width: min(100%, 82rem);
+  margin-inline: auto;
+}
+
+.backLink {
+  display: inline-flex;
+  margin-bottom: 1.25rem;
+  gap: 0.5rem;
+  align-items: center;
+  color: var(--color-brand);
+  font-size: 0.85rem;
+  font-weight: 750;
+}
+
+.backLink:hover,
+.entry a:hover,
+.contactCard a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.hero {
+  display: grid;
+  min-width: 0;
+  padding: clamp(1.35rem, 3vw, 2.4rem);
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  border-radius: 1.25rem;
+  color: #fff;
+  background: linear-gradient(135deg, #063d2b, #0c6545);
+  box-shadow: 0 16px 42px rgb(3 69 44 / 12%);
+}
+
+.avatar {
+  display: grid;
+  width: clamp(6.5rem, 12vw, 9.25rem);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 3px solid rgb(255 255 255 / 40%);
+  border-radius: 1rem;
+  place-items: center;
+  background: #287151;
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 850;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.identity {
+  min-width: 0;
+}
+
+.eyebrow {
+  color: #f4ce77;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.identity h1 {
+  margin-top: 0.45rem;
+  overflow-wrap: anywhere;
+  font-size: clamp(1.85rem, 4vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.designation {
+  margin-top: 0.7rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-weight: 700;
+}
+
+.department {
+  margin-top: 0.2rem;
+  color: rgb(255 255 255 / 72%);
+  font-size: 0.85rem;
+}
+
+.status {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  font-size: 0.8rem;
+}
+
+.contentGrid {
+  display: grid;
+  margin-top: 1.25rem;
+  gap: 1.25rem;
+  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 19rem);
+}
+
+.mainColumn,
+.sidebar {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.section,
+.contactCard {
+  min-width: 0;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: var(--color-surface);
+  box-shadow: 0 10px 28px rgb(20 50 35 / 5%);
+}
+
+.section h2,
+.contactCard h2 {
+  margin-bottom: 1rem;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  letter-spacing: -0.03em;
+}
+
+.prose,
+.entryDescription {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.entryList {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.entry {
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.7rem;
+  background: var(--color-canvas);
+}
+
+.entryHeading {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.entry h3 {
+  font-size: 0.98rem;
+  overflow-wrap: anywhere;
+}
+.entryHeading span {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+.subtitle {
+  margin-top: 0.35rem;
+  color: var(--color-text-muted);
+  font-size: 0.83rem;
+}
+.entryDescription {
+  margin-top: 0.75rem;
+}
+.entry a {
+  display: inline-block;
+  margin-top: 0.7rem;
+  color: var(--color-brand);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.contactCard dl {
+  display: grid;
+  gap: 0.9rem;
+}
+.contactCard dl > div {
+  display: grid;
+  gap: 0.2rem;
+}
+.contactCard dt {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.contactCard dd,
+.contactCard p {
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.contactCard a {
+  color: var(--color-brand);
+  font-weight: 700;
+}
+.linkList {
+  display: grid;
+  padding: 0;
+  gap: 0.6rem;
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 48rem) {
+  .contentGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sidebar {
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 32rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .avatar {
+    width: 6.5rem;
+  }
+}

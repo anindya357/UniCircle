@@ -96,7 +96,11 @@ relying on it as current. Missing fields remain null. No faculty login accounts
 are created. A person listed in multiple departments has one directory entry
 per department. The read-only directory routes require an authenticated account:
 `GET /api/v1/departments`, `GET /api/v1/departments/{code}`,
-`GET /api/v1/departments/{code}/faculty`, and `GET /api/v1/faculty/{entry_id}`.
+`GET /api/v1/departments/{code}/faculty`, `GET /api/v1/faculty/{entry_id}`,
+and `GET /api/v1/faculty/{entry_id}/profile`. The profile route fetches that
+faculty member's public CUET details on demand, returns only an explicit
+allowlist of academic/contact fields, and falls back to the saved listing when
+CUET is unavailable. CUET's private response fields are never exposed.
 
 Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with

@@ -13,6 +13,7 @@ from app.db.base import Base
 from app.db.models import Department, FacultyDirectoryEntry
 from app.db.session import get_db
 from app.main import create_app
+from app.modules.directory.cuet_profile import slug_from_profile_url
 from app.modules.directory.seed import seed_directory
 
 
@@ -46,6 +47,10 @@ def test_seed_idempotence_and_shared_faculty(directory_stack) -> None:
     assert db.get(FacultyDirectoryEntry, "bme-6174") is not None
     assert db.get(Department, "wre") is not None
     assert db.get(Department, "mme") is not None
+    assert all(
+        slug_from_profile_url(entry.profile_url)
+        for entry in db.scalars(select(FacultyDirectoryEntry))
+    )
 
 
 def test_directory_endpoints_and_validation(directory_stack) -> None:
@@ -99,3 +104,54 @@ def test_directory_requires_authentication(directory_stack) -> None:
     client, _ = directory_stack
     client.app.dependency_overrides.pop(get_current_user)
     assert client.get("/api/v1/departments").status_code == 401
+
+
+def test_faculty_profile_loads_cuet_details_without_leaking_private_fields(
+    directory_stack, monkeypatch
+) -> None:
+    client, db = directory_stack
+    seed_directory(db)
+    monkeypatch.setattr(
+        "app.modules.directory.router.fetch_cuet_profile",
+        lambda slug: {
+            "id": 6705,
+            "admin_type": "faculty_member",
+            "nid": "do-not-expose",
+            "profile": {
+                "intro": "<p>Human-centered <strong>AI</strong> researcher.</p>",
+                "research_interests": "<p>NLP and computer vision.</p>",
+            },
+            "personal_info": {},
+            "educations": [
+                {
+                    "app_admin_education_type_title": "B.Sc(Engineering)",
+                    "subject": "Computer Science",
+                    "institute": "CUET",
+                }
+            ],
+        },
+    )
+    response = client.get("/api/v1/faculty/cse-6705/profile")
+    assert response.status_code == 200
+    profile = response.json()["data"]
+    assert profile["name"] == "Md. Refaj Hossan"
+    assert profile["source_status"] == "current"
+    assert profile["biography"] == "Human-centered AI researcher."
+    assert profile["education"][0]["subtitle"] == "Computer Science, CUET"
+    assert "nid" not in profile
+    assert "do-not-expose" not in response.text
+
+
+def test_faculty_profile_falls_back_when_cuet_profile_is_unavailable(
+    directory_stack, monkeypatch
+) -> None:
+    client, db = directory_stack
+    seed_directory(db)
+    monkeypatch.setattr(
+        "app.modules.directory.router.fetch_cuet_profile", lambda slug: None
+    )
+    response = client.get("/api/v1/faculty/cse-6439/profile")
+    assert response.status_code == 200
+    assert response.json()["data"]["source_status"] == "unavailable"
+    assert response.json()["data"]["email"] == "debkaushik99@cuet.ac.bd"
+    assert client.get("/api/v1/faculty/cse-99999/profile").status_code == 404

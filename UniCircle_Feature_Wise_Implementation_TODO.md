@@ -388,7 +388,7 @@ Create entries for the departments specified in the workflow:
 - [x] Create faculty card/list.
 - [x] Show required contact information.
 - [x] Add faculty-detail presentation if included in approved UI design.
-- [x] Use typed mock department/faculty data.
+- [x] Use typed department/faculty data from the backend.
 
 ### Feature 3 frontend completion
 
@@ -1079,6 +1079,7 @@ If intentionally static:
 - [x] Connect loading state.
 - [x] Connect not-found/empty state.
 - [x] Verify all 12 department selections against the seeded data.
+- [x] Open faculty details within UniCircle; fetch public details from each corresponding CUET profile on demand and show saved directory information when CUET is unavailable.
 
 ---
 

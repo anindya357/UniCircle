@@ -1,16 +1,19 @@
-export type DepartmentCode =
-  | "cse"
-  | "eee"
-  | "me"
-  | "ce"
-  | "ete"
-  | "bme"
-  | "mme"
-  | "mie"
-  | "pme"
-  | "wre"
-  | "architecture"
-  | "urp";
+export const departmentCodes = [
+  "cse",
+  "eee",
+  "me",
+  "ce",
+  "ete",
+  "bme",
+  "mme",
+  "mie",
+  "pme",
+  "wre",
+  "architecture",
+  "urp",
+] as const;
+
+export type DepartmentCode = (typeof departmentCodes)[number];
 
 export type FacultyMember = Readonly<{
   id: string;

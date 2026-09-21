@@ -6,6 +6,8 @@ import { CampusAssistantPage } from "@/features/assistant/components/campus-assi
 import { CampusExplorerPage } from "@/features/campus-explorer/components/campus-explorer-page";
 import { ClubEventHub } from "@/features/clubs-events/components/club-event-hub";
 import { DirectoryPage } from "@/features/directory/components/directory-page";
+import { departmentCodes } from "@/features/directory/types/directory";
+import type { DepartmentCode } from "@/features/directory/types/directory";
 import { ForumPage } from "@/features/forum/components/forum-page";
 import { NewsPage } from "@/features/news/components/news-page";
 import { FeaturePlaceholder } from "@/features/shell/components/feature-placeholder";
@@ -15,13 +17,14 @@ import { adminService, forumService, newsService, transportService } from "@/ser
 
 type FeaturePageProps = Readonly<{
   params: Promise<{ feature: string }>;
+  searchParams: Promise<{ department?: string | string[] }>;
 }>;
 
 export function generateStaticParams() {
   return featurePages.map(({ slug }) => ({ feature: slug }));
 }
 
-export default async function FeaturePage({ params }: FeaturePageProps) {
+export default async function FeaturePage({ params, searchParams }: FeaturePageProps) {
   const user = await requireServerSessionUser();
   const { feature } = await params;
   const content = getFeaturePage(feature);
@@ -31,7 +34,13 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
   }
 
   if (feature === "directory") {
-    return <DirectoryPage />;
+    const { department } = await searchParams;
+    const initialDepartment: DepartmentCode =
+      typeof department === "string" &&
+      departmentCodes.includes(department as DepartmentCode)
+        ? (department as DepartmentCode)
+        : "cse";
+    return <DirectoryPage initialDepartment={initialDepartment} />;
   }
 
   if (feature === "campus-explorer") {

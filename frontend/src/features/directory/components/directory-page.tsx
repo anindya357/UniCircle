@@ -13,9 +13,11 @@ import { DepartmentNavigation } from "./department-navigation";
 import styles from "./directory-page.module.css";
 import { FacultyCard } from "./faculty-card";
 
-export function DirectoryPage() {
+export function DirectoryPage({
+  initialDepartment = "cse",
+}: Readonly<{ initialDepartment?: DepartmentCode }>) {
   const { departments, isLoading, error, retry } = useDirectory();
-  const [selectedId, setSelectedId] = useState<DepartmentCode>("cse");
+  const [selectedId, setSelectedId] = useState<DepartmentCode>(initialDepartment);
   const [query, setQuery] = useState("");
   const departmentPanelRef = useRef<HTMLDivElement>(null);
 

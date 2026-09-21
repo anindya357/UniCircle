@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import type { FacultyMember } from "@/features/directory/types/directory";
 
 import styles from "./directory-page.module.css";
@@ -50,17 +52,13 @@ export function FacultyCard({ member, departmentCode }: FacultyCardProps) {
             <dd>{member.office}</dd>
           </div>
         ) : null}
-        {member.profileUrl ? (
-          <div>
-            <dt>Profile</dt>
-            <dd>
-              <a href={member.profileUrl} target="_blank" rel="noopener noreferrer">
-                Official CUET profile ↗
-              </a>
-            </dd>
-          </div>
-        ) : null}
       </dl>
+      <Link
+        className={styles.facultyProfileLink}
+        href={`/directory/faculty/${encodeURIComponent(member.id)}`}
+      >
+        View full profile <span aria-hidden="true">→</span>
+      </Link>
     </article>
   );
 }
