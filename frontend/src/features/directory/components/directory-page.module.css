@@ -311,6 +311,16 @@
   line-height: 1.78;
 }
 
+.sourceLink {
+  display: inline-block;
+  margin-top: 1.4rem;
+  color: var(--color-brand);
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .departmentMeta {
   display: grid;
   margin-top: 2rem;
@@ -449,7 +459,7 @@
 .facultyCard {
   display: flex;
   min-width: 0;
-  min-height: 25rem;
+  min-height: 17rem;
   padding: 1.3rem;
   border: 1px solid var(--color-border);
   border-radius: 1rem;
@@ -612,7 +622,7 @@
   }
 
   .facultyCard {
-    min-height: 23rem;
+    min-height: 17rem;
   }
 }
 
@@ -661,7 +671,7 @@
   }
 
   .facultyCard {
-    min-height: 26rem;
+    min-height: 17rem;
   }
 }
 

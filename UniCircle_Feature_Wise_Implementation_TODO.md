@@ -370,6 +370,7 @@ Create entries for the departments specified in the workflow:
 - [x] MME
 - [x] MIE
 - [x] PME
+- [x] WRE
 - [x] Architecture
 - [x] URP
 
@@ -1055,29 +1056,29 @@ If intentionally static:
 
 ## 7.6 Data layer
 
-- [ ] Create Department model.
-- [ ] Create Faculty/Teacher directory model according to ERD.
-- [ ] Create relationship between faculty and department.
-- [ ] Add contact fields required by design.
-- [ ] Create migration.
-- [ ] Seed required departments.
+- [x] Create Department model.
+- [x] Create Faculty/Teacher directory model according to ERD.
+- [x] Create relationship between faculty and department.
+- [x] Add contact fields required by design; leave unavailable CUET values null.
+- [x] Create migration.
+- [x] Seed CSE, EEE, ME, CE, ETE, BME, MME, MIE, PME, WRE, Architecture, and URP from the official CUET directory snapshot (21 September 2026).
 
 ## 7.7 API
 
-- [ ] Get all departments.
-- [ ] Get one department.
-- [ ] Get faculty for department.
-- [ ] Get faculty details if required by frontend.
-- [ ] Add Admin management endpoints only if system design requires editable directory information.
-- [ ] Add validation.
+- [x] Get all departments.
+- [x] Get one department.
+- [x] Get faculty for department.
+- [x] Get faculty details if required by frontend.
+- [x] Admin management endpoints not required by the current read-only directory design.
+- [x] Add validation.
 
 ## 7.8 Frontend connection
 
-- [ ] Replace department mocks.
-- [ ] Replace faculty mocks.
-- [ ] Connect loading state.
-- [ ] Connect not-found state.
-- [ ] Verify all department tabs.
+- [x] Replace department mocks.
+- [x] Replace faculty mocks.
+- [x] Connect loading state.
+- [x] Connect not-found/empty state.
+- [x] Verify all 12 department selections against the seeded data.
 
 ---
 

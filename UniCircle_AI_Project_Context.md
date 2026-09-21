@@ -549,6 +549,7 @@ The workflow specifies department tabs for:
 - MME
 - MIE
 - PME
+- WRE
 - Architecture
 - URP
 

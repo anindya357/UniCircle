@@ -49,7 +49,7 @@ The table lists a compact API surface, not a promise to build all endpoints at o
 
 | Module | Proposed FastAPI routes | Access and response rule |
 | --- | --- | --- |
-| Directory | `GET /departments`, `GET /departments/{code}`, `GET /departments/{code}/faculty`, `GET /faculty/{id}` | U; only readable directory fields; 11 department codes seeded |
+| Directory | `GET /departments`, `GET /departments/{code}`, `GET /departments/{code}/faculty`, `GET /faculty/{id}` | U; only readable directory fields; 12 department codes (including MME and WRE) seeded |
 | Campus explorer | `GET /campus-locations`, `GET /campus-locations/{id}` | U; public asset/map references only |
 | Clubs | `GET /clubs`, `GET /clubs/{id}`, `GET /clubs/{id}/events` | U; no private member/admin IDs in public list DTO |
 | Club requests | `POST /club-requests`, `GET /club-requests/mine` | S; request owner from session |
@@ -91,7 +91,7 @@ Event `upcoming/ongoing/finished` is derived from UTC start/end times, not manua
 
 ## Feature-specific implementation notes
 
-- **Directory/Explorer:** seed the 11 approved departments and current known faculty/location content through idempotent development data. Do not manufacture missing phone/email values. Home stays static with CUET media assets unless the product owner later requests CMS management.
+- **Directory/Explorer:** seed the 12 approved departments and current known faculty/location content through idempotent development data. Do not manufacture missing phone/email values. Home stays static with CUET media assets unless the product owner later requests CMS management.
 - **Clubs/Events:** public club DTOs include name, short name, category, tagline, activities, and event counts. Return `canManage` or an admin-specific view only after permission lookup. Convert the frontend's fee display to integer paisa at the API boundary. Free/paid event registration and Interest/Going are independent. The club request form must add campus need and expected impact to match the ERD.
 - **Resources/Chat:** discovery exposes only opted-in resource-profile fields. Current mock's all-messages snapshot must become owner-scoped conversation pages. REST with refresh/polling is the initial chat transport; WebSocket/realtime is deferred until justified. No claim of cryptographic E2EE.
 - **Transport:** keep a dated four-window schedule and route variants. Recurrent Admin input materializes a bounded date range with a shared series ID; edits/deletes must specify one occurrence or the whole future series. Reject double-booked bus/driver assignments. Public queries do not reveal past dates.

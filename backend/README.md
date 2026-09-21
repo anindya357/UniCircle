@@ -81,8 +81,24 @@ Run from `backend/` with the configured environment:
 ```
 
 The reviewed first revision (`20260920_0001`) is intentionally empty. Revision
-`20260921_0002` creates authentication tables and can be applied with the command
-above. Future feature work should add ORM models, import them from
+`20260921_0002` creates authentication tables; `20260921_0003` creates the
+department and faculty directory tables. Both can be applied with the command
+above. After migrating, load the reviewed CUET snapshot from `backend/`:
+
+```powershell
+.\.venv\Scripts\python -m app.modules.directory.seed
+```
+
+The seed is idempotent. It contains 12 CUET departments and 292 current-faculty
+listings retrieved on 21 September 2026 from the public CUET department pages
+and their underlying API. It is a snapshot, not a live sync; recheck CUET before
+relying on it as current. Missing fields remain null. No faculty login accounts
+are created. A person listed in multiple departments has one directory entry
+per department. The read-only directory routes require an authenticated account:
+`GET /api/v1/departments`, `GET /api/v1/departments/{code}`,
+`GET /api/v1/departments/{code}/faculty`, and `GET /api/v1/faculty/{entry_id}`.
+
+Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with
 `alembic revision --autogenerate -m "description"`, then **review and edit**
 its operations, constraints, indexes, nullability, data migrations, and

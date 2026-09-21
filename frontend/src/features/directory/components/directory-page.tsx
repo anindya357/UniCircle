@@ -71,7 +71,8 @@ export function DirectoryPage() {
           </p>
           <div className={styles.previewNotice}>
             <span aria-hidden="true">i</span>
-            CSE names and roles are verified · remaining profiles are prototype data
+            Faculty listings sourced from CUET&apos;s official directory on 21 September
+            2026
           </div>
         </div>
 
@@ -132,30 +133,42 @@ export function DirectoryPage() {
               <div className={styles.departmentMeta}>
                 <div>
                   <span>Department office</span>
-                  <strong>{selectedDepartment.location}</strong>
+                  <strong>{selectedDepartment.location ?? "Address not listed"}</strong>
                 </div>
                 <div>
                   <span>General enquiries</span>
-                  <a href={"mailto:" + selectedDepartment.officeEmail}>
-                    {selectedDepartment.officeEmail}
-                  </a>
+                  {selectedDepartment.officeEmail ? (
+                    <a href={"mailto:" + selectedDepartment.officeEmail}>
+                      {selectedDepartment.officeEmail}
+                    </a>
+                  ) : (
+                    <strong>Email not listed</strong>
+                  )}
                 </div>
+                {selectedDepartment.phone ? (
+                  <div>
+                    <span>Phone</span>
+                    <strong>{selectedDepartment.phone}</strong>
+                  </div>
+                ) : null}
               </div>
 
-              <div className={styles.focusBlock}>
-                <span>Areas of focus</span>
-                <ul>
-                  {selectedDepartment.focusAreas.map((area) => (
-                    <li key={area}>{area}</li>
-                  ))}
-                </ul>
-              </div>
+              {selectedDepartment.sourceUrl ? (
+                <a
+                  className={styles.sourceLink}
+                  href={selectedDepartment.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View official department page ↗
+                </a>
+              ) : null}
             </section>
 
             <section className={styles.facultySection} aria-labelledby="faculty-title">
               <div className={styles.facultyToolbar}>
                 <div>
-                  <p className={styles.eyebrow}>People and expertise</p>
+                  <p className={styles.eyebrow}>Current CUET faculty</p>
                   <h2 id="faculty-title">Faculty directory</h2>
                   <span>
                     {selectedDepartment.faculty.length} directory profile
@@ -169,7 +182,7 @@ export function DirectoryPage() {
                     <input
                       type="search"
                       value={query}
-                      placeholder="Name, role, or expertise"
+                      placeholder="Name or role"
                       onChange={(event) => setQuery(event.target.value)}
                     />
                   </label>
@@ -180,7 +193,7 @@ export function DirectoryPage() {
                 <EmptyState
                   title="Faculty profiles are being prepared"
                   description={
-                    "No mock faculty records are available for " +
+                    "No current faculty records are available for " +
                     selectedDepartment.shortName +
                     " yet. The department information remains available above."
                   }
@@ -189,7 +202,7 @@ export function DirectoryPage() {
                 <EmptyState
                   title="No matching faculty"
                   description={
-                    "Try a different name, role, or area of expertise in " +
+                    "Try a different name or role in " +
                     selectedDepartment.shortName +
                     "."
                   }

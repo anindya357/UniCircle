@@ -3,16 +3,14 @@
 The /directory route provides the Phase 4 department and faculty-directory
 experience.
 
-- All eleven required departments are selectable from a responsive tab list.
-- Each department exposes its description, academic focus, office, and enquiry email.
-- Faculty cards provide designation, expertise, email, phone extension, and office.
-- Faculty records can be filtered by name, designation, or expertise.
+- All twelve departments (including MME and WRE) are selectable from a responsive tab list.
+- Department descriptions, address, and office contact come from CUET's public directory where available.
+- Faculty cards show current names, roles, and available contact details with official profile links. Missing contact fields are not fabricated.
+- Faculty records can be filtered by name or designation.
 - Loading, service error, empty directory, empty faculty, and no-search-result states
   are represented.
-- Data is delivered through a typed directory service backed by mock records, ready
-  to be replaced by the backend service in a later phase.
+- Data is delivered through the typed directory service via the authenticated Next.js BFF and FastAPI directory API.
 
-The three CSE names and roles currently shown were checked against CUET's July 2026
-teacher list. Their areas of expertise follow the approved project content. Other
-department profiles remain explicit prototype data and must not be treated as CUET's
-official directory.
+The checked-in CUET data snapshot was retrieved on 21 September 2026. Refresh and
+review it periodically; it is not a live sync with CUET. Areas of expertise are
+omitted because they are not in the official current-faculty listing response.

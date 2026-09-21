@@ -31,6 +31,9 @@ dev = [
 where = ["."]
 include = ["app*"]
 
+[tool.setuptools.package-data]
+"app.modules.directory" = ["cuet_directory.json"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 

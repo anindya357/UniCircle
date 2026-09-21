@@ -8,6 +8,7 @@ export type DepartmentCode =
   | "mme"
   | "mie"
   | "pme"
+  | "wre"
   | "architecture"
   | "urp";
 
@@ -16,9 +17,10 @@ export type FacultyMember = Readonly<{
   name: string;
   initials: string;
   designation: string;
-  email: string;
-  phone: string;
-  office: string;
+  email: string | null;
+  phone: string | null;
+  office: string | null;
+  profileUrl?: string | null;
   expertise: readonly string[];
 }>;
 
@@ -28,8 +30,9 @@ export type Department = Readonly<{
   name: string;
   academicArea: string;
   description: string;
-  location: string;
-  officeEmail: string;
-  focusAreas: readonly string[];
+  location: string | null;
+  officeEmail: string | null;
+  phone?: string | null;
+  sourceUrl?: string;
   faculty: readonly FacultyMember[];
 }>;

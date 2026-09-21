@@ -11,6 +11,7 @@ from sqlalchemy import (
     Index,
     Integer,
     String,
+    Text,
     UniqueConstraint,
     Uuid,
     func,
@@ -130,3 +131,48 @@ class AuthRateLimit(Base):
         DateTime(timezone=True), nullable=False
     )
     attempt_count: Mapped[int] = mapped_column(Integer, nullable=False)
+
+
+class Department(Base, TimestampMixin):
+    """Academic department, sourced from CUET's public department pages."""
+
+    __tablename__ = "departments"
+
+    code: Mapped[str] = mapped_column(String(32), primary_key=True)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    description: Mapped[str | None] = mapped_column(Text)
+    office_email: Mapped[str | None] = mapped_column(String(254))
+    phone: Mapped[str | None] = mapped_column(String(100))
+    address: Mapped[str | None] = mapped_column(String(500))
+    source_url: Mapped[str] = mapped_column(String(500), nullable=False)
+    sort_order: Mapped[int] = mapped_column(Integer, nullable=False)
+
+    faculty: Mapped[list["FacultyDirectoryEntry"]] = relationship(
+        back_populates="department", order_by="FacultyDirectoryEntry.sort_order"
+    )
+
+
+class FacultyDirectoryEntry(Base, TimestampMixin):
+    """A faculty listing is department-specific; one person may appear twice."""
+
+    __tablename__ = "faculty_directory_entries"
+    __table_args__ = (
+        UniqueConstraint(
+            "department_code", "source_id", name="uq_faculty_department_source"
+        ),
+    )
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    department_code: Mapped[str] = mapped_column(
+        ForeignKey("departments.code", ondelete="CASCADE"), nullable=False, index=True
+    )
+    source_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    designation: Mapped[str | None] = mapped_column(String(100))
+    email: Mapped[str | None] = mapped_column(String(254))
+    phone: Mapped[str | None] = mapped_column(String(100))
+    office: Mapped[str | None] = mapped_column(String(100))
+    profile_url: Mapped[str | None] = mapped_column(String(500))
+    sort_order: Mapped[int] = mapped_column(Integer, nullable=False)
+
+    department: Mapped[Department] = relationship(back_populates="faculty")

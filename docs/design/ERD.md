@@ -172,24 +172,26 @@ erDiagram
     TRANSPORT_ROUTE ||--o{ BUS_ASSIGNMENT : follows
 
     DEPARTMENT {
-        uuid id PK
-        string code UK
-        string name UK
-        string academic_area
+        string code PK
+        string name
         string description
-        string location
+        string address
         string office_email
-        string[] focus_areas
+        string phone
+        string source_url
+        integer sort_order
     }
     FACULTY {
-        uuid id PK
-        uuid department_id FK
+        string id PK
+        string department_code FK
+        integer source_id
         string name
         string designation
-        string[] specializations
         string email
         string phone
         string office
+        string profile_url
+        integer sort_order
     }
     CAMPUS_LOCATION {
         uuid id PK
@@ -251,7 +253,7 @@ erDiagram
     }
 ```
 
-- Seed the 11 required departments. A general user's `department_id` is optional; staff or newly registered users need not claim an academic department. Faculty contact data is directory content, not automatically a login account; linking a faculty profile to a registered teacher is optional future work. Missing faculty contact fields remain null rather than fabricated.
+- Seed the 12 required departments, including both MME and WRE. A general user's department association is optional; staff or newly registered users need not claim an academic department. Faculty contact data is directory content, not automatically a login account; linking a faculty profile to a registered teacher is optional future work. The same CUET person can have entries in multiple departments, so `(department_code, source_id)` is unique rather than `source_id` alone. Missing faculty contact fields remain null rather than fabricated.
 - Home-page content stays static unless Admin-managed content is explicitly requested. Campus images/video are asset references, not database blobs.
 - One `TRANSPORT_SCHEDULE` represents a date and one of the four daily time windows. Unique `(service_date, window_code)`. Admin `once`/`weekly`/`monthly` input materializes dated rows over a bounded date range; generated rows share `schedule_series_id` for later batch updates, while `recurrence` records the source rule. `BUS_ASSIGNMENT` connects the specific buses, drivers, and route variant for that window; unique `(schedule_id, bus_id)` and prevent overlapping allocation of a bus/driver. A driver's assignment belongs to a schedule, not permanently to a bus. `ROUTE_STOP` has unique `(route_id, direction, position)`. Routes include regular and Chawkbazar variants, with outbound/return ordered stops. General-user queries exclude past service dates.
 
