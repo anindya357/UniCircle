@@ -33,7 +33,7 @@ export function EventCard({
   onAttendanceChange,
   compact = false,
 }: EventCardProps) {
-  const displayedAttendance = event.attendeeCount + (attendance === "going" ? 1 : 0);
+  const displayedAttendance = event.attendeeCount;
 
   return (
     <article

@@ -37,8 +37,11 @@ export function EventDetailRoute({ eventId }: Readonly<{ eventId: string }>) {
     return (
       <AppShell>
         <EmptyState
-          title="Event not found"
-          description="This event may have been removed by its club administrators."
+          title={snapshot.loadError ? "Events could not be loaded" : "Event not found"}
+          description={
+            snapshot.loadError ??
+            "This event may have been removed by its club administrators."
+          }
         />
       </AppShell>
     );
@@ -47,7 +50,7 @@ export function EventDetailRoute({ eventId }: Readonly<{ eventId: string }>) {
   const alreadyRegistered = hasRegistered(event.id);
   const canRegister =
     event.registration.enabled &&
-    event.status !== "finished" &&
+    event.status === "upcoming" &&
     user.role === "student";
 
   async function submit(eventObject: FormEvent<HTMLFormElement>) {
@@ -116,10 +119,10 @@ export function EventDetailRoute({ eventId }: Readonly<{ eventId: string }>) {
               <strong>No registration form was added</strong>
               <p>You can still mark this event as Interested or Going.</p>
             </div>
-          ) : event.status === "finished" ? (
+          ) : event.status !== "upcoming" ? (
             <div className={styles.registrationUnavailable}>
               <strong>Registration has closed</strong>
-              <p>This event has already finished.</p>
+              <p>Registration closes when the event starts.</p>
             </div>
           ) : user.role !== "student" ? (
             <div className={styles.registrationUnavailable}>
@@ -128,8 +131,16 @@ export function EventDetailRoute({ eventId }: Readonly<{ eventId: string }>) {
             </div>
           ) : alreadyRegistered ? (
             <div className={styles.registrationSuccess} role="status">
-              <strong>Your registration is confirmed</strong>
-              <p>The club now has your submitted participant information.</p>
+              <strong>
+                {event.registration.isPaid
+                  ? "Registration submitted"
+                  : "You are registered"}
+              </strong>
+              <p>
+                {event.registration.isPaid
+                  ? `Payment status: ${event.myRegistration?.paymentStatus ?? "pending review"}. The club must verify your bKash transaction.`
+                  : "The club now has your submitted participant information."}
+              </p>
             </div>
           ) : (
             <>

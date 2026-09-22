@@ -34,8 +34,8 @@ npm run format       # apply Prettier formatting
 - `src/features` owns feature-specific components and types.
 - `src/components/ui` contains genuinely reusable presentation primitives.
 - `src/components/shared` contains application-wide composition components.
-- `src/services/contracts` defines interfaces implemented by real authentication
-  adapters and mock services for the remaining features.
+- `src/services/contracts` defines interfaces implemented by real authentication,
+  club/event, directory, and campus adapters, plus mock services for remaining features.
 - `src/mocks` contains typed mock repositories, services, and data for features
   not yet connected to their backend.
 - `src/features/home/content` contains the reviewed static Home content; the
@@ -45,3 +45,12 @@ npm run format       # apply Prettier formatting
 Other route components call service interfaces through `src/services`; they do
 not import mock data directly. The auth adapters call same-origin BFF handlers,
 which keep tokens out of browser JavaScript.
+
+The club and event pages use the FastAPI club/event endpoints through a
+same-origin `/api/club-events/*` handler. The club workspace appears only for
+students mapped as admins of that club; the backend independently enforces
+authorization for all changes. Admins can edit club details, add/remove other
+verified student admins by student ID, and create, edit, or delete club events.
+The ten initial clubs are seeded by the backend, and new events appear here
+only after a Club Admin creates them. The event-notification dropdown remains
+a separate integration step.

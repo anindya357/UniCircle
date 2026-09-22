@@ -1,4 +1,5 @@
 import type {
+  AttendanceStatus,
   CampusClub,
   CampusEvent,
   CampusEventInput,
@@ -13,7 +14,7 @@ import type {
 } from "@/features/clubs-events/types/club-event";
 
 export interface ClubEventService {
-  getSnapshot(): Promise<ClubEventSnapshot>;
+  getSnapshot(token?: string, role?: string): Promise<ClubEventSnapshot>;
   listClubs(): Promise<readonly CampusClub[]>;
   listEvents(): Promise<readonly CampusEvent[]>;
   submitClubRequest(
@@ -32,6 +33,7 @@ export interface ClubEventService {
     current?: CampusEvent,
   ): Promise<CampusEvent>;
   deleteEvent(eventId: string): Promise<void>;
+  setInterest(eventId: string, status: AttendanceStatus): Promise<CampusEvent>;
   registerForEvent(
     eventId: string,
     userId: string,

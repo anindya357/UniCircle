@@ -1,6 +1,6 @@
 import { MockAdminService } from "@/mocks/services/mock-admin-service";
 import { MockCampusAssistantService } from "@/mocks/services/mock-campus-assistant-service";
-import { MockClubEventService } from "@/mocks/services/mock-club-event-service";
+import { ApiClubEventService } from "@/services/api/api-club-event-service";
 import { MockForumService } from "@/mocks/services/mock-forum-service";
 import { MockNotificationService } from "@/mocks/services/mock-notification-service";
 import { MockNewsService } from "@/mocks/services/mock-news-service";
@@ -31,7 +31,7 @@ export const campusAssistantService: CampusAssistantService =
   new MockCampusAssistantService();
 export const campusExplorerService: CampusExplorerService =
   new ApiCampusExplorerService();
-export const clubEventService: ClubEventService = new MockClubEventService();
+export const clubEventService: ClubEventService = new ApiClubEventService();
 export const directoryService: DirectoryService = new ApiDirectoryService();
 export const forumService: ForumService = new MockForumService();
 export const notificationService: NotificationService = new MockNotificationService();

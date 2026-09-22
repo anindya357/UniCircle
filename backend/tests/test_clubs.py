@@ -117,7 +117,7 @@ def test_seed_and_admin_permissions(stack):
     current["user"] = first
     assert (
         client.post(
-            f"/api/v1/clubs/{club}/admins", json={"user_id": str(second.id)}
+            f"/api/v1/clubs/{club}/admins", json={"student_id": second.university_id}
         ).status_code
         == 200
     )

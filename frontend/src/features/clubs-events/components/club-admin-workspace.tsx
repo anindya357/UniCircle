@@ -15,6 +15,12 @@ import styles from "./club-event-hub.module.css";
 
 type WorkspaceSection = "profile" | "admins" | "events";
 
+function localDateTime(value: string): string {
+  const date = new Date(value);
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60_000);
+  return local.toISOString().slice(0, 16);
+}
+
 export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
   const { user } = useAuthenticatedUser();
   const {
@@ -30,12 +36,7 @@ export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
   const clubEvents = snapshot.events.filter((event) => event.clubId === club.id);
-  const administrators = snapshot.students.filter((student) =>
-    club.adminUserIds.includes(student.userId),
-  );
-  const availableStudents = snapshot.students.filter(
-    (student) => !club.adminUserIds.includes(student.userId),
-  );
+  const administrators = club.adminStudents ?? [];
 
   async function runBusy(key: string, action: () => Promise<void>) {
     setBusy(key);
@@ -98,11 +99,10 @@ export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
       {section === "admins" ? (
         <AdminDirectory
           administrators={administrators}
-          availableStudents={availableStudents}
           busy={busy}
           currentUserId={user.id}
-          onAdd={(userId) =>
-            runBusy(`admin-${userId}`, () => addClubAdmin(club, userId))
+          onAdd={(studentId) =>
+            runBusy("add-admin", () => addClubAdmin(club, studentId))
           }
           onRemove={(userId) =>
             runBusy(`admin-${userId}`, () => removeClubAdmin(club, userId))
@@ -158,7 +158,9 @@ export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
                   <button
                     disabled={busy === `event-${event.id}`}
                     onClick={() =>
-                      void runBusy(`event-${event.id}`, () => deleteEvent(event.id))
+                      window.confirm(`Delete ${event.title}? This cannot be undone.`)
+                        ? void runBusy(`event-${event.id}`, () => deleteEvent(event.id))
+                        : undefined
                     }
                     type="button"
                   >
@@ -255,50 +257,37 @@ function ClubProfileForm({
 
 function AdminDirectory({
   administrators,
-  availableStudents,
   currentUserId,
   busy,
   onAdd,
   onRemove,
 }: Readonly<{
   administrators: ReturnType<typeof useClubEvents>["snapshot"]["students"];
-  availableStudents: ReturnType<typeof useClubEvents>["snapshot"]["students"];
   currentUserId: string;
   busy: string;
   onAdd: (userId: string) => Promise<void>;
   onRemove: (userId: string) => Promise<void>;
 }>) {
-  const [selectedUserId, setSelectedUserId] = useState(
-    availableStudents[0]?.userId ?? "",
-  );
-  const effectiveSelectedUserId = availableStudents.some(
-    (student) => student.userId === selectedUserId,
-  )
-    ? selectedUserId
-    : (availableStudents[0]?.userId ?? "");
+  const [studentId, setStudentId] = useState("");
 
   return (
     <div className={styles.clubAdminDirectory}>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          if (effectiveSelectedUserId) void onAdd(effectiveSelectedUserId);
+          if (studentId.trim()) void onAdd(studentId.trim());
         }}
       >
         <label>
-          <span>Add a registered student</span>
-          <select
-            onChange={(event) => setSelectedUserId(event.target.value)}
-            value={effectiveSelectedUserId}
-          >
-            {availableStudents.map((student) => (
-              <option key={student.userId} value={student.userId}>
-                {student.name} · {student.studentId}
-              </option>
-            ))}
-          </select>
+          <span>Registered student ID</span>
+          <input
+            onChange={(event) => setStudentId(event.target.value)}
+            placeholder="e.g. 2204067"
+            required
+            value={studentId}
+          />
         </label>
-        <button disabled={!effectiveSelectedUserId || Boolean(busy)} type="submit">
+        <button disabled={!studentId.trim() || Boolean(busy)} type="submit">
           Make club admin
         </button>
       </form>
@@ -311,7 +300,7 @@ function AdminDirectory({
               <p>
                 {student.studentId} · {student.department}
               </p>
-              <small>{student.email}</small>
+              {student.email ? <small>{student.email}</small> : null}
             </div>
             <button
               disabled={Boolean(busy) || administrators.length === 1}
@@ -343,8 +332,8 @@ function EventManagementForm({
     category: initial?.category ?? "",
     summary: initial?.summary ?? "",
     location: initial?.location ?? "",
-    startsAt: initial?.startsAt.slice(0, 16) ?? "2026-09-20T10:00",
-    endsAt: initial?.endsAt.slice(0, 16) ?? "2026-09-20T13:00",
+    startsAt: initial ? localDateTime(initial.startsAt) : "",
+    endsAt: initial ? localDateTime(initial.endsAt) : "",
     status: initial?.status ?? "upcoming",
     registration: initial?.registration ?? { enabled: false, isPaid: false },
   });
@@ -383,22 +372,6 @@ function EventManagementForm({
           value={values.location}
           onChange={(location) => setValues({ ...values, location })}
         />
-        <label>
-          <span>Status</span>
-          <select
-            onChange={(event) =>
-              setValues({
-                ...values,
-                status: event.target.value as CampusEventInput["status"],
-              })
-            }
-            value={values.status}
-          >
-            <option value="upcoming">Upcoming</option>
-            <option value="ongoing">Ongoing</option>
-            <option value="finished">Finished</option>
-          </select>
-        </label>
         <label>
           <span>Starts at</span>
           <input

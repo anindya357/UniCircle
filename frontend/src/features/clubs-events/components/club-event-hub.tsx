@@ -36,11 +36,9 @@ const eventFilters = [
 
 export function ClubEventHub({ view }: ClubEventHubProps) {
   const { user } = useAuthenticatedUser();
-  const { snapshot, submitClubRequest } = useClubEvents();
+  const { snapshot, submitClubRequest, setInterest } = useClubEvents();
   const { clubs, events } = snapshot;
-  const [attendance, setAttendance] = useState<
-    Readonly<Record<string, AttendanceStatus>>
-  >({});
+  const [actionError, setActionError] = useState("");
   const [eventFilter, setEventFilter] = useState<EventFilter>("all");
   const [isRequestingClub, setIsRequestingClub] = useState(false);
 
@@ -67,11 +65,16 @@ export function ClubEventHub({ view }: ClubEventHubProps) {
     [events],
   );
 
-  function changeAttendance(eventId: string, status: AttendanceStatus) {
-    setAttendance((current) => ({
-      ...current,
-      [eventId]: current[eventId] === status ? "none" : status,
-    }));
+  async function changeAttendance(eventId: string, status: AttendanceStatus) {
+    const current = events.find((item) => item.id === eventId)?.myInterest ?? "none";
+    setActionError("");
+    try {
+      await setInterest(eventId, current === status ? "none" : status);
+    } catch (error) {
+      setActionError(
+        error instanceof Error ? error.message : "Attendance could not be updated.",
+      );
+    }
   }
 
   return (
@@ -88,7 +91,7 @@ export function ClubEventHub({ view }: ClubEventHubProps) {
           </p>
           <div className={styles.previewNotice}>
             <span aria-hidden="true">i</span>
-            Prototype club, member, event, and attendance data
+            Live club and event information
           </div>
         </div>
 
@@ -110,6 +113,17 @@ export function ClubEventHub({ view }: ClubEventHubProps) {
 
       <HubNavigation activeView={view} />
 
+      {snapshot.loadError ? (
+        <p className={styles.formError} role="alert">
+          {snapshot.loadError}
+        </p>
+      ) : null}
+      {actionError ? (
+        <p className={styles.formError} role="alert">
+          {actionError}
+        </p>
+      ) : null}
+
       {view === "clubs" ? (
         <ClubDirectory
           clubs={clubs}
@@ -120,7 +134,6 @@ export function ClubEventHub({ view }: ClubEventHubProps) {
         />
       ) : (
         <CampusEventDirectory
-          attendance={attendance}
           clubNames={clubNames}
           eventCounts={eventCounts}
           eventFilter={eventFilter}
@@ -226,7 +239,6 @@ function ClubDirectory({
 }
 
 type CampusEventDirectoryProps = Readonly<{
-  attendance: Readonly<Record<string, AttendanceStatus>>;
   clubNames: ReadonlyMap<string, string>;
   eventCounts: Readonly<Record<EventFilter, number>>;
   eventFilter: EventFilter;
@@ -236,7 +248,6 @@ type CampusEventDirectoryProps = Readonly<{
 }>;
 
 function CampusEventDirectory({
-  attendance,
   clubNames,
   eventCounts,
   eventFilter,
@@ -284,7 +295,7 @@ function CampusEventDirectory({
         <div className={styles.eventGrid}>
           {events.map((event) => (
             <EventCard
-              attendance={attendance[event.id] ?? "none"}
+              attendance={event.myInterest ?? "none"}
               clubName={clubNames.get(event.clubId) ?? "CUET student club"}
               event={event}
               key={event.id}

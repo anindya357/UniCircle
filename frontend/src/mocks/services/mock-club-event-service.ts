@@ -1,5 +1,6 @@
 import { validateCuetEmail } from "@/features/auth/lib/auth-validation";
 import type {
+  AttendanceStatus,
   CampusClub,
   CampusEvent,
   CampusEventInput,
@@ -25,6 +26,11 @@ import type { ClubEventService } from "@/services/contracts/club-event-service";
 const mockLatencyMilliseconds = 150;
 
 export class MockClubEventService implements ClubEventService {
+  async setInterest(eventId: string, status: AttendanceStatus): Promise<CampusEvent> {
+    const event = mockCampusEvents.find((item) => item.id === eventId);
+    if (!event) throw new Error("Event not found.");
+    return { ...event, myInterest: status };
+  }
   async getSnapshot(): Promise<ClubEventSnapshot> {
     await delay(mockLatencyMilliseconds);
     return {

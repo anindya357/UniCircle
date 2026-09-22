@@ -56,7 +56,14 @@ class ReviewIn(Input):
 
 
 class AdminIn(Input):
-    user_id: str
+    user_id: str | None = None
+    student_id: str | None = Field(default=None, min_length=1, max_length=64)
+
+    @model_validator(mode="after")
+    def one_identifier(self) -> "AdminIn":
+        if bool(self.user_id) == bool(self.student_id):
+            raise ValueError("Provide exactly one of user_id or student_id")
+        return self
 
 
 class EventIn(Input):

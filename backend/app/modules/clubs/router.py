@@ -87,6 +87,8 @@ def display_user(db: Session, user_id: uuid.UUID) -> dict:
         "name": f"{person.first_name} {person.last_name}".strip()
         if person
         else "Unknown student",
+        "studentId": person.university_id if person else "",
+        "department": person.department_name or "" if person else "",
     }
 
 
@@ -112,6 +114,8 @@ def club_data(db: Session, club: Club, user: AuthIdentity) -> dict:
         "activities": club.activities,
         "memberCount": member_count,
         "adminCount": len(admin_ids),
+        "adminUserIds": [str(admin_id) for admin_id in admin_ids],
+        "adminUsers": [display_user(db, admin_id) for admin_id in admin_ids],
         "isAdmin": user.role == "student" and uid(user) in admin_ids,
     }
 
@@ -137,6 +141,14 @@ def event_data(db: Session, event: ClubEvent, user: AuthIdentity) -> dict:
             select(func.count())
             .select_from(EventRegistration)
             .where(EventRegistration.event_id == event.id)
+        )
+        or 0
+    )
+    going_count = (
+        db.scalar(
+            select(func.count())
+            .select_from(EventInterest)
+            .where(EventInterest.event_id == event.id, EventInterest.status == "going")
         )
         or 0
     )
@@ -171,6 +183,7 @@ def event_data(db: Session, event: ClubEvent, user: AuthIdentity) -> dict:
         "fee": event.fee,
         "bkashNumber": event.bkash_number,
         "registeredCount": count,
+        "goingCount": going_count,
         "myInterest": interest.status if interest else "none",
         "myRegistration": {
             "id": str(registration.id),
@@ -181,10 +194,17 @@ def event_data(db: Session, event: ClubEvent, user: AuthIdentity) -> dict:
     }
 
 
-def request_data(item: ClubCreationRequest) -> dict:
+def request_data(db: Session, item: ClubCreationRequest) -> dict:
+    requester = db.get(User, item.requester_id)
     return {
         "id": str(item.id),
         "requesterId": str(item.requester_id),
+        "requesterName": (
+            f"{requester.first_name} {requester.last_name}".strip()
+            if requester
+            else "Unknown student"
+        ),
+        "requesterStudentId": requester.university_id if requester else "",
         "name": item.name,
         "shortName": item.short_name,
         "category": item.category,
@@ -231,7 +251,7 @@ def my_requests(db: Db, user: CurrentUser) -> ApiResponse[list[dict]]:
         .where(ClubCreationRequest.requester_id == uid(user))
         .order_by(ClubCreationRequest.created_at.desc())
     ).all()
-    return ApiResponse(data=[request_data(item) for item in records])
+    return ApiResponse(data=[request_data(db, item) for item in records])
 
 
 @router.post("/clubs/requests", response_model=ApiResponse[dict], status_code=201)
@@ -241,7 +261,7 @@ def submit_request(body: ClubRequestIn, db: Db, user: CurrentUser) -> ApiRespons
     db.add(item)
     db.commit()
     db.refresh(item)
-    return ApiResponse(data=request_data(item))
+    return ApiResponse(data=request_data(db, item))
 
 
 @router.get("/admin/club-requests", response_model=ApiResponse[dict])
@@ -264,7 +284,7 @@ def review_queue(
     ).all()
     return ApiResponse(
         data={
-            "items": [request_data(item) for item in records],
+            "items": [request_data(db, item) for item in records],
             "total": total,
             "page": page,
             "size": size,
@@ -293,7 +313,7 @@ def review_request(
                 "already_reviewed",
                 "This request has already been reviewed differently.",
             )
-        return ApiResponse(data=request_data(item))
+        return ApiResponse(data=request_data(db, item))
     if body.decision == "approved":
         slug = re.sub(r"[^a-z0-9]+", "-", item.name.lower()).strip("-")[:48].strip("-")
         club_id = f"{slug}-{str(item.id)[:8]}"
@@ -322,7 +342,7 @@ def review_request(
     item.review_note = body.note
     db.commit()
     db.refresh(item)
-    return ApiResponse(data=request_data(item))
+    return ApiResponse(data=request_data(db, item))
 
 
 @router.get("/clubs/{club_id}", response_model=ApiResponse[dict])
@@ -392,11 +412,18 @@ def add_admin(
     club_id: str, body: AdminIn, db: Db, user: CurrentUser
 ) -> ApiResponse[dict]:
     club_admin(db, club_id, user)
-    try:
-        target_id = uuid.UUID(body.user_id)
-    except ValueError:
-        fail(422, "invalid_user_id", "User ID must be a UUID.")
-    target = db.get(User, target_id)
+    if body.student_id:
+        target = db.scalar(
+            select(User).where(
+                User.role == "student", User.university_id == body.student_id.strip()
+            )
+        )
+    else:
+        try:
+            target_id = uuid.UUID(body.user_id or "")
+        except ValueError:
+            fail(422, "invalid_user_id", "User ID must be a UUID.")
+        target = db.get(User, target_id)
     if (
         target is None
         or target.role != "student"
@@ -406,6 +433,7 @@ def add_admin(
         fail(
             422, "invalid_club_admin", "Club Admin must be an active, verified student."
         )
+    target_id = target.id
     if db.get(ClubMember, (club_id, target_id)) is None:
         db.add(ClubMember(club_id=club_id, user_id=target_id))
     if db.get(ClubAdmin, (club_id, target_id)) is None:

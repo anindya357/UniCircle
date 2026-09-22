@@ -40,10 +40,8 @@ function getInitials(name: string) {
 }
 
 export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
-  const { isClubAdmin, snapshot } = useClubEvents();
-  const [attendance, setAttendance] = useState<
-    Readonly<Record<string, AttendanceStatus>>
-  >({});
+  const { isClubAdmin, snapshot, setInterest } = useClubEvents();
+  const [actionError, setActionError] = useState("");
   const accentStyle = { "--club-accent": club.accent } as CSSProperties;
   const leaders =
     club.leaders.length > 0
@@ -57,11 +55,16 @@ export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
             department: student.department,
           }));
 
-  function changeAttendance(eventId: string, status: AttendanceStatus) {
-    setAttendance((current) => ({
-      ...current,
-      [eventId]: current[eventId] === status ? "none" : status,
-    }));
+  async function changeAttendance(eventId: string, status: AttendanceStatus) {
+    const current = events.find((item) => item.id === eventId)?.myInterest ?? "none";
+    setActionError("");
+    try {
+      await setInterest(eventId, current === status ? "none" : status);
+    } catch (error) {
+      setActionError(
+        error instanceof Error ? error.message : "Attendance could not be updated.",
+      );
+    }
   }
 
   return (
@@ -101,6 +104,11 @@ export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
       </section>
 
       <HubNavigation activeView="clubs" />
+      {actionError ? (
+        <p className={styles.formError} role="alert">
+          {actionError}
+        </p>
+      ) : null}
 
       {isClubAdmin(club) ? <ClubAdminWorkspace club={club} /> : null}
 
@@ -175,7 +183,7 @@ export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
                     <div className={styles.compactEventGrid}>
                       {sectionEvents.map((event) => (
                         <EventCard
-                          attendance={attendance[event.id] ?? "none"}
+                          attendance={event.myInterest ?? "none"}
                           clubName={club.name}
                           compact
                           event={event}
@@ -206,8 +214,11 @@ export function ClubDetailRoute({ clubId }: Readonly<{ clubId: string }>) {
           <span aria-hidden="true">←</span> All clubs
         </Link>
         <EmptyState
-          title="Club not found"
-          description="This club may still be awaiting approval or is no longer available."
+          title={snapshot.loadError ? "Clubs could not be loaded" : "Club not found"}
+          description={
+            snapshot.loadError ??
+            "This club may still be awaiting approval or is no longer available."
+          }
         />
       </AppShell>
     );

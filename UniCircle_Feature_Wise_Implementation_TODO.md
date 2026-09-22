@@ -1177,15 +1177,15 @@ The snapshot is campus-only; map tiles need network access in the browser.
 
 ## 7.15 Frontend connection
 
-- [ ] Replace club mocks.
-- [ ] Replace event mocks.
-- [ ] Connect Interested/Going buttons.
-- [ ] Connect Club Admin membership and permission-aware controls.
-- [ ] Connect club detail/admin update actions.
-- [ ] Connect new-club request submission and request-status UI.
-- [ ] Connect event create/edit/delete actions.
-- [ ] Connect optional free/paid event registration and registration totals.
-- [ ] Connect event-status rendering.
+- [x] Replace club mocks.
+- [x] Replace event mocks.
+- [x] Connect Interested/Going buttons.
+- [x] Connect Club Admin membership and permission-aware controls.
+- [x] Connect club detail/admin update actions.
+- [x] Connect new-club request submission and request-status UI.
+- [x] Connect event create/edit/delete actions.
+- [x] Connect optional free/paid event registration and registration totals.
+- [x] Connect event-status rendering.
 - [ ] Connect real notification list.
 - [ ] Verify event start/finish notification behavior.
 

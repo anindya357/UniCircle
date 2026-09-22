@@ -157,8 +157,8 @@ notifications, run this idempotent job every minute with an external scheduler
 
 The job notifies interested, going, or registered users. A unique constraint
 prevents duplicate state notifications. No in-process scheduler is started by
-the API. The frontend currently still uses its mock club/event service;
-replacing those mocks is a separate frontend-connection step in the plan.
+the API. The frontend club/event pages now use the live API. The global
+notification dropdown is not yet connected to the event-notification endpoint.
 
 Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with

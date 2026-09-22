@@ -33,6 +33,7 @@ export type CampusClub = Readonly<{
   activities: readonly string[];
   leaders: readonly ClubMember[];
   adminUserIds: readonly EntityId[];
+  adminStudents?: readonly RegisteredStudent[];
 }>;
 
 export type EventRegistrationSettings = Readonly<{
@@ -55,6 +56,8 @@ export type CampusEvent = Readonly<{
   attendeeCount: number;
   registeredCount: number;
   registration: EventRegistrationSettings;
+  myInterest?: AttendanceStatus;
+  myRegistration?: Readonly<{ id: EntityId; paymentStatus: string }> | null;
 }>;
 
 export type EventRegistration = Readonly<{
@@ -92,6 +95,7 @@ export type ClubEventSnapshot = Readonly<{
   students: readonly RegisteredStudent[];
   clubRequests: readonly ClubCreationRequest[];
   registrations: readonly EventRegistration[];
+  loadError?: string;
 }>;
 
 export type ClubProfileInput = Pick<

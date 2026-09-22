@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -43,6 +42,10 @@ type ClubEventContextValue = Readonly<{
     current?: CampusEvent,
   ) => Promise<void>;
   deleteEvent: (eventId: string) => Promise<void>;
+  setInterest: (
+    eventId: string,
+    status: "interested" | "going" | "none",
+  ) => Promise<void>;
   registerForEvent: (
     event: CampusEvent,
     input: EventRegistrationInput,
@@ -51,75 +54,28 @@ type ClubEventContextValue = Readonly<{
 }>;
 
 const ClubEventContext = createContext<ClubEventContextValue | null>(null);
-const mockStorageKey = "unicircle.club-events.v1";
-
-function restoreSnapshot(fallback: ClubEventSnapshot): ClubEventSnapshot {
-  try {
-    const stored = window.sessionStorage.getItem(mockStorageKey);
-    if (!stored) return fallback;
-    const parsed: unknown = JSON.parse(stored);
-    if (!parsed || typeof parsed !== "object") return fallback;
-    const value = parsed as Partial<ClubEventSnapshot>;
-    if (
-      !Array.isArray(value.clubs) ||
-      !Array.isArray(value.events) ||
-      !Array.isArray(value.students) ||
-      !Array.isArray(value.clubRequests) ||
-      !Array.isArray(value.registrations)
-    )
-      return fallback;
-    return value as ClubEventSnapshot;
-  } catch {
-    return fallback;
-  }
-}
-
 export function ClubEventProvider({
   initialSnapshot,
   children,
 }: Readonly<{ initialSnapshot: ClubEventSnapshot; children: ReactNode }>) {
   const { user } = useAuthenticatedUser();
-  const [snapshot, setSnapshot] = useState(initialSnapshot);
-  const [isRestored, setIsRestored] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-    const restored = restoreSnapshot(initialSnapshot);
-    const currentStudent: RegisteredStudent | undefined =
-      user.role === "student"
-        ? {
-            userId: user.id,
-            name: user.displayName,
-            email: user.email,
-            studentId: user.universityId,
-            department: user.department,
-          }
-        : undefined;
-    queueMicrotask(() => {
-      if (!active) return;
-      setSnapshot({
-        ...restored,
-        students:
-          currentStudent &&
-          !restored.students.some((student) => student.userId === user.id)
-            ? [...restored.students, currentStudent]
-            : restored.students,
-      });
-      setIsRestored(true);
-    });
-    return () => {
-      active = false;
-    };
-  }, [initialSnapshot, user]);
-
-  useEffect(() => {
-    if (!isRestored) return;
-    try {
-      window.sessionStorage.setItem(mockStorageKey, JSON.stringify(snapshot));
-    } catch {
-      // The mock remains usable for this session when storage is unavailable.
-    }
-  }, [isRestored, snapshot]);
+  const [snapshot, setSnapshot] = useState(() => ({
+    ...initialSnapshot,
+    students:
+      user.role === "student" &&
+      !initialSnapshot.students.some((item) => item.userId === user.id)
+        ? [
+            ...initialSnapshot.students,
+            {
+              userId: user.id,
+              name: user.displayName,
+              email: user.email,
+              studentId: user.universityId,
+              department: user.department,
+            },
+          ]
+        : initialSnapshot.students,
+  }));
 
   const assertClubAdmin = useCallback(
     (clubId: string) => {
@@ -211,20 +167,19 @@ export function ClubEventProvider({
       if (userIds.length === 0) {
         throw new Error("A club must keep at least one student admin.");
       }
-      if (
-        userIds.some(
-          (id) => !snapshot.students.some((student) => student.userId === id),
-        )
-      ) {
-        throw new Error("Club admins must be registered students.");
-      }
       const updated = await clubEventService.setClubAdmins(club, userIds);
       setSnapshot((current) => ({
         ...current,
         clubs: current.clubs.map((item) => (item.id === updated.id ? updated : item)),
+        students: [
+          ...current.students.filter(
+            (item) => !updated.adminUserIds.includes(item.userId),
+          ),
+          ...(updated.adminStudents ?? []),
+        ],
       }));
     },
-    [assertClubAdmin, snapshot.students],
+    [assertClubAdmin],
   );
 
   const addClubAdmin = useCallback(
@@ -276,6 +231,17 @@ export function ClubEventProvider({
     [assertClubAdmin, snapshot.events],
   );
 
+  const setInterest = useCallback(
+    async (eventId: string, status: "interested" | "going" | "none") => {
+      const updated = await clubEventService.setInterest(eventId, status);
+      setSnapshot((current) => ({
+        ...current,
+        events: current.events.map((item) => (item.id === eventId ? updated : item)),
+      }));
+    },
+    [],
+  );
+
   const registerForEvent = useCallback(
     async (event: CampusEvent, input: EventRegistrationInput) => {
       if (!event.registration.enabled) {
@@ -309,7 +275,16 @@ export function ClubEventProvider({
         registrations: [registration, ...current.registrations],
         events: current.events.map((item) =>
           item.id === event.id
-            ? { ...item, registeredCount: item.registeredCount + 1 }
+            ? {
+                ...item,
+                registeredCount: item.registeredCount + 1,
+                myRegistration: {
+                  id: registration.id,
+                  paymentStatus: item.registration.isPaid
+                    ? "pending_review"
+                    : "not_required",
+                },
+              }
             : item,
         ),
       }));
@@ -320,11 +295,12 @@ export function ClubEventProvider({
 
   const hasRegistered = useCallback(
     (eventId: string) =>
+      Boolean(snapshot.events.find((event) => event.id === eventId)?.myRegistration) ||
       snapshot.registrations.some(
         (registration) =>
           registration.eventId === eventId && registration.userId === user.id,
       ),
-    [snapshot.registrations, user.id],
+    [snapshot.events, snapshot.registrations, user.id],
   );
 
   const value = useMemo(
@@ -338,12 +314,14 @@ export function ClubEventProvider({
       removeClubAdmin,
       saveEvent,
       deleteEvent,
+      setInterest,
       registerForEvent,
       hasRegistered,
     }),
     [
       addClubAdmin,
       deleteEvent,
+      setInterest,
       hasRegistered,
       isClubAdmin,
       registerForEvent,

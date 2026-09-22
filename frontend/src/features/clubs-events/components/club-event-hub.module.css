@@ -1151,7 +1151,8 @@
 .formGrid textarea,
 .formGrid select,
 .managementForm textarea,
-.clubAdminDirectory select {
+.clubAdminDirectory select,
+.clubAdminDirectory input {
   width: 100%;
   min-height: 2.85rem;
   padding: 0.68rem 0.78rem;
