@@ -2,6 +2,96 @@
   width: min(calc(100% - 2rem), 76rem);
 }
 
+.resourceError {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid #e3b8b8;
+  border-radius: 0.75rem;
+  color: #842525;
+  background: #fff1f1;
+  font-size: 0.85rem;
+}
+
+.profileEditor {
+  display: grid;
+  margin-top: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  gap: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: var(--color-surface);
+}
+
+.profileEditor h3 {
+  margin: 0.3rem 0;
+  font-size: 1.3rem;
+}
+.profileEditor p {
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.profileEditor fieldset {
+  padding: 0;
+  border: 0;
+}
+.profileEditor legend {
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.profileOptIn,
+.profileCategories label {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  font-size: 0.8rem;
+}
+.profileCategories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.2rem;
+}
+.profileFields {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.profileFields label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.profileFields input {
+  min-width: 0;
+  padding: 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  background: var(--color-canvas);
+}
+.profileFooter {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.profileFooter button {
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 0.6rem;
+  color: white;
+  background: var(--color-brand);
+  font-weight: 800;
+}
+.profileFooter button:disabled {
+  opacity: 0.6;
+}
+.profileFooter span {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+
 .hero {
   position: relative;
   display: grid;
@@ -679,6 +769,9 @@
 }
 
 @media (max-width: 52rem) {
+  .profileFields {
+    grid-template-columns: 1fr;
+  }
   .hero {
     min-height: auto;
     padding: 1.65rem 1.15rem 1.15rem;

@@ -7,6 +7,7 @@ import { AppShell } from "@/components/shared/app-shell";
 import { EmptyState } from "@/components/ui/feedback/empty-state";
 import { routes } from "@/config/routes";
 import { ResourceRequestModal } from "@/features/resources/components/resource-request-modal";
+import { ResourceProfileEditor } from "@/features/resources/components/resource-profile-editor";
 import { useResourceSharing } from "@/features/resources/context/resource-sharing-context";
 import { formatResourceDate } from "@/features/resources/lib/format-resource-time";
 import {
@@ -37,11 +38,14 @@ function getInitials(name: string) {
 export function ResourceHubPage() {
   const {
     currentUserId,
+    profile,
     people,
     requests,
     conversations,
     submitRequest,
     updateRequestStatus,
+    saveProfile,
+    error,
   } = useResourceSharing();
   const [view, setView] = useState<ResourceView>("discover");
   const [selectedPerson, setSelectedPerson] = useState<ResourcePerson | null>(null);
@@ -110,13 +114,19 @@ export function ResourceHubPage() {
         <div className={styles.heroSummary}>
           <span>Community snapshot</span>
           <strong>{people.length}</strong>
-          <p>students available in this frontend prototype</p>
+          <p>students in this discovery view</p>
           <div>
             <span>{pendingIncomingCount} waiting for you</span>
             <span>{conversations.length} open chats</span>
           </div>
         </div>
       </section>
+
+      {error ? (
+        <p className={styles.resourceError} role="alert">
+          {error}
+        </p>
+      ) : null}
 
       <nav className={styles.sectionNavigation} aria-label="Resource sharing sections">
         <button
@@ -154,10 +164,12 @@ export function ResourceHubPage() {
               <h2 id="discover-title">Find someone who can help</h2>
             </div>
             <p>
-              Resource availability is self-reported prototype data. Agree on clear
-              collection and return details after acceptance.
+              Resource availability is self-reported. Agree on clear collection and
+              return details after acceptance.
             </p>
           </div>
+
+          <ResourceProfileEditor profile={profile} onSave={saveProfile} />
 
           <div className={styles.discoveryFilters}>
             <label>
@@ -190,7 +202,7 @@ export function ResourceHubPage() {
           {filteredPeople.length === 0 ? (
             <EmptyState
               title="No matching students"
-              description="Try another name, department, hall, or resource category."
+              description="No students have opted in yet, or no one matches your filters. You can set your own sharing preferences above."
             />
           ) : (
             <div className={styles.peopleGrid}>
@@ -244,11 +256,13 @@ export function ResourceHubPage() {
 
       {selectedPerson ? (
         <ResourceRequestModal
+          error={error}
           onClose={() => setSelectedPerson(null)}
-          onSubmit={(request) => {
-            submitRequest(request);
-            setSelectedPerson(null);
-            setView("requests");
+          onSubmit={async (request) => {
+            if (await submitRequest(request)) {
+              setSelectedPerson(null);
+              setView("requests");
+            }
           }}
           person={selectedPerson}
         />
@@ -272,7 +286,8 @@ function PersonCard({ person, latestRequest, onRequest }: PersonCardProps) {
           <p>@{person.username}</p>
           <h3>{person.name}</h3>
           <small>
-            {person.department} · {person.level}
+            {person.department}
+            {person.level ? ` · ${person.level}` : ""}
           </small>
         </div>
       </header>
@@ -284,24 +299,24 @@ function PersonCard({ person, latestRequest, onRequest }: PersonCardProps) {
       </ul>
       <div className={styles.personMeta}>
         <span>{person.hall}</span>
-        <span>{person.mutualConnections} mutual connections</span>
       </div>
       <footer>
         {latestRequest?.status === "accepted" ? (
           <Link href={routes.chat}>Open coordination chat</Link>
-        ) : (
-          <button
-            disabled={latestRequest?.status === "pending"}
-            onClick={onRequest}
-            type="button"
-          >
-            {latestRequest?.status === "pending"
-              ? "Request pending"
+        ) : null}
+        <button
+          disabled={latestRequest?.status === "pending"}
+          onClick={onRequest}
+          type="button"
+        >
+          {latestRequest?.status === "pending"
+            ? "Request pending"
+            : latestRequest?.status === "accepted"
+              ? "Request another resource"
               : latestRequest?.status === "rejected"
                 ? "Request again"
                 : "Request a resource"}
-          </button>
-        )}
+        </button>
         {latestRequest ? (
           <span className={styles.statusBadge} data-status={latestRequest.status}>
             {latestRequest.status}

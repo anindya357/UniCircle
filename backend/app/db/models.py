@@ -384,3 +384,103 @@ class EventNotification(Base):
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
     read_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class ResourceProfile(Base, TimestampMixin):
+    """Optional, opt-in public resource-discovery details for a General User."""
+
+    __tablename__ = "resource_profiles"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
+    is_discoverable: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    level: Mapped[str | None] = mapped_column(String(60))
+    hall: Mapped[str | None] = mapped_column(String(100))
+    availability_note: Mapped[str | None] = mapped_column(String(500))
+
+
+class ResourceProfileCategory(Base):
+    __tablename__ = "resource_profile_categories"
+    __table_args__ = (
+        CheckConstraint(
+            "category IN ('notebook','lab-report','t-scale','bicycle','other')",
+            name="valid_category",
+        ),
+    )
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("resource_profiles.user_id", ondelete="CASCADE"), primary_key=True
+    )
+    category: Mapped[str] = mapped_column(String(20), primary_key=True)
+
+
+class ResourceRequest(Base, TimestampMixin):
+    __tablename__ = "resource_requests"
+    __table_args__ = (
+        CheckConstraint("requester_id <> recipient_id", name="different_users"),
+        CheckConstraint(
+            "category IN ('notebook','lab-report','t-scale','bicycle','other')",
+            name="valid_category",
+        ),
+        CheckConstraint(
+            "status IN ('pending','accepted','rejected')", name="valid_status"
+        ),
+        Index("ix_resource_requests_recipient_status", "recipient_id", "status"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    requester_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), nullable=False, index=True
+    )
+    recipient_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), nullable=False, index=True
+    )
+    category: Mapped[str] = mapped_column(String(20), nullable=False)
+    resource_name: Mapped[str] = mapped_column(String(200), nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=False)
+    status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="pending"
+    )
+    responded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class Conversation(Base, TimestampMixin):
+    __tablename__ = "conversations"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    resource_request_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("resource_requests.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
+    last_activity_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class Message(Base):
+    __tablename__ = "messages"
+    __table_args__ = (
+        Index("ix_messages_conversation_time_id", "conversation_id", "sent_at", "id"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    conversation_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("conversations.id", ondelete="CASCADE"), nullable=False
+    )
+    sender_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), nullable=False
+    )
+    body: Mapped[str] = mapped_column(Text, nullable=False)
+    sent_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )

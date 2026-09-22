@@ -18,7 +18,14 @@ export type ResourcePerson = Readonly<{
   hall: string;
   availabilityNote: string;
   resourceCategories: readonly ResourceCategory[];
-  mutualConnections: number;
+}>;
+
+export type ResourceProfile = Readonly<{
+  isDiscoverable: boolean;
+  level: string;
+  hall: string;
+  availabilityNote: string;
+  resourceCategories: readonly ResourceCategory[];
 }>;
 
 export type ResourceRequest = Readonly<{
@@ -36,6 +43,8 @@ export type ResourceConversation = Readonly<{
   id: string;
   requestId: string;
   otherUserId: string;
+  otherUserName: string;
+  resourceName: string;
   lastActivityAt: string;
 }>;
 
@@ -49,10 +58,12 @@ export type ResourceMessage = Readonly<{
 
 export type ResourceSharingSnapshot = Readonly<{
   currentUserId: string;
+  profile: ResourceProfile;
   people: readonly ResourcePerson[];
   requests: readonly ResourceRequest[];
   conversations: readonly ResourceConversation[];
   messages: readonly ResourceMessage[];
+  loadError?: string;
 }>;
 
 export type NewResourceRequest = Readonly<{

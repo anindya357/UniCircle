@@ -1,12 +1,13 @@
-# Resource sharing feature
+# Resource sharing
 
-Feature 6 provides a connected mock resource-sharing workflow:
+`/resources` and `/chat` use the authenticated backend through the Next.js
+resource-sharing proxy. Students choose whether their resource profile appears
+in discovery and which categories they may share. Other students can request
+a resource; only the recipient can accept or reject. Accepted requests open
+a private conversation for those two users. Requests and discovery refresh
+every 15 seconds; the selected chat refreshes every 5 seconds while visible.
+Older messages can be loaded on demand.
 
-- `/resources` includes people discovery, resource-category filters, request
-  composition, and sent/received request management.
-- Pending incoming requests can be accepted or rejected in local mock state.
-- Accepted requests create a coordination conversation shared with `/chat` through
-  the resource-sharing route layout.
-
-Data enters the route through `ResourceSharingService`, allowing the mock snapshot to
-be replaced by backend-managed users, requests, and conversations later.
+There is no seeded demo data. Discovery is empty until another registered,
+verified student opts in. Neither profile data nor messages are end-to-end
+encrypted; deploy behind HTTPS. Server API details are in `backend/README.md`.

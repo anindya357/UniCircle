@@ -2,6 +2,26 @@
   width: min(calc(100% - 2rem), 76rem);
 }
 
+.chatError {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid #e3b8b8;
+  border-radius: 0.75rem;
+  color: #842525;
+  background: #fff1f1;
+}
+
+.loadOlder {
+  display: block;
+  margin: 0 auto 1rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  color: var(--color-brand);
+  background: var(--color-surface);
+  font-weight: 750;
+}
+
 .heading {
   display: flex;
   padding: clamp(1.4rem, 3vw, 2.25rem);

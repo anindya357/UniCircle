@@ -1195,61 +1195,61 @@ The snapshot is campus-only; map tiles need network access in the browser.
 
 ## 7.16 Resource request data
 
-- [ ] Create user-to-user Resource Request model.
-- [ ] Store requester.
-- [ ] Store requested user.
-- [ ] Store requested resource description/category.
-- [ ] Store status:
-  - [ ] Pending
-  - [ ] Accepted
-  - [ ] Rejected
-- [ ] Store timestamps.
-- [ ] Create constraints preventing invalid self-requests if required.
-- [ ] Create migration.
+- [x] Create user-to-user Resource Request model.
+- [x] Store requester.
+- [x] Store requested user.
+- [x] Store requested resource description/category.
+- [x] Store status:
+  - [x] Pending
+  - [x] Accepted
+  - [x] Rejected
+- [x] Store timestamps.
+- [x] Create constraints preventing invalid self-requests if required.
+- [x] Create migration.
 
 ## 7.17 Resource API
 
-- [ ] List/discover users according to approved rules.
-- [ ] Send resource request.
-- [ ] View sent requests.
-- [ ] View received requests.
-- [ ] Accept request.
-- [ ] Reject request.
-- [ ] Authorize request updates so only the intended recipient can accept/reject.
+- [x] List/discover users according to approved rules.
+- [x] Send resource request.
+- [x] View sent requests.
+- [x] View received requests.
+- [x] Accept request.
+- [x] Reject request.
+- [x] Authorize request updates so only the intended recipient can accept/reject.
 
 ## 7.18 Chat data
 
-- [ ] Create Conversation model.
-- [ ] Create Message model.
-- [ ] Link conversation to accepted resource request if that is the approved design.
-- [ ] Create migration.
-- [ ] Prevent chat creation before request acceptance.
-- [ ] Store sender.
-- [ ] Store recipient/conversation.
-- [ ] Store message text.
-- [ ] Store timestamps.
+- [x] Create Conversation model.
+- [x] Create Message model.
+- [x] Link conversation to accepted resource request if that is the approved design.
+- [x] Create migration.
+- [x] Prevent chat creation before request acceptance.
+- [x] Store sender.
+- [x] Store recipient/conversation.
+- [x] Store message text.
+- [x] Store timestamps.
 
 ## 7.19 Chat API/realtime behavior
 
-- [ ] Create conversation list endpoint.
-- [ ] Create message-history endpoint.
-- [ ] Create message-send mechanism.
-- [ ] Decide whether the approved architecture uses:
-  - [ ] REST + refresh/polling, or
+- [x] Create conversation list endpoint.
+- [x] Create message-history endpoint.
+- [x] Create message-send mechanism.
+- [x] Decide whether the approved architecture uses:
+  - [x] REST + refresh/polling, or
   - [ ] WebSocket/realtime connection.
-- [ ] Do not claim cryptographic end-to-end encryption unless it is formally designed and implemented.
-- [ ] Authorize conversation access.
+- [x] Do not claim cryptographic end-to-end encryption unless it is formally designed and implemented.
+- [x] Authorize conversation access.
 
 ## 7.20 Frontend connection
 
-- [ ] Replace discovered-user mocks.
-- [ ] Connect request creation.
-- [ ] Connect accept/reject.
-- [ ] Unlock chat only after accepted request.
-- [ ] Connect conversations.
-- [ ] Connect message history.
-- [ ] Connect message sending.
-- [ ] Implement realtime/polling behavior according to chosen architecture.
+- [x] Replace discovered-user mocks.
+- [x] Connect request creation.
+- [x] Connect accept/reject.
+- [x] Unlock chat only after accepted request.
+- [x] Connect conversations.
+- [x] Connect message history.
+- [x] Connect message sending.
+- [x] Implement realtime/polling behavior according to chosen architecture.
 
 ---
 

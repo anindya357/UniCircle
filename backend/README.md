@@ -160,6 +160,28 @@ prevents duplicate state notifications. No in-process scheduler is started by
 the API. The frontend club/event pages now use the live API. The global
 notification dropdown is not yet connected to the event-notification endpoint.
 
+## Resource sharing and chat
+
+Revision `667afe78e4cf` adds opt-in resource profiles/categories, resource
+requests, accepted-request conversations, and messages. Apply migrations before
+using `/resources` or `/chat`. No demo students or requests are seeded. A student
+appears in discovery only after saving a discoverable profile with at least one
+resource category. Email, phone, and home address are never returned by the
+discovery endpoint. A single registered student cannot send a request to
+themselves; register and verify another student account to test both sides.
+
+Authenticated General Users can use `GET/PATCH /api/v1/resource-profile/me`,
+`GET /api/v1/users/discover`, `POST /api/v1/resource-requests`,
+`GET /api/v1/resource-requests/mine`, and
+`POST /api/v1/resource-requests/{id}/decision`. Only the recipient can accept or
+reject. Acceptance creates one conversation; only its two participants may list
+it, fetch messages, or send messages through `/api/v1/conversations` and
+`/api/v1/conversations/{id}/messages`. Discovery, requests, and conversations
+are paginated; message history supports `before_id` and `after_id` cursors.
+The frontend refreshes these REST endpoints periodically. Chat messages are
+server-readable; this is **not** cryptographic end-to-end encryption. Use TLS
+outside local development.
+
 Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with
 `alembic revision --autogenerate -m "description"`, then **review and edit**

@@ -13,12 +13,14 @@ import styles from "./resource-sharing.module.css";
 
 type ResourceRequestModalProps = Readonly<{
   person: ResourcePerson;
+  error: string | null;
   onClose: () => void;
-  onSubmit: (request: NewResourceRequest) => void;
+  onSubmit: (request: NewResourceRequest) => Promise<void>;
 }>;
 
 export function ResourceRequestModal({
   person,
+  error,
   onClose,
   onSubmit,
 }: ResourceRequestModalProps) {
@@ -41,13 +43,13 @@ export function ResourceRequestModal({
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [onClose]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const categoryLabel =
       resourceCategories.find((item) => item.id === category)?.label ?? "Resource";
 
-    onSubmit({
+    await onSubmit({
       receiverId: person.id,
       category,
       resourceName: resourceName.trim() || categoryLabel,
@@ -77,6 +79,11 @@ export function ResourceRequestModal({
           Describe what you need and when. Chat becomes available only if the request is
           accepted.
         </p>
+        {error ? (
+          <p className={styles.resourceError} role="alert">
+            {error}
+          </p>
+        ) : null}
 
         <form onSubmit={handleSubmit}>
           <label>
@@ -86,11 +93,13 @@ export function ResourceRequestModal({
               ref={firstFieldRef}
               value={category}
             >
-              {resourceCategories.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.label}
-                </option>
-              ))}
+              {resourceCategories
+                .filter((item) => person.resourceCategories.includes(item.id))
+                .map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.label}
+                  </option>
+                ))}
             </select>
           </label>
 
