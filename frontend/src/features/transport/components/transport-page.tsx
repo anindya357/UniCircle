@@ -89,15 +89,6 @@ export function TransportPage({ snapshot }: TransportPageProps) {
   return (
     <AppShell className={styles.pageShell}>
       <section className={styles.hero} aria-labelledby="transport-title">
-        <Image
-          alt="A CUET campus bus travelling inside the university campus"
-          className={styles.heroImage}
-          fill
-          priority
-          sizes="(max-width: 832px) 100vw, 1216px"
-          src="/images/cuet-bus.jpg"
-        />
-        <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroCopy}>
           <p>CUET transport network</p>
           <h1 id="transport-title">
@@ -114,18 +105,29 @@ export function TransportPage({ snapshot }: TransportPageProps) {
           </div>
         </div>
 
-        <div className={styles.heroStats} aria-label="Transport summary">
-          <div>
-            <strong>04</strong>
-            <span>daily schedule windows</span>
-          </div>
-          <div>
-            <strong>{snapshot.buses.length}</strong>
-            <span>buses in directory</span>
-          </div>
-          <div>
-            <strong>02</strong>
-            <span>station route variants</span>
+        <div className={styles.heroVisual}>
+          <Image
+            alt="A CUET campus bus travelling inside the university campus"
+            className={styles.heroImage}
+            fill
+            priority
+            sizes="(max-width: 832px) calc(100vw - 3rem), 620px"
+            src="/images/cuet-bus.jpg"
+          />
+          <div className={styles.heroImageTint} aria-hidden="true" />
+          <div className={styles.heroStats} aria-label="Transport summary">
+            <div>
+              <strong>04</strong>
+              <span>daily windows</span>
+            </div>
+            <div>
+              <strong>{snapshot.buses.length}</strong>
+              <span>buses</span>
+            </div>
+            <div>
+              <strong>02</strong>
+              <span>route variants</span>
+            </div>
           </div>
         </div>
       </section>
