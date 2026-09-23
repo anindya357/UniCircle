@@ -91,7 +91,7 @@ export function ScheduleDetailPage({
           </div>
           <p>
             Every assignment below belongs only to the selected schedule. Driver phone
-            numbers and fleet IDs are prototype information until backend integration.
+            numbers and fleet IDs come from the current transport directory.
           </p>
         </header>
 
@@ -136,7 +136,7 @@ export function ScheduleDetailPage({
                 <ol className={styles.detailBusList}>
                   {assignment.busIds.map((busId, index) => {
                     const bus = busesById.get(busId);
-                    const driver = bus ? driversById.get(bus.driverId) : undefined;
+                    const driver = driversById.get(assignment.driverIds[index]);
 
                     return (
                       <li className={styles.detailBusRow} key={busId}>

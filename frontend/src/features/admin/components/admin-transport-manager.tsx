@@ -157,6 +157,7 @@ export function AdminTransportManager({
             <ScheduleForm
               busy={busyId === "schedule-form"}
               drivers={snapshot.drivers}
+              buses={snapshot.buses ?? []}
               initial={editingSchedule}
               key={`schedule-${editor.id ?? "new"}`}
               onCancel={() => setEditor(null)}
@@ -176,6 +177,7 @@ export function AdminTransportManager({
           {editor.kind === "driver" ? (
             <DriverForm
               busy={busyId === "driver-form"}
+              buses={snapshot.buses ?? []}
               initial={editingDriver}
               key={`driver-${editor.id ?? "new"}`}
               onCancel={() => setEditor(null)}
@@ -287,7 +289,7 @@ export function AdminTransportManager({
                 <div>
                   <strong>{driver.name}</strong>
                   <p>
-                    {driver.phone} · License {driver.licenseNumber}
+                    {driver.phone} · {driver.assignedBusName ?? "Bus not assigned"}
                   </p>
                 </div>
                 <div className={styles.miniActions}>
@@ -348,6 +350,7 @@ function ScheduleForm({
   initial,
   routes,
   drivers,
+  buses,
   busy,
   onSave,
   onCancel,
@@ -355,18 +358,24 @@ function ScheduleForm({
   initial?: AdminSchedule;
   routes: readonly AdminRoute[];
   drivers: readonly AdminDriver[];
+  buses: readonly NonNullable<AdminSnapshot["buses"]>[number][];
   busy: boolean;
   onSave: (input: AdminScheduleInput, id?: string) => Promise<void>;
   onCancel: () => void;
 }>) {
   const [values, setValues] = useState<AdminScheduleInput>({
     title: initial?.title ?? "",
-    serviceDate: initial?.serviceDate ?? "2026-09-06",
+    serviceDate: initial?.serviceDate ?? new Date().toISOString().slice(0, 10),
     startTime: initial?.startTime ?? "07:00",
     endTime: initial?.endTime ?? "08:20",
     routeId: initial?.routeId ?? routes[0]?.id ?? "",
     driverId: initial?.driverId ?? drivers[0]?.id ?? "",
     busName: initial?.busName ?? "",
+    busId: initial?.busId ?? buses[0]?.id ?? "",
+    direction: initial?.direction ?? "to-campus",
+    origin: initial?.origin ?? "Bottoli Rail Station",
+    destination: initial?.destination ?? "CUET",
+    recurrenceUntil: initial?.recurrenceUntil ?? "",
     recurrence: initial?.recurrence ?? "weekly",
   });
 
@@ -430,6 +439,37 @@ function ScheduleForm({
             ))}
           </select>
         </AdminField>
+        <AdminField label="Direction">
+          <select
+            value={values.direction}
+            onChange={(event) =>
+              setValues({
+                ...values,
+                direction: event.target.value as AdminScheduleInput["direction"],
+              })
+            }
+          >
+            <option value="to-campus">To campus</option>
+            <option value="from-campus">From campus</option>
+            <option value="round-trip">Round trip</option>
+          </select>
+        </AdminField>
+        <AdminField label="Origin">
+          <input
+            required
+            value={values.origin}
+            onChange={(event) => setValues({ ...values, origin: event.target.value })}
+          />
+        </AdminField>
+        <AdminField label="Destination">
+          <input
+            required
+            value={values.destination}
+            onChange={(event) =>
+              setValues({ ...values, destination: event.target.value })
+            }
+          />
+        </AdminField>
         <AdminField label="Driver">
           <select
             required
@@ -444,11 +484,24 @@ function ScheduleForm({
           </select>
         </AdminField>
         <AdminField label="Bus name">
-          <input
+          <select
             required
-            value={values.busName}
-            onChange={(event) => setValues({ ...values, busName: event.target.value })}
-          />
+            value={values.busId}
+            onChange={(event) => {
+              const bus = buses.find((item) => item.id === event.target.value);
+              setValues({
+                ...values,
+                busId: event.target.value,
+                busName: bus?.name ?? "",
+              });
+            }}
+          >
+            {buses.map((bus) => (
+              <option key={bus.id} value={bus.id}>
+                {bus.name} · {bus.registration}
+              </option>
+            ))}
+          </select>
         </AdminField>
         <AdminField label="Repeat">
           <select
@@ -461,6 +514,7 @@ function ScheduleForm({
             }
           >
             <option value="once">One date only</option>
+            <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
           </select>
@@ -521,11 +575,13 @@ function RouteForm({
 function DriverForm({
   initial,
   busy,
+  buses,
   onSave,
   onCancel,
 }: Readonly<{
   initial?: AdminDriver;
   busy: boolean;
+  buses: readonly NonNullable<AdminSnapshot["buses"]>[number][];
   onSave: (input: AdminDriverInput, id?: string) => Promise<void>;
   onCancel: () => void;
 }>) {
@@ -533,6 +589,9 @@ function DriverForm({
     name: initial?.name ?? "",
     phone: initial?.phone ?? "",
     licenseNumber: initial?.licenseNumber ?? "",
+    assignedBusId: initial?.assignedBusId ?? buses[0]?.id ?? "",
+    assignedBusName: initial?.assignedBusName ?? buses[0]?.name ?? "",
+    driverClass: initial?.driverClass ?? "heavy",
   });
 
   return (
@@ -545,7 +604,7 @@ function DriverForm({
     >
       <FormHeading
         title={initial ? "Edit driver" : "Add driver"}
-        description="Maintain the contact and license details used by schedule assignments."
+        description="Maintain the contact, vehicle class, and normal bus assignment."
       />
       <div className={styles.formGrid}>
         <AdminField label="Driver name">
@@ -563,14 +622,39 @@ function DriverForm({
             onChange={(event) => setValues({ ...values, phone: event.target.value })}
           />
         </AdminField>
-        <AdminField label="License number">
-          <input
+        <AdminField label="Assigned bus">
+          <select
             required
-            value={values.licenseNumber}
+            value={values.assignedBusId}
+            onChange={(event) => {
+              const bus = buses.find((item) => item.id === event.target.value);
+              setValues({
+                ...values,
+                assignedBusId: event.target.value,
+                assignedBusName: bus?.name,
+              });
+            }}
+          >
+            {buses.map((bus) => (
+              <option key={bus.id} value={bus.id}>
+                {bus.name}
+              </option>
+            ))}
+          </select>
+        </AdminField>
+        <AdminField label="Driver class">
+          <select
+            value={values.driverClass}
             onChange={(event) =>
-              setValues({ ...values, licenseNumber: event.target.value })
+              setValues({
+                ...values,
+                driverClass: event.target.value as "heavy" | "light",
+              })
             }
-          />
+          >
+            <option value="heavy">Heavy vehicle</option>
+            <option value="light">Light vehicle</option>
+          </select>
         </AdminField>
       </div>
       <FormActions busy={busy} onCancel={onCancel} />
@@ -585,7 +669,7 @@ function FormHeading({
   return (
     <header className={styles.formHeading}>
       <div>
-        <p>Mock management form</p>
+        <p>Admin management form</p>
         <h3>{title}</h3>
       </div>
       <span>{description}</span>

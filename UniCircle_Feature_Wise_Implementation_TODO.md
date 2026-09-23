@@ -1257,46 +1257,46 @@ The snapshot is campus-only; map tiles need network access in the browser.
 
 ## 7.21 Data models
 
-- [ ] Create Bus model if required by ERD.
-- [ ] Create Bus Driver model.
-- [ ] Create Route model if separate.
-- [ ] Create Transport Schedule model.
-- [ ] Store schedule date.
-- [ ] Store bus name/reference.
-- [ ] Store driver.
-- [ ] Store bus type.
-- [ ] Store route.
-- [ ] Store schedule/times.
-- [ ] Create migrations.
+- [x] Create Bus model if required by ERD.
+- [x] Create Bus Driver model.
+- [x] Create Route model if separate.
+- [x] Create Transport Schedule model.
+- [x] Store schedule date.
+- [x] Store bus name/reference.
+- [x] Store driver.
+- [x] Store bus type.
+- [x] Store route.
+- [x] Store schedule/times.
+- [x] Create migrations.
 
 ## 7.22 General User API
 
-- [ ] Get schedule for date.
-- [ ] Get current/upcoming available dates.
-- [ ] Prevent normal endpoint from returning past schedules according to workflow requirement.
-- [ ] List bus drivers.
-- [ ] Return driver contact number.
+- [x] Get schedule for date.
+- [x] Get current/upcoming available dates.
+- [x] Prevent normal endpoint from returning past schedules according to workflow requirement.
+- [x] List bus drivers.
+- [x] Return driver contact number.
 
 ## 7.23 Admin API
 
-- [ ] Admin create schedule.
-- [ ] Admin update schedule.
-- [ ] Admin delete schedule where allowed.
-- [ ] Admin manage route.
-- [ ] Admin manage bus information where required.
-- [ ] Admin manage driver information.
-- [ ] Support weekly/monthly schedule maintenance workflow.
-- [ ] Protect every write endpoint with Admin authorization.
+- [x] Admin create schedule.
+- [x] Admin update schedule.
+- [x] Admin delete schedule where allowed.
+- [x] Admin manage route.
+- [x] Admin manage bus information where required.
+- [x] Admin manage driver information.
+- [x] Support weekly/monthly schedule maintenance workflow.
+- [x] Protect every write endpoint with Admin authorization.
 
 ## 7.24 Frontend connection
 
-- [ ] Replace schedule mocks.
-- [ ] Connect date selector.
-- [ ] Connect schedule view.
-- [ ] Connect drivers tab.
-- [ ] Connect Admin schedule forms.
-- [ ] Connect Admin driver/route forms.
-- [ ] Verify past schedule is not exposed in normal user UI/API.
+- [x] Replace schedule mocks.
+- [x] Connect date selector.
+- [x] Connect schedule view.
+- [x] Connect drivers tab.
+- [x] Connect Admin schedule forms.
+- [x] Connect Admin driver/route forms.
+- [x] Verify past schedule is not exposed in normal user UI/API.
 
 ---
 

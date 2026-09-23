@@ -182,6 +182,32 @@ The frontend refreshes these REST endpoints periodically. Chat messages are
 server-readable; this is **not** cryptographic end-to-end encryption. Use TLS
 outside local development.
 
+## Transport
+
+Revision `0363e1e5ad21` adds transport routes, buses, drivers, and recurring
+schedule assignments. After applying migrations, load the reviewed CUET data:
+
+```powershell
+.\.venv\Scripts\python -m app.modules.transport.seed
+```
+
+The idempotent seed contains the 20 supplied bus names, the regular,
+Chawkbazar, and Rastar Matha routes, and four daily service windows. It imports
+only PDF rows 7-31 because those 25 records are designated drivers; rows 1-6
+are officials/staff and rows 32-46 are helpers, security, or office staff.
+Names are transliterated to English and phone numbers retain the PDF digits.
+Every driver receives a deterministic, repeatable bus allocation. The source
+PDF itself is not copied into the repository.
+
+Authenticated users read `GET /api/v1/transport/snapshot`, `/transport/dates`,
+`/transport/schedules?service_date=YYYY-MM-DD`, and `/transport/drivers`.
+Normal APIs reject past dates. App Admin writes are under
+`/api/v1/admin/transport`: routes, buses, drivers, and schedules support create,
+update, and guarded delete operations. Recurrence supports once, daily, weekly,
+and monthly templates with an optional end date. The Admin transport UI uses
+these APIs; its unrelated announcement and report sections remain mock-backed
+until their backend phases.
+
 Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with
 `alembic revision --autogenerate -m "description"`, then **review and edit**

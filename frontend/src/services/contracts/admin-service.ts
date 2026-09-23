@@ -14,7 +14,7 @@ import type {
 } from "@/features/admin/types/admin";
 
 export interface AdminService {
-  getSnapshot(): Promise<AdminSnapshot>;
+  getSnapshot(token?: string): Promise<AdminSnapshot>;
   saveSchedule(input: AdminScheduleInput, id?: string): Promise<AdminSchedule>;
   deleteSchedule(id: string): Promise<void>;
   saveRoute(input: AdminRouteInput, id?: string): Promise<AdminRoute>;

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 
 import { AdminPage } from "@/features/admin/components/admin-page";
 import { requireServerSessionUser } from "@/features/auth/lib/server-session";
@@ -52,7 +53,8 @@ export default async function FeaturePage({ params, searchParams }: FeaturePageP
   }
 
   if (feature === "transport") {
-    const snapshot = await transportService.getSnapshot();
+    const token = (await cookies()).get("unicircle_session")?.value;
+    const snapshot = await transportService.getSnapshot(token);
 
     return <TransportPage snapshot={snapshot} />;
   }
@@ -75,7 +77,8 @@ export default async function FeaturePage({ params, searchParams }: FeaturePageP
 
   if (feature === "admin") {
     if (user.role !== "admin") notFound();
-    const snapshot = await adminService.getSnapshot();
+    const token = (await cookies()).get("unicircle_session")?.value;
+    const snapshot = await adminService.getSnapshot(token);
 
     return <AdminPage initialSnapshot={snapshot} />;
   }

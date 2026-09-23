@@ -165,11 +165,10 @@ erDiagram
 erDiagram
     DEPARTMENT ||--o{ FACULTY : lists
     DEPARTMENT o|--o{ USER : optional_academic_unit
-    TRANSPORT_ROUTE ||--|{ ROUTE_STOP : contains
-    TRANSPORT_SCHEDULE ||--o{ BUS_ASSIGNMENT : allocates
-    BUS ||--o{ BUS_ASSIGNMENT : runs
-    DRIVER ||--o{ BUS_ASSIGNMENT : drives
-    TRANSPORT_ROUTE ||--o{ BUS_ASSIGNMENT : follows
+    BUS ||--o{ DRIVER : normally_assigned
+    BUS ||--o{ TRANSPORT_SCHEDULE : runs
+    DRIVER ||--o{ TRANSPORT_SCHEDULE : drives
+    TRANSPORT_ROUTE ||--o{ TRANSPORT_SCHEDULE : follows
 
     DEPARTMENT {
         string code PK
@@ -207,55 +206,49 @@ erDiagram
         string image_ref
     }
     BUS {
-        uuid id PK
+        string id PK
         string name UK
         string bus_type
-        string registration_number
+        string registration UK
         boolean is_active
     }
     DRIVER {
         uuid id PK
+        integer source_row UK
         string name
-        string contact_number
-        string emergency_contact
-        string license_number
+        string phone UK
+        string driver_class
+        string assigned_bus_id FK
         boolean is_active
     }
     TRANSPORT_ROUTE {
-        uuid id PK
+        string id PK
         string name UK
-        string description
-    }
-    ROUTE_STOP {
-        uuid id PK
-        uuid route_id FK
-        string direction
-        int position
-        string stop_name
+        json outbound_stops
+        json return_stops
+        boolean is_active
     }
     TRANSPORT_SCHEDULE {
         uuid id PK
         date service_date
-        string window_code
-        uuid schedule_series_id
-        string recurrence
-        datetime starts_at
-        datetime ends_at
+        time start_time
+        time end_time
+        string title
+        string direction
         string origin
         string destination
-    }
-    BUS_ASSIGNMENT {
-        uuid id PK
-        uuid schedule_id FK
-        uuid bus_id FK
+        string route_id FK
+        string bus_id FK
         uuid driver_id FK
-        uuid route_id FK
+        string recurrence
+        date recurrence_until
+        boolean is_active
     }
 ```
 
 - Seed the 12 required departments, including both MME and WRE. A general user's department association is optional; staff or newly registered users need not claim an academic department. Faculty contact data is directory content, not automatically a login account; linking a faculty profile to a registered teacher is optional future work. The same CUET person can have entries in multiple departments, so `(department_code, source_id)` is unique rather than `source_id` alone. Missing faculty contact fields remain null rather than fabricated.
 - Home-page content stays static unless Admin-managed content is explicitly requested. Campus images/video are asset references, not database blobs.
-- One `TRANSPORT_SCHEDULE` represents a date and one of the four daily time windows. Unique `(service_date, window_code)`. Admin `once`/`weekly`/`monthly` input materializes dated rows over a bounded date range; generated rows share `schedule_series_id` for later batch updates, while `recurrence` records the source rule. `BUS_ASSIGNMENT` connects the specific buses, drivers, and route variant for that window; unique `(schedule_id, bus_id)` and prevent overlapping allocation of a bus/driver. A driver's assignment belongs to a schedule, not permanently to a bus. `ROUTE_STOP` has unique `(route_id, direction, position)`. Routes include regular and Chawkbazar variants, with outbound/return ordered stops. General-user queries exclude past service dates.
+- One `TRANSPORT_SCHEDULE` row assigns one bus, driver, and route to a service window. Rows with matching date/time/title are grouped into one trip response for the frontend; unique `(service_date, start_time, bus_id)` prevents a duplicate bus allocation. `recurrence` supports `once`, `daily`, `weekly`, and `monthly`, with an optional end date, so Admin edits apply to the recurring template without materializing months of rows. Each driver has a normal bus allocation for the directory, while a schedule records the actual driver for that run. Route stop order is stored as reviewed outbound/return JSON arrays. General-user queries expand only current/future occurrences and reject past dates.
 
 ## Resource requests, chat, and community
 

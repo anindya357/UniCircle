@@ -1,13 +1,14 @@
 """Phase 7 identity tables imported by Alembic metadata discovery."""
 
 import uuid
-from datetime import datetime
+from datetime import date, datetime, time
 
 from sqlalchemy import (
     JSON,
     BigInteger,
     Boolean,
     CheckConstraint,
+    Date,
     DateTime,
     Float,
     ForeignKey,
@@ -15,6 +16,7 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    Time,
     UniqueConstraint,
     Uuid,
     func,
@@ -483,4 +485,101 @@ class Message(Base):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     sent_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class TransportRoute(Base, TimestampMixin):
+    __tablename__ = "transport_routes"
+
+    id: Mapped[str] = mapped_column(String(80), primary_key=True)
+    name: Mapped[str] = mapped_column(String(160), nullable=False, unique=True)
+    outbound_stops: Mapped[list[str]] = mapped_column(JSON, nullable=False)
+    return_stops: Mapped[list[str]] = mapped_column(JSON, nullable=False)
+    is_active: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("true")
+    )
+
+
+class TransportBus(Base, TimestampMixin):
+    __tablename__ = "transport_buses"
+    __table_args__ = (
+        CheckConstraint("bus_type IN ('student','teacher','staff')", name="valid_type"),
+    )
+
+    id: Mapped[str] = mapped_column(String(80), primary_key=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
+    bus_type: Mapped[str] = mapped_column(String(16), nullable=False)
+    registration: Mapped[str] = mapped_column(String(80), nullable=False, unique=True)
+    is_active: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("true")
+    )
+
+
+class BusDriver(Base, TimestampMixin):
+    __tablename__ = "bus_drivers"
+    __table_args__ = (
+        CheckConstraint("driver_class IN ('heavy','light')", name="valid_class"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    source_row: Mapped[int | None] = mapped_column(Integer, unique=True)
+    name: Mapped[str] = mapped_column(String(160), nullable=False)
+    phone: Mapped[str] = mapped_column(String(24), nullable=False, unique=True)
+    driver_class: Mapped[str] = mapped_column(String(12), nullable=False)
+    assigned_bus_id: Mapped[str | None] = mapped_column(
+        ForeignKey("transport_buses.id", ondelete="SET NULL"), index=True
+    )
+    is_active: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("true")
+    )
+
+
+class TransportSchedule(Base, TimestampMixin):
+    __tablename__ = "transport_schedules"
+    __table_args__ = (
+        CheckConstraint(
+            "direction IN ('to-campus','from-campus','round-trip')",
+            name="valid_direction",
+        ),
+        CheckConstraint(
+            "recurrence IN ('once','daily','weekly','monthly')",
+            name="valid_recurrence",
+        ),
+        CheckConstraint("end_time > start_time", name="valid_time_window"),
+        UniqueConstraint(
+            "service_date",
+            "start_time",
+            "bus_id",
+            name="uq_transport_schedule_date_time_bus",
+        ),
+        Index("ix_transport_schedule_active_date", "is_active", "service_date"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    title: Mapped[str] = mapped_column(String(180), nullable=False)
+    service_date: Mapped[date] = mapped_column(Date, nullable=False)
+    start_time: Mapped[time] = mapped_column(Time, nullable=False)
+    end_time: Mapped[time] = mapped_column(Time, nullable=False)
+    direction: Mapped[str] = mapped_column(String(16), nullable=False)
+    origin: Mapped[str] = mapped_column(String(180), nullable=False)
+    destination: Mapped[str] = mapped_column(String(180), nullable=False)
+    route_id: Mapped[str] = mapped_column(
+        ForeignKey("transport_routes.id", ondelete="RESTRICT"), nullable=False
+    )
+    bus_id: Mapped[str] = mapped_column(
+        ForeignKey("transport_buses.id", ondelete="RESTRICT"), nullable=False
+    )
+    driver_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("bus_drivers.id", ondelete="RESTRICT"), nullable=False
+    )
+    recurrence: Mapped[str] = mapped_column(
+        String(12), nullable=False, server_default="once"
+    )
+    recurrence_until: Mapped[date | None] = mapped_column(Date)
+    is_active: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("true")
     )

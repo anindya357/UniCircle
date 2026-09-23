@@ -13,11 +13,28 @@
   align-items: end;
   grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.6fr);
   color: #ffffff;
-  background:
-    radial-gradient(circle at 92% 0%, rgb(230 177 52 / 34%), transparent 24rem),
-    radial-gradient(circle at 10% 120%, rgb(39 141 97 / 34%), transparent 27rem),
-    linear-gradient(135deg, #032f20 0%, #075c3c 58%, #06472f 100%);
+  background: #043c29;
   box-shadow: 0 28px 70px rgb(3 69 44 / 18%);
+}
+
+.heroImage {
+  z-index: 0;
+  object-fit: cover;
+  object-position: center 54%;
+}
+
+.heroOverlay {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(2 37 25 / 94%) 0%,
+      rgb(2 50 33 / 82%) 48%,
+      rgb(2 40 27 / 48%) 100%
+    ),
+    linear-gradient(0deg, rgb(2 35 24 / 74%), transparent 60%);
 }
 
 .hero::before {
@@ -32,12 +49,13 @@
     0 0 0 4rem rgb(255 255 255 / 2.5%),
     0 0 0 8rem rgb(255 255 255 / 1.8%);
   content: "";
+  z-index: 2;
 }
 
 .heroCopy,
 .heroStats {
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 .heroCopy > p:first-child,

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { AppShell } from "@/components/shared/app-shell";
@@ -42,8 +43,14 @@ export function TransportPage({ snapshot }: TransportPageProps) {
   const [busTypeFilter, setBusTypeFilter] = useState<BusTypeFilter>("all");
 
   const busesByDriverId = useMemo(
-    () => new Map(snapshot.buses.map((bus) => [bus.driverId, bus])),
-    [snapshot.buses],
+    () =>
+      new Map(
+        snapshot.drivers.map((driver) => [
+          driver.id,
+          snapshot.buses.find((bus) => bus.id === driver.assignedBusId),
+        ]),
+      ),
+    [snapshot.buses, snapshot.drivers],
   );
   const routesById = useMemo(
     () => new Map(snapshot.routes.map((route) => [route.id, route])),
@@ -82,6 +89,15 @@ export function TransportPage({ snapshot }: TransportPageProps) {
   return (
     <AppShell className={styles.pageShell}>
       <section className={styles.hero} aria-labelledby="transport-title">
+        <Image
+          alt="A CUET campus bus travelling inside the university campus"
+          className={styles.heroImage}
+          fill
+          priority
+          sizes="(max-width: 832px) 100vw, 1216px"
+          src="/images/cuet-bus.jpg"
+        />
+        <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroCopy}>
           <p>CUET transport network</p>
           <h1 id="transport-title">
@@ -93,8 +109,8 @@ export function TransportPage({ snapshot }: TransportPageProps) {
           </p>
           <div className={styles.prototypeNotice}>
             <span aria-hidden="true">i</span>
-            Routine structure follows the supplied reference · assignments and contacts
-            are prototype data
+            Schedule assignments and driver contacts are managed by CUET transport
+            administrators.
           </div>
         </div>
 
@@ -142,10 +158,7 @@ export function TransportPage({ snapshot }: TransportPageProps) {
               <p>Selected-day routine</p>
               <h2 id="schedule-title">Choose when you travel</h2>
             </div>
-            <p>
-              Only the current date and future dates are available. Friday and Saturday
-              demonstrate the no-schedule state in this prototype.
-            </p>
+            <p>Only current and upcoming published schedules are available.</p>
           </div>
 
           {futureDates.length === 0 ? (
@@ -213,7 +226,7 @@ export function TransportPage({ snapshot }: TransportPageProps) {
               <h2 id="drivers-title">Bus Drivers</h2>
             </div>
             <p>
-              Search the prototype directory by driver, phone number, or assigned bus
+              Search the transport directory by driver, phone number, or assigned bus
               and filter by service type.
             </p>
           </div>

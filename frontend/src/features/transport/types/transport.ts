@@ -14,6 +14,7 @@ export type BusDriver = Readonly<{
   name: string;
   phone: string;
   emergencyContact: string;
+  assignedBusId: string | null;
 }>;
 
 export type TransportRoute = Readonly<{
@@ -26,6 +27,7 @@ export type TransportRoute = Readonly<{
 export type RouteAssignment = Readonly<{
   routeId: string;
   busIds: readonly string[];
+  driverIds: readonly string[];
 }>;
 
 export type TransportTrip = Readonly<{

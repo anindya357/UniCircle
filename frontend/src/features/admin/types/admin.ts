@@ -2,7 +2,7 @@ import type { CampusNewsType } from "@/features/news/types/campus-news";
 
 export type AdminSectionId =
   "overview" | "transport" | "announcements" | "club-requests" | "reports";
-export type ScheduleRecurrence = "once" | "weekly" | "monthly";
+export type ScheduleRecurrence = "once" | "daily" | "weekly" | "monthly";
 export type PublishStatus = "draft" | "published";
 export type ReportStatus = "open" | "resolved" | "post-removed";
 
@@ -16,7 +16,17 @@ export type AdminDriver = Readonly<{
   id: string;
   name: string;
   phone: string;
-  licenseNumber: string;
+  licenseNumber?: string;
+  assignedBusId?: string;
+  assignedBusName?: string;
+  driverClass?: "heavy" | "light";
+}>;
+
+export type AdminBus = Readonly<{
+  id: string;
+  name: string;
+  type: "student" | "teacher" | "staff";
+  registration: string;
 }>;
 
 export type AdminSchedule = Readonly<{
@@ -28,6 +38,11 @@ export type AdminSchedule = Readonly<{
   routeId: string;
   driverId: string;
   busName: string;
+  busId?: string;
+  direction?: "to-campus" | "from-campus" | "round-trip";
+  origin?: string;
+  destination?: string;
+  recurrenceUntil?: string;
   recurrence: ScheduleRecurrence;
 }>;
 
@@ -54,6 +69,7 @@ export type AdminCommunityReport = Readonly<{
 
 export type AdminSnapshot = Readonly<{
   routes: readonly AdminRoute[];
+  buses?: readonly AdminBus[];
   drivers: readonly AdminDriver[];
   schedules: readonly AdminSchedule[];
   announcements: readonly AdminAnnouncement[];

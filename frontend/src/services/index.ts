@@ -1,4 +1,4 @@
-import { MockAdminService } from "@/mocks/services/mock-admin-service";
+import { ApiAdminService } from "@/services/api/api-admin-service";
 import { MockCampusAssistantService } from "@/mocks/services/mock-campus-assistant-service";
 import { ApiClubEventService } from "@/services/api/api-club-event-service";
 import { MockForumService } from "@/mocks/services/mock-forum-service";
@@ -10,7 +10,7 @@ import { ApiCampusExplorerService } from "@/services/api/api-campus-explorer-ser
 import { ApiDirectoryService } from "@/services/api/api-directory-service";
 import { ApiProfileService } from "@/services/api/api-profile-service";
 import { ApiSessionService } from "@/services/api/api-session-service";
-import { MockTransportService } from "@/mocks/services/mock-transport-service";
+import { ApiTransportService } from "@/services/api/api-transport-service";
 import type { AdminService } from "@/services/contracts/admin-service";
 import type { AuthService } from "@/services/contracts/auth-service";
 import type { CampusAssistantService } from "@/services/contracts/campus-assistant-service";
@@ -25,7 +25,7 @@ import type { ResourceSharingService } from "@/services/contracts/resource-shari
 import type { SessionService } from "@/services/contracts/session-service";
 import type { TransportService } from "@/services/contracts/transport-service";
 
-export const adminService: AdminService = new MockAdminService();
+export const adminService: AdminService = new ApiAdminService();
 export const authService: AuthService = new ApiAuthService();
 export const campusAssistantService: CampusAssistantService =
   new MockCampusAssistantService();
@@ -40,4 +40,4 @@ export const profileService: ProfileService = new ApiProfileService();
 export const resourceSharingService: ResourceSharingService =
   new ApiResourceSharingService();
 export const sessionService: SessionService = new ApiSessionService();
-export const transportService: TransportService = new MockTransportService();
+export const transportService: TransportService = new ApiTransportService();

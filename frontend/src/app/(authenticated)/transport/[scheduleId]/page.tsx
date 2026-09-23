@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { ScheduleDetailPage } from "@/features/transport/components/schedule-detail-page";
@@ -10,17 +11,16 @@ type ScheduleDetailsRouteProps = Readonly<{
 }>;
 
 export async function generateStaticParams() {
-  const snapshot = await transportService.getSnapshot();
-
-  return snapshot.trips.map((trip) => ({ scheduleId: trip.id }));
+  return [];
 }
 
 export async function generateMetadata({
   params,
 }: ScheduleDetailsRouteProps): Promise<Metadata> {
+  const token = (await cookies()).get("unicircle_session")?.value;
   const [{ scheduleId }, snapshot] = await Promise.all([
     params,
-    transportService.getSnapshot(),
+    transportService.getSnapshot(token),
   ]);
   const trip = snapshot.trips.find((item) => item.id === scheduleId);
 
@@ -36,9 +36,10 @@ export default async function ScheduleDetailsRoute({
   params,
 }: ScheduleDetailsRouteProps) {
   await requireServerSessionUser();
+  const token = (await cookies()).get("unicircle_session")?.value;
   const [{ scheduleId }, snapshot] = await Promise.all([
     params,
-    transportService.getSnapshot(),
+    transportService.getSnapshot(token),
   ]);
   const trip = snapshot.trips.find((item) => item.id === scheduleId);
 

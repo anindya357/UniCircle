@@ -8,8 +8,10 @@ routine and driver directory.
   the Chawkbazar route; the midday CUET–Rastar Matha return uses 4 buses.
 - Each schedule card links to a dedicated assignment page showing the buses, service
   types, drivers, contacts, and route path for that exact run.
-- The Bus Drivers tab lists all 20 named buses with searchable prototype contacts.
+- The Bus Drivers tab lists the 25 PDF-sourced drivers, their assigned buses, and
+  searchable contact numbers.
 
-The supplied routine image informed the information hierarchy. Exact bus assignments,
-fleet IDs, and driver contacts remain typed mock data until the backend provides the
-approved routine.
+The live authenticated API supplies routes, recurring schedules, buses, and driver
+contacts. The supplied CUET bus photo appears in the responsive page banner. Past
+schedules are rejected by the General User API, while App Admins can maintain the
+transport records in the Admin workspace.
