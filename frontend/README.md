@@ -35,7 +35,8 @@ npm run format       # apply Prettier formatting
 - `src/components/ui` contains genuinely reusable presentation primitives.
 - `src/components/shared` contains application-wide composition components.
 - `src/services/contracts` defines interfaces implemented by real authentication,
-  club/event, directory, and campus adapters, plus mock services for remaining features.
+  club/event, directory, campus, resource/chat, transport, and forum adapters, plus
+  mock services for remaining features.
 - `src/mocks` contains typed mock repositories, services, and data for features
   not yet connected to their backend.
 - `src/features/home/content` contains the reviewed static Home content; the
@@ -57,3 +58,8 @@ membership recruitment with bKash and Nagad accounts and review applications
 on a dedicated page. Students see member, pending, closed, or application states
 on each club page. The global notification UI combines live event and membership
 approval notifications with the retained campus-announcement sample items.
+
+The Community Forum uses the authenticated FastAPI forum endpoints through the
+same-origin `/api/forum/*` handler. Posts and comments are text-only. Reporting
+state survives reloads, and the App Admin report queue uses the live moderation
+API to dismiss reports or soft-remove posts from the General User feed.

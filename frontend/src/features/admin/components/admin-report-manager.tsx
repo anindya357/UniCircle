@@ -22,18 +22,35 @@ export function AdminReportManager({
   setSnapshot,
 }: Readonly<{ snapshot: AdminSnapshot; setSnapshot: AdminSnapshotSetter }>) {
   const [busyId, setBusyId] = useState("");
+  const [error, setError] = useState("");
   const openCount = snapshot.reports.filter(
     (report) => report.status === "open",
   ).length;
 
   async function updateReport(report: AdminCommunityReport, status: ReportStatus) {
     setBusyId(report.id);
-    const saved = await adminService.setReportStatus(report, status);
-    setSnapshot((current) => ({
-      ...current,
-      reports: current.reports.map((item) => (item.id === saved.id ? saved : item)),
-    }));
-    setBusyId("");
+    setError("");
+    try {
+      const saved = await adminService.setReportStatus(report, status);
+      setSnapshot((current) => ({
+        ...current,
+        reports: current.reports.map((item) => {
+          if (item.id === saved.id) return saved;
+          if (status === "post-removed" && item.postId === saved.postId) {
+            return { ...item, status: "post-removed" };
+          }
+          return item;
+        }),
+      }));
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "The report could not be updated.",
+      );
+    } finally {
+      setBusyId("");
+    }
   }
 
   return (
@@ -45,6 +62,12 @@ export function AdminReportManager({
         </div>
         <span>{openCount} awaiting review</span>
       </header>
+
+      {error ? (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      ) : null}
 
       {snapshot.reports.length === 0 ? (
         <div className={styles.adminEmptyState}>

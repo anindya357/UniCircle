@@ -22,6 +22,7 @@ export type ForumPost = Readonly<{
   body: string;
   createdAt: string;
   comments: readonly ForumComment[];
+  isReportedByCurrentUser?: boolean;
 }>;
 
 export type ForumSnapshot = Readonly<{

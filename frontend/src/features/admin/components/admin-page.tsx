@@ -165,7 +165,7 @@ function AdminOverview({
           <p>Today at a glance</p>
           <h2 id="overview-title">Admin dashboard</h2>
         </div>
-        <span>Mock management state</span>
+        <span>Management overview</span>
       </header>
       <div className={styles.overviewGrid}>
         {cards.map((card, index) => (

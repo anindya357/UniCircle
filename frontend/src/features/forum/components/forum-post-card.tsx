@@ -5,15 +5,14 @@ import { useId, useState, type FormEvent } from "react";
 import { FormError } from "@/components/ui/forms/form-error";
 import { formatForumTimestamp } from "@/features/forum/lib/format-forum-date";
 import type { ForumPost } from "@/features/forum/types/forum";
-import { delay } from "@/lib/delay";
 
 import styles from "./forum-page.module.css";
 
 type ForumPostCardProps = Readonly<{
   post: ForumPost;
   isReported: boolean;
-  onCreateComment: (postId: string, body: string) => void;
-  onReportPost: (postId: string) => void;
+  onCreateComment: (postId: string, body: string) => Promise<void>;
+  onReportPost: (postId: string) => Promise<void>;
 }>;
 
 const maximumCommentLength = 600;
@@ -43,11 +42,13 @@ export function ForumPostCard({
   const commentErrorId = useId();
   const commentsHeadingId = useId();
   const reportHeadingId = useId();
+  const reportErrorId = useId();
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState<string | null>(null);
   const [isCommentSubmitting, setIsCommentSubmitting] = useState(false);
   const [showReportConfirmation, setShowReportConfirmation] = useState(false);
   const [isReporting, setIsReporting] = useState(false);
+  const [reportError, setReportError] = useState<string | null>(null);
 
   async function handleCommentSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -60,18 +61,35 @@ export function ForumPostCard({
 
     setCommentError(null);
     setIsCommentSubmitting(true);
-    await delay(350);
-    onCreateComment(post.id, normalizedComment);
-    setComment("");
-    setIsCommentSubmitting(false);
+    try {
+      await onCreateComment(post.id, normalizedComment);
+      setComment("");
+    } catch (caughtError) {
+      setCommentError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Your comment could not be posted.",
+      );
+    } finally {
+      setIsCommentSubmitting(false);
+    }
   }
 
   async function handleReport() {
     setIsReporting(true);
-    await delay(400);
-    onReportPost(post.id);
-    setIsReporting(false);
-    setShowReportConfirmation(false);
+    setReportError(null);
+    try {
+      await onReportPost(post.id);
+      setShowReportConfirmation(false);
+    } catch (caughtError) {
+      setReportError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "This post could not be reported.",
+      );
+    } finally {
+      setIsReporting(false);
+    }
   }
 
   return (
@@ -134,6 +152,7 @@ export function ForumPostCard({
               {isReporting ? "Sending…" : "Confirm report"}
             </button>
           </div>
+          <FormError id={reportErrorId} message={reportError} />
         </section>
       ) : null}
 

@@ -2,12 +2,15 @@
 
 Feature 8 provides the `/forum` community discussion experience.
 
-- The server route reads typed posts and authors through `ForumService`.
-- The client feed mocks text-only post and comment creation with validation and submit
-  states.
+- The server route reads authenticated posts, comments, authors, and report state
+  through `ForumService`.
+- The client feed persists text-only post and comment creation with validation,
+  pending, and error states.
 - Posts expose a confirmation step before they are reported to an App Admin.
-- A reported post cannot be accidentally submitted again in the current mock session.
+- A report is persisted once per user/post and appears in the App Admin queue.
+- Admins can dismiss a report or soft-remove its post; removed posts and comments
+  disappear from the user feed.
 - No reaction controls or image/video upload controls are included by design.
 
-Mock mutations reset when the page reloads. A future backend integration can replace the
-mock service while retaining the feature types and component boundaries.
+The same-origin `/api/forum/*` handler keeps the access token out of browser
+JavaScript and performs origin/CSRF checks for every mutation.

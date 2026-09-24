@@ -11,6 +11,7 @@ import type {
   ForumPost,
   ForumSnapshot,
 } from "@/features/forum/types/forum";
+import { forumService } from "@/services";
 
 import styles from "./forum-page.module.css";
 
@@ -21,7 +22,12 @@ type ForumPageProps = Readonly<{
 export function ForumPage({ initialSnapshot }: ForumPageProps) {
   const [posts, setPosts] = useState<ForumPost[]>([...initialSnapshot.posts]);
   const [reportedPostIds, setReportedPostIds] = useState<ReadonlySet<string>>(
-    () => new Set(),
+    () =>
+      new Set(
+        initialSnapshot.posts
+          .filter((post) => post.isReportedByCurrentUser)
+          .map((post) => post.id),
+      ),
   );
   const [announcement, setAnnouncement] = useState("");
 
@@ -30,31 +36,14 @@ export function ForumPage({ initialSnapshot }: ForumPageProps) {
     [posts],
   );
 
-  function createPost(body: string) {
-    const createdAt = new Date().toISOString();
-
-    setPosts((current) => [
-      {
-        id: `forum-post-${Date.now()}`,
-        author: initialSnapshot.currentUser,
-        body,
-        createdAt,
-        comments: [],
-      },
-      ...current,
-    ]);
+  async function createPost(body: string) {
+    const created = await forumService.createPost(body);
+    setPosts((current) => [created, ...current]);
     setAnnouncement("Your discussion was published at the top of the community feed.");
   }
 
-  function createComment(postId: string, body: string) {
-    const createdAt = new Date().toISOString();
-    const comment: ForumComment = {
-      id: `forum-comment-${Date.now()}`,
-      postId,
-      author: initialSnapshot.currentUser,
-      body,
-      createdAt,
-    };
+  async function createComment(postId: string, body: string) {
+    const comment: ForumComment = await forumService.createComment(postId, body);
 
     setPosts((current) =>
       current.map((post) =>
@@ -64,7 +53,11 @@ export function ForumPage({ initialSnapshot }: ForumPageProps) {
     setAnnouncement("Your comment was added to the discussion.");
   }
 
-  function reportPost(postId: string) {
+  async function reportPost(postId: string) {
+    await forumService.reportPost(
+      postId,
+      "Community standards review requested by a forum user.",
+    );
     setReportedPostIds((current) => new Set(current).add(postId));
     setAnnouncement("The post was reported to an App Admin for review.");
   }

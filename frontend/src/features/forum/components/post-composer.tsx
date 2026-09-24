@@ -4,13 +4,12 @@ import { useId, useState, type FormEvent } from "react";
 
 import { FormError } from "@/components/ui/forms/form-error";
 import type { ForumAuthor } from "@/features/forum/types/forum";
-import { delay } from "@/lib/delay";
 
 import styles from "./forum-page.module.css";
 
 type PostComposerProps = Readonly<{
   currentUser: ForumAuthor;
-  onCreatePost: (body: string) => void;
+  onCreatePost: (body: string) => Promise<void>;
 }>;
 
 const maximumPostLength = 1200;
@@ -43,10 +42,18 @@ export function PostComposer({ currentUser, onCreatePost }: PostComposerProps) {
 
     setError(null);
     setIsSubmitting(true);
-    await delay(450);
-    onCreatePost(normalizedBody);
-    setBody("");
-    setIsSubmitting(false);
+    try {
+      await onCreatePost(normalizedBody);
+      setBody("");
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Your discussion could not be published.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (

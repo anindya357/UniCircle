@@ -1336,46 +1336,46 @@ The snapshot is campus-only; map tiles need network access in the browser.
 
 ## 7.25 Data models
 
-- [ ] Create Post model.
-- [ ] Create Comment model.
-- [ ] Create Report model.
-- [ ] Store text-only post content.
-- [ ] Store author.
-- [ ] Store timestamps.
-- [ ] Relate comments to posts and authors.
-- [ ] Relate reports to reporter and reported post.
-- [ ] Create migrations.
+- [x] Create Post model.
+- [x] Create Comment model.
+- [x] Create Report model.
+- [x] Store text-only post content.
+- [x] Store author.
+- [x] Store timestamps.
+- [x] Relate comments to posts and authors.
+- [x] Relate reports to reporter and reported post.
+- [x] Create migrations.
 
 ## 7.26 General User API
 
-- [ ] Create text post.
-- [ ] List posts.
-- [ ] Get post if required.
-- [ ] Add comment.
-- [ ] List comments.
-- [ ] Report post.
-- [ ] Validate text-only payloads.
-- [ ] Do not implement image/video upload for forum.
-- [ ] Do not implement reactions.
+- [x] Create text post.
+- [x] List posts.
+- [x] Get post if required.
+- [x] Add comment.
+- [x] List comments.
+- [x] Report post.
+- [x] Validate text-only payloads.
+- [x] Do not implement image/video upload for forum.
+- [x] Do not implement reactions.
 
 ## 7.27 Admin moderation API
 
-- [ ] List reported posts.
-- [ ] Show report details.
-- [ ] Remove reported post.
-- [ ] Handle related comments according to deletion strategy.
-- [ ] Resolve/dismiss report if part of final design.
-- [ ] Protect moderation endpoints with Admin authorization.
+- [x] List reported posts.
+- [x] Show report details.
+- [x] Remove reported post.
+- [x] Handle related comments according to deletion strategy.
+- [x] Resolve/dismiss report if part of final design.
+- [x] Protect moderation endpoints with Admin authorization.
 
 ## 7.28 Frontend connection
 
-- [ ] Replace feed mocks.
-- [ ] Connect post creation.
-- [ ] Connect comments.
-- [ ] Connect reporting.
-- [ ] Connect Admin report queue.
-- [ ] Connect Admin post removal.
-- [ ] Verify removed posts disappear from user feed.
+- [x] Replace feed mocks.
+- [x] Connect post creation.
+- [x] Connect comments.
+- [x] Connect reporting.
+- [x] Connect Admin report queue.
+- [x] Connect Admin post removal.
+- [x] Verify removed posts disappear from user feed.
 
 ---
 

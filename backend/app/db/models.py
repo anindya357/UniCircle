@@ -558,6 +558,71 @@ class Message(Base):
     )
 
 
+class ForumPost(Base, TimestampMixin):
+    """A text-only community discussion visible until an Admin removes it."""
+
+    __tablename__ = "forum_posts"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    author_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    body: Mapped[str] = mapped_column(Text, nullable=False)
+    removed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    removed_by_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL")
+    )
+
+
+class ForumComment(Base, TimestampMixin):
+    """A text-only comment whose visibility follows its parent post."""
+
+    __tablename__ = "forum_comments"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    post_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("forum_posts.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    author_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    body: Mapped[str] = mapped_column(Text, nullable=False)
+
+
+class ForumReport(Base, TimestampMixin):
+    """One moderation report per reporter and post."""
+
+    __tablename__ = "forum_reports"
+    __table_args__ = (
+        UniqueConstraint("post_id", "reporter_id", name="uq_forum_report_user"),
+        CheckConstraint(
+            "status IN ('open','resolved','post-removed')", name="valid_status"
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    post_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("forum_posts.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    reporter_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    reason: Mapped[str] = mapped_column(String(500), nullable=False)
+    status: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default="open", index=True
+    )
+    reviewer_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL")
+    )
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class TransportRoute(Base, TimestampMixin):
     __tablename__ = "transport_routes"
 

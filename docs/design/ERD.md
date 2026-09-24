@@ -341,32 +341,36 @@ erDiagram
     }
     FORUM_POST {
         uuid id PK
-        uuid author_user_id FK
-        string content
+        uuid author_id FK
+        string body
         datetime created_at
-        datetime deleted_at
+        datetime updated_at
+        datetime removed_at
+        uuid removed_by_user_id FK
     }
     FORUM_COMMENT {
         uuid id PK
         uuid post_id FK
-        uuid author_user_id FK
-        string content
+        uuid author_id FK
+        string body
         datetime created_at
+        datetime updated_at
     }
     FORUM_REPORT {
         uuid id PK
         uuid post_id FK
-        uuid reporter_user_id FK
-        uuid reviewed_by_user_id FK
+        uuid reporter_id FK
+        uuid reviewer_id FK
         string reason
         string status
-        datetime reviewed_at
+        datetime resolved_at
         datetime created_at
+        datetime updated_at
     }
 ```
 
 - `RESOURCE_PROFILE` supplies optional discovery details and categories; private contact/address fields from `USER` are not returned in discovery. The mock `mutualConnections` number has no supported data source and must be removed from the live DTO rather than invented. `RESOURCE_REQUEST.status` is `pending`, `accepted`, or `rejected`, and requester/recipient must differ. `CONVERSATION.resource_request_id` is unique and can be created only for an accepted request. Only the two request participants may read or send messages. Chat is **not** claimed to be cryptographically end-to-end encrypted.
-- Forum posts and comments contain text only. No reactions or media tables. Reports are unique per `(post_id, reporter_user_id)`; only App Admin may review them. Use soft deletion for moderated posts so reports and audit relationships remain intact; hide deleted posts and their comments from normal feeds.
+- Forum posts and comments contain text only. No reactions or media tables. Reports are unique per `(post_id, reporter_id)`; only App Admin may review them. Moderated posts use `removed_at` soft removal so reports and audit relationships remain intact; removed posts and their comments are hidden from General User feeds.
 
 ## News, notifications, and AI knowledge
 

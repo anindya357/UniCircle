@@ -80,6 +80,43 @@ async function data<T>(
   return result.data as T;
 }
 
+async function forumData<T>(
+  path: string,
+  method = "GET",
+  body?: unknown,
+  token?: string,
+): Promise<T> {
+  const url = token
+    ? new URL(`/api/v1/${path}`, process.env.BACKEND_API_URL ?? "http://127.0.0.1:8000")
+    : `/api/forum/${path}`;
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      method,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+        ...(!token && method !== "GET" ? { "X-CSRF-Token": csrfToken() } : {}),
+      },
+      body: body === undefined ? undefined : JSON.stringify(body),
+      credentials: token ? undefined : "same-origin",
+      cache: "no-store",
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch (cause) {
+    throw new ServiceError("Cannot reach forum moderation services.", "network", {
+      cause,
+    });
+  }
+  const result = await response.json().catch(() => null);
+  if (!response.ok || !result || !("data" in result)) {
+    throw new ServiceError(
+      result?.error?.message ?? "Forum moderation request failed.",
+    );
+  }
+  return result.data as T;
+}
+
 function mapTransport(
   record: TransportAdminRecord,
 ): Pick<AdminSnapshot, "routes" | "buses" | "drivers" | "schedules"> {
@@ -146,10 +183,11 @@ function schedulePayload(input: AdminScheduleInput) {
 
 export class ApiAdminService implements AdminService {
   async getSnapshot(token?: string): Promise<AdminSnapshot> {
-    const transport = mapTransport(
-      await data<TransportAdminRecord>("admin/transport", "GET", undefined, token),
-    );
-    return { ...mockAdminSnapshot, ...transport };
+    const [transportRecord, reports] = await Promise.all([
+      data<TransportAdminRecord>("admin/transport", "GET", undefined, token),
+      forumData<AdminCommunityReport[]>("admin/forum/reports", "GET", undefined, token),
+    ]);
+    return { ...mockAdminSnapshot, ...mapTransport(transportRecord), reports };
   }
 
   async saveSchedule(input: AdminScheduleInput, id?: string) {
@@ -217,6 +255,11 @@ export class ApiAdminService implements AdminService {
     item: AdminCommunityReport,
     status: ReportStatus,
   ): Promise<AdminCommunityReport> {
-    return mockFallback.setReportStatus(item, status);
+    if (status === "open") {
+      throw new ServiceError("A reviewed report cannot be reopened.");
+    }
+    return forumData<AdminCommunityReport>(`admin/forum/reports/${item.id}`, "PUT", {
+      decision: status,
+    });
   }
 }

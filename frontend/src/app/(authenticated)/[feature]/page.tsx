@@ -60,7 +60,8 @@ export default async function FeaturePage({ params, searchParams }: FeaturePageP
   }
 
   if (feature === "forum") {
-    const snapshot = await forumService.getSnapshot();
+    const token = (await cookies()).get("unicircle_session")?.value;
+    const snapshot = await forumService.getSnapshot(token);
 
     return <ForumPage initialSnapshot={snapshot} />;
   }

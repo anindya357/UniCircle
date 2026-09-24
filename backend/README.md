@@ -1,9 +1,9 @@
 # UniCircle backend foundation
 
 Phases 6.1–6.3 provide the FastAPI and database foundation. Phase 7 includes
-Authentication Feature 1, the Department and Faculty Directory, and the
-Campus Explorer read API, and the Club & Event Hub backend. Other feature APIs
-and domain tables remain future work.
+Authentication Feature 1, the Department and Faculty Directory, Campus Explorer,
+Club & Event Hub, Resource Sharing + Chat, Transport, and Community Forum.
+Remaining feature APIs and domain tables are future work.
 
 Backend Feature 2 is intentionally static: the public Home page reads reviewed
 content from `frontend/src/features/home/content`, with media shipped from
@@ -191,6 +191,18 @@ The frontend refreshes these REST endpoints periodically. Chat messages are
 server-readable; this is **not** cryptographic end-to-end encryption. Use TLS
 outside local development.
 
+## Community discussion forum
+
+Revision `9e4a2b1c7d30` adds text-only forum posts, comments, and moderation
+reports. General Users can list/create posts, list/add comments, and report a
+post through `/api/v1/forum/posts`. Each user can report a post only once.
+Image/video fields and reaction data are rejected or unsupported by design.
+
+App Admin moderation is under `/api/v1/admin/forum/reports`. Dismissing a report
+keeps the post visible. Removing a reported post soft-removes it, hides its
+comments from every General User endpoint, and retains the post/report audit
+record. All moderation permissions are enforced by FastAPI, not by the UI.
+
 ## Transport
 
 Revision `0363e1e5ad21` adds transport routes, buses, drivers, and recurring
@@ -215,7 +227,7 @@ Normal APIs reject past dates. App Admin writes are under
 update, and guarded delete operations. Recurrence supports once, daily, weekly,
 and monthly templates with an optional end date. The Admin transport UI uses
 these APIs; its unrelated announcement and report sections remain mock-backed
-until their backend phases.
+until their backend phases; the report section now uses the forum moderation API.
 
 Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with
