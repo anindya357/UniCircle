@@ -14,6 +14,7 @@ import styles from "./notification-item.module.css";
 const notificationTypeLabels = {
   "event-started": "Event started",
   "event-finished": "Event finished",
+  "club-membership-approved": "Membership approved",
   "campus-announcement": "Announcement",
   "campus-update": "Campus update",
 } as const satisfies Record<NotificationType, string>;

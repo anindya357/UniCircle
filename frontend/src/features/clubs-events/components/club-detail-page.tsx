@@ -7,6 +7,7 @@ import { AppShell } from "@/components/shared/app-shell";
 import { EmptyState } from "@/components/ui/feedback/empty-state";
 import { routes } from "@/config/routes";
 import { ClubAdminWorkspace } from "@/features/clubs-events/components/club-admin-workspace";
+import { MembershipRecruitmentPanel } from "@/features/clubs-events/components/membership-recruitment-panel";
 import { useClubEvents } from "@/features/clubs-events/context/club-event-context";
 import type {
   AttendanceStatus,
@@ -111,6 +112,7 @@ export function ClubDetailPage({ club, events }: ClubDetailPageProps) {
       ) : null}
 
       {isClubAdmin(club) ? <ClubAdminWorkspace club={club} /> : null}
+      <MembershipRecruitmentPanel club={club} />
 
       <div className={styles.clubDetailContent} style={accentStyle}>
         <div className={styles.clubDetailsGrid}>

@@ -34,7 +34,44 @@ export type CampusClub = Readonly<{
   leaders: readonly ClubMember[];
   adminUserIds: readonly EntityId[];
   adminStudents?: readonly RegisteredStudent[];
+  isMember?: boolean;
+  membershipRequestStatus?: "pending" | "approved";
+  pendingMembershipRequestCount?: number;
+  membershipRecruitment?: Readonly<{
+    open: boolean;
+    fee: 200;
+    bkashNumber?: string;
+    nagadNumber?: string;
+  }>;
 }>;
+
+export type MembershipSettingsInput = Readonly<{
+  open: boolean;
+  bkashNumber: string;
+  nagadNumber: string;
+}>;
+
+export type MembershipRequestInput = Readonly<{
+  applicantName: string;
+  email: string;
+  studentId: string;
+  departmentName: string;
+  phone: string;
+  motivation: string;
+  paymentMethod: "bkash" | "nagad";
+  transactionId: string;
+}>;
+
+export type MembershipRequest = MembershipRequestInput &
+  Readonly<{
+    id: EntityId;
+    clubId: EntityId;
+    userId: EntityId;
+    fee: 200;
+    status: "pending" | "approved";
+    submittedAt: string;
+    reviewedAt?: string;
+  }>;
 
 export type EventRegistrationSettings = Readonly<{
   enabled: boolean;

@@ -15,7 +15,7 @@ export default async function AuthenticatedLayout({
   const user = await requireServerSessionUser();
   const token = (await cookies()).get("unicircle_session")?.value;
   const [notifications, clubEventSnapshot] = await Promise.all([
-    notificationService.list(),
+    notificationService.list(token).catch(() => []),
     clubEventService.getSnapshot(token, user.role).catch(() => ({
       clubs: [],
       events: [],

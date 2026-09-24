@@ -1,7 +1,11 @@
 import type { EntityId } from "@/types/common";
 
 export type NotificationType =
-  "event-started" | "event-finished" | "campus-announcement" | "campus-update";
+  | "event-started"
+  | "event-finished"
+  | "club-membership-approved"
+  | "campus-announcement"
+  | "campus-update";
 
 export type AppNotification = Readonly<{
   id: EntityId;

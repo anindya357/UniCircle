@@ -66,6 +66,47 @@ class AdminIn(Input):
         return self
 
 
+class MembershipSettingsIn(Input):
+    recruitment_open: bool
+    bkash_number: str | None = Field(default=None, pattern=r"^01[0-9]{9}$")
+    nagad_number: str | None = Field(default=None, pattern=r"^01[0-9]{9}$")
+
+    @model_validator(mode="after")
+    def payment_accounts_when_open(self) -> "MembershipSettingsIn":
+        if self.recruitment_open and not (self.bkash_number and self.nagad_number):
+            raise ValueError(
+                "Both bKash and Nagad numbers are required while recruitment is open"
+            )
+        return self
+
+
+class MembershipRequestIn(Input):
+    applicant_name: str = Field(min_length=2, max_length=200)
+    email: str
+    student_id: str = Field(min_length=1, max_length=64)
+    department_name: str = Field(min_length=2, max_length=100)
+    phone: str = Field(pattern=r"^01[0-9]{9}$")
+    motivation: str = Field(min_length=20, max_length=2000)
+    payment_method: Literal["bkash", "nagad"]
+    transaction_id: str = Field(min_length=4, max_length=100)
+
+    @field_validator(
+        "applicant_name",
+        "student_id",
+        "department_name",
+        "motivation",
+        "transaction_id",
+    )
+    @classmethod
+    def trim_membership_fields(cls, value: str) -> str:
+        return value.strip()
+
+    @field_validator("email")
+    @classmethod
+    def membership_email(cls, value: str) -> str:
+        return normalize_cuet_email(value)
+
+
 class EventIn(Input):
     title: str = Field(min_length=1, max_length=200)
     category: str = Field(min_length=1, max_length=100)

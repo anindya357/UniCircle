@@ -11,6 +11,9 @@ import type {
   ClubRequestStatus,
   EventRegistration,
   EventRegistrationInput,
+  MembershipRequest,
+  MembershipRequestInput,
+  MembershipSettingsInput,
   RegisteredStudent,
 } from "@/features/clubs-events/types/club-event";
 import { delay } from "@/lib/delay";
@@ -125,6 +128,57 @@ export class MockClubEventService implements ClubEventService {
   ): Promise<CampusClub> {
     await delay(mockLatencyMilliseconds);
     return { ...club, adminUserIds: [...new Set(adminUserIds)] };
+  }
+
+  async updateMembershipSettings(
+    clubId: string,
+    input: MembershipSettingsInput,
+  ): Promise<CampusClub> {
+    const club = mockCampusClubs.find((item) => item.id === clubId);
+    if (!club) throw new Error("Club not found.");
+    return {
+      ...club,
+      membershipRecruitment: {
+        open: input.open,
+        fee: 200,
+        bkashNumber: input.bkashNumber || undefined,
+        nagadNumber: input.nagadNumber || undefined,
+      },
+    };
+  }
+
+  async submitMembershipRequest(
+    clubId: string,
+    input: MembershipRequestInput,
+  ): Promise<MembershipRequest> {
+    return {
+      ...input,
+      id: `membership-${Date.now()}`,
+      clubId,
+      userId: "mock-user",
+      fee: 200,
+      status: "pending",
+      submittedAt: new Date().toISOString(),
+    };
+  }
+
+  async listMembershipRequests(_clubId: string): Promise<readonly MembershipRequest[]> {
+    void _clubId;
+    return [];
+  }
+
+  async approveMembershipRequest(
+    clubId: string,
+    _requestId: string,
+  ): Promise<{ request: MembershipRequest; club: CampusClub }> {
+    void clubId;
+    void _requestId;
+    throw new Error("No mock membership request is available.");
+  }
+
+  async removeMembershipRequest(_clubId: string, _requestId: string): Promise<void> {
+    void _clubId;
+    void _requestId;
   }
 
   async saveEvent(

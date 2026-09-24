@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
 import { useAuthenticatedUser } from "@/features/auth/context/authenticated-user-context";
@@ -9,11 +10,12 @@ import type {
   CampusEvent,
   CampusEventInput,
   ClubProfileInput,
+  MembershipSettingsInput,
 } from "@/features/clubs-events/types/club-event";
 
 import styles from "./club-event-hub.module.css";
 
-type WorkspaceSection = "profile" | "admins" | "events";
+type WorkspaceSection = "profile" | "membership" | "admins" | "events";
 
 function localDateTime(value: string): string {
   const date = new Date(value);
@@ -26,6 +28,7 @@ export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
   const {
     snapshot,
     updateClub,
+    updateMembershipSettings,
     addClubAdmin,
     removeClubAdmin,
     saveEvent,
@@ -71,6 +74,7 @@ export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
         {(
           [
             ["profile", "Club details"],
+            ["membership", "Membership"],
             ["admins", "Student admins"],
             ["events", "Club events"],
           ] as const
@@ -106,6 +110,16 @@ export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
           }
           onRemove={(userId) =>
             runBusy(`admin-${userId}`, () => removeClubAdmin(club, userId))
+          }
+        />
+      ) : null}
+
+      {section === "membership" ? (
+        <MembershipManagement
+          busy={busy === "membership-settings"}
+          club={club}
+          onSave={(input) =>
+            runBusy("membership-settings", () => updateMembershipSettings(club, input))
           }
         />
       ) : null}
@@ -173,6 +187,78 @@ export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
         </div>
       ) : null}
     </section>
+  );
+}
+
+function MembershipManagement({
+  club,
+  busy,
+  onSave,
+}: Readonly<{
+  club: CampusClub;
+  busy: boolean;
+  onSave: (input: MembershipSettingsInput) => Promise<void>;
+}>) {
+  const [values, setValues] = useState<MembershipSettingsInput>({
+    open: club.membershipRecruitment?.open ?? false,
+    bkashNumber: club.membershipRecruitment?.bkashNumber ?? "",
+    nagadNumber: club.membershipRecruitment?.nagadNumber ?? "",
+  });
+
+  return (
+    <div className={styles.membershipManagement}>
+      <form
+        className={styles.managementForm}
+        onSubmit={(event) => {
+          event.preventDefault();
+          void onSave(values);
+        }}
+      >
+        <header>
+          <div>
+            <h3>Membership recruitment settings</h3>
+            <p>The standard membership fee is fixed at BDT 200 for every club.</p>
+          </div>
+          <label className={styles.recruitmentToggle}>
+            <input
+              checked={values.open}
+              onChange={(event) => setValues({ ...values, open: event.target.checked })}
+              type="checkbox"
+            />
+            <span>{values.open ? "Recruitment open" : "Recruitment closed"}</span>
+          </label>
+        </header>
+        <div className={styles.formGrid}>
+          <TextField
+            label="bKash personal number"
+            required={values.open}
+            value={values.bkashNumber}
+            onChange={(bkashNumber) => setValues({ ...values, bkashNumber })}
+          />
+          <TextField
+            label="Nagad personal number"
+            required={values.open}
+            value={values.nagadNumber}
+            onChange={(nagadNumber) => setValues({ ...values, nagadNumber })}
+          />
+        </div>
+        <div className={styles.formActions}>
+          <button disabled={busy} type="submit">
+            {busy ? "Saving…" : "Save recruitment settings"}
+          </button>
+        </div>
+      </form>
+      <Link
+        className={styles.membershipRequestsLink}
+        href={`/clubs/${club.id}/membership-requests`}
+      >
+        <span>
+          <strong>See all Membership Requests</strong>
+          <small>Review pending applications and payment transaction IDs.</small>
+        </span>
+        <b>{club.pendingMembershipRequestCount ?? 0}</b>
+      </Link>
+    </div>
   );
 }
 
@@ -497,13 +583,19 @@ function TextField({
   label,
   value,
   onChange,
-}: Readonly<{ label: string; value: string; onChange: (value: string) => void }>) {
+  required = true,
+}: Readonly<{
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  required?: boolean;
+}>) {
   return (
     <label>
       <span>{label}</span>
       <input
         onChange={(event) => onChange(event.target.value)}
-        required
+        required={required}
         value={value}
       />
     </label>

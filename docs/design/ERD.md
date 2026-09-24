@@ -13,14 +13,19 @@ erDiagram
     USER ||--o{ CLUB_CREATION_REQUEST : submits
     USER ||--o{ CLUB_ADMIN : administers
     USER ||--o{ CLUB_MEMBER : joins
+    USER ||--o{ CLUB_MEMBERSHIP_REQUEST : applies
+    USER ||--o{ CLUB_MEMBERSHIP_NOTIFICATION : receives
     USER ||--o{ EVENT_INTEREST : chooses
     USER ||--o{ EVENT_REGISTRATION : registers
     CLUB_CREATION_REQUEST o|--o| CLUB : creates_if_approved
     CLUB ||--|{ CLUB_ADMIN : has
     CLUB ||--o{ CLUB_MEMBER : includes
+    CLUB ||--o{ CLUB_MEMBERSHIP_REQUEST : receives
+    CLUB ||--o{ CLUB_MEMBERSHIP_NOTIFICATION : concerns
     CLUB ||--o{ EVENT : hosts
     EVENT ||--o{ EVENT_INTEREST : receives
     EVENT ||--o{ EVENT_REGISTRATION : receives
+    CLUB_MEMBERSHIP_REQUEST ||--o| CLUB_MEMBERSHIP_NOTIFICATION : creates_on_approval
 
     USER {
         uuid id PK
@@ -94,6 +99,10 @@ erDiagram
         string description
         string[] activities
         string contact_email
+        boolean membership_recruitment_open
+        int membership_fee
+        string membership_bkash_number
+        string membership_nagad_number
         datetime created_at
     }
     CLUB_ADMIN {
@@ -106,6 +115,32 @@ erDiagram
         uuid club_id PK, FK
         uuid user_id PK, FK
         datetime joined_at
+    }
+    CLUB_MEMBERSHIP_REQUEST {
+        uuid id PK
+        uuid club_id FK
+        uuid user_id FK
+        string applicant_name
+        string email
+        string student_id
+        string department_name
+        string phone
+        string motivation
+        string payment_method
+        string transaction_id
+        int fee
+        string status
+        uuid reviewer_id FK
+        datetime reviewed_at
+        datetime created_at
+    }
+    CLUB_MEMBERSHIP_NOTIFICATION {
+        uuid id PK
+        uuid membership_request_id FK, UK
+        uuid club_id FK
+        uuid user_id FK
+        datetime created_at
+        datetime read_at
     }
     EVENT {
         uuid id PK
@@ -155,6 +190,7 @@ erDiagram
 - `CLUB_ADMIN` is a student-only many-to-many mapping, independent of global App Admin. A club must retain at least one admin; enforce this in a locked transaction when removing admins. Club-request approval locks the pending request, creates exactly one club and its initial admin, and records the reviewer atomically. Existing CUET clubs may have null `creation_request_id` and must be seeded with at least one admin before club management opens.
 - Club short name, category, tagline, and activities are needed by the current frontend. A request must also capture purpose and the planned campus need/impact required by the workflow; the existing mock form will need those additional fields when connected.
 - `CLUB_MEMBER` is optional general membership information, not a grant of management privileges. Do not infer club-admin status from it.
+- Club membership recruitment starts closed. Opening it requires both bKash and Nagad numbers; `CLUB.membership_fee` is constrained to BDT 200. `CLUB_MEMBERSHIP_REQUEST` is unique on `(club_id, user_id)` and only accepts `pending` or `approved`. Approval atomically adds `CLUB_MEMBER`, records the reviewing Club Admin, and creates one unread `CLUB_MEMBERSHIP_NOTIFICATION`. Pending request data and transaction IDs are private to mapped admins of that club.
 - `EVENT.registration_mode` is `none`, `free`, or `paid`; paid events require positive `fee_minor_units` and `bkash_number`. Event state (`upcoming`, `ongoing`, `finished`) is derived from the current time and start/end timestamps. `EVENT_INTEREST.status` is `interested` or `going`, one row per `(user_id, event_id)`.
 - Public `CLUB.memberCount` is derived from `CLUB_MEMBER`; `EVENT.attendeeCount` counts `going` interest rows and `EVENT.registeredCount` counts submitted registrations. A paid registration still counts as submitted while payment review is pending; the UI must not label that as confirmed payment.
 - `EVENT_REGISTRATION` is student-only and unique on `(event_id, user_id)`. The form captures participant details as snapshots; validate the CUET email and compare student identity to the authenticated account. For paid events, require `bkash_trxid` but set `payment_status=pending_review` until a club admin verifies it. A submitted transaction ID is **not** proof of payment. Expose only the registration total publicly; restrict individual rows to that club's admins and authorized staff. Consider a partial unique index on `(event_id, bkash_trxid)` where the transaction ID is present.

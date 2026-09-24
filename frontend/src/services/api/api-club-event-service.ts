@@ -10,6 +10,9 @@ import type {
   ClubRequestStatus,
   EventRegistration,
   EventRegistrationInput,
+  MembershipRequest,
+  MembershipRequestInput,
+  MembershipSettingsInput,
   RegisteredStudent,
 } from "@/features/clubs-events/types/club-event";
 import type { ClubEventService } from "@/services/contracts/club-event-service";
@@ -26,6 +29,33 @@ type ClubRecord = {
   activities: string[];
   adminUserIds: string[];
   adminUsers: { userId: string; name: string; studentId: string; department: string }[];
+  isMember: boolean;
+  membershipRequestStatus: "pending" | "approved" | null;
+  pendingMembershipRequestCount: number;
+  membershipRecruitment: {
+    open: boolean;
+    fee: 200;
+    bkashNumber: string | null;
+    nagadNumber: string | null;
+  };
+};
+
+type MembershipRequestRecord = {
+  id: string;
+  clubId: string;
+  userId: string;
+  applicantName: string;
+  email: string;
+  studentId: string;
+  departmentName: string;
+  phone: string;
+  motivation: string;
+  paymentMethod: "bkash" | "nagad";
+  transactionId: string;
+  fee: 200;
+  status: "pending" | "approved";
+  submittedAt: string;
+  reviewedAt: string | null;
 };
 
 type EventRecord = {
@@ -100,6 +130,35 @@ function mapClub(record: ClubRecord): CampusClub {
       role: "Club admin",
       department: item.department,
     })),
+    isMember: record.isMember,
+    membershipRequestStatus: record.membershipRequestStatus ?? undefined,
+    pendingMembershipRequestCount: record.pendingMembershipRequestCount,
+    membershipRecruitment: {
+      open: record.membershipRecruitment.open,
+      fee: record.membershipRecruitment.fee,
+      bkashNumber: record.membershipRecruitment.bkashNumber ?? undefined,
+      nagadNumber: record.membershipRecruitment.nagadNumber ?? undefined,
+    },
+  };
+}
+
+function mapMembershipRequest(record: MembershipRequestRecord): MembershipRequest {
+  return {
+    id: record.id,
+    clubId: record.clubId,
+    userId: record.userId,
+    applicantName: record.applicantName,
+    email: record.email,
+    studentId: record.studentId,
+    departmentName: record.departmentName,
+    phone: record.phone,
+    motivation: record.motivation,
+    paymentMethod: record.paymentMethod,
+    transactionId: record.transactionId,
+    fee: record.fee,
+    status: record.status,
+    submittedAt: record.submittedAt,
+    reviewedAt: record.reviewedAt ?? undefined,
   };
 }
 
@@ -167,6 +226,7 @@ async function requestData<T>(
   body?: unknown,
   token?: string,
 ): Promise<T> {
+  const bodylessJsonMutation = method !== "GET" && method !== "DELETE";
   const url = token
     ? new URL(`/api/v1/${path}`, process.env.BACKEND_API_URL ?? "http://127.0.0.1:8000")
     : `/api/club-events/${path}`;
@@ -176,7 +236,9 @@ async function requestData<T>(
       method,
       headers: {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        ...(body ? { "Content-Type": "application/json" } : {}),
+        ...(body !== undefined || bodylessJsonMutation
+          ? { "Content-Type": "application/json" }
+          : {}),
         ...(!token && method !== "GET" ? { "X-CSRF-Token": csrfToken() } : {}),
       },
       body: body ? JSON.stringify(body) : undefined,
@@ -306,6 +368,65 @@ export class ApiClubEventService implements ClubEventService {
         await requestData<ClubRecord>(`clubs/${club.id}/admins/${removed}`, "DELETE"),
       );
     return club;
+  }
+
+  async updateMembershipSettings(
+    clubId: string,
+    input: MembershipSettingsInput,
+  ): Promise<CampusClub> {
+    return mapClub(
+      await requestData<ClubRecord>(`clubs/${clubId}/membership-settings`, "PUT", {
+        recruitment_open: input.open,
+        bkash_number: input.bkashNumber || null,
+        nagad_number: input.nagadNumber || null,
+      }),
+    );
+  }
+
+  async submitMembershipRequest(
+    clubId: string,
+    input: MembershipRequestInput,
+  ): Promise<MembershipRequest> {
+    const record = await requestData<MembershipRequestRecord>(
+      `clubs/${clubId}/membership-requests`,
+      "POST",
+      {
+        applicant_name: input.applicantName,
+        email: input.email,
+        student_id: input.studentId,
+        department_name: input.departmentName,
+        phone: input.phone,
+        motivation: input.motivation,
+        payment_method: input.paymentMethod,
+        transaction_id: input.transactionId,
+      },
+    );
+    return mapMembershipRequest(record);
+  }
+
+  async listMembershipRequests(clubId: string) {
+    const records = await requestData<MembershipRequestRecord[]>(
+      `clubs/${clubId}/membership-requests`,
+    );
+    return records.map(mapMembershipRequest);
+  }
+
+  async approveMembershipRequest(clubId: string, requestId: string) {
+    const result = await requestData<{
+      request: MembershipRequestRecord;
+      club: ClubRecord;
+    }>(`clubs/${clubId}/membership-requests/${requestId}/approve`, "POST");
+    return {
+      request: mapMembershipRequest(result.request),
+      club: mapClub(result.club),
+    };
+  }
+
+  async removeMembershipRequest(clubId: string, requestId: string) {
+    await requestData<void>(
+      `clubs/${clubId}/membership-requests/${requestId}`,
+      "DELETE",
+    );
   }
 
   async saveEvent(

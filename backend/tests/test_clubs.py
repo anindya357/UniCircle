@@ -16,6 +16,9 @@ from app.db.models import (
     ClubAdmin,
     ClubCreationRequest,
     ClubEvent,
+    ClubMember,
+    ClubMembershipNotification,
+    ClubMembershipRequest,
     EventNotification,
     User,
 )
@@ -259,3 +262,119 @@ def test_notification_exact_start_end_boundaries(stack):
     assert reconcile_event_notifications(db, end - timedelta(microseconds=1)) == 0
     assert reconcile_event_notifications(db, end) == 1
     assert reconcile_event_notifications(db, end) == 0
+
+
+def test_membership_recruitment_approval_and_notification(stack):
+    client, db, first, second, _, current = stack
+    seed_clubs(db, first.id)
+    club_id = "cuet-computer-club"
+    settings = {
+        "recruitment_open": True,
+        "bkash_number": "01712345678",
+        "nagad_number": "01812345678",
+    }
+    assert (
+        client.put(
+            f"/api/v1/clubs/{club_id}/membership-settings", json=settings
+        ).status_code
+        == 200
+    )
+    current["user"] = second
+    club = client.get(f"/api/v1/clubs/{club_id}").json()["data"]
+    assert club["isMember"] is False
+    assert club["membershipRecruitment"]["fee"] == 200
+    body = {
+        "applicant_name": "Second Student",
+        "email": second.email,
+        "student_id": second.university_id,
+        "department_name": "CSE",
+        "phone": "01912345678",
+        "motivation": "I want to learn, contribute, and volunteer in club activities.",
+        "payment_method": "bkash",
+        "transaction_id": "TRX123456",
+    }
+    submitted = client.post(f"/api/v1/clubs/{club_id}/membership-requests", json=body)
+    assert submitted.status_code == 201
+    request_id = submitted.json()["data"]["id"]
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/membership-requests", json=body
+        ).status_code
+        == 409
+    )
+    current["user"] = first
+    queue = client.get(f"/api/v1/clubs/{club_id}/membership-requests")
+    assert queue.status_code == 200
+    assert queue.json()["data"][0]["transactionId"] == "TRX123456"
+    approved = client.post(
+        f"/api/v1/clubs/{club_id}/membership-requests/{request_id}/approve"
+    )
+    assert approved.status_code == 200
+    assert db.get(ClubMember, (club_id, second.id)) is not None
+    assert db.get(ClubMembershipRequest, uuid.UUID(request_id)).status == "approved"
+    assert db.scalar(select(func.count()).select_from(ClubMembershipNotification)) == 1
+    current["user"] = second
+    updated = client.get(f"/api/v1/clubs/{club_id}").json()["data"]
+    assert updated["isMember"] is True
+    notifications = client.get("/api/v1/notifications/me").json()["data"]
+    assert notifications[0]["type"] == "club-membership-approved"
+    assert (
+        client.put(f"/api/v1/notifications/{notifications[0]['id']}/read").status_code
+        == 200
+    )
+
+
+def test_closed_recruitment_and_admin_removal(stack):
+    client, db, first, second, _, current = stack
+    seed_clubs(db, first.id)
+    club_id = "cuet-computer-club"
+    current["user"] = second
+    assert (
+        client.put(
+            f"/api/v1/clubs/{club_id}/membership-settings",
+            json={
+                "recruitment_open": True,
+                "bkash_number": "01712345678",
+                "nagad_number": "01812345678",
+            },
+        ).status_code
+        == 403
+    )
+    assert client.get(f"/api/v1/clubs/{club_id}/membership-requests").status_code == 403
+    body = {
+        "applicant_name": "Second Student",
+        "email": second.email,
+        "student_id": second.university_id,
+        "department_name": "CSE",
+        "phone": "01912345678",
+        "motivation": "I want to learn, contribute, and volunteer in club activities.",
+        "payment_method": "nagad",
+        "transaction_id": "TRX987654",
+    }
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/membership-requests", json=body
+        ).status_code
+        == 409
+    )
+    current["user"] = first
+    client.put(
+        f"/api/v1/clubs/{club_id}/membership-settings",
+        json={
+            "recruitment_open": True,
+            "bkash_number": "01712345678",
+            "nagad_number": "01812345678",
+        },
+    )
+    current["user"] = second
+    request_id = client.post(
+        f"/api/v1/clubs/{club_id}/membership-requests", json=body
+    ).json()["data"]["id"]
+    current["user"] = first
+    assert (
+        client.delete(
+            f"/api/v1/clubs/{club_id}/membership-requests/{request_id}"
+        ).status_code
+        == 204
+    )
+    assert db.get(ClubMembershipRequest, uuid.UUID(request_id)) is None

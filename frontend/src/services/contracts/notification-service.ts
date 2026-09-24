@@ -2,7 +2,7 @@ import type { AppNotification } from "@/features/notifications/types/notificatio
 import type { EntityId } from "@/types/common";
 
 export interface NotificationService {
-  list(): Promise<readonly AppNotification[]>;
+  list(token?: string): Promise<readonly AppNotification[]>;
   markAsRead(id: EntityId): Promise<void>;
   markAllAsRead(): Promise<void>;
 }

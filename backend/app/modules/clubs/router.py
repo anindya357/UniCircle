@@ -18,6 +18,8 @@ from app.db.models import (
     ClubCreationRequest,
     ClubEvent,
     ClubMember,
+    ClubMembershipNotification,
+    ClubMembershipRequest,
     EventInterest,
     EventNotification,
     EventRegistration,
@@ -30,6 +32,8 @@ from app.modules.clubs.schemas import (
     ClubUpdateIn,
     EventIn,
     InterestIn,
+    MembershipRequestIn,
+    MembershipSettingsIn,
     PaymentReviewIn,
     RegistrationIn,
     ReviewIn,
@@ -92,6 +96,26 @@ def display_user(db: Session, user_id: uuid.UUID) -> dict:
     }
 
 
+def membership_request_data(db: Session, item: ClubMembershipRequest) -> dict:
+    return {
+        "id": str(item.id),
+        "clubId": item.club_id,
+        "userId": str(item.user_id),
+        "applicantName": item.applicant_name,
+        "email": item.email,
+        "studentId": item.student_id,
+        "departmentName": item.department_name,
+        "phone": item.phone,
+        "motivation": item.motivation,
+        "paymentMethod": item.payment_method,
+        "transactionId": item.transaction_id,
+        "fee": item.fee,
+        "status": item.status,
+        "submittedAt": item.created_at.isoformat(),
+        "reviewedAt": item.reviewed_at.isoformat() if item.reviewed_at else None,
+    }
+
+
 def club_data(db: Session, club: Club, user: AuthIdentity) -> dict:
     admin_ids = db.scalars(
         select(ClubAdmin.user_id).where(ClubAdmin.club_id == club.id)
@@ -104,6 +128,33 @@ def club_data(db: Session, club: Club, user: AuthIdentity) -> dict:
         )
         or 0
     )
+    membership = (
+        db.get(ClubMember, (club.id, uid(user))) if user.role == "student" else None
+    )
+    membership_request = (
+        db.scalar(
+            select(ClubMembershipRequest).where(
+                ClubMembershipRequest.club_id == club.id,
+                ClubMembershipRequest.user_id == uid(user),
+            )
+        )
+        if user.role == "student"
+        else None
+    )
+    is_club_admin = user.role == "student" and uid(user) in admin_ids
+    pending_count = 0
+    if is_club_admin:
+        pending_count = (
+            db.scalar(
+                select(func.count())
+                .select_from(ClubMembershipRequest)
+                .where(
+                    ClubMembershipRequest.club_id == club.id,
+                    ClubMembershipRequest.status == "pending",
+                )
+            )
+            or 0
+        )
     return {
         "id": club.id,
         "name": club.name,
@@ -116,7 +167,18 @@ def club_data(db: Session, club: Club, user: AuthIdentity) -> dict:
         "adminCount": len(admin_ids),
         "adminUserIds": [str(admin_id) for admin_id in admin_ids],
         "adminUsers": [display_user(db, admin_id) for admin_id in admin_ids],
-        "isAdmin": user.role == "student" and uid(user) in admin_ids,
+        "isAdmin": is_club_admin,
+        "isMember": membership is not None,
+        "membershipRequestStatus": (
+            membership_request.status if membership_request else None
+        ),
+        "pendingMembershipRequestCount": pending_count,
+        "membershipRecruitment": {
+            "open": club.membership_recruitment_open,
+            "fee": club.membership_fee,
+            "bkashNumber": club.membership_bkash_number,
+            "nagadNumber": club.membership_nagad_number,
+        },
     }
 
 
@@ -370,14 +432,135 @@ def get_members(club_id: str, db: Db, _user: CurrentUser) -> ApiResponse[dict]:
     )
 
 
-@router.post("/clubs/{club_id}/members/me", response_model=ApiResponse[dict])
-def join_club(club_id: str, db: Db, user: CurrentUser) -> ApiResponse[dict]:
+@router.put("/clubs/{club_id}/membership-settings", response_model=ApiResponse[dict])
+def update_membership_settings(
+    club_id: str, body: MembershipSettingsIn, db: Db, user: CurrentUser
+) -> ApiResponse[dict]:
+    club_admin(db, club_id, user)
+    club = club_or_404(db, club_id)
+    club.membership_recruitment_open = body.recruitment_open
+    club.membership_bkash_number = body.bkash_number
+    club.membership_nagad_number = body.nagad_number
+    club.membership_fee = 200
+    db.commit()
+    return ApiResponse(data=club_data(db, club, user))
+
+
+@router.post(
+    "/clubs/{club_id}/membership-requests",
+    response_model=ApiResponse[dict],
+    status_code=201,
+)
+def submit_membership_request(
+    club_id: str, body: MembershipRequestIn, db: Db, user: CurrentUser
+) -> ApiResponse[dict]:
     student(user)
     club = club_or_404(db, club_id)
-    if db.get(ClubMember, (club_id, uid(user))) is None:
-        db.add(ClubMember(club_id=club_id, user_id=uid(user)))
-        db.commit()
-    return ApiResponse(data=club_data(db, club, user))
+    user_id = uid(user)
+    if db.get(ClubMember, (club_id, user_id)) is not None:
+        fail(409, "already_a_member", "You are already a member of this club.")
+    if not club.membership_recruitment_open:
+        fail(409, "recruitment_closed", "This club is not recruiting members now.")
+    if not club.membership_bkash_number or not club.membership_nagad_number:
+        fail(409, "payment_accounts_missing", "Club payment accounts are unavailable.")
+    existing = db.scalar(
+        select(ClubMembershipRequest).where(
+            ClubMembershipRequest.club_id == club_id,
+            ClubMembershipRequest.user_id == user_id,
+        )
+    )
+    if existing is not None:
+        fail(409, "membership_request_exists", "A membership request already exists.")
+    account = db.get(User, user_id)
+    if account is None:
+        fail(404, "user_not_found", "Student account not found.")
+    if body.email.lower() != (account.email or "").lower():
+        fail(422, "email_mismatch", "Use the CUET email from your account.")
+    if body.student_id != account.university_id:
+        fail(422, "student_id_mismatch", "Use the student ID from your account.")
+    item = ClubMembershipRequest(
+        club_id=club_id,
+        user_id=user_id,
+        fee=200,
+        **body.model_dump(),
+    )
+    db.add(item)
+    db.commit()
+    db.refresh(item)
+    return ApiResponse(data=membership_request_data(db, item))
+
+
+@router.get(
+    "/clubs/{club_id}/membership-requests", response_model=ApiResponse[list[dict]]
+)
+def list_membership_requests(
+    club_id: str, db: Db, user: CurrentUser
+) -> ApiResponse[list[dict]]:
+    club_admin(db, club_id, user)
+    items = db.scalars(
+        select(ClubMembershipRequest)
+        .where(
+            ClubMembershipRequest.club_id == club_id,
+            ClubMembershipRequest.status == "pending",
+        )
+        .order_by(ClubMembershipRequest.created_at)
+    ).all()
+    return ApiResponse(data=[membership_request_data(db, item) for item in items])
+
+
+@router.post(
+    "/clubs/{club_id}/membership-requests/{request_id}/approve",
+    response_model=ApiResponse[dict],
+)
+def approve_membership_request(
+    club_id: str, request_id: uuid.UUID, db: Db, user: CurrentUser
+) -> ApiResponse[dict]:
+    club_admin(db, club_id, user)
+    item = db.scalar(
+        select(ClubMembershipRequest)
+        .where(
+            ClubMembershipRequest.id == request_id,
+            ClubMembershipRequest.club_id == club_id,
+        )
+        .with_for_update()
+    )
+    if item is None:
+        fail(404, "membership_request_not_found", "Membership request not found.")
+    if item.status != "pending":
+        fail(409, "membership_request_reviewed", "This request was already reviewed.")
+    if db.get(ClubMember, (club_id, item.user_id)) is None:
+        db.add(ClubMember(club_id=club_id, user_id=item.user_id))
+    item.status = "approved"
+    item.reviewer_id = uid(user)
+    item.reviewed_at = datetime.now(UTC)
+    db.add(
+        ClubMembershipNotification(
+            membership_request_id=item.id,
+            club_id=club_id,
+            user_id=item.user_id,
+        )
+    )
+    db.commit()
+    return ApiResponse(
+        data={
+            "request": membership_request_data(db, item),
+            "club": club_data(db, club_or_404(db, club_id), user),
+        }
+    )
+
+
+@router.delete("/clubs/{club_id}/membership-requests/{request_id}", status_code=204)
+def remove_membership_request(
+    club_id: str, request_id: uuid.UUID, db: Db, user: CurrentUser
+) -> None:
+    club_admin(db, club_id, user)
+    item = db.get(ClubMembershipRequest, request_id)
+    if item is None or item.club_id != club_id:
+        fail(404, "membership_request_not_found", "Membership request not found.")
+    if item.status != "pending":
+        fail(409, "membership_request_reviewed", "Approved requests cannot be removed.")
+    db.delete(item)
+    db.commit()
 
 
 @router.delete("/clubs/{club_id}/members/me", response_model=ApiResponse[dict])
@@ -753,6 +936,98 @@ def read_notification(
 ) -> ApiResponse[dict]:
     item = db.get(EventNotification, notification_id)
     if item is None or item.user_id != uid(user):
+        fail(404, "notification_not_found", "Notification not found.")
+    if item.read_at is None:
+        item.read_at = datetime.now(UTC)
+        db.commit()
+    return ApiResponse(data={"id": str(item.id), "readAt": item.read_at.isoformat()})
+
+
+@router.get("/notifications/me", response_model=ApiResponse[list[dict]])
+def my_notifications(db: Db, user: CurrentUser) -> ApiResponse[list[dict]]:
+    user_id = uid(user)
+    event_records = db.scalars(
+        select(EventNotification)
+        .where(EventNotification.user_id == user_id)
+        .order_by(EventNotification.created_at.desc())
+        .limit(100)
+    ).all()
+    membership_records = db.scalars(
+        select(ClubMembershipNotification)
+        .where(ClubMembershipNotification.user_id == user_id)
+        .order_by(ClubMembershipNotification.created_at.desc())
+        .limit(100)
+    ).all()
+    result: list[dict] = []
+    for item in event_records:
+        event = db.get(ClubEvent, item.event_id)
+        if event:
+            result.append(
+                {
+                    "id": str(item.id),
+                    "type": f"event-{item.kind}",
+                    "title": f"{event.title} has {item.kind}",
+                    "message": (
+                        "The event is now underway."
+                        if item.kind == "started"
+                        else "The event has now finished."
+                    ),
+                    "createdAt": item.created_at.isoformat(),
+                    "isRead": item.read_at is not None,
+                    "href": f"/events/{event.id}",
+                }
+            )
+    for item in membership_records:
+        club = db.get(Club, item.club_id)
+        if club:
+            result.append(
+                {
+                    "id": str(item.id),
+                    "type": "club-membership-approved",
+                    "title": f"Welcome to {club.name}",
+                    "message": (
+                        "Your membership request was approved by the club admin."
+                    ),
+                    "createdAt": item.created_at.isoformat(),
+                    "isRead": item.read_at is not None,
+                    "href": f"/clubs/{club.id}",
+                }
+            )
+    result.sort(key=lambda item: item["createdAt"], reverse=True)
+    return ApiResponse(data=result[:100])
+
+
+@router.put("/notifications/read-all", response_model=ApiResponse[dict])
+def read_all_notifications(db: Db, user: CurrentUser) -> ApiResponse[dict]:
+    now = datetime.now(UTC)
+    user_id = uid(user)
+    event_records = db.scalars(
+        select(EventNotification).where(
+            EventNotification.user_id == user_id,
+            EventNotification.read_at.is_(None),
+        )
+    ).all()
+    membership_records = db.scalars(
+        select(ClubMembershipNotification).where(
+            ClubMembershipNotification.user_id == user_id,
+            ClubMembershipNotification.read_at.is_(None),
+        )
+    ).all()
+    for item in [*event_records, *membership_records]:
+        item.read_at = now
+    db.commit()
+    return ApiResponse(data={"updated": len(event_records) + len(membership_records)})
+
+
+@router.put("/notifications/{notification_id}/read", response_model=ApiResponse[dict])
+def read_any_notification(
+    notification_id: uuid.UUID, db: Db, user: CurrentUser
+) -> ApiResponse[dict]:
+    user_id = uid(user)
+    item = db.get(EventNotification, notification_id)
+    if item is None:
+        item = db.get(ClubMembershipNotification, notification_id)
+    if item is None or item.user_id != user_id:
         fail(404, "notification_not_found", "Notification not found.")
     if item.read_at is None:
         item.read_at = datetime.now(UTC)

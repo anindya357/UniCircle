@@ -52,5 +52,8 @@ students mapped as admins of that club; the backend independently enforces
 authorization for all changes. Admins can edit club details, add/remove other
 verified student admins by student ID, and create, edit, or delete club events.
 The ten initial clubs are seeded by the backend, and new events appear here
-only after a Club Admin creates them. The event-notification dropdown remains
-a separate integration step.
+only after a Club Admin creates them. Club Admins can also configure BDT 200
+membership recruitment with bKash and Nagad accounts and review applications
+on a dedicated page. Students see member, pending, closed, or application states
+on each club page. The global notification UI combines live event and membership
+approval notifications with the retained campus-announcement sample items.

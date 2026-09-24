@@ -14,23 +14,31 @@ const allowed: Record<string, RegExp[]> = {
     /^events$/,
     /^clubs\/requests\/mine$/,
     /^admin\/club-requests$/,
+    /^notifications\/me$/,
     new RegExp(`^clubs/${club}$`),
+    new RegExp(`^clubs/${club}/membership-requests$`),
   ],
   POST: [
     /^clubs\/requests$/,
     new RegExp(`^admin/club-requests/${uuid}/review$`),
     new RegExp(`^clubs/${club}/admins$`),
     new RegExp(`^clubs/${club}/events$`),
+    new RegExp(`^clubs/${club}/membership-requests$`),
+    new RegExp(`^clubs/${club}/membership-requests/${uuid}/approve$`),
     new RegExp(`^events/${uuid}/registrations$`),
   ],
   PUT: [
     new RegExp(`^clubs/${club}$`),
     new RegExp(`^events/${uuid}$`),
     new RegExp(`^events/${uuid}/interest$`),
+    /^notifications\/read-all$/,
+    new RegExp(`^notifications/${uuid}/read$`),
+    new RegExp(`^clubs/${club}/membership-settings$`),
   ],
   DELETE: [
     new RegExp(`^clubs/${club}/admins/${uuid}$`),
     new RegExp(`^events/${uuid}$`),
+    new RegExp(`^clubs/${club}/membership-requests/${uuid}$`),
   ],
 };
 

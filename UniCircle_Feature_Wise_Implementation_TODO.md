@@ -467,6 +467,20 @@ During the frontend-only prototype, club requests, admin edits, and event regist
 - [x] Show the requesting student their mock request status.
 - [x] Keep requested clubs hidden from the public directory until App Admin approval.
 
+### Club membership recruitment
+
+- [x] Show whether the authenticated student is already a member of each club.
+- [x] Let Club Admins open or close membership recruitment for their own club.
+- [x] Fix the standard membership fee at BDT 200 for every club.
+- [x] Let Club Admins publish both bKash and Nagad payment numbers while recruitment is open.
+- [x] Show a dedicated "Be a member" application form only to eligible non-members.
+- [x] Collect applicant name, account email, Student ID, department, phone, motivation, payment method, and transaction ID.
+- [x] Show clear member, pending-request, and recruitment-closed states.
+- [x] Add a separate Club Admin page for pending membership requests.
+- [x] Let Club Admins approve or remove pending requests.
+- [x] Update the member count and membership state after approval.
+- [x] Surface membership-approval notifications in the global notification UI.
+
 ## 4.11 Events section
 
 - [x] Create separate events section/tab.
@@ -508,6 +522,7 @@ During the frontend-only prototype, club requests, admin edits, and event regist
 - [x] Global event list is available.
 - [x] Interested/Going UI works with mock state.
 - [x] Notification UI can represent start/end event notifications.
+- [x] Membership recruitment, application, and Club Admin review UI is responsive and permission-aware.
 
 ---
 
@@ -1120,6 +1135,18 @@ The snapshot is campus-only; map tiles need network access in the browser.
 - [x] Create activity/event relationships.
 - [x] Create migrations.
 
+### 7.11A Club membership recruitment
+
+- [x] Store per-club recruitment open/closed state and bKash/Nagad payment accounts.
+- [x] Enforce the standard BDT 200 membership fee at the database and API layers.
+- [x] Create a Membership Request model linked to one Club and one Student User.
+- [x] Store applicant snapshots, motivation, payment method, and transaction ID.
+- [x] Prevent duplicate requests and applications from existing members.
+- [x] Restrict the pending request queue, approval, removal, and settings endpoints to that club's mapped admins.
+- [x] Make approval create the Club Member record, finalize the request, and create a user notification in one transaction.
+- [x] Persist membership-approval notification read/unread state.
+- [x] Add and apply the membership recruitment migration.
+
 ## 7.12 Event data
 
 - [x] Create Event model.
@@ -1165,6 +1192,11 @@ The snapshot is campus-only; map tiles need network access in the browser.
 - [x] Restrict registration to authenticated students and validate all participant fields, including the CUET email domain.
 - [x] Validate paid-event bKash configuration and registration transaction IDs.
 - [x] Prevent registrations after the event or registration window closes.
+- [x] Return current-user club membership and membership-request state.
+- [x] Update club membership recruitment settings as a mapped Club Admin.
+- [x] Submit a membership request as an eligible registered student.
+- [x] List, approve, or remove membership requests as a mapped Club Admin.
+- [x] Return the unified authenticated-user notification list and read controls.
 
 ## 7.14 Event notifications
 
@@ -1186,8 +1218,8 @@ The snapshot is campus-only; map tiles need network access in the browser.
 - [x] Connect event create/edit/delete actions.
 - [x] Connect optional free/paid event registration and registration totals.
 - [x] Connect event-status rendering.
-- [ ] Connect real notification list.
-- [ ] Verify event start/finish notification behavior.
+- [x] Connect real notification list, including club membership approvals.
+- [x] Verify event start/finish notification behavior.
 
 ---
 

@@ -66,6 +66,11 @@
   background: #eeebf7;
 }
 
+.type[data-type="club-membership-approved"] {
+  color: #075c3c;
+  background: #dff3e8;
+}
+
 .type[data-type="campus-announcement"] {
   color: #77520a;
   background: #fff0c7;

@@ -210,6 +210,9 @@ class CampusLocation(Base, TimestampMixin):
 
 class Club(Base, TimestampMixin):
     __tablename__ = "clubs"
+    __table_args__ = (
+        CheckConstraint("membership_fee = 200", name="standard_membership_fee"),
+    )
 
     id: Mapped[str] = mapped_column(String(80), primary_key=True)
     name: Mapped[str] = mapped_column(String(200), nullable=False)
@@ -218,6 +221,14 @@ class Club(Base, TimestampMixin):
     tagline: Mapped[str] = mapped_column(String(240), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
     activities: Mapped[list[str]] = mapped_column(JSON, nullable=False)
+    membership_recruitment_open: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("false")
+    )
+    membership_fee: Mapped[int] = mapped_column(
+        Integer, nullable=False, server_default="200"
+    )
+    membership_bkash_number: Mapped[str | None] = mapped_column(String(24))
+    membership_nagad_number: Mapped[str | None] = mapped_column(String(24))
 
 
 class ClubMember(Base):
@@ -246,6 +257,65 @@ class ClubAdmin(Base):
     appointed_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
+
+
+class ClubMembershipRequest(Base, TimestampMixin):
+    __tablename__ = "club_membership_requests"
+    __table_args__ = (
+        UniqueConstraint("club_id", "user_id", name="uq_club_membership_request_user"),
+        CheckConstraint("status IN ('pending','approved')", name="valid_status"),
+        CheckConstraint(
+            "payment_method IN ('bkash','nagad')", name="valid_payment_method"
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    club_id: Mapped[str] = mapped_column(
+        ForeignKey("clubs.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    applicant_name: Mapped[str] = mapped_column(String(200), nullable=False)
+    email: Mapped[str] = mapped_column(String(254), nullable=False)
+    student_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    department_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    phone: Mapped[str] = mapped_column(String(40), nullable=False)
+    motivation: Mapped[str] = mapped_column(Text, nullable=False)
+    payment_method: Mapped[str] = mapped_column(String(12), nullable=False)
+    transaction_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    fee: Mapped[int] = mapped_column(Integer, nullable=False, server_default="200")
+    status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="pending"
+    )
+    reviewer_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class ClubMembershipNotification(Base):
+    __tablename__ = "club_membership_notifications"
+    __table_args__ = (
+        UniqueConstraint("membership_request_id", name="uq_membership_notification"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    membership_request_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("club_membership_requests.id", ondelete="CASCADE"), nullable=False
+    )
+    club_id: Mapped[str] = mapped_column(
+        ForeignKey("clubs.id", ondelete="CASCADE"), nullable=False
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    read_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class ClubCreationRequest(Base, TimestampMixin):

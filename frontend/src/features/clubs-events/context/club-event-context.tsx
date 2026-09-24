@@ -21,6 +21,9 @@ import type {
   ClubRequestStatus,
   EventRegistration,
   EventRegistrationInput,
+  MembershipRequest,
+  MembershipRequestInput,
+  MembershipSettingsInput,
   RegisteredStudent,
 } from "@/features/clubs-events/types/club-event";
 import { clubEventService } from "@/services";
@@ -36,6 +39,17 @@ type ClubEventContextValue = Readonly<{
   updateClub: (club: CampusClub, input: ClubProfileInput) => Promise<void>;
   addClubAdmin: (club: CampusClub, userId: string) => Promise<void>;
   removeClubAdmin: (club: CampusClub, userId: string) => Promise<void>;
+  updateMembershipSettings: (
+    club: CampusClub,
+    input: MembershipSettingsInput,
+  ) => Promise<void>;
+  submitMembershipRequest: (
+    club: CampusClub,
+    input: MembershipRequestInput,
+  ) => Promise<void>;
+  listMembershipRequests: (clubId: string) => Promise<readonly MembershipRequest[]>;
+  approveMembershipRequest: (clubId: string, requestId: string) => Promise<void>;
+  removeMembershipRequest: (clubId: string, requestId: string) => Promise<void>;
   saveEvent: (
     clubId: string,
     input: CampusEventInput,
@@ -197,6 +211,78 @@ export function ClubEventProvider({
     [setAdmins],
   );
 
+  const updateMembershipSettings = useCallback(
+    async (club: CampusClub, input: MembershipSettingsInput) => {
+      assertClubAdmin(club.id);
+      const updated = await clubEventService.updateMembershipSettings(club.id, input);
+      setSnapshot((current) => ({
+        ...current,
+        clubs: current.clubs.map((item) => (item.id === updated.id ? updated : item)),
+      }));
+    },
+    [assertClubAdmin],
+  );
+
+  const submitMembershipRequest = useCallback(
+    async (club: CampusClub, input: MembershipRequestInput) => {
+      if (user.role !== "student") {
+        throw new Error("Only registered students can request club membership.");
+      }
+      await clubEventService.submitMembershipRequest(club.id, input);
+      setSnapshot((current) => ({
+        ...current,
+        clubs: current.clubs.map((item) =>
+          item.id === club.id ? { ...item, membershipRequestStatus: "pending" } : item,
+        ),
+      }));
+    },
+    [user.role],
+  );
+
+  const listMembershipRequests = useCallback(
+    (clubId: string) => {
+      assertClubAdmin(clubId);
+      return clubEventService.listMembershipRequests(clubId);
+    },
+    [assertClubAdmin],
+  );
+
+  const approveMembershipRequest = useCallback(
+    async (clubId: string, requestId: string) => {
+      assertClubAdmin(clubId);
+      const result = await clubEventService.approveMembershipRequest(clubId, requestId);
+      setSnapshot((current) => ({
+        ...current,
+        clubs: current.clubs.map((item) =>
+          item.id === result.club.id ? result.club : item,
+        ),
+      }));
+    },
+    [assertClubAdmin],
+  );
+
+  const removeMembershipRequest = useCallback(
+    async (clubId: string, requestId: string) => {
+      assertClubAdmin(clubId);
+      await clubEventService.removeMembershipRequest(clubId, requestId);
+      setSnapshot((current) => ({
+        ...current,
+        clubs: current.clubs.map((item) =>
+          item.id === clubId
+            ? {
+                ...item,
+                pendingMembershipRequestCount: Math.max(
+                  0,
+                  (item.pendingMembershipRequestCount ?? 1) - 1,
+                ),
+              }
+            : item,
+        ),
+      }));
+    },
+    [assertClubAdmin],
+  );
+
   const saveEvent = useCallback(
     async (clubId: string, input: CampusEventInput, current?: CampusEvent) => {
       assertClubAdmin(clubId);
@@ -312,6 +398,11 @@ export function ClubEventProvider({
       updateClub,
       addClubAdmin,
       removeClubAdmin,
+      updateMembershipSettings,
+      submitMembershipRequest,
+      listMembershipRequests,
+      approveMembershipRequest,
+      removeMembershipRequest,
       saveEvent,
       deleteEvent,
       setInterest,
@@ -326,6 +417,11 @@ export function ClubEventProvider({
       isClubAdmin,
       registerForEvent,
       removeClubAdmin,
+      updateMembershipSettings,
+      submitMembershipRequest,
+      listMembershipRequests,
+      approveMembershipRequest,
+      removeMembershipRequest,
       reviewClubRequest,
       saveEvent,
       snapshot,

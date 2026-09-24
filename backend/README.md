@@ -135,13 +135,22 @@ made admins. Club Admins may add another verified student admin, but cannot
 remove the last admin. App Admins review club-creation requests; approval
 atomically creates a club and grants the requester initial admin access.
 
+Revision `7b6f0c2d91aa` adds the membership-recruitment workflow. Recruitment is
+closed by default. A mapped Club Admin must save valid bKash and Nagad numbers
+before opening it. The fee is fixed at BDT 200 by both API validation and a
+database check constraint. A student can submit one request per club; approval
+creates the membership and a persistent unread notification in one transaction.
+Only that club's admins may view, approve, or remove pending requests.
+
 Protected endpoints are under `/api/v1`: `GET /clubs`, `GET /clubs/{id}`,
 `GET /clubs/{id}/members`, `GET /clubs/{id}/events`, `GET /events`,
 `GET /events/{id}`, `PUT /events/{id}/interest`, `POST /events/{id}/registrations`,
-and `GET /notifications/events/me`. Students use `/clubs/requests` and
-`/clubs/requests/mine`; App Admins use `/admin/club-requests` and
+and `GET /notifications/me`. Students use `/clubs/requests`,
+`/clubs/requests/mine`, and `/clubs/{id}/membership-requests`; App Admins use
+`/admin/club-requests` and
 `/admin/club-requests/{id}/review`. Club Admins use `/clubs/administered`,
-`PUT /clubs/{id}`, `/clubs/{id}/admins`, and club/event write routes. The
+`PUT /clubs/{id}`, `/clubs/{id}/admins`, `/clubs/{id}/membership-settings`,
+and the membership-review and club/event write routes. The
 OpenAPI page at `/docs` shows request/response details. Registration records
 and payment review are visible only to that club's admins or App Admins.
 Public event responses expose counts, not participant details. Paid submissions

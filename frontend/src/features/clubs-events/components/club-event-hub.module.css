@@ -1245,7 +1245,7 @@
   gap: 0.35rem;
   border: 1px solid var(--color-border);
   border-radius: 0.85rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   background: #ffffff;
 }
 
@@ -1562,6 +1562,336 @@
   text-transform: capitalize;
 }
 
+.membershipStatus,
+.membershipRecruitment {
+  margin-top: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: var(--color-surface);
+  box-shadow: 0 12px 32px rgb(20 50 35 / 6%);
+}
+
+.membershipStatus {
+  display: flex;
+  padding: 1.1rem 1.25rem;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.membershipStatus > span {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  place-items: center;
+  color: var(--color-brand);
+  background: var(--color-surface-muted);
+  font-weight: 850;
+}
+
+.membershipStatus[data-status="member"] {
+  border-color: #a9d5bd;
+  background: #edf9f2;
+}
+
+.membershipStatus[data-status="pending"] {
+  border-color: #ecd99f;
+  background: #fff9e8;
+}
+
+.membershipStatus h2 {
+  font-size: 1rem;
+}
+
+.membershipStatus p,
+.membershipRecruitment header span,
+.membershipManagement header p {
+  margin-top: 0.2rem;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.membershipRecruitment {
+  padding: clamp(1.1rem, 3vw, 1.6rem);
+}
+
+.membershipRecruitment > header,
+.membershipManagement header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.membershipRecruitment > header p,
+.membershipRequestHero > p {
+  color: var(--color-brand);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.membershipRecruitment > header h2 {
+  margin-top: 0.25rem;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.membershipRecruitment > header button,
+.membershipRequestList footer button:last-child {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 0.65rem;
+  color: #ffffff;
+  background: var(--color-brand);
+  font-weight: 780;
+  white-space: nowrap;
+}
+
+.membershipForm {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.membershipPaymentNotice {
+  display: grid;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid #ecd99f;
+  border-radius: 0.8rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: #ecd99f;
+}
+
+.membershipPaymentNotice > div {
+  display: grid;
+  padding: 0.9rem 1rem;
+  gap: 0.25rem;
+  background: #fff9e8;
+}
+
+.membershipPaymentNotice span,
+.membershipRequestDetails span,
+.membershipMotivation > span {
+  color: var(--color-text-muted);
+  font-size: 0.59rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.membershipPaymentNotice strong {
+  color: #6d571e;
+  font-size: 0.82rem;
+}
+
+.membershipPaymentHelp {
+  margin: 0.7rem 0 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  line-height: 1.55;
+}
+
+.membershipManagement {
+  margin-top: 1.2rem;
+}
+
+.membershipManagement .managementForm {
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.85rem;
+  background: #ffffff;
+}
+
+.membershipManagement .formGrid {
+  margin-top: 1rem;
+}
+
+.recruitmentToggle {
+  display: flex;
+  padding: 0.65rem 0.8rem;
+  gap: 0.55rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.7rem;
+  align-items: center;
+  background: var(--color-canvas);
+  font-size: 0.7rem;
+  font-weight: 780;
+}
+
+.recruitmentToggle input {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.membershipRequestsLink {
+  display: flex;
+  margin-top: 0.8rem;
+  padding: 1rem;
+  gap: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.85rem;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-brand);
+  background: #ffffff;
+}
+
+.membershipRequestsLink > span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.membershipRequestsLink small {
+  color: var(--color-text-muted);
+  font-size: 0.66rem;
+}
+
+.membershipRequestsLink > b {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  place-items: center;
+  color: #ffffff;
+  background: var(--color-brand);
+}
+
+.membershipRequestHero {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: 1.25rem;
+  color: #ffffff;
+  background: var(--color-brand);
+}
+
+.membershipRequestHero > p {
+  color: #f1cb6d;
+}
+
+.membershipRequestHero h1 {
+  margin-top: 0.35rem;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  letter-spacing: -0.055em;
+}
+
+.membershipRequestHero > span {
+  display: block;
+  max-width: 46rem;
+  margin-top: 0.7rem;
+  color: rgb(255 255 255 / 72%);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.membershipRequestList {
+  display: grid;
+  margin-top: 1.25rem;
+  gap: 1rem;
+}
+
+.membershipRequestList article {
+  padding: 1.15rem;
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgb(20 50 35 / 6%);
+}
+
+.membershipRequestList article > header,
+.membershipRequestList footer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.membershipRequestList header span {
+  color: var(--color-brand);
+  font-size: 0.62rem;
+  font-weight: 820;
+  text-transform: uppercase;
+}
+
+.membershipRequestList header h2 {
+  margin-top: 0.2rem;
+  font-size: 1.25rem;
+}
+
+.membershipRequestList header p {
+  margin-top: 0.25rem;
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+}
+
+.membershipRequestList header > b {
+  padding: 0.42rem 0.65rem;
+  border-radius: 999px;
+  color: #795d15;
+  background: #fff1c6;
+  font-size: 0.68rem;
+}
+
+.membershipRequestDetails {
+  display: grid;
+  margin-top: 1rem;
+  gap: 1px;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow: hidden;
+  background: var(--color-border);
+}
+
+.membershipRequestDetails > div {
+  display: grid;
+  padding: 0.75rem;
+  gap: 0.25rem;
+  background: var(--color-canvas);
+}
+
+.membershipRequestDetails strong {
+  overflow-wrap: anywhere;
+  font-size: 0.72rem;
+  text-transform: capitalize;
+}
+
+.membershipMotivation {
+  margin-top: 0.8rem;
+  padding: 0.85rem;
+  border-left: 0.2rem solid var(--color-brand);
+  background: var(--color-surface-muted);
+}
+
+.membershipMotivation p {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.membershipRequestList footer {
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+.membershipRequestList footer button:first-child {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid #efb9b4;
+  border-radius: 0.65rem;
+  color: var(--color-danger);
+  background: #fff5f4;
+  font-weight: 780;
+}
+
+.membershipRequestList footer button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
 @media (max-width: 68rem) {
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.5fr);
@@ -1753,5 +2083,23 @@
 
   .clubRequestModal {
     max-height: calc(100vh - 1rem);
+  }
+
+  .membershipRecruitment > header,
+  .membershipManagement header,
+  .membershipRequestList article > header,
+  .membershipRequestList footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .membershipPaymentNotice,
+  .membershipRequestDetails {
+    grid-template-columns: 1fr;
+  }
+
+  .membershipRecruitment > header button,
+  .membershipRequestList footer button {
+    width: 100%;
   }
 }
