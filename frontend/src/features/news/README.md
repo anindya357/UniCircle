@@ -4,10 +4,10 @@ Feature 9 provides the `/news` information stream and `/news/[newsId]` detail pa
 
 - `NewsService` returns typed News, Update, and Announcement records newest first.
 - The serial list shows publication time, summary, publisher, audience, and content type.
-- Each item links to a readable detail view with full prototype content.
+- Each item links to a readable detail view with its full Admin-authored content.
 - The page includes a no-data state and responsive layouts without nested scrolling.
-- Mock Update and Announcement records automatically generate matching notification
-  records that link to their detail pages.
+- Published Update and Announcement records generate persistent, recipient-scoped
+  notifications that link to their detail pages.
 
-The content is intentionally marked as prototype information. A later Admin/backend
-feature will replace mock insertion with authorized publishing.
+The authenticated FastAPI API supplies list/detail data. Only published records are
+visible here; creation, editing, deletion, and publication are App Admin operations.

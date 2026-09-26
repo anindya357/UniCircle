@@ -8,6 +8,7 @@ from app.modules.campus.router import router as campus_router
 from app.modules.clubs.router import router as clubs_router
 from app.modules.directory.router import router as directory_router
 from app.modules.forum.router import router as forum_router
+from app.modules.news.router import router as news_router
 from app.modules.resources.router import router as resources_router
 from app.modules.transport.router import router as transport_router
 
@@ -20,3 +21,4 @@ api_router.include_router(clubs_router)
 api_router.include_router(resources_router)
 api_router.include_router(transport_router)
 api_router.include_router(forum_router)
+api_router.include_router(news_router)

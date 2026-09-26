@@ -38,8 +38,7 @@ export function NewsPage({ items }: NewsPageProps) {
           </p>
           <div className={styles.prototypeNote}>
             <span aria-hidden="true">i</span>
-            Prototype content · official information will come from authorized Admin
-            publishing
+            Information published through the authorized UniCircle Admin desk
           </div>
         </div>
 

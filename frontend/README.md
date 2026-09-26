@@ -56,8 +56,8 @@ The ten initial clubs are seeded by the backend, and new events appear here
 only after a Club Admin creates them. Club Admins can also configure BDT 200
 membership recruitment with bKash and Nagad accounts and review applications
 on a dedicated page. Students see member, pending, closed, or application states
-on each club page. The global notification UI combines live event and membership
-approval notifications with the retained campus-announcement sample items.
+on each club page. The global notification UI combines live event, membership
+approval, and published campus announcement/update notifications.
 
 The Community Forum uses the authenticated FastAPI forum endpoints through the
 same-origin `/api/forum/*` handler. Posts and comments are text-only. Reporting

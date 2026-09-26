@@ -623,6 +623,62 @@ class ForumReport(Base, TimestampMixin):
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+class CampusNewsItem(Base, TimestampMixin):
+    """Admin-authored campus information with an explicit publication state."""
+
+    __tablename__ = "campus_news_items"
+    __table_args__ = (
+        CheckConstraint("kind IN ('news','update','announcement')", name="valid_kind"),
+        CheckConstraint("status IN ('draft','published')", name="valid_status"),
+        Index("ix_campus_news_published", "status", "published_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    kind: Mapped[str] = mapped_column(String(20), nullable=False)
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    summary: Mapped[str] = mapped_column(String(600), nullable=False)
+    content: Mapped[list[str]] = mapped_column(JSON, nullable=False)
+    audience: Mapped[str] = mapped_column(String(160), nullable=False)
+    status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="draft", index=True
+    )
+    published_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), index=True
+    )
+    author_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), nullable=False, index=True
+    )
+
+
+class CampusNewsNotification(Base):
+    """A deduplicated announcement/update notification for one General User."""
+
+    __tablename__ = "campus_news_notifications"
+    __table_args__ = (
+        UniqueConstraint(
+            "news_item_id", "user_id", name="uq_campus_news_notification_user"
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    news_item_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("campus_news_items.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    read_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class TransportRoute(Base, TimestampMixin):
     __tablename__ = "transport_routes"
 

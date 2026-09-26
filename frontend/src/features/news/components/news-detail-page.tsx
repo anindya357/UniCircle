@@ -77,8 +77,8 @@ export function NewsDetailPage({ item }: NewsDetailPageProps) {
             <div className={styles.detailNotice}>
               <span aria-hidden="true">i</span>
               <p>
-                Prototype information will be replaced by verified Admin publications
-                after backend integration.
+                This information was published through the authorized UniCircle Admin
+                workspace.
               </p>
             </div>
           </aside>

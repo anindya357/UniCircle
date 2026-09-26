@@ -1383,44 +1383,44 @@ The snapshot is campus-only; map tiles need network access in the browser.
 
 ## 7.29 Data model
 
-- [ ] Create News/Announcement model according to ERD.
-- [ ] Store type/category if required.
-- [ ] Store title.
-- [ ] Store content.
-- [ ] Store publication timestamp.
-- [ ] Store author/Admin reference.
-- [ ] Create migration.
+- [x] Create News/Announcement model according to ERD.
+- [x] Store type/category if required.
+- [x] Store title.
+- [x] Store content.
+- [x] Store publication timestamp.
+- [x] Store author/Admin reference.
+- [x] Create migration.
 
 ## 7.30 API
 
 General User:
 
-- [ ] List published news/updates/announcements.
-- [ ] Sort newest first.
-- [ ] Get item details if required.
+- [x] List published news/updates/announcements.
+- [x] Sort newest first.
+- [x] Get item details if required.
 
 Admin:
 
-- [ ] Create item.
-- [ ] Update item.
-- [ ] Delete item.
-- [ ] Publish/unpublish only if included in approved design.
-- [ ] Protect Admin writes.
+- [x] Create item.
+- [x] Update item.
+- [x] Delete item.
+- [x] Publish/unpublish only if included in approved design.
+- [x] Protect Admin writes.
 
 ## 7.31 Announcement notifications
 
-- [ ] Create user notifications for new updates/announcements according to requirement.
-- [ ] Prevent duplicate notification creation.
-- [ ] Link notification to announcement.
-- [ ] Support read/unread status.
+- [x] Create user notifications for new updates/announcements according to requirement.
+- [x] Prevent duplicate notification creation.
+- [x] Link notification to announcement.
+- [x] Support read/unread status.
 
 ## 7.32 Frontend connection
 
-- [ ] Replace news mocks.
-- [ ] Connect newest-first list.
-- [ ] Connect details.
-- [ ] Connect notification entries.
-- [ ] Connect Admin create/edit/delete UI.
+- [x] Replace news mocks.
+- [x] Connect newest-first list.
+- [x] Connect details.
+- [x] Connect notification entries.
+- [x] Connect Admin create/edit/delete UI.
 
 ---
 

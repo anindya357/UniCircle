@@ -94,6 +94,8 @@ export const mockAdminSnapshot = {
       title: "Revised academic calendar published for the current term",
       summary:
         "Students and faculty members should review the revised class and examination dates.",
+      content:
+        "Students and faculty members should review the revised academic calendar.",
       audience: "All students and faculty",
       status: "published",
       updatedAt: "2026-09-03T09:30:00+06:00",
@@ -104,6 +106,7 @@ export const mockAdminSnapshot = {
       title: "Central library weekday service extended until 9:00 PM",
       summary:
         "A draft service update prepared for students who need evening reading time.",
+      content: "The central library service window will be extended on weekdays.",
       audience: "Students, teachers, and staff",
       status: "draft",
       updatedAt: "2026-09-02T15:45:00+06:00",

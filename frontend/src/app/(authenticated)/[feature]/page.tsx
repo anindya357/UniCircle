@@ -67,7 +67,8 @@ export default async function FeaturePage({ params, searchParams }: FeaturePageP
   }
 
   if (feature === "news") {
-    const items = await newsService.listItems();
+    const token = (await cookies()).get("unicircle_session")?.value;
+    const items = await newsService.listItems(token);
 
     return <NewsPage items={items} />;
   }

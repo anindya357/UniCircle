@@ -2,8 +2,9 @@
 
 Phases 6.1–6.3 provide the FastAPI and database foundation. Phase 7 includes
 Authentication Feature 1, the Department and Faculty Directory, Campus Explorer,
-Club & Event Hub, Resource Sharing + Chat, Transport, and Community Forum.
-Remaining feature APIs and domain tables are future work.
+Club & Event Hub, Resource Sharing + Chat, Transport, Community Forum, and
+Campus News & Announcements. Remaining feature APIs and domain tables are future
+work.
 
 Backend Feature 2 is intentionally static: the public Home page reads reviewed
 content from `frontend/src/features/home/content`, with media shipped from
@@ -166,8 +167,8 @@ notifications, run this idempotent job every minute with an external scheduler
 
 The job notifies interested, going, or registered users. A unique constraint
 prevents duplicate state notifications. No in-process scheduler is started by
-the API. The frontend club/event pages now use the live API. The global
-notification dropdown is not yet connected to the event-notification endpoint.
+the API. The frontend club/event pages and global notification UI use the live
+API.
 
 ## Resource sharing and chat
 
@@ -203,6 +204,22 @@ keeps the post visible. Removing a reported post soft-removes it, hides its
 comments from every General User endpoint, and retains the post/report audit
 record. All moderation permissions are enforced by FastAPI, not by the UI.
 
+## Campus news and announcements
+
+Revision `4f7a2c8d1b90` adds persisted campus news, updates, announcements, and
+recipient-scoped publication notifications. Authenticated users read only
+published items through `GET /api/v1/news` and `GET /api/v1/news/{id}`; results
+are newest first. App Admin CRUD and draft/publish controls are under
+`/api/v1/admin/news` and are protected server-side.
+
+Publishing an update or announcement creates one notification for every active,
+verified General User in the same transaction. A database uniqueness constraint
+prevents duplicate recipient/item rows. Plain news does not fan out. Moving an
+item back to draft removes its notifications and hides it from General Users.
+Notification links point to the live news detail route and use the existing
+owner-scoped read and mark-all-read endpoints. The news list/detail pages and
+Admin publishing workspace now use these APIs rather than prototype data.
+
 ## Transport
 
 Revision `0363e1e5ad21` adds transport routes, buses, drivers, and recurring
@@ -226,8 +243,7 @@ Normal APIs reject past dates. App Admin writes are under
 `/api/v1/admin/transport`: routes, buses, drivers, and schedules support create,
 update, and guarded delete operations. Recurrence supports once, daily, weekly,
 and monthly templates with an optional end date. The Admin transport UI uses
-these APIs; its unrelated announcement and report sections remain mock-backed
-until their backend phases; the report section now uses the forum moderation API.
+these APIs; the announcement and report sections use their respective live APIs.
 
 Future feature work should add ORM models, import them from
 `app/db/models.py`, generate a candidate revision with

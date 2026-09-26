@@ -13,4 +13,11 @@ export class MockNewsService implements NewsService {
         new Date(second.publishedAt).getTime() - new Date(first.publishedAt).getTime(),
     );
   }
+
+  async getItem(id: string) {
+    await delay(mockLatencyMilliseconds);
+    const item = mockCampusNews.find((candidate) => candidate.id === id);
+    if (!item) throw new Error("Campus news item not found.");
+    return item;
+  }
 }

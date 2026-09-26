@@ -171,6 +171,7 @@ function AnnouncementForm({
     type: initial?.type ?? "announcement",
     title: initial?.title ?? "",
     summary: initial?.summary ?? "",
+    content: initial?.content ?? "",
     audience: initial?.audience ?? "CUET community",
     status: initial?.status ?? "draft",
   });
@@ -229,6 +230,16 @@ function AnnouncementForm({
             rows={4}
             value={values.summary}
             onChange={(event) => setValues({ ...values, summary: event.target.value })}
+          />
+        </label>
+        <label className={`${styles.adminField} ${styles.wideField}`}>
+          <span>Full information</span>
+          <textarea
+            required
+            rows={8}
+            value={values.content}
+            onChange={(event) => setValues({ ...values, content: event.target.value })}
+            placeholder="Write the complete information. Separate paragraphs with a blank line."
           />
         </label>
         <label className={styles.adminField}>

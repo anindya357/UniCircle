@@ -1,10 +1,10 @@
 # Notifications feature
 
 Owns the notification dropdown, full-page list, typed notification model, timestamp
-formatting, and mock read-state behavior. A provider in the authenticated shell keeps
+formatting, and persistent read-state behavior. A provider in the authenticated shell keeps
 the navbar dropdown and notification page synchronized. The components depend on the
-notification service contract so the mock implementation can later be replaced by
-the authenticated API.
+notification service contract backed by the authenticated API.
 
-Mock campus Update and Announcement notifications are derived from the Feature 9 news
-dataset, keeping their title, summary, timestamp, and detail link synchronized.
+Campus Update and Announcement notifications are created by the backend when an App
+Admin publishes an eligible item. Event and club-membership notifications share the
+same list and read endpoints.

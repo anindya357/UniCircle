@@ -1,5 +1,4 @@
 import type { AppNotification } from "@/features/notifications/types/notification";
-import { mockNotifications } from "@/mocks/data/notifications";
 import type { NotificationService } from "@/services/contracts/notification-service";
 import { ServiceError } from "@/services/errors/service-error";
 
@@ -42,31 +41,15 @@ async function request<T>(path: string, method = "GET", token?: string): Promise
 }
 
 export class ApiNotificationService implements NotificationService {
-  private readonly locallyRead = new Set<string>();
-
   async list(token?: string): Promise<readonly AppNotification[]> {
-    if (!token && typeof window === "undefined") return mockNotifications;
-    const live = await request<AppNotification[]>("notifications/me", "GET", token);
-    return [...live, ...mockNotifications]
-      .map((item) => ({
-        ...item,
-        isRead: item.isRead || this.locallyRead.has(item.id),
-      }))
-      .toSorted(
-        (first, second) =>
-          new Date(second.createdAt).getTime() - new Date(first.createdAt).getTime(),
-      );
+    return request<AppNotification[]>("notifications/me", "GET", token);
   }
 
   async markAsRead(id: string): Promise<void> {
-    this.locallyRead.add(id);
-    if (/^[0-9a-f-]{36}$/i.test(id)) {
-      await request(`notifications/${id}/read`, "PUT");
-    }
+    await request(`notifications/${id}/read`, "PUT");
   }
 
   async markAllAsRead(): Promise<void> {
-    mockNotifications.forEach((item) => this.locallyRead.add(item.id));
     await request("notifications/read-all", "PUT");
   }
 }

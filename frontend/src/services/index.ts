@@ -3,7 +3,7 @@ import { MockCampusAssistantService } from "@/mocks/services/mock-campus-assista
 import { ApiClubEventService } from "@/services/api/api-club-event-service";
 import { ApiForumService } from "@/services/api/api-forum-service";
 import { ApiNotificationService } from "@/services/api/api-notification-service";
-import { MockNewsService } from "@/mocks/services/mock-news-service";
+import { ApiNewsService } from "@/services/api/api-news-service";
 import { ApiResourceSharingService } from "@/services/api/api-resource-sharing-service";
 import { ApiAuthService } from "@/services/api/api-auth-service";
 import { ApiCampusExplorerService } from "@/services/api/api-campus-explorer-service";
@@ -35,7 +35,7 @@ export const clubEventService: ClubEventService = new ApiClubEventService();
 export const directoryService: DirectoryService = new ApiDirectoryService();
 export const forumService: ForumService = new ApiForumService();
 export const notificationService: NotificationService = new ApiNotificationService();
-export const newsService: NewsService = new MockNewsService();
+export const newsService: NewsService = new ApiNewsService();
 export const profileService: ProfileService = new ApiProfileService();
 export const resourceSharingService: ResourceSharingService =
   new ApiResourceSharingService();

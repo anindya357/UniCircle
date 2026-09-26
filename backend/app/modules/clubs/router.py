@@ -13,6 +13,8 @@ from app.api.schemas import ApiResponse
 from app.core.auth import AuthIdentity, get_current_user
 from app.core.errors import AppError
 from app.db.models import (
+    CampusNewsItem,
+    CampusNewsNotification,
     Club,
     ClubAdmin,
     ClubCreationRequest,
@@ -958,6 +960,12 @@ def my_notifications(db: Db, user: CurrentUser) -> ApiResponse[list[dict]]:
         .order_by(ClubMembershipNotification.created_at.desc())
         .limit(100)
     ).all()
+    news_records = db.scalars(
+        select(CampusNewsNotification)
+        .where(CampusNewsNotification.user_id == user_id)
+        .order_by(CampusNewsNotification.created_at.desc())
+        .limit(100)
+    ).all()
     result: list[dict] = []
     for item in event_records:
         event = db.get(ClubEvent, item.event_id)
@@ -993,6 +1001,24 @@ def my_notifications(db: Db, user: CurrentUser) -> ApiResponse[list[dict]]:
                     "href": f"/clubs/{club.id}",
                 }
             )
+    for item in news_records:
+        news_item = db.get(CampusNewsItem, item.news_item_id)
+        if news_item and news_item.status == "published":
+            result.append(
+                {
+                    "id": str(item.id),
+                    "type": (
+                        "campus-announcement"
+                        if news_item.kind == "announcement"
+                        else "campus-update"
+                    ),
+                    "title": news_item.title,
+                    "message": news_item.summary,
+                    "createdAt": item.created_at.isoformat(),
+                    "isRead": item.read_at is not None,
+                    "href": f"/news/{news_item.id}",
+                }
+            )
     result.sort(key=lambda item: item["createdAt"], reverse=True)
     return ApiResponse(data=result[:100])
 
@@ -1013,10 +1039,20 @@ def read_all_notifications(db: Db, user: CurrentUser) -> ApiResponse[dict]:
             ClubMembershipNotification.read_at.is_(None),
         )
     ).all()
-    for item in [*event_records, *membership_records]:
+    news_records = db.scalars(
+        select(CampusNewsNotification).where(
+            CampusNewsNotification.user_id == user_id,
+            CampusNewsNotification.read_at.is_(None),
+        )
+    ).all()
+    for item in [*event_records, *membership_records, *news_records]:
         item.read_at = now
     db.commit()
-    return ApiResponse(data={"updated": len(event_records) + len(membership_records)})
+    return ApiResponse(
+        data={
+            "updated": len(event_records) + len(membership_records) + len(news_records)
+        }
+    )
 
 
 @router.put("/notifications/{notification_id}/read", response_model=ApiResponse[dict])
@@ -1027,6 +1063,8 @@ def read_any_notification(
     item = db.get(EventNotification, notification_id)
     if item is None:
         item = db.get(ClubMembershipNotification, notification_id)
+    if item is None:
+        item = db.get(CampusNewsNotification, notification_id)
     if item is None or item.user_id != user_id:
         fail(404, "notification_not_found", "Notification not found.")
     if item.read_at is None:

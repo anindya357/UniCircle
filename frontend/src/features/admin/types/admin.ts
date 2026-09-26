@@ -51,6 +51,7 @@ export type AdminAnnouncement = Readonly<{
   type: CampusNewsType;
   title: string;
   summary: string;
+  content: string;
   audience: string;
   status: PublishStatus;
   updatedAt: string;

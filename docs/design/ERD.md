@@ -377,11 +377,11 @@ erDiagram
 ```mermaid
 erDiagram
     USER ||--o{ NEWS_ITEM : publishes
-    USER ||--o{ NOTIFICATION : receives
-    NEWS_ITEM o|--o{ NOTIFICATION : triggers
-    EVENT o|--o{ NOTIFICATION : triggers
+    USER ||--o{ NEWS_NOTIFICATION : receives
+    NEWS_ITEM ||--o{ NEWS_NOTIFICATION : triggers
+    USER ||--o{ EVENT_NOTIFICATION : receives
+    EVENT ||--o{ EVENT_NOTIFICATION : triggers
     RAG_SOURCE ||--o{ RAG_CHUNK : contains
-    OUTBOX_EVENT ||--o{ NOTIFICATION : fans_out
 
     USER {
         uuid id PK
@@ -391,37 +391,31 @@ erDiagram
     }
     NEWS_ITEM {
         uuid id PK
-        uuid author_user_id FK
-        string category
+        uuid author_id FK
+        string kind
         string title
         string summary
-        string body
+        json content
         string audience
         string status
         datetime published_at
         datetime created_at
+        datetime updated_at
     }
-    NOTIFICATION {
+    NEWS_NOTIFICATION {
         uuid id PK
         uuid recipient_user_id FK
-        uuid event_id FK
         uuid news_item_id FK
-        uuid outbox_event_id FK
-        string kind
-        string title
-        string body
-        string link
-        string dedupe_key
         datetime read_at
         datetime created_at
     }
-    OUTBOX_EVENT {
+    EVENT_NOTIFICATION {
         uuid id PK
-        string event_type
-        uuid object_id
-        datetime occurred_at
-        datetime processed_at
-        int attempts
+        uuid recipient_user_id FK
+        uuid event_id FK
+        string kind
+        datetime read_at
+        datetime created_at
     }
     RAG_SOURCE {
         uuid id PK
@@ -442,7 +436,7 @@ erDiagram
     }
 ```
 
-- Only App Admin can create or manage news. `NEWS_ITEM.status` is `draft` or `published`; only published items appear to general users. `NOTIFICATION` is owner-scoped and unique on `(recipient_user_id, dedupe_key)`; this prevents duplicate event-start/end and announcement notices. `event_id` and `news_item_id` are optional related-object references, with at most one present. Do not expose another user's notifications. Publishing an **update or announcement** inserts `OUTBOX_EVENT` in the same transaction; a worker fans out notifications with retries and idempotent keys. Ordinary news need not notify everyone. Event start/finish detection must be scheduled separately and enqueue each transition only once.
+- Only App Admin can create or manage news. `NEWS_ITEM.status` is `draft` or `published`; only published items appear to General Users. `NEWS_NOTIFICATION` is owner-scoped and unique on `(news_item_id, recipient_user_id)`, preventing duplicate announcement/update notices. Publishing an **update or announcement** creates recipient rows in the same transaction; ordinary news does not notify everyone. Moving an item back to draft removes its news notifications. Event and club-membership notifications currently use their feature-owned tables but share the same authenticated list/read endpoints; a later shared-notification migration may consolidate those physical tables without changing the frontend contract. Event start/finish detection remains separately scheduled and creates each transition only once.
 - `RAG_SOURCE` is restricted to approved CUET URLs. `RAG_CHUNK` has unique `(source_id, ordinal)` and source metadata for citations. `embedding_ref` can point to the selected vector index; this ERD does **not** preselect a vector database or embedding model. No chat-transcript storage is required by the current AI-assistant workflow.
 
 ## Authentication and migration decisions

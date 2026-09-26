@@ -11,8 +11,6 @@ import type {
   PublishStatus,
   ReportStatus,
 } from "@/features/admin/types/admin";
-import { mockAdminSnapshot } from "@/mocks/data/admin";
-import { MockAdminService } from "@/mocks/services/mock-admin-service";
 import type { AdminService } from "@/services/contracts/admin-service";
 import { ServiceError } from "@/services/errors/service-error";
 
@@ -34,7 +32,16 @@ type TransportAdminRecord = {
   })[];
 };
 
-const mockFallback = new MockAdminService();
+type NewsAdminRecord = {
+  id: string;
+  type: AdminAnnouncement["type"];
+  title: string;
+  summary: string;
+  content: string[];
+  audience: string;
+  status: PublishStatus;
+  updatedAt: string;
+};
 
 function csrfToken(): string {
   if (typeof document === "undefined") return "";
@@ -117,6 +124,71 @@ async function forumData<T>(
   return result.data as T;
 }
 
+async function newsData<T>(
+  path: string,
+  method = "GET",
+  body?: unknown,
+  token?: string,
+): Promise<T> {
+  const url = token
+    ? new URL(`/api/v1/${path}`, process.env.BACKEND_API_URL ?? "http://127.0.0.1:8000")
+    : `/api/news/${path}`;
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      method,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+        ...(!token && method !== "GET" ? { "X-CSRF-Token": csrfToken() } : {}),
+      },
+      body: body === undefined ? undefined : JSON.stringify(body),
+      credentials: token ? undefined : "same-origin",
+      cache: "no-store",
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch (cause) {
+    throw new ServiceError("Cannot reach campus publishing services.", "network", {
+      cause,
+    });
+  }
+  if (response.status === 204) return undefined as T;
+  const result = await response.json().catch(() => null);
+  if (!response.ok || !result || !("data" in result)) {
+    throw new ServiceError(
+      result?.error?.message ?? "Campus publishing request failed.",
+    );
+  }
+  return result.data as T;
+}
+
+function mapAnnouncement(record: NewsAdminRecord): AdminAnnouncement {
+  return {
+    id: record.id,
+    type: record.type,
+    title: record.title,
+    summary: record.summary,
+    content: record.content.join("\n\n"),
+    audience: record.audience,
+    status: record.status,
+    updatedAt: record.updatedAt,
+  };
+}
+
+function announcementPayload(input: AdminAnnouncementInput) {
+  return {
+    type: input.type,
+    title: input.title,
+    summary: input.summary,
+    content: input.content
+      .split(/\n\s*\n/)
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean),
+    audience: input.audience,
+    status: input.status,
+  };
+}
+
 function mapTransport(
   record: TransportAdminRecord,
 ): Pick<AdminSnapshot, "routes" | "buses" | "drivers" | "schedules"> {
@@ -183,11 +255,16 @@ function schedulePayload(input: AdminScheduleInput) {
 
 export class ApiAdminService implements AdminService {
   async getSnapshot(token?: string): Promise<AdminSnapshot> {
-    const [transportRecord, reports] = await Promise.all([
+    const [transportRecord, reports, announcementRecords] = await Promise.all([
       data<TransportAdminRecord>("admin/transport", "GET", undefined, token),
       forumData<AdminCommunityReport[]>("admin/forum/reports", "GET", undefined, token),
+      newsData<NewsAdminRecord[]>("admin/news", "GET", undefined, token),
     ]);
-    return { ...mockAdminSnapshot, ...mapTransport(transportRecord), reports };
+    return {
+      ...mapTransport(transportRecord),
+      announcements: announcementRecords.map(mapAnnouncement),
+      reports,
+    };
   }
 
   async saveSchedule(input: AdminScheduleInput, id?: string) {
@@ -236,20 +313,30 @@ export class ApiAdminService implements AdminService {
   async deleteDriver(id: string) {
     await data(`admin/transport/drivers/${id}`, "DELETE");
   }
-  saveAnnouncement(
+  async saveAnnouncement(
     input: AdminAnnouncementInput,
     id?: string,
   ): Promise<AdminAnnouncement> {
-    return mockFallback.saveAnnouncement(input, id);
+    const record = await newsData<NewsAdminRecord>(
+      `admin/news${id ? `/${id}` : ""}`,
+      id ? "PUT" : "POST",
+      announcementPayload(input),
+    );
+    return mapAnnouncement(record);
   }
-  deleteAnnouncement(id: string): Promise<void> {
-    return mockFallback.deleteAnnouncement(id);
+  async deleteAnnouncement(id: string): Promise<void> {
+    await newsData(`admin/news/${id}`, "DELETE");
   }
-  setAnnouncementStatus(
+  async setAnnouncementStatus(
     item: AdminAnnouncement,
     status: PublishStatus,
   ): Promise<AdminAnnouncement> {
-    return mockFallback.setAnnouncementStatus(item, status);
+    const record = await newsData<NewsAdminRecord>(
+      `admin/news/${item.id}/status`,
+      "PUT",
+      { status },
+    );
+    return mapAnnouncement(record);
   }
   setReportStatus(
     item: AdminCommunityReport,

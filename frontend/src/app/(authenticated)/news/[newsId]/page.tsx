@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { NewsDetailPage } from "@/features/news/components/news-detail-page";
@@ -9,17 +10,14 @@ type NewsDetailsRouteProps = Readonly<{
   params: Promise<{ newsId: string }>;
 }>;
 
-export async function generateStaticParams() {
-  const items = await newsService.listItems();
-
-  return items.map((item) => ({ newsId: item.id }));
-}
-
 export async function generateMetadata({
   params,
 }: NewsDetailsRouteProps): Promise<Metadata> {
-  const [{ newsId }, items] = await Promise.all([params, newsService.listItems()]);
-  const item = items.find((candidate) => candidate.id === newsId);
+  const { newsId } = await params;
+  const token = (await cookies()).get("unicircle_session")?.value;
+  const item = token
+    ? await newsService.getItem(newsId, token).catch(() => null)
+    : null;
 
   return {
     title: item?.title ?? "Campus news item not found",
@@ -29,8 +27,11 @@ export async function generateMetadata({
 
 export default async function NewsDetailsRoute({ params }: NewsDetailsRouteProps) {
   await requireServerSessionUser();
-  const [{ newsId }, items] = await Promise.all([params, newsService.listItems()]);
-  const item = items.find((candidate) => candidate.id === newsId);
+  const { newsId } = await params;
+  const token = (await cookies()).get("unicircle_session")?.value;
+  const item = token
+    ? await newsService.getItem(newsId, token).catch(() => null)
+    : null;
 
   if (!item) {
     notFound();
