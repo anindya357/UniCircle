@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 
+from app.modules.assistant.router import router as assistant_router
 from app.modules.auth.router import profile_router
 from app.modules.auth.router import router as auth_router
 from app.modules.campus.router import router as campus_router
@@ -22,3 +23,4 @@ api_router.include_router(resources_router)
 api_router.include_router(transport_router)
 api_router.include_router(forum_router)
 api_router.include_router(news_router)
+api_router.include_router(assistant_router)

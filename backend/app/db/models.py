@@ -679,6 +679,79 @@ class CampusNewsNotification(Base):
     read_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+class RagSource(Base, TimestampMixin):
+    """One approved CUET web document and its latest ingestion state."""
+
+    __tablename__ = "rag_sources"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('active','unchanged','failed')", name="valid_status"
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    url: Mapped[str] = mapped_column(String(1000), nullable=False, unique=True)
+    title: Mapped[str] = mapped_column(String(500), nullable=False)
+    content_type: Mapped[str] = mapped_column(String(100), nullable=False)
+    content_hash: Mapped[str | None] = mapped_column(String(64), index=True)
+    status: Mapped[str] = mapped_column(
+        String(16), nullable=False, server_default="active", index=True
+    )
+    published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    crawled_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now(), index=True
+    )
+    error_message: Mapped[str | None] = mapped_column(String(500))
+    source_metadata: Mapped[dict] = mapped_column(JSON, nullable=False, default=dict)
+
+    chunks: Mapped[list["RagChunk"]] = relationship(
+        back_populates="source", cascade="all, delete-orphan"
+    )
+
+
+class RagChunk(Base):
+    """A searchable text chunk with its OpenAI embedding persisted in PostgreSQL."""
+
+    __tablename__ = "rag_chunks"
+    __table_args__ = (
+        UniqueConstraint("source_id", "chunk_index", name="uq_rag_chunk_position"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("rag_sources.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    chunk_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    content_hash: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    embedding: Mapped[list[float]] = mapped_column(JSON, nullable=False)
+
+    source: Mapped[RagSource] = relationship(back_populates="chunks")
+
+
+class RagQueryAudit(Base):
+    """Minimal query audit used for per-user rate and cost safeguards."""
+
+    __tablename__ = "rag_query_audits"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    question_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(24), nullable=False)
+    source_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now(), index=True
+    )
+
+
 class TransportRoute(Base, TimestampMixin):
     __tablename__ = "transport_routes"
 

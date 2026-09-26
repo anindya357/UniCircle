@@ -1430,44 +1430,44 @@ The workflow says the knowledge base will be created from CUET’s main website 
 
 ## 7.33 RAG ingestion foundation
 
-- [ ] Finalize approved knowledge-source list.
-- [ ] Define “official/acceptable CUET source” policy.
-- [ ] Create ingestion module.
-- [ ] Fetch/load approved campus content.
-- [ ] Clean/extract useful text.
-- [ ] Split content into chunks.
-- [ ] Generate embeddings.
-- [ ] Store vectors in the approved vector store.
-- [ ] Store source metadata.
-- [ ] Store source URL/title/date metadata where available.
-- [ ] Prevent uncontrolled ingestion of unrelated sources.
-- [ ] Create refresh/update strategy.
+- [x] Finalize approved knowledge-source list.
+- [x] Define “official/acceptable CUET source” policy.
+- [x] Create ingestion module.
+- [x] Fetch/load approved campus content.
+- [x] Clean/extract useful text.
+- [x] Split content into chunks.
+- [x] Generate embeddings.
+- [x] Store vectors in the approved vector store.
+- [x] Store source metadata.
+- [x] Store source URL/title/date metadata where available.
+- [x] Prevent uncontrolled ingestion of unrelated sources.
+- [x] Create refresh/update strategy.
 
 ## 7.34 RAG query pipeline
 
-- [ ] Accept user question through FastAPI.
-- [ ] Validate input.
-- [ ] Retrieve relevant chunks.
-- [ ] Construct context.
-- [ ] Construct controlled prompt.
-- [ ] Call OpenAI from backend only.
-- [ ] Generate grounded answer.
-- [ ] Return answer.
-- [ ] Return source metadata if supported by final design.
-- [ ] Handle no relevant context.
-- [ ] Handle OpenAI failure.
-- [ ] Add rate/cost safeguards according to approved architecture.
+- [x] Accept user question through FastAPI.
+- [x] Validate input.
+- [x] Retrieve relevant chunks.
+- [x] Construct context.
+- [x] Construct controlled prompt.
+- [x] Call OpenAI from backend only.
+- [x] Generate grounded answer.
+- [x] Return answer.
+- [x] Return source metadata if supported by final design.
+- [x] Handle no relevant context.
+- [x] Handle OpenAI failure.
+- [x] Add rate/cost safeguards according to approved architecture.
 
 ## 7.35 Frontend connection
 
-- [ ] Replace AI mock service.
-- [ ] Connect question endpoint.
-- [ ] Connect loading state.
-- [ ] Connect answer.
-- [ ] Connect no-answer state.
-- [ ] Connect source display if returned.
-- [ ] Connect API error handling.
-- [ ] Verify OpenAI key is never exposed in browser.
+- [x] Replace AI mock service.
+- [x] Connect question endpoint.
+- [x] Connect loading state.
+- [x] Connect answer.
+- [x] Connect no-answer state.
+- [x] Connect source display if returned.
+- [x] Connect API error handling.
+- [x] Verify OpenAI key is never exposed in browser.
 
 ---
 

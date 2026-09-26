@@ -37,6 +37,21 @@ class Settings(BaseSettings):
     smtp_username: str | None = None
     smtp_password: SecretStr | None = None
     smtp_from_email: str | None = None
+    openai_api_key: SecretStr | None = None
+    openai_chat_model: str = "gpt-4o-mini"
+    openai_embedding_model: str = "text-embedding-3-small"
+    rag_allowed_hosts: str = "cuet.ac.bd"
+    rag_seed_urls: str = "https://cuet.ac.bd/"
+    rag_max_pages: int = Field(default=500, ge=1, le=5000)
+    rag_max_depth: int = Field(default=5, ge=0, le=12)
+    rag_request_timeout_seconds: int = Field(default=20, ge=5, le=120)
+    rag_requests_per_second: float = Field(default=1.0, gt=0, le=5)
+    rag_chunk_size: int = Field(default=1200, ge=300, le=4000)
+    rag_chunk_overlap: int = Field(default=180, ge=0, le=1000)
+    rag_retrieval_limit: int = Field(default=5, ge=1, le=10)
+    rag_similarity_threshold: float = Field(default=0.24, ge=-1, le=1)
+    rag_query_limit: int = Field(default=10, ge=1, le=100)
+    rag_query_window_minutes: int = Field(default=5, ge=1, le=60)
 
     @model_validator(mode="after")
     def validate_database_configuration(self) -> "Settings":
@@ -48,6 +63,10 @@ class Settings(BaseSettings):
             self.require_jwt_key()
             self.require_otp_key()
             self.require_smtp_configuration()
+        if self.rag_chunk_overlap >= self.rag_chunk_size:
+            raise ValueError("RAG_CHUNK_OVERLAP must be smaller than RAG_CHUNK_SIZE")
+        if not self.rag_hosts:
+            raise ValueError("RAG_ALLOWED_HOSTS must contain at least one host")
         return self
 
     @staticmethod
@@ -80,6 +99,26 @@ class Settings(BaseSettings):
         ):
             raise ValueError("SMTP configuration is incomplete")
         return host, self.smtp_port, username, password, sender, self.smtp_tls_mode
+
+    def require_openai_key(self) -> str:
+        value = self.openai_api_key.get_secret_value() if self.openai_api_key else ""
+        if not value or value == "replace-me" or not value.startswith("sk-"):
+            raise ValueError("OPENAI_API_KEY is not configured")
+        return value
+
+    @property
+    def rag_hosts(self) -> tuple[str, ...]:
+        return tuple(
+            host.strip().lower().rstrip(".")
+            for host in self.rag_allowed_hosts.split(",")
+            if host.strip()
+        )
+
+    @property
+    def rag_seeds(self) -> tuple[str, ...]:
+        return tuple(
+            url.strip() for url in self.rag_seed_urls.split(",") if url.strip()
+        )
 
     @property
     def cors_origins(self) -> list[str]:

@@ -17,7 +17,7 @@ flowchart LR
     Worker[Worker process] -->|claim and complete| Outbox
     Worker --> DB
     Worker -->|approved URLs only| Sources[CUET sites and articles]
-    Worker --> Vectors[(Vector index - choice pending)]
+    Worker --> Vectors[(PostgreSQL chunk vectors)]
     API --> Vectors
     API -->|grounded prompt| Model[OpenAI API]
 ```
@@ -39,7 +39,7 @@ The existing `NEXT_PUBLIC_API_URL` frontend variable is an unused placeholder fr
 | RAG ingest/query modules | Approved-source ingestion and grounded, cited answers | Source metadata, vector index, OpenAI API |
 | SMTP | Deliver verification codes | Recipient and one-time code; no other account data |
 
-The worker is a **planned** runtime component, not yet in the repository. PostgreSQL is the only approved relational store. The vector engine, embedding model, SMTP provider, and production host are not chosen yet; do not claim them as implemented or add provider-specific dependencies prematurely.
+The durable notification worker remains a planned runtime component. RAG refresh is an explicit CLI/scheduled operation, not an API-request task. PostgreSQL is the approved relational store and holds the bounded first-version chunk vectors as JSON; `text-embedding-3-small` is the selected embedding model. A dedicated vector extension/service is deferred until corpus size requires it. SMTP provider and production host remain deployment decisions.
 
 ## Internal backend boundaries
 

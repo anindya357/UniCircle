@@ -2,9 +2,8 @@
 
 Phases 6.1–6.3 provide the FastAPI and database foundation. Phase 7 includes
 Authentication Feature 1, the Department and Faculty Directory, Campus Explorer,
-Club & Event Hub, Resource Sharing + Chat, Transport, Community Forum, and
-Campus News & Announcements. Remaining feature APIs and domain tables are future
-work.
+Club & Event Hub, Resource Sharing + Chat, Transport, Community Forum, Campus
+News & Announcements, and the Campus AI Assistant/RAG backend.
 
 Backend Feature 2 is intentionally static: the public Home page reads reviewed
 content from `frontend/src/features/home/content`, with media shipped from
@@ -219,6 +218,31 @@ item back to draft removes its notifications and hides it from General Users.
 Notification links point to the live news detail route and use the existing
 owner-scoped read and mark-all-read endpoints. The news list/detail pages and
 Admin publishing workspace now use these APIs rather than prototype data.
+
+## Campus AI Assistant / RAG
+
+Revision `a18d6c9e4f20` adds approved knowledge sources, embedded chunks, and
+privacy-minimal query audits. Apply the migration, configure a backend-only
+`OPENAI_API_KEY`, then build the initial public CUET snapshot from `backend/`:
+
+```powershell
+.\.venv\Scripts\python -m app.modules.assistant.ingest --max-pages 500
+```
+
+The crawler starts at `https://cuet.ac.bd/`, follows only explicitly allowed
+HTTPS hosts, respects crawl limits and `robots.txt`, excludes portals/assets,
+uses LangChain `WebBaseLoader` for HTML and `PyPDFLoader` for PDFs, and stores
+source URL/title/date metadata. Re-run the same command for an incremental
+refresh; unchanged content hashes are not re-embedded. Review
+`docs/design/RAG_Knowledge_Source_Policy.md` before adding any CUET subdomain.
+
+Authenticated users ask through `POST /api/v1/assistant/ask`. The service
+retrieves relevant chunks, sends only those public excerpts and the question to
+OpenAI, returns official source links, and emits a no-context response when
+retrieval confidence is insufficient. Per-user fixed-window limits and output
+limits control cost. `GET /api/v1/admin/assistant/knowledge` reports corpus
+counts to App Admins. Browser requests use the same-origin Next.js proxy; the
+OpenAI key is never returned to or read by browser JavaScript.
 
 ## Transport
 

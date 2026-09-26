@@ -4,12 +4,11 @@ import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 
 
 import { AppShell } from "@/components/shared/app-shell";
 import { AssistantMessage } from "@/features/assistant/components/assistant-message";
-import type { CampusAssistantMessage } from "@/features/assistant/types/campus-assistant";
 import {
-  mockAssistantErrorQuestion,
-  mockAssistantSuggestions,
-  mockAssistantWelcomeMessage,
-} from "@/mocks/data/campus-assistant";
+  assistantSuggestions,
+  assistantWelcomeMessage,
+} from "@/features/assistant/content/assistant-content";
+import type { CampusAssistantMessage } from "@/features/assistant/types/campus-assistant";
 import { campusAssistantService } from "@/services";
 
 import styles from "./campus-assistant-page.module.css";
@@ -22,7 +21,7 @@ function createMessageId(prefix: string) {
 
 export function CampusAssistantPage() {
   const [messages, setMessages] = useState<CampusAssistantMessage[]>([
-    mockAssistantWelcomeMessage,
+    assistantWelcomeMessage,
   ]);
   const [draft, setDraft] = useState("");
   const [isThinking, setIsThinking] = useState(false);
@@ -105,7 +104,7 @@ export function CampusAssistantPage() {
   }
 
   function resetConversation() {
-    setMessages([mockAssistantWelcomeMessage]);
+    setMessages([assistantWelcomeMessage]);
     setDraft("");
     setError("");
     setLastQuestion("");
@@ -125,28 +124,28 @@ export function CampusAssistantPage() {
           </p>
           <div className={styles.prototypeNote}>
             <span aria-hidden="true">i</span>
-            Prototype responses only - the FastAPI RAG knowledge service will be
-            connected later
+            Answers are grounded in indexed official CUET web sources. Always open
+            the cited source before making an important decision.
           </div>
         </div>
 
-        <aside className={styles.heroStatus} aria-label="Assistant prototype status">
+        <aside className={styles.heroStatus} aria-label="Assistant service status">
           <div className={styles.orbitMark} aria-hidden="true">
             <span />
           </div>
           <div>
             <span>Assistant status</span>
             <strong>Ready to help</strong>
-            <p>Mock campus knowledge with source-ready answers.</p>
+            <p>Live retrieval with official-source citations.</p>
           </div>
           <dl>
             <div>
               <dt>Topics</dt>
-              <dd>06</dd>
+              <dd>CUET</dd>
             </div>
             <div>
               <dt>Mode</dt>
-              <dd>Mock RAG</dd>
+              <dd>Live RAG</dd>
             </div>
           </dl>
         </aside>
@@ -161,7 +160,7 @@ export function CampusAssistantPage() {
           </div>
 
           <div className={styles.suggestions}>
-            {mockAssistantSuggestions.map((suggestion, index) => (
+            {assistantSuggestions.map((suggestion, index) => (
               <button
                 disabled={isThinking}
                 key={suggestion.id}
@@ -175,25 +174,6 @@ export function CampusAssistantPage() {
             ))}
           </div>
 
-          <div className={styles.prototypeChecks}>
-            <p>Prototype state checks</p>
-            <button
-              disabled={isThinking}
-              onClick={() =>
-                void requestAnswer("What is the CUET lunar ferry timetable?", true)
-              }
-              type="button"
-            >
-              Show not-found answer
-            </button>
-            <button
-              disabled={isThinking}
-              onClick={() => void requestAnswer(mockAssistantErrorQuestion, true)}
-              type="button"
-            >
-              Simulate service error
-            </button>
-          </div>
         </aside>
 
         <div className={styles.chatPanel}>
@@ -202,7 +182,7 @@ export function CampusAssistantPage() {
               <span className={styles.onlineDot} aria-hidden="true" />
               <div>
                 <strong>Campus AI Assistant</strong>
-                <p>Grounded CUET answers - mock service</p>
+                <p>Grounded CUET answers with official sources</p>
               </div>
             </div>
             <button

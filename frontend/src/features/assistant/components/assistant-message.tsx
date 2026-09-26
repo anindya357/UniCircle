@@ -45,10 +45,10 @@ export function AssistantMessage({ message }: AssistantMessageProps) {
 
         {message.sources && message.sources.length > 0 ? (
           <aside className={styles.sources} aria-label="Sources used for this answer">
-            <p>Sources in this prototype</p>
+            <p>Official sources used</p>
             <div>
               {message.sources.map((source, index) => (
-                <a href={source.href} key={source.id}>
+                <a href={source.href} key={source.id} rel="noreferrer" target="_blank">
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <div>
                     <strong>{source.title}</strong>

@@ -1,5 +1,5 @@
 import { ApiAdminService } from "@/services/api/api-admin-service";
-import { MockCampusAssistantService } from "@/mocks/services/mock-campus-assistant-service";
+import { ApiCampusAssistantService } from "@/services/api/api-campus-assistant-service";
 import { ApiClubEventService } from "@/services/api/api-club-event-service";
 import { ApiForumService } from "@/services/api/api-forum-service";
 import { ApiNotificationService } from "@/services/api/api-notification-service";
@@ -28,7 +28,7 @@ import type { TransportService } from "@/services/contracts/transport-service";
 export const adminService: AdminService = new ApiAdminService();
 export const authService: AuthService = new ApiAuthService();
 export const campusAssistantService: CampusAssistantService =
-  new MockCampusAssistantService();
+  new ApiCampusAssistantService();
 export const campusExplorerService: CampusExplorerService =
   new ApiCampusExplorerService();
 export const clubEventService: ClubEventService = new ApiClubEventService();

@@ -382,6 +382,7 @@ erDiagram
     USER ||--o{ EVENT_NOTIFICATION : receives
     EVENT ||--o{ EVENT_NOTIFICATION : triggers
     RAG_SOURCE ||--o{ RAG_CHUNK : contains
+    USER ||--o{ RAG_QUERY_AUDIT : asks
 
     USER {
         uuid id PK
@@ -421,23 +422,34 @@ erDiagram
         uuid id PK
         string url UK
         string title
-        string source_host
+        string content_type
         string content_hash
-        boolean is_approved
-        datetime fetched_at
+        string status
+        datetime published_at
+        datetime crawled_at
+        string error_message
+        json source_metadata
     }
     RAG_CHUNK {
         uuid id PK
         uuid source_id FK
-        int ordinal
-        string text
-        string embedding_ref
-        datetime indexed_at
+        int chunk_index
+        string content
+        string content_hash
+        json embedding
+    }
+    RAG_QUERY_AUDIT {
+        uuid id PK
+        uuid user_id FK
+        string question_hash
+        string status
+        int source_count
+        datetime created_at
     }
 ```
 
 - Only App Admin can create or manage news. `NEWS_ITEM.status` is `draft` or `published`; only published items appear to General Users. `NEWS_NOTIFICATION` is owner-scoped and unique on `(news_item_id, recipient_user_id)`, preventing duplicate announcement/update notices. Publishing an **update or announcement** creates recipient rows in the same transaction; ordinary news does not notify everyone. Moving an item back to draft removes its news notifications. Event and club-membership notifications currently use their feature-owned tables but share the same authenticated list/read endpoints; a later shared-notification migration may consolidate those physical tables without changing the frontend contract. Event start/finish detection remains separately scheduled and creates each transition only once.
-- `RAG_SOURCE` is restricted to approved CUET URLs. `RAG_CHUNK` has unique `(source_id, ordinal)` and source metadata for citations. `embedding_ref` can point to the selected vector index; this ERD does **not** preselect a vector database or embedding model. No chat-transcript storage is required by the current AI-assistant workflow.
+- `RAG_SOURCE` is restricted to approved CUET URLs. `RAG_CHUNK` has unique `(source_id, chunk_index)` and stores the selected `text-embedding-3-small` vector in PostgreSQL JSON for bounded cosine retrieval. `RAG_QUERY_AUDIT` stores no raw question or answer; its digest/outcome rows support per-user rate limits. No chat-transcript storage is required by the current AI-assistant workflow.
 
 ## Authentication and migration decisions
 
