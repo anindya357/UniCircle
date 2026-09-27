@@ -93,7 +93,7 @@ flowchart LR
         DeliverOtp([Deliver email verification code])
         Notify([Fan out event and announcement notices])
         Ingest([Ingest approved campus sources])
-        Answer([Generate grounded answer with citations])
+        Answer([Generate grounded answer])
     end
 
     SMTP --> DeliverOtp

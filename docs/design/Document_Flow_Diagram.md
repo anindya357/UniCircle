@@ -51,7 +51,7 @@ flowchart LR
 
     Curator[Approved source list] -->|CUET URL| Source[Source metadata record]
     Source -->|fetch and extract| Chunks[Indexed content chunks]
-    Chunks -->|retrieved evidence| Answer[Assistant answer with source links]
+    Chunks -->|retrieved evidence| Answer[Grounded assistant answer]
 ```
 
 Codes, passwords, and JWTs are **not** business documents and must not enter reports or logs. Store only password hashes, OTP digests, and session-token identifiers as designed in the [ERD](ERD.md). News publication and notification work are linked through a durable outbox so a failed worker can retry without duplicate notices. Source chunks must carry provenance, and only approved CUET URLs enter the assistant knowledge base.

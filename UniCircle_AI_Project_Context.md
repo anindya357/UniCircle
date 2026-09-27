@@ -852,7 +852,8 @@ User question
 → return answer
 ```
 
-If the approved design supports citations/source metadata, return and display them.
+Use source metadata internally for retrieval and auditing; do not display citations,
+source cards, or source URLs with assistant answers.
 
 ## 20.4 RAG Safety/Quality Expectations
 

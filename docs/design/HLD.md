@@ -36,7 +36,7 @@ The existing `NEXT_PUBLIC_API_URL` frontend variable is an unused placeholder fr
 | FastAPI services/repositories | Business transitions, object-level authorization, transactions | PostgreSQL through SQLAlchemy sessions |
 | PostgreSQL | Accounts, OTP/session state, campus/community content, outbox, RAG source metadata | Migrations via Alembic |
 | Notification worker | Idempotent event/news fanout and scheduled event-state detection | Outbox and notifications |
-| RAG ingest/query modules | Approved-source ingestion and grounded, cited answers | Source metadata, vector index, local Ollama service |
+| RAG ingest/query modules | Approved-source ingestion and grounded answers without visible citations | Source metadata, vector index, local Ollama service |
 | SMTP | Deliver verification codes | Recipient and one-time code; no other account data |
 
 The durable notification worker remains a planned runtime component. RAG refresh is an explicit CLI/scheduled operation, not an API-request task. PostgreSQL is the approved relational store and holds the bounded first-version chunk vectors as JSON; local `embeddinggemma:300m` is the selected embedding model. A dedicated vector extension/service is deferred until corpus size requires it. SMTP provider and production host remain deployment decisions.

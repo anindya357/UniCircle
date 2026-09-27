@@ -245,8 +245,8 @@ refresh; unchanged content hashes are not re-embedded. Review
 
 Authenticated users ask through `POST /api/v1/assistant/ask`. The service
 retrieves relevant chunks, sends only those public excerpts and the question to
-the locally hosted Qwen model, returns official source links, and emits a
-no-context response when retrieval confidence is insufficient. Per-user fixed-window limits and output
+the locally hosted Qwen model, returns a clean answer without citation/source
+metadata, and emits a no-context response when retrieval confidence is insufficient. Per-user fixed-window limits and output
 limits bound resource usage. `GET /api/v1/admin/assistant/knowledge` reports
 corpus counts to App Admins. Browser requests use the same-origin Next.js proxy;
 the Ollama service is never exposed to browser JavaScript.

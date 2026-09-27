@@ -36,14 +36,6 @@ class FakeRouteService:
         return {
             "answer": f"Grounded answer for: {question}",
             "status": "answered",
-            "sources": [
-                {
-                    "id": "source-1",
-                    "title": "CUET",
-                    "context": "Official CUET information",
-                    "href": "https://cuet.ac.bd/",
-                }
-            ],
         }
 
 
@@ -91,7 +83,7 @@ def test_source_policy_restricts_hosts_protocols_and_portals():
     assert policy.canonicalize("https://cuet.ac.bd/files/notice.pdf") is not None
 
 
-def test_grounded_retrieval_returns_source(assistant_stack):
+def test_grounded_retrieval_returns_answer_without_sources(assistant_stack):
     db, user, settings = assistant_stack
     source = RagSource(
         url="https://cuet.ac.bd/about",
@@ -121,8 +113,8 @@ def test_grounded_retrieval_returns_source(assistant_stack):
     result = service.ask(str(user.id), "Where is CUET?")
 
     assert result["status"] == "answered"
-    assert result["sources"][0]["href"] == "https://cuet.ac.bd/about"
-    assert "[1]" in result["answer"]
+    assert "sources" not in result
+    assert "[1]" not in result["answer"]
 
 
 def test_empty_knowledge_returns_not_found_without_model_call(assistant_stack):
@@ -132,7 +124,7 @@ def test_empty_knowledge_returns_not_found_without_model_call(assistant_stack):
     result = service.ask(str(user.id), "What is available?")
 
     assert result["status"] == "not-found"
-    assert result["sources"] == []
+    assert "sources" not in result
 
 
 def test_assistant_endpoint_is_authenticated_and_validated(settings):

@@ -68,7 +68,7 @@ The table lists a compact API surface, not a promise to build all endpoints at o
 | News | `GET /news`, `GET /news/{id}` | U; published items only, newest first |
 | News management | `POST /admin/news`, `PATCH/DELETE /admin/news/{id}`, `POST /admin/news/{id}/publish` | A; update/announcement publication and outbox entry in one transaction |
 | Notifications | `GET /notifications`, `PATCH /notifications/{id}/read`, `POST /notifications/read-all` | U; own rows only, unread/read timestamps |
-| Assistant | `POST /assistant/questions` | U; bounded question, grounded answer/status/sources; rate-limited |
+| Assistant | `POST /assistant/questions` | U; bounded question and grounded answer/status; sources remain internal; rate-limited |
 
 Implementation must define exact Pydantic request/response schemas before each route is added. Do not expose the mock-only aggregate snapshots directly: `ClubEventSnapshot`, `ResourceSharingSnapshot`, `ForumSnapshot`, `TransportSnapshot`, and `AdminSnapshot` currently bundle unrelated private and public data. The frontend service adapters should compose their screens from scoped, paginated real endpoints instead. The mock `mutualConnections` field has no data source and is omitted from the live resource-discovery DTO.
 
@@ -96,7 +96,7 @@ Event `upcoming/ongoing/finished` is derived from UTC start/end times, not manua
 - **Resources/Chat:** discovery exposes only opted-in resource-profile fields. Current mock's all-messages snapshot must become owner-scoped conversation pages. REST with refresh/polling is the initial chat transport; WebSocket/realtime is deferred until justified. No claim of cryptographic E2EE.
 - **Transport:** keep a dated four-window schedule and route variants. Recurrent Admin input materializes a bounded date range with a shared series ID; edits/deletes must specify one occurrence or the whole future series. Reject double-booked bus/driver assignments. Public queries do not reveal past dates.
 - **Forum/News:** text-only posts/comments. News categories are `news`, `update`, `announcement`; only published items enter the public list. Private report details stay in Admin APIs. Announcements/updates generate idempotent notification jobs.
-- **Assistant/RAG:** crawl only explicitly allowlisted public CUET HTTPS hosts, extract HTML/PDF content with LangChain, and persist source metadata plus local `embeddinggemma:300m` vectors in PostgreSQL JSON. The bounded service ranks at most 10,000 chunks by cosine similarity, returns a no-context result below threshold, and asks local `qwen3:1.7b` for a cited answer. Retrieved text is untrusted data, never an instruction or source of API permissions. See the [source policy](RAG_Knowledge_Source_Policy.md) and [RAG sequence](Sequence_Diagram.md#campus-assistant-query).
+- **Assistant/RAG:** crawl only explicitly allowlisted public CUET HTTPS hosts, extract HTML/PDF content with LangChain, and persist source metadata plus local `embeddinggemma:300m` vectors in PostgreSQL JSON. The bounded service ranks at most 10,000 chunks by cosine similarity, returns a no-context result below threshold, and asks local `qwen3:1.7b` for a grounded answer without visible source metadata. Retrieved text is untrusted data, never an instruction or source of API permissions. See the [source policy](RAG_Knowledge_Source_Policy.md) and [RAG sequence](Sequence_Diagram.md#campus-assistant-query).
 
 ## Verification gates for each feature
 

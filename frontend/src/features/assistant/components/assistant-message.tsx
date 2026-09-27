@@ -42,24 +42,6 @@ export function AssistantMessage({ message }: AssistantMessageProps) {
         <div className={styles.responseText}>
           <ResponseText>{message.content}</ResponseText>
         </div>
-
-        {message.sources && message.sources.length > 0 ? (
-          <aside className={styles.sources} aria-label="Sources used for this answer">
-            <p>Official sources used</p>
-            <div>
-              {message.sources.map((source, index) => (
-                <a href={source.href} key={source.id} rel="noreferrer" target="_blank">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <strong>{source.title}</strong>
-                    <small>{source.context}</small>
-                  </div>
-                  <b aria-hidden="true">&#8599;</b>
-                </a>
-              ))}
-            </div>
-          </aside>
-        ) : null}
       </article>
     </li>
   );

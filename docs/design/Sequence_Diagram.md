@@ -205,8 +205,8 @@ sequenceDiagram
     else Grounded context found
         API->>Model: Question plus bounded, untrusted evidence as data
         Model-->>API: Candidate answer
-        API->>API: Validate output and map citations to retrieved sources
-        API-->>BFF: Answer, status, allowed source links
+        API->>API: Validate output and remove citation markers
+        API-->>BFF: Answer and status
     end
     BFF-->>User: Answer or no-context/error state
 ```

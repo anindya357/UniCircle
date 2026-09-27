@@ -705,7 +705,7 @@ The workflow allows text-only community posts, comments, and reporting. There ar
 - [x] Add loading/“thinking” state.
 - [x] Add API-error state.
 - [x] Add “information not found” response state.
-- [x] Prepare a source/reference display area if the approved RAG design returns source information.
+- [x] Keep retrieval sources internal; do not display citation markers or source cards.
 - [x] Use mocked campus-related responses for frontend implementation.
 - [x] Do not call the Ollama model service directly from frontend.
 
@@ -1455,7 +1455,7 @@ The workflow says the knowledge base will be created from CUET’s main website 
 - [x] Call local Ollama/Qwen from backend only.
 - [x] Generate grounded answer.
 - [x] Return answer.
-- [x] Return source metadata if supported by final design.
+- [x] Keep retrieved-source metadata internal to the RAG service.
 - [x] Handle no relevant context.
 - [x] Handle Ollama/model failure.
 - [x] Add rate/cost safeguards according to approved architecture.
@@ -1467,7 +1467,7 @@ The workflow says the knowledge base will be created from CUET’s main website 
 - [x] Connect loading state.
 - [x] Connect answer.
 - [x] Connect no-answer state.
-- [x] Connect source display if returned.
+- [x] Verify answers omit source cards, URLs, and citation markers.
 - [x] Connect API error handling.
 - [x] Verify the Ollama service is never exposed directly to the browser.
 
@@ -1908,7 +1908,7 @@ Test:
 - [ ] Unsupported question handled safely.
 - [ ] Campus-unrelated question behavior.
 - [ ] Outdated information strategy.
-- [ ] Source metadata/citation behavior if implemented.
+- [ ] Verify retrieval sources remain internal and are not rendered with answers.
 - [ ] Response latency.
 - [ ] External API error handling.
 

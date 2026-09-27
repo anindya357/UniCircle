@@ -76,7 +76,6 @@ export function CampusAssistantPage() {
           content: reply.answer,
           createdAt: new Date().toISOString(),
           status: reply.status,
-          sources: reply.sources,
         },
       ]);
     } catch (caughtError) {
@@ -119,13 +118,13 @@ export function CampusAssistantPage() {
             Ask about campus. <span>Find the next step.</span>
           </h1>
           <p>
-            Explore CUET information through a focused assistant designed for grounded,
-            source-aware campus answers.
+            Explore CUET information through a focused assistant designed for clear,
+            grounded campus answers.
           </p>
           <div className={styles.prototypeNote}>
             <span aria-hidden="true">i</span>
-            Answers are grounded in indexed official CUET web sources. Always open
-            the cited source before making an important decision.
+            Answers use indexed official CUET information. Confirm important decisions
+            with the appropriate university office.
           </div>
         </div>
 
@@ -136,7 +135,7 @@ export function CampusAssistantPage() {
           <div>
             <span>Assistant status</span>
             <strong>Ready to help</strong>
-            <p>Live retrieval with official-source citations.</p>
+            <p>Live retrieval from indexed CUET information.</p>
           </div>
           <dl>
             <div>
@@ -182,7 +181,7 @@ export function CampusAssistantPage() {
               <span className={styles.onlineDot} aria-hidden="true" />
               <div>
                 <strong>Campus AI Assistant</strong>
-                <p>Grounded CUET answers with official sources</p>
+                <p>Grounded CUET campus answers</p>
               </div>
             </div>
             <button

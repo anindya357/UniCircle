@@ -74,7 +74,7 @@ export const featurePages = [
     eyebrow: "Campus AI assistant",
     title: "Ask questions about CUET",
     description:
-      "Ask CUET-related questions through a source-ready assistant with clear fallback and service states.",
+      "Ask CUET-related questions through a grounded assistant with clear fallback and service states.",
   },
   {
     slug: "admin",
