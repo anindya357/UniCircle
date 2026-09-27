@@ -226,7 +226,7 @@ privacy-minimal query audits. Apply the migration, install Ollama, and make the
 configured local models available before building the initial CUET snapshot:
 
 ```powershell
-ollama pull qwen3:8b
+ollama pull qwen3:1.7b
 ollama pull embeddinggemma:300m
 ```
 

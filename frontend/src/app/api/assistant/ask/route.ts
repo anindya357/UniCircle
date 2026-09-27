@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       },
       body,
       cache: "no-store",
-      signal: AbortSignal.timeout(40_000),
+      signal: AbortSignal.timeout(180_000),
     });
     const result = await response.json().catch(() => null);
     if (!result) {

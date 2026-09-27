@@ -22,7 +22,7 @@ UniCircle uses separate development, testing, and production configuration. The 
 | `SMTP_PASSWORD` | Backend | No | SMTP credential. |
 | `SMTP_FROM_EMAIL` | Backend | No | Sender address for OTP messages. |
 | `OLLAMA_BASE_URL` | Backend | No | Private URL of the local Ollama service. |
-| `OLLAMA_CHAT_MODEL` | Backend | No | Local chat model; defaults to `qwen3:8b`. |
+| `OLLAMA_CHAT_MODEL` | Backend | No | Local chat model; defaults to `qwen3:1.7b`. |
 | `OLLAMA_EMBEDDING_MODEL` | Backend | No | Local embedding model; defaults to `embeddinggemma:300m`. |
 
 ## Environment rules

@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     smtp_password: SecretStr | None = None
     smtp_from_email: str | None = None
     ollama_base_url: str = "http://127.0.0.1:11434"
-    ollama_chat_model: str = "qwen3:8b"
+    ollama_chat_model: str = "qwen3:1.7b"
     ollama_embedding_model: str = "embeddinggemma:300m"
     rag_allowed_hosts: str = "cuet.ac.bd"
     rag_seed_urls: str = "https://cuet.ac.bd/"

@@ -27,7 +27,7 @@ class FakeChat:
     def answer(self, *, question: str, context: str) -> str:
         assert question == "Where is CUET?"
         assert "Raozan" in context
-        return "CUET is in Raozan, Chattogram. [1]"
+        return "CUET is in Raozan, Chattogram."
 
 
 class FakeRouteService:

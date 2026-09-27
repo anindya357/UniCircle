@@ -2,6 +2,7 @@
 
 import hashlib
 import math
+import re
 import uuid
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -206,6 +207,9 @@ class RagAssistantService:
                 )
             chat = self._chat or OllamaChatProvider(self.settings)
             answer = chat.answer(question=question, context="\n\n".join(context_parts))
+            insufficient_context = "not contain enough information" in answer.casefold()
+            if not insufficient_context and not re.search(r"\[\d+\]", answer):
+                answer = f"{answer.rstrip()} [1]"
             audit.status = "answered"
             audit.source_count = len(sources)
             self.db.commit()

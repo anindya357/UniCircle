@@ -23,7 +23,7 @@ export class ApiCampusAssistantService implements CampusAssistantService {
         body: JSON.stringify({ question }),
         credentials: "same-origin",
         cache: "no-store",
-        signal: AbortSignal.timeout(45_000),
+        signal: AbortSignal.timeout(190_000),
       });
     } catch (cause) {
       throw new ServiceError(
