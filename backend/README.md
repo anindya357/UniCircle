@@ -222,8 +222,15 @@ Admin publishing workspace now use these APIs rather than prototype data.
 ## Campus AI Assistant / RAG
 
 Revision `a18d6c9e4f20` adds approved knowledge sources, embedded chunks, and
-privacy-minimal query audits. Apply the migration, configure a backend-only
-`OPENAI_API_KEY`, then build the initial public CUET snapshot from `backend/`:
+privacy-minimal query audits. Apply the migration, install Ollama, and make the
+configured local models available before building the initial CUET snapshot:
+
+```powershell
+ollama pull qwen3:8b
+ollama pull embeddinggemma:300m
+```
+
+Then run from `backend/`:
 
 ```powershell
 .\.venv\Scripts\python -m app.modules.assistant.ingest --max-pages 500
@@ -238,11 +245,11 @@ refresh; unchanged content hashes are not re-embedded. Review
 
 Authenticated users ask through `POST /api/v1/assistant/ask`. The service
 retrieves relevant chunks, sends only those public excerpts and the question to
-OpenAI, returns official source links, and emits a no-context response when
-retrieval confidence is insufficient. Per-user fixed-window limits and output
-limits control cost. `GET /api/v1/admin/assistant/knowledge` reports corpus
-counts to App Admins. Browser requests use the same-origin Next.js proxy; the
-OpenAI key is never returned to or read by browser JavaScript.
+the locally hosted Qwen model, returns official source links, and emits a
+no-context response when retrieval confidence is insufficient. Per-user fixed-window limits and output
+limits bound resource usage. `GET /api/v1/admin/assistant/knowledge` reports
+corpus counts to App Admins. Browser requests use the same-origin Next.js proxy;
+the Ollama service is never exposed to browser JavaScript.
 
 ## Transport
 

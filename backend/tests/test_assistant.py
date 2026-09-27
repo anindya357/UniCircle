@@ -125,7 +125,7 @@ def test_grounded_retrieval_returns_source(assistant_stack):
     assert "[1]" in result["answer"]
 
 
-def test_empty_knowledge_returns_not_found_without_openai(assistant_stack):
+def test_empty_knowledge_returns_not_found_without_model_call(assistant_stack):
     db, user, settings = assistant_stack
     service = RagAssistantService(db, settings)
 

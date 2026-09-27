@@ -57,7 +57,7 @@ The **Software Engineering project proposal** is the source for:
 - Overall objectives.
 - Broad platform scope.
 - Selected core technologies.
-- RAG/OpenAI/LangChain direction.
+- RAG/LangChain/local Ollama direction.
 - Agile development context.
 
 ## 2.3 Approved System Design
@@ -847,7 +847,7 @@ User question
 → validate/process
 → retrieve relevant knowledge chunks
 → construct context
-→ call OpenAI
+→ call local Ollama/Qwen
 → generate grounded answer
 → return answer
 ```
@@ -861,9 +861,9 @@ The assistant should:
 - Answer campus-related questions from the knowledge base.
 - Avoid pretending unsupported information exists.
 - Handle “no relevant information found”.
-- Handle external OpenAI/API failures.
-- Keep OpenAI API keys on the backend.
-- Never expose the key to browser/client code.
+- Handle Ollama/model-service failures.
+- Keep the Ollama service private to the backend.
+- Never expose the model service directly to browser/client code.
 
 ---
 
@@ -1063,7 +1063,7 @@ Never commit:
 DATABASE_URL with production credentials
 JWT_SECRET
 SMTP_PASSWORD
-OPENAI_API_KEY
+OLLAMA remote credentials, if any
 production admin password
 cloud credentials
 ```
@@ -1319,7 +1319,7 @@ AI agents **must not**:
 - Remove security checks to simplify implementation.
 - Put business authorization only in frontend.
 - Expose backend secrets to Next.js/browser.
-- Call OpenAI directly from frontend.
+- Call Ollama directly from frontend.
 - Store plaintext passwords.
 - Hard-code real credentials.
 - Implement the whole project when asked for one step.
@@ -1412,7 +1412,7 @@ Do not add them unless requirements are changed.
 
 # 36. One-Sentence Project Summary
 
-> **UniCircle is a modular CUET campus information and community web platform built with Next.js, FastAPI, PostgreSQL, Docker, GitHub Actions, and a RAG-based OpenAI campus assistant, developed through complete system design followed by frontend-first feature implementation, backend integration, testing, containerization, CI/CD, and production deployment.**
+> **UniCircle is a modular CUET campus information and community web platform built with Next.js, FastAPI, PostgreSQL, Docker, GitHub Actions, and a RAG-based local Ollama/Qwen campus assistant, developed through complete system design followed by frontend-first feature implementation, backend integration, testing, containerization, CI/CD, and production deployment.**
 
 ---
 
@@ -1480,6 +1480,6 @@ Critical constraints:
 - Forum is text-only, comments only, no reactions
 - Do not expose secrets
 - Admin authorization must be server-side
-- OpenAI is backend-only
+- Ollama is backend-only
 - Do NOT implement Automated Attendance unless detailed requirements are explicitly added
 ```

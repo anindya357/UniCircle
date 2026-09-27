@@ -21,7 +21,9 @@ UniCircle uses separate development, testing, and production configuration. The 
 | `SMTP_USERNAME` | Backend | No | SMTP account identifier. |
 | `SMTP_PASSWORD` | Backend | No | SMTP credential. |
 | `SMTP_FROM_EMAIL` | Backend | No | Sender address for OTP messages. |
-| `OPENAI_API_KEY` | Backend | No | AI-provider credential for the later RAG implementation. |
+| `OLLAMA_BASE_URL` | Backend | No | Private URL of the local Ollama service. |
+| `OLLAMA_CHAT_MODEL` | Backend | No | Local chat model; defaults to `qwen3:8b`. |
+| `OLLAMA_EMBEDDING_MODEL` | Backend | No | Local embedding model; defaults to `embeddinggemma:300m`. |
 
 ## Environment rules
 

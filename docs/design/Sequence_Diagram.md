@@ -193,7 +193,7 @@ sequenceDiagram
     participant API as FastAPI assistant service
     participant Index as Approved vector index
     participant Sources as Source metadata store
-    participant Model as OpenAI API
+    participant Model as Private Ollama / Qwen3
     User->>BFF: Ask bounded campus question
     BFF->>API: POST /api/v1/assistant/questions with Bearer JWT
     API->>API: Verify user and apply per-user rate/cost limits

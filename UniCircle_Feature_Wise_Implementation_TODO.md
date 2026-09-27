@@ -123,7 +123,9 @@ SMTP_HOST
 SMTP_PORT
 SMTP_USERNAME
 SMTP_PASSWORD
-OPENAI_API_KEY
+OLLAMA_BASE_URL
+OLLAMA_CHAT_MODEL
+OLLAMA_EMBEDDING_MODEL
 ```
 
 Additional storage/vector-database variables can be added after the corresponding technology is finalized.
@@ -705,7 +707,7 @@ The workflow allows text-only community posts, comments, and reporting. There ar
 - [x] Add “information not found” response state.
 - [x] Prepare a source/reference display area if the approved RAG design returns source information.
 - [x] Use mocked campus-related responses for frontend implementation.
-- [x] Do not call OpenAI directly from frontend.
+- [x] Do not call the Ollama model service directly from frontend.
 
 ### Feature 10 frontend completion
 
@@ -1450,12 +1452,12 @@ The workflow says the knowledge base will be created from CUET’s main website 
 - [x] Retrieve relevant chunks.
 - [x] Construct context.
 - [x] Construct controlled prompt.
-- [x] Call OpenAI from backend only.
+- [x] Call local Ollama/Qwen from backend only.
 - [x] Generate grounded answer.
 - [x] Return answer.
 - [x] Return source metadata if supported by final design.
 - [x] Handle no relevant context.
-- [x] Handle OpenAI failure.
+- [x] Handle Ollama/model failure.
 - [x] Add rate/cost safeguards according to approved architecture.
 
 ## 7.35 Frontend connection
@@ -1467,7 +1469,7 @@ The workflow says the knowledge base will be created from CUET’s main website 
 - [x] Connect no-answer state.
 - [x] Connect source display if returned.
 - [x] Connect API error handling.
-- [x] Verify OpenAI key is never exposed in browser.
+- [x] Verify the Ollama service is never exposed directly to the browser.
 
 ---
 
@@ -1866,7 +1868,7 @@ Automate the most important user journeys, not every visual detail.
 - [ ] Passwords are never stored plain text.
 - [ ] JWT secret is not committed.
 - [ ] SMTP password is not committed.
-- [ ] OpenAI API key is backend-only.
+- [ ] Ollama is reachable only from trusted backend infrastructure.
 - [ ] Admin endpoints enforce server-side authorization.
 - [ ] Club-management endpoints enforce per-club student-admin membership server-side.
 - [ ] Club-request review endpoints require main App Admin authority server-side.
@@ -2156,7 +2158,7 @@ Tasks:
 - [ ] Configure database SSL if required.
 - [ ] Create production application secrets.
 - [ ] Configure SMTP production credentials.
-- [ ] Configure OpenAI API key.
+- [ ] Provision the Ollama runtime and configured local models.
 - [ ] Configure production vector store.
 - [ ] Configure media/storage if used.
 - [ ] Configure frontend production URL.
@@ -2184,7 +2186,7 @@ Tasks:
 - [ ] Configure environment variables.
 - [ ] Verify database connectivity.
 - [ ] Verify SMTP connectivity.
-- [ ] Verify OpenAI/RAG dependencies.
+- [ ] Verify Ollama/RAG dependencies and model availability.
 - [ ] Verify `/health`.
 - [ ] Verify logs.
 - [ ] Verify Admin authentication.
@@ -2244,7 +2246,7 @@ Admin:
 - [ ] SMTP errors.
 - [ ] Authentication failures without leaking credentials.
 - [ ] Admin-operation logs where appropriate.
-- [ ] RAG/OpenAI failures.
+- [ ] RAG/Ollama failures.
 - [ ] Background/scheduled notification failures.
 
 Do **not** log:
@@ -2253,7 +2255,7 @@ Do **not** log:
 - [ ] JWTs.
 - [ ] OTP values in production.
 - [ ] SMTP password.
-- [ ] OpenAI API key.
+- [ ] Private Ollama service endpoints or infrastructure credentials.
 - [ ] Sensitive private-chat contents unless specifically required and approved.
 
 ---
@@ -2266,7 +2268,7 @@ Do **not** log:
 - [ ] Backend latency.
 - [ ] PostgreSQL availability.
 - [ ] Storage/vector service availability.
-- [ ] OpenAI/RAG failures.
+- [ ] Ollama/RAG failures.
 - [ ] CI failures.
 - [ ] CD/deployment failures.
 

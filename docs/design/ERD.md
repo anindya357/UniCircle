@@ -449,7 +449,7 @@ erDiagram
 ```
 
 - Only App Admin can create or manage news. `NEWS_ITEM.status` is `draft` or `published`; only published items appear to General Users. `NEWS_NOTIFICATION` is owner-scoped and unique on `(news_item_id, recipient_user_id)`, preventing duplicate announcement/update notices. Publishing an **update or announcement** creates recipient rows in the same transaction; ordinary news does not notify everyone. Moving an item back to draft removes its news notifications. Event and club-membership notifications currently use their feature-owned tables but share the same authenticated list/read endpoints; a later shared-notification migration may consolidate those physical tables without changing the frontend contract. Event start/finish detection remains separately scheduled and creates each transition only once.
-- `RAG_SOURCE` is restricted to approved CUET URLs. `RAG_CHUNK` has unique `(source_id, chunk_index)` and stores the selected `text-embedding-3-small` vector in PostgreSQL JSON for bounded cosine retrieval. `RAG_QUERY_AUDIT` stores no raw question or answer; its digest/outcome rows support per-user rate limits. No chat-transcript storage is required by the current AI-assistant workflow.
+- `RAG_SOURCE` is restricted to approved CUET URLs. `RAG_CHUNK` has unique `(source_id, chunk_index)` and stores the selected local `embeddinggemma:300m` vector in PostgreSQL JSON for bounded cosine retrieval. `RAG_QUERY_AUDIT` stores no raw question or answer; its digest/outcome rows support per-user rate limits. No chat-transcript storage is required by the current AI-assistant workflow.
 
 ## Authentication and migration decisions
 

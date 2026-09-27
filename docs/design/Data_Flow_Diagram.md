@@ -16,11 +16,11 @@ flowchart LR
     System -->|own-club data and registration review| ClubAdmin
     System -->|OTP email request| SMTP[SMTP provider]
     Sources[Approved CUET sites] -->|published campus text and metadata| System
-    System -->|bounded question plus retrieved evidence| OpenAI[OpenAI API]
-    OpenAI -->|candidate answer| System
+    System -->|bounded question plus retrieved evidence| Ollama[Private Ollama / Qwen3]
+    Ollama -->|candidate answer| System
 ```
 
-No user password, OTP, JWT, private chat, registration record, or bKash transaction ID is sent to OpenAI. The SMTP provider receives only the verification recipient, code, and basic email content. The frontend never sends a user-supplied role, owner ID, or club-admin flag as authority.
+No user password, OTP, JWT, private chat, registration record, or bKash transaction ID is placed in a model prompt. The SMTP provider receives only the verification recipient, code, and basic email content. The frontend never sends a user-supplied role, owner ID, or club-admin flag as authority.
 
 ## Level 1 — primary processes and data stores
 
@@ -51,7 +51,7 @@ flowchart LR
     Ingest -->|source metadata and approved chunks| D6
 
     Auth -->|OTP delivery| Mail[SMTP]
-    Assist -->|retrieved evidence and question| Model[OpenAI]
+    Assist -->|retrieved evidence and question| Model[Private Ollama / Qwen3]
     Model -->|candidate text| Assist
 
     Auth -->|auth result| User
@@ -88,7 +88,7 @@ The application does not send an access token after registration or OTP issuance
 
 ## DFD balancing and privacy checks
 
-- Level 1 inputs/outputs are subsets of Level 0: visitors/users/Admins provide forms and commands; UniCircle returns scoped views/results; SMTP, CUET sites, and OpenAI are the only external data collaborators shown.
+- Level 1 inputs/outputs are subsets of Level 0: visitors/users/Admins provide forms and commands; UniCircle returns scoped views/results; SMTP and CUET sites are external collaborators, while Ollama is a private supporting service.
 - The document [flow diagram](Document_Flow_Diagram.md) tracks individual forms and review records; it should not be read as a second database design.
 - The notification list is owner-scoped, conversation data is participant-scoped, and event-registration rows are limited to the registrant and that club's admins. Data minimization belongs in response DTOs, not just frontend hiding.
 - App Admin operations pass through FastAPI authorization even if an Admin-only page is hidden from General Users. No direct `D1`–`D6` browser access exists.

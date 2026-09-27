@@ -712,7 +712,7 @@ class RagSource(Base, TimestampMixin):
 
 
 class RagChunk(Base):
-    """A searchable text chunk with its OpenAI embedding persisted in PostgreSQL."""
+    """A searchable text chunk with its local Ollama embedding in PostgreSQL."""
 
     __tablename__ = "rag_chunks"
     __table_args__ = (

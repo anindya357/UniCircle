@@ -37,9 +37,9 @@ class Settings(BaseSettings):
     smtp_username: str | None = None
     smtp_password: SecretStr | None = None
     smtp_from_email: str | None = None
-    openai_api_key: SecretStr | None = None
-    openai_chat_model: str = "gpt-4o-mini"
-    openai_embedding_model: str = "text-embedding-3-small"
+    ollama_base_url: str = "http://127.0.0.1:11434"
+    ollama_chat_model: str = "qwen3:8b"
+    ollama_embedding_model: str = "embeddinggemma:300m"
     rag_allowed_hosts: str = "cuet.ac.bd"
     rag_seed_urls: str = "https://cuet.ac.bd/"
     rag_max_pages: int = Field(default=500, ge=1, le=5000)
@@ -99,12 +99,6 @@ class Settings(BaseSettings):
         ):
             raise ValueError("SMTP configuration is incomplete")
         return host, self.smtp_port, username, password, sender, self.smtp_tls_mode
-
-    def require_openai_key(self) -> str:
-        value = self.openai_api_key.get_secret_value() if self.openai_api_key else ""
-        if not value or value == "replace-me" or not value.startswith("sk-"):
-            raise ValueError("OPENAI_API_KEY is not configured")
-        return value
 
     @property
     def rag_hosts(self) -> tuple[str, ...]:

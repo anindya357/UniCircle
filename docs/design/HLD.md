@@ -19,7 +19,7 @@ flowchart LR
     Worker -->|approved URLs only| Sources[CUET sites and articles]
     Worker --> Vectors[(PostgreSQL chunk vectors)]
     API --> Vectors
-    API -->|grounded prompt| Model[OpenAI API]
+    API -->|grounded prompt| Model[Local Ollama / Qwen3]
 ```
 
 The browser talks to Next.js, not directly to FastAPI for authenticated operations. Next.js sets an HttpOnly cookie, reads it only on the server, and forwards the short-lived JWT to FastAPI. FastAPI checks the JWT, session row, current account state, and resource-specific permissions. Next.js route/layout guards improve navigation but are not the authorization boundary. This follows the installed Next.js authentication guide's distinction between optimistic UI checks and secure checks near the data source; see also [Next.js authentication guidance](https://nextjs.org/docs/app/guides/authentication) and [OWASP REST access-control guidance](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html).
@@ -36,10 +36,10 @@ The existing `NEXT_PUBLIC_API_URL` frontend variable is an unused placeholder fr
 | FastAPI services/repositories | Business transitions, object-level authorization, transactions | PostgreSQL through SQLAlchemy sessions |
 | PostgreSQL | Accounts, OTP/session state, campus/community content, outbox, RAG source metadata | Migrations via Alembic |
 | Notification worker | Idempotent event/news fanout and scheduled event-state detection | Outbox and notifications |
-| RAG ingest/query modules | Approved-source ingestion and grounded, cited answers | Source metadata, vector index, OpenAI API |
+| RAG ingest/query modules | Approved-source ingestion and grounded, cited answers | Source metadata, vector index, local Ollama service |
 | SMTP | Deliver verification codes | Recipient and one-time code; no other account data |
 
-The durable notification worker remains a planned runtime component. RAG refresh is an explicit CLI/scheduled operation, not an API-request task. PostgreSQL is the approved relational store and holds the bounded first-version chunk vectors as JSON; `text-embedding-3-small` is the selected embedding model. A dedicated vector extension/service is deferred until corpus size requires it. SMTP provider and production host remain deployment decisions.
+The durable notification worker remains a planned runtime component. RAG refresh is an explicit CLI/scheduled operation, not an API-request task. PostgreSQL is the approved relational store and holds the bounded first-version chunk vectors as JSON; local `embeddinggemma:300m` is the selected embedding model. A dedicated vector extension/service is deferred until corpus size requires it. SMTP provider and production host remain deployment decisions.
 
 ## Internal backend boundaries
 
@@ -62,7 +62,7 @@ Feature modules own their schemas, routes, services, repositories, and tests. Sh
 
 ## Trust and privacy boundaries
 
-1. Browser input, campus-source HTML, and AI output are untrusted. Validate before use or display. Do not send passwords, OTPs, JWTs, private chat, or registration/payment records to OpenAI.
+1. Browser input, campus-source HTML, and AI output are untrusted. Validate before use or display. Do not place passwords, OTPs, JWTs, private chat, or registration/payment records in model prompts.
 2. General User, Club Admin, and App Admin are different permission scopes. Club Admin is a student-to-club relationship, not a global JWT role. Every mutation checks current database state.
 3. Public club/event and news DTOs omit individual event registrations, bKash transaction IDs, home addresses, and private contact information. The public event count is derived from registration rows.
 4. Account and notification queries are owner-scoped. Conversation participants and resource-request participants are verified on every access.
@@ -70,7 +70,7 @@ Feature modules own their schemas, routes, services, repositories, and tests. Sh
 
 ## Deployment shape and operations
 
-The target topology is one public HTTPS origin for Next.js, a non-public or tightly restricted FastAPI origin reachable by the BFF, PostgreSQL, a separate worker process, and outbound TLS access to SMTP, approved CUET sources, the vector service, and OpenAI. Development may use `localhost:3000` and `localhost:8000`; production DNS, host, and network policy remain deployment decisions. If FastAPI is exposed for non-browser clients, it must independently enforce authentication, rate limits, CORS, and per-object authorization.
+The target topology is one public HTTPS origin for Next.js, a non-public or tightly restricted FastAPI origin reachable by the BFF, PostgreSQL, a separate worker process, and a private Ollama service reachable only by the backend. Outbound TLS is required for SMTP and approved CUET sources. Development may use `localhost:3000`, `localhost:8000`, and loopback Ollama; production DNS, host, and network policy remain deployment decisions. If FastAPI is exposed for non-browser clients, it must independently enforce authentication, rate limits, CORS, and per-object authorization.
 
 Apply reviewed Alembic migrations before starting a new API revision. Keep liveness (`/health`) separate from dependency readiness. Use structured logs without request bodies or secrets; include request IDs and safe error codes. Back up PostgreSQL and document restore tests before deployment. Background jobs require idempotency, retries, and failure visibility. Static Home media stays with the frontend unless a later content-management requirement changes that decision.
 

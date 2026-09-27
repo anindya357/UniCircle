@@ -30,7 +30,7 @@ CUET publishing changes; do not run it inside an API request.
 
 ## Storage, retrieval, and safety
 
-`text-embedding-3-small` vectors are stored with chunks in PostgreSQL JSON and
+Local `embeddinggemma:300m` vectors are stored with chunks in PostgreSQL JSON and
 ranked by cosine similarity in the bounded query service. This keeps the first
 deployment self-contained. If the corpus grows beyond the current 10,000-chunk
 retrieval ceiling, migrate the same model to pgvector or a separately approved

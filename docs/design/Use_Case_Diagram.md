@@ -87,7 +87,7 @@ flowchart LR
     SMTP[SMTP provider]
     Worker[Scheduled notification worker]
     CUET[Approved CUET websites]
-    OpenAI[OpenAI API]
+    Ollama[Private Ollama / Qwen3]
 
     subgraph System[UniCircle automated cases]
         DeliverOtp([Deliver email verification code])
@@ -99,11 +99,11 @@ flowchart LR
     SMTP --> DeliverOtp
     Worker --> Notify
     CUET --> Ingest
-    OpenAI --> Answer
+    Ollama --> Answer
     Ingest -. provides_evidence .-> Answer
 ```
 
-External collaborators do not receive broad application permissions. SMTP receives only a verification message. The scheduled worker acts on durable outbox/schedule state and uses idempotency. Approved CUET sites supply source material; OpenAI receives a bounded question plus retrieved evidence, not account secrets or private data.
+External collaborators do not receive broad application permissions. SMTP receives only a verification message. The scheduled worker acts on durable outbox/schedule state and uses idempotency. Approved CUET sites supply source material; the private Ollama service receives a bounded question plus retrieved evidence, not account secrets or private data.
 
 ## Use-case conditions
 

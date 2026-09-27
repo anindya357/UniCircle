@@ -38,33 +38,32 @@ class RetrievedChunk:
     score: float
 
 
-class OpenAIEmbeddingProvider:
+class OllamaEmbeddingProvider:
     def __init__(self, settings: Settings) -> None:
-        from langchain_openai import OpenAIEmbeddings
+        from langchain_ollama import OllamaEmbeddings
 
-        self._client = OpenAIEmbeddings(
-            api_key=settings.require_openai_key(),
-            model=settings.openai_embedding_model,
+        self._client = OllamaEmbeddings(
+            base_url=settings.ollama_base_url,
+            model=settings.ollama_embedding_model,
         )
 
     def embed_query(self, text: str) -> list[float]:
         return self._client.embed_query(text)
 
 
-class OpenAIChatProvider:
+class OllamaChatProvider:
     def __init__(self, settings: Settings) -> None:
         from langchain_core.messages import HumanMessage, SystemMessage
-        from langchain_openai import ChatOpenAI
+        from langchain_ollama import ChatOllama
 
         self._human_message = HumanMessage
         self._system_message = SystemMessage
-        self._client = ChatOpenAI(
-            api_key=settings.require_openai_key(),
-            model=settings.openai_chat_model,
+        self._client = ChatOllama(
+            base_url=settings.ollama_base_url,
+            model=settings.ollama_chat_model,
             temperature=0,
-            max_tokens=600,
-            timeout=30,
-            max_retries=2,
+            num_predict=256,
+            reasoning=False,
         )
 
     def answer(self, *, question: str, context: str) -> str:
@@ -77,7 +76,7 @@ class OpenAIChatProvider:
             ]
         )
         if not isinstance(response.content, str) or not response.content.strip():
-            raise RuntimeError("OpenAI returned an empty answer")
+            raise RuntimeError("Ollama returned an empty answer")
         return response.content.strip()
 
 
@@ -149,7 +148,7 @@ class RagAssistantService:
         ).all()
         if not rows:
             return []
-        embeddings = self._embeddings or OpenAIEmbeddingProvider(self.settings)
+        embeddings = self._embeddings or OllamaEmbeddingProvider(self.settings)
         query_vector = embeddings.embed_query(question)
         ranked = sorted(
             (
@@ -205,7 +204,7 @@ class RagAssistantService:
                     f"URL: {match.source.url}\n"
                     f"Excerpt: {match.chunk.content}"
                 )
-            chat = self._chat or OpenAIChatProvider(self.settings)
+            chat = self._chat or OllamaChatProvider(self.settings)
             answer = chat.answer(question=question, context="\n\n".join(context_parts))
             audit.status = "answered"
             audit.source_count = len(sources)
