@@ -34,12 +34,12 @@ The existing `NEXT_PUBLIC_API_URL` frontend variable is an unused placeholder fr
 | Next.js BFF | Login cookie, CSRF/origin checks, server-side API adapter, protected layout/session bootstrap | Short-lived JWT in HttpOnly cookie; no database credentials |
 | FastAPI feature routers | Validate requests and expose versioned JSON contracts | `/api/v1`, never unrestricted ORM entities |
 | FastAPI services/repositories | Business transitions, object-level authorization, transactions | PostgreSQL through SQLAlchemy sessions |
-| PostgreSQL | Accounts, OTP/session state, campus/community content, outbox, RAG source metadata | Migrations via Alembic |
-| Notification worker | Idempotent event/news fanout and scheduled event-state detection | Outbox and notifications |
+| PostgreSQL | Accounts, OTP/session state, campus/community content, consolidated notifications, RAG source metadata | Migrations via Alembic |
+| Notification worker | Idempotent scheduled event-state detection and recipient fanout | Notifications |
 | RAG ingest/query modules | Approved-source ingestion and grounded answers without visible citations | Source metadata, vector index, local Ollama service |
 | SMTP | Deliver verification codes | Recipient and one-time code; no other account data |
 
-The durable notification worker remains a planned runtime component. RAG refresh is an explicit CLI/scheduled operation, not an API-request task. PostgreSQL is the approved relational store and holds the bounded first-version chunk vectors as JSON; local `embeddinggemma:300m` is the selected embedding model. A dedicated vector extension/service is deferred until corpus size requires it. SMTP provider and production host remain deployment decisions.
+The event-notification worker is an idempotent external scheduled command; production scheduling and monitoring remain deployment work. News and membership notifications are written in the same database transaction as their source action. RAG refresh is an explicit CLI/scheduled operation, not an API-request task. PostgreSQL is the approved relational store and holds the bounded first-version chunk vectors as JSON; local `embeddinggemma:300m` is the selected embedding model. A dedicated vector extension/service is deferred until corpus size requires it. SMTP provider and production host remain deployment decisions.
 
 ## Internal backend boundaries
 
@@ -55,10 +55,10 @@ flowchart TB
     Content --> Repos
     Auth --> Repos
     Repos --> PG[(PostgreSQL)]
-    Content --> Outbox[(Outbox)]
+    Content --> Inbox[(Consolidated notifications)]
 ```
 
-Feature modules own their schemas, routes, services, repositories, and tests. Shared code contains only genuinely cross-feature utilities. The API layer returns the existing success/error envelope, not ORM instances. A request-scoped session does not auto-commit; the service owns commit/rollback and emits outbox rows in the same transaction as state changes.
+Feature modules own their schemas, routes, services, repositories, and tests. Shared code contains only genuinely cross-feature utilities. The API layer returns the existing success/error envelope, not ORM instances. A request-scoped session does not auto-commit; the feature operation owns commit/rollback and emits notification rows in the same transaction as state changes.
 
 ## Trust and privacy boundaries
 

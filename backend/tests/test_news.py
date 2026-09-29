@@ -11,7 +11,7 @@ from sqlalchemy.pool import StaticPool
 
 from app.core.auth import AuthIdentity, get_current_user
 from app.db.base import Base
-from app.db.models import CampusNewsItem, CampusNewsNotification, User
+from app.db.models import CampusNewsItem, Notification, User
 from app.db.session import get_db
 from app.main import create_app
 
@@ -149,8 +149,8 @@ def test_announcement_notifications_are_deduplicated_and_readable(stack):
         json=payload(kind="update", status="published", title="Library update"),
     )
     item_id = created.json()["data"]["id"]
-    assert db.scalar(select(func.count()).select_from(CampusNewsNotification)) == 2
-    recipients = set(db.scalars(select(CampusNewsNotification.user_id)).all())
+    assert db.scalar(select(func.count()).select_from(Notification)) == 2
+    recipients = set(db.scalars(select(Notification.recipient_id)).all())
     assert recipients == {student.id, teacher.id}
     assert unverified.id not in recipients
     assert admin.id not in recipients
@@ -169,10 +169,11 @@ def test_announcement_notifications_are_deduplicated_and_readable(stack):
         ).status_code
         == 200
     )
-    assert db.scalar(select(func.count()).select_from(CampusNewsNotification)) == 2
+    assert db.scalar(select(func.count()).select_from(Notification)) == 2
 
     current["user"] = student
     notifications = client.get("/api/v1/notifications/me").json()["data"]
+    assert len(notifications) == 1
     news_notification = next(
         item for item in notifications if item["type"] == "campus-update"
     )
@@ -180,6 +181,15 @@ def test_announcement_notifications_are_deduplicated_and_readable(stack):
     assert news_notification["href"] == f"/news/{item_id}"
     assert news_notification["isRead"] is False
     notification_id = news_notification["id"]
+    teacher_notification_id = str(
+        db.scalar(
+            select(Notification.id).where(Notification.recipient_id == teacher.id)
+        )
+    )
+    assert (
+        client.put(f"/api/v1/notifications/{teacher_notification_id}/read").status_code
+        == 404
+    )
     marked = client.put(f"/api/v1/notifications/{notification_id}/read")
     assert marked.status_code == 200
     assert marked.json()["data"]["readAt"] is not None
@@ -202,14 +212,14 @@ def test_unpublish_removes_notifications_and_inputs_are_strict(stack):
     created = client.post(
         "/api/v1/admin/news", json=payload(status="published")
     ).json()["data"]
-    assert db.scalar(select(func.count()).select_from(CampusNewsNotification)) == 2
+    assert db.scalar(select(func.count()).select_from(Notification)) == 2
     assert (
         client.put(
             f"/api/v1/admin/news/{created['id']}/status", json={"status": "draft"}
         ).status_code
         == 200
     )
-    assert db.scalar(select(func.count()).select_from(CampusNewsNotification)) == 0
+    assert db.scalar(select(func.count()).select_from(Notification)) == 0
 
     current["user"] = student
     assert client.get(f"/api/v1/news/{created['id']}").status_code == 404

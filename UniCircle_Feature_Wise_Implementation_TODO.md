@@ -1479,23 +1479,23 @@ Because notifications are used by multiple features, consolidate them into one s
 
 ## 7.36 Notification model/API
 
-- [ ] Create Notification model.
-- [ ] Store recipient.
-- [ ] Store notification type.
-- [ ] Store message/title.
-- [ ] Store related-object reference according to approved design.
-- [ ] Store read/unread state.
-- [ ] Store creation timestamp.
-- [ ] List current user notifications.
-- [ ] Mark one as read.
-- [ ] Mark all as read if included in frontend.
-- [ ] Authorize users to access only their own notifications.
+- [x] Create Notification model.
+- [x] Store recipient.
+- [x] Store notification type.
+- [x] Store message/title.
+- [x] Store related-object reference according to approved design.
+- [x] Store read/unread state.
+- [x] Store creation timestamp.
+- [x] List current user notifications.
+- [x] Mark one as read.
+- [x] Mark all as read if included in frontend.
+- [x] Authorize users to access only their own notifications.
 
 Notification sources currently required:
 
-- [ ] Event started.
-- [ ] Event finished.
-- [ ] Campus update/announcement.
+- [x] Event started.
+- [x] Event finished.
+- [x] Campus update/announcement.
 
 ---
 

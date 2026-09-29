@@ -87,7 +87,15 @@ class FakeNotificationRepository:
         key = (draft.user_id, draft.dedupe_key)
         existing_id = self.dedupe.get(key)
         if existing_id:
-            return self.records[existing_id]
+            existing = self.records[existing_id]
+            updated = NotificationRecord(
+                **draft.__dict__,
+                id=existing.id,
+                created_at=existing.created_at,
+                read_at=existing.read_at,
+            )
+            self.records[existing_id] = updated
+            return updated
         record = NotificationRecord(
             **draft.__dict__,
             id=f"notification-{len(self.records) + 1}",
@@ -115,4 +123,12 @@ class FakeNotificationRepository:
             return None
         updated = replace(record, read_at=record.read_at or now)
         self.records[notification_id] = updated
+        return updated
+
+    def mark_all_read(self, user_id: str, *, now: datetime) -> int:
+        updated = 0
+        for notification_id, record in list(self.records.items()):
+            if record.user_id == user_id and record.read_at is None:
+                self.records[notification_id] = replace(record, read_at=now)
+                updated += 1
         return updated

@@ -12,18 +12,15 @@ from sqlalchemy.orm import Session
 from app.api.schemas import ApiResponse
 from app.core.auth import AuthIdentity, get_current_user
 from app.core.errors import AppError
+from app.core.notifications import NotificationDraft, NotificationService
 from app.db.models import (
-    CampusNewsItem,
-    CampusNewsNotification,
     Club,
     ClubAdmin,
     ClubCreationRequest,
     ClubEvent,
     ClubMember,
-    ClubMembershipNotification,
     ClubMembershipRequest,
     EventInterest,
-    EventNotification,
     EventRegistration,
     User,
 )
@@ -40,6 +37,7 @@ from app.modules.clubs.schemas import (
     RegistrationIn,
     ReviewIn,
 )
+from app.modules.notifications.repository import SqlNotificationRepository
 
 router = APIRouter(tags=["clubs-events"])
 Db = Annotated[Session, Depends(get_db)]
@@ -535,11 +533,17 @@ def approve_membership_request(
     item.status = "approved"
     item.reviewer_id = uid(user)
     item.reviewed_at = datetime.now(UTC)
-    db.add(
-        ClubMembershipNotification(
-            membership_request_id=item.id,
-            club_id=club_id,
-            user_id=item.user_id,
+    club = club_or_404(db, club_id)
+    NotificationService(SqlNotificationRepository(db)).publish(
+        NotificationDraft(
+            user_id=str(item.user_id),
+            kind="club-membership-approved",
+            title=f"Welcome to {club.name}",
+            body="Your membership request was approved by the club admin.",
+            dedupe_key=f"membership-approved:{item.id}",
+            link=f"/clubs/{club_id}",
+            related_object_type="club",
+            related_object_id=club_id,
         )
     )
     db.commit()
@@ -906,168 +910,3 @@ def my_registration(
         if record
         else None
     )
-
-
-@router.get("/notifications/events/me", response_model=ApiResponse[list[dict]])
-def my_event_notifications(db: Db, user: CurrentUser) -> ApiResponse[list[dict]]:
-    records = db.scalars(
-        select(EventNotification)
-        .where(EventNotification.user_id == uid(user))
-        .order_by(EventNotification.created_at.desc())
-        .limit(100)
-    ).all()
-    return ApiResponse(
-        data=[
-            {
-                "id": str(item.id),
-                "eventId": str(item.event_id),
-                "kind": item.kind,
-                "createdAt": item.created_at.isoformat(),
-                "readAt": item.read_at.isoformat() if item.read_at else None,
-            }
-            for item in records
-        ]
-    )
-
-
-@router.post(
-    "/notifications/events/{notification_id}/read", response_model=ApiResponse[dict]
-)
-def read_notification(
-    notification_id: uuid.UUID, db: Db, user: CurrentUser
-) -> ApiResponse[dict]:
-    item = db.get(EventNotification, notification_id)
-    if item is None or item.user_id != uid(user):
-        fail(404, "notification_not_found", "Notification not found.")
-    if item.read_at is None:
-        item.read_at = datetime.now(UTC)
-        db.commit()
-    return ApiResponse(data={"id": str(item.id), "readAt": item.read_at.isoformat()})
-
-
-@router.get("/notifications/me", response_model=ApiResponse[list[dict]])
-def my_notifications(db: Db, user: CurrentUser) -> ApiResponse[list[dict]]:
-    user_id = uid(user)
-    event_records = db.scalars(
-        select(EventNotification)
-        .where(EventNotification.user_id == user_id)
-        .order_by(EventNotification.created_at.desc())
-        .limit(100)
-    ).all()
-    membership_records = db.scalars(
-        select(ClubMembershipNotification)
-        .where(ClubMembershipNotification.user_id == user_id)
-        .order_by(ClubMembershipNotification.created_at.desc())
-        .limit(100)
-    ).all()
-    news_records = db.scalars(
-        select(CampusNewsNotification)
-        .where(CampusNewsNotification.user_id == user_id)
-        .order_by(CampusNewsNotification.created_at.desc())
-        .limit(100)
-    ).all()
-    result: list[dict] = []
-    for item in event_records:
-        event = db.get(ClubEvent, item.event_id)
-        if event:
-            result.append(
-                {
-                    "id": str(item.id),
-                    "type": f"event-{item.kind}",
-                    "title": f"{event.title} has {item.kind}",
-                    "message": (
-                        "The event is now underway."
-                        if item.kind == "started"
-                        else "The event has now finished."
-                    ),
-                    "createdAt": item.created_at.isoformat(),
-                    "isRead": item.read_at is not None,
-                    "href": f"/events/{event.id}",
-                }
-            )
-    for item in membership_records:
-        club = db.get(Club, item.club_id)
-        if club:
-            result.append(
-                {
-                    "id": str(item.id),
-                    "type": "club-membership-approved",
-                    "title": f"Welcome to {club.name}",
-                    "message": (
-                        "Your membership request was approved by the club admin."
-                    ),
-                    "createdAt": item.created_at.isoformat(),
-                    "isRead": item.read_at is not None,
-                    "href": f"/clubs/{club.id}",
-                }
-            )
-    for item in news_records:
-        news_item = db.get(CampusNewsItem, item.news_item_id)
-        if news_item and news_item.status == "published":
-            result.append(
-                {
-                    "id": str(item.id),
-                    "type": (
-                        "campus-announcement"
-                        if news_item.kind == "announcement"
-                        else "campus-update"
-                    ),
-                    "title": news_item.title,
-                    "message": news_item.summary,
-                    "createdAt": item.created_at.isoformat(),
-                    "isRead": item.read_at is not None,
-                    "href": f"/news/{news_item.id}",
-                }
-            )
-    result.sort(key=lambda item: item["createdAt"], reverse=True)
-    return ApiResponse(data=result[:100])
-
-
-@router.put("/notifications/read-all", response_model=ApiResponse[dict])
-def read_all_notifications(db: Db, user: CurrentUser) -> ApiResponse[dict]:
-    now = datetime.now(UTC)
-    user_id = uid(user)
-    event_records = db.scalars(
-        select(EventNotification).where(
-            EventNotification.user_id == user_id,
-            EventNotification.read_at.is_(None),
-        )
-    ).all()
-    membership_records = db.scalars(
-        select(ClubMembershipNotification).where(
-            ClubMembershipNotification.user_id == user_id,
-            ClubMembershipNotification.read_at.is_(None),
-        )
-    ).all()
-    news_records = db.scalars(
-        select(CampusNewsNotification).where(
-            CampusNewsNotification.user_id == user_id,
-            CampusNewsNotification.read_at.is_(None),
-        )
-    ).all()
-    for item in [*event_records, *membership_records, *news_records]:
-        item.read_at = now
-    db.commit()
-    return ApiResponse(
-        data={
-            "updated": len(event_records) + len(membership_records) + len(news_records)
-        }
-    )
-
-
-@router.put("/notifications/{notification_id}/read", response_model=ApiResponse[dict])
-def read_any_notification(
-    notification_id: uuid.UUID, db: Db, user: CurrentUser
-) -> ApiResponse[dict]:
-    user_id = uid(user)
-    item = db.get(EventNotification, notification_id)
-    if item is None:
-        item = db.get(ClubMembershipNotification, notification_id)
-    if item is None:
-        item = db.get(CampusNewsNotification, notification_id)
-    if item is None or item.user_id != user_id:
-        fail(404, "notification_not_found", "Notification not found.")
-    if item.read_at is None:
-        item.read_at = datetime.now(UTC)
-        db.commit()
-    return ApiResponse(data={"id": str(item.id), "readAt": item.read_at.isoformat()})

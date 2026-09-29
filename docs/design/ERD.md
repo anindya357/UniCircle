@@ -14,18 +14,15 @@ erDiagram
     USER ||--o{ CLUB_ADMIN : administers
     USER ||--o{ CLUB_MEMBER : joins
     USER ||--o{ CLUB_MEMBERSHIP_REQUEST : applies
-    USER ||--o{ CLUB_MEMBERSHIP_NOTIFICATION : receives
     USER ||--o{ EVENT_INTEREST : chooses
     USER ||--o{ EVENT_REGISTRATION : registers
     CLUB_CREATION_REQUEST o|--o| CLUB : creates_if_approved
     CLUB ||--|{ CLUB_ADMIN : has
     CLUB ||--o{ CLUB_MEMBER : includes
     CLUB ||--o{ CLUB_MEMBERSHIP_REQUEST : receives
-    CLUB ||--o{ CLUB_MEMBERSHIP_NOTIFICATION : concerns
     CLUB ||--o{ EVENT : hosts
     EVENT ||--o{ EVENT_INTEREST : receives
     EVENT ||--o{ EVENT_REGISTRATION : receives
-    CLUB_MEMBERSHIP_REQUEST ||--o| CLUB_MEMBERSHIP_NOTIFICATION : creates_on_approval
 
     USER {
         uuid id PK
@@ -134,14 +131,6 @@ erDiagram
         datetime reviewed_at
         datetime created_at
     }
-    CLUB_MEMBERSHIP_NOTIFICATION {
-        uuid id PK
-        uuid membership_request_id FK, UK
-        uuid club_id FK
-        uuid user_id FK
-        datetime created_at
-        datetime read_at
-    }
     EVENT {
         uuid id PK
         uuid club_id FK
@@ -190,7 +179,7 @@ erDiagram
 - `CLUB_ADMIN` is a student-only many-to-many mapping, independent of global App Admin. A club must retain at least one admin; enforce this in a locked transaction when removing admins. Club-request approval locks the pending request, creates exactly one club and its initial admin, and records the reviewer atomically. Existing CUET clubs may have null `creation_request_id` and must be seeded with at least one admin before club management opens.
 - Club short name, category, tagline, and activities are needed by the current frontend. A request must also capture purpose and the planned campus need/impact required by the workflow; the existing mock form will need those additional fields when connected.
 - `CLUB_MEMBER` is optional general membership information, not a grant of management privileges. Do not infer club-admin status from it.
-- Club membership recruitment starts closed. Opening it requires both bKash and Nagad numbers; `CLUB.membership_fee` is constrained to BDT 200. `CLUB_MEMBERSHIP_REQUEST` is unique on `(club_id, user_id)` and only accepts `pending` or `approved`. Approval atomically adds `CLUB_MEMBER`, records the reviewing Club Admin, and creates one unread `CLUB_MEMBERSHIP_NOTIFICATION`. Pending request data and transaction IDs are private to mapped admins of that club.
+- Club membership recruitment starts closed. Opening it requires both bKash and Nagad numbers; `CLUB.membership_fee` is constrained to BDT 200. `CLUB_MEMBERSHIP_REQUEST` is unique on `(club_id, user_id)` and only accepts `pending` or `approved`. Approval atomically adds `CLUB_MEMBER`, records the reviewing Club Admin, and creates one unread shared `NOTIFICATION`. Pending request data and transaction IDs are private to mapped admins of that club.
 - `EVENT.registration_mode` is `none`, `free`, or `paid`; paid events require positive `fee_minor_units` and `bkash_number`. Event state (`upcoming`, `ongoing`, `finished`) is derived from the current time and start/end timestamps. `EVENT_INTEREST.status` is `interested` or `going`, one row per `(user_id, event_id)`.
 - Public `CLUB.memberCount` is derived from `CLUB_MEMBER`; `EVENT.attendeeCount` counts `going` interest rows and `EVENT.registeredCount` counts submitted registrations. A paid registration still counts as submitted while payment review is pending; the UI must not label that as confirmed payment.
 - `EVENT_REGISTRATION` is student-only and unique on `(event_id, user_id)`. The form captures participant details as snapshots; validate the CUET email and compare student identity to the authenticated account. For paid events, require `bkash_trxid` but set `payment_status=pending_review` until a club admin verifies it. A submitted transaction ID is **not** proof of payment. Expose only the registration total publicly; restrict individual rows to that club's admins and authorized staff. Consider a partial unique index on `(event_id, bkash_trxid)` where the transaction ID is present.
@@ -377,10 +366,7 @@ erDiagram
 ```mermaid
 erDiagram
     USER ||--o{ NEWS_ITEM : publishes
-    USER ||--o{ NEWS_NOTIFICATION : receives
-    NEWS_ITEM ||--o{ NEWS_NOTIFICATION : triggers
-    USER ||--o{ EVENT_NOTIFICATION : receives
-    EVENT ||--o{ EVENT_NOTIFICATION : triggers
+    USER ||--o{ NOTIFICATION : receives
     RAG_SOURCE ||--o{ RAG_CHUNK : contains
     USER ||--o{ RAG_QUERY_AUDIT : asks
 
@@ -403,18 +389,16 @@ erDiagram
         datetime created_at
         datetime updated_at
     }
-    NEWS_NOTIFICATION {
+    NOTIFICATION {
         uuid id PK
-        uuid recipient_user_id FK
-        uuid news_item_id FK
-        datetime read_at
-        datetime created_at
-    }
-    EVENT_NOTIFICATION {
-        uuid id PK
-        uuid recipient_user_id FK
-        uuid event_id FK
-        string kind
+        uuid recipient_id FK
+        string type
+        string title
+        string message
+        string related_object_type
+        string related_object_id
+        string href
+        string dedupe_key
         datetime read_at
         datetime created_at
     }
@@ -448,7 +432,7 @@ erDiagram
     }
 ```
 
-- Only App Admin can create or manage news. `NEWS_ITEM.status` is `draft` or `published`; only published items appear to General Users. `NEWS_NOTIFICATION` is owner-scoped and unique on `(news_item_id, recipient_user_id)`, preventing duplicate announcement/update notices. Publishing an **update or announcement** creates recipient rows in the same transaction; ordinary news does not notify everyone. Moving an item back to draft removes its news notifications. Event and club-membership notifications currently use their feature-owned tables but share the same authenticated list/read endpoints; a later shared-notification migration may consolidate those physical tables without changing the frontend contract. Event start/finish detection remains separately scheduled and creates each transition only once.
+- Only App Admin can create or manage news. `NEWS_ITEM.status` is `draft` or `published`; only published items appear to General Users. `NOTIFICATION` is the consolidated owner-scoped inbox for event transitions, club membership approvals, and campus updates/announcements. Unique `(recipient_id, dedupe_key)` prevents duplicate delivery; the related-object pair is either fully populated or fully null. Publishing an **update or announcement** creates recipient rows in the same transaction; ordinary news does not notify everyone. Moving an item back to draft removes its corresponding notifications. Event start/finish detection remains separately scheduled and creates each transition only once. Migration `c31f2a9d8e40` backfills the earlier feature-owned notification rows without changing the frontend contract.
 - `RAG_SOURCE` is restricted to approved CUET URLs. `RAG_CHUNK` has unique `(source_id, chunk_index)` and stores the selected local `embeddinggemma:300m` vector in PostgreSQL JSON for bounded cosine retrieval. `RAG_QUERY_AUDIT` stores no raw question or answer; its digest/outcome rows support per-user rate limits. No chat-transcript storage is required by the current AI-assistant workflow.
 
 ## Authentication and migration decisions

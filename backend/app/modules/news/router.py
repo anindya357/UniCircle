@@ -11,9 +11,11 @@ from sqlalchemy.orm import Session
 from app.api.schemas import ApiResponse
 from app.core.auth import AuthIdentity, get_current_admin, get_current_user
 from app.core.errors import AppError
-from app.db.models import CampusNewsItem, CampusNewsNotification, User
+from app.core.notifications import NotificationDraft, NotificationService
+from app.db.models import CampusNewsItem, Notification, User
 from app.db.session import get_db
 from app.modules.news.schemas import NewsItemIn, PublishStatusIn
+from app.modules.notifications.repository import SqlNotificationRepository
 
 router = APIRouter(tags=["campus-news"])
 Db = Annotated[Session, Depends(get_db)]
@@ -74,8 +76,9 @@ def sync_notifications(db: Session, item: CampusNewsItem) -> None:
     should_notify = item.status == "published" and item.kind in NOTIFY_KINDS
     if not should_notify:
         db.execute(
-            delete(CampusNewsNotification).where(
-                CampusNewsNotification.news_item_id == item.id
+            delete(Notification).where(
+                Notification.related_object_type == "news",
+                Notification.related_object_id == str(item.id),
             )
         )
         return
@@ -88,15 +91,24 @@ def sync_notifications(db: Session, item: CampusNewsItem) -> None:
             )
         ).all()
     )
-    existing = set(
-        db.scalars(
-            select(CampusNewsNotification.user_id).where(
-                CampusNewsNotification.news_item_id == item.id
+    service = NotificationService(SqlNotificationRepository(db))
+    for user_id in recipients:
+        service.publish(
+            NotificationDraft(
+                user_id=str(user_id),
+                kind=(
+                    "campus-announcement"
+                    if item.kind == "announcement"
+                    else "campus-update"
+                ),
+                title=item.title,
+                body=item.summary,
+                dedupe_key=f"news:{item.id}",
+                link=f"/news/{item.id}",
+                related_object_type="news",
+                related_object_id=str(item.id),
             )
-        ).all()
-    )
-    for user_id in recipients - existing:
-        db.add(CampusNewsNotification(news_item_id=item.id, user_id=user_id))
+        )
 
 
 def apply_input(item: CampusNewsItem, body: NewsItemIn) -> None:

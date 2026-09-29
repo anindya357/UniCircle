@@ -5,8 +5,10 @@ from datetime import UTC, datetime
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.db.models import ClubEvent, EventInterest, EventNotification, EventRegistration
+from app.core.notifications import NotificationDraft, NotificationService
+from app.db.models import ClubEvent, EventInterest, EventRegistration, Notification
 from app.db.session import get_session_factory
+from app.modules.notifications.repository import SqlNotificationRepository
 
 
 def reconcile_event_notifications(db: Session, now: datetime | None = None) -> int:
@@ -14,6 +16,7 @@ def reconcile_event_notifications(db: Session, now: datetime | None = None) -> i
     if now.tzinfo is None:
         raise ValueError("now must be timezone-aware")
     created = 0
+    service = NotificationService(SqlNotificationRepository(db))
     # A row lock serializes concurrent workers for each event on PostgreSQL.
     for event in db.scalars(
         select(ClubEvent).where(ClubEvent.starts_at <= now).with_for_update()
@@ -40,17 +43,28 @@ def reconcile_event_notifications(db: Session, now: datetime | None = None) -> i
         )
         for recipient in recipients:
             for kind in kinds:
+                dedupe_key = f"event:{event.id}:{kind}"
                 exists = db.scalar(
-                    select(EventNotification.id).where(
-                        EventNotification.event_id == event.id,
-                        EventNotification.user_id == recipient,
-                        EventNotification.kind == kind,
+                    select(Notification.id).where(
+                        Notification.recipient_id == recipient,
+                        Notification.dedupe_key == dedupe_key,
                     )
                 )
                 if exists is None:
-                    db.add(
-                        EventNotification(
-                            event_id=event.id, user_id=recipient, kind=kind
+                    service.publish(
+                        NotificationDraft(
+                            user_id=str(recipient),
+                            kind=f"event-{kind}",
+                            title=f"{event.title} has {kind}",
+                            body=(
+                                "The event is now underway."
+                                if kind == "started"
+                                else "The event has now finished."
+                            ),
+                            dedupe_key=dedupe_key,
+                            link=f"/events/{event.id}",
+                            related_object_type="event",
+                            related_object_id=str(event.id),
                         )
                     )
                     created += 1

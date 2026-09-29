@@ -66,8 +66,8 @@ The table lists a compact API surface, not a promise to build all endpoints at o
 | Forum | `GET /forum/posts`, `POST /forum/posts`, `GET /forum/posts/{id}`, `GET/POST /forum/posts/{id}/comments`, `POST /forum/posts/{id}/reports` | U; text only, paginated feed, report once per user/post |
 | Forum moderation | `GET /admin/forum/reports`, `POST /admin/forum/reports/{id}/decision` | A; soft-delete reported post or resolve report |
 | News | `GET /news`, `GET /news/{id}` | U; published items only, newest first |
-| News management | `POST /admin/news`, `PATCH/DELETE /admin/news/{id}`, `POST /admin/news/{id}/publish` | A; update/announcement publication and outbox entry in one transaction |
-| Notifications | `GET /notifications`, `PATCH /notifications/{id}/read`, `POST /notifications/read-all` | U; own rows only, unread/read timestamps |
+| News management | `POST /admin/news`, `PUT/DELETE /admin/news/{id}`, `PUT /admin/news/{id}/status` | A; update/announcement publication and notifications commit together |
+| Notifications | `GET /notifications/me`, `PUT /notifications/{id}/read`, `PUT /notifications/read-all` | U; own rows only, unread/read timestamps |
 | Assistant | `POST /assistant/questions` | U; bounded question and grounded answer/status; sources remain internal; rate-limited |
 
 Implementation must define exact Pydantic request/response schemas before each route is added. Do not expose the mock-only aggregate snapshots directly: `ClubEventSnapshot`, `ResourceSharingSnapshot`, `ForumSnapshot`, `TransportSnapshot`, and `AdminSnapshot` currently bundle unrelated private and public data. The frontend service adapters should compose their screens from scoped, paginated real endpoints instead. The mock `mutualConnections` field has no data source and is omitted from the live resource-discovery DTO.
@@ -84,10 +84,10 @@ Implementation must define exact Pydantic request/response schemas before each r
 | Paid registration | pending_review → confirmed or rejected | Only that club's admin may review; never infer payment from transaction ID alone |
 | Resource request | pending → accepted or rejected | Only recipient decides; accept creates at most one conversation in the same transaction |
 | Forum report | open → resolved or post_removed | Only App Admin; removal soft-deletes post and hides comments in reads |
-| News | draft → published | Publish timestamp and outbox event commit together; only published news is visible |
+| News | draft → published | Publish timestamp and recipient notifications commit together; only published news is visible |
 | Notification | unread → read | Owner-scoped update; repeated mark-as-read is idempotent |
 
-Event `upcoming/ongoing/finished` is derived from UTC start/end times, not manually edited. `attendeeCount` counts Going interest rows; `registeredCount` counts submitted registrations, including paid submissions awaiting review. A worker detects start/end boundaries and writes idempotent outbox events. Outbox consumers claim work safely across processes, create notification rows with unique `(recipient_id,dedupe_key)`, and retry failures without duplicating user-visible notices. The job runner and polling interval will be selected when notifications are implemented; no in-process development timer should be mistaken for durable production scheduling.
+Event `upcoming/ongoing/finished` is derived from UTC start/end times, not manually edited. `attendeeCount` counts Going interest rows; `registeredCount` counts submitted registrations, including paid submissions awaiting review. The external event worker locks eligible event rows and creates shared notification rows with unique `(recipient_id,dedupe_key)`, so retries do not duplicate user-visible notices. News publication and membership approval create their notifications inside the source transaction. No in-process development timer should be mistaken for durable production scheduling.
 
 ## Feature-specific implementation notes
 
@@ -95,7 +95,7 @@ Event `upcoming/ongoing/finished` is derived from UTC start/end times, not manua
 - **Clubs/Events:** public club DTOs include name, short name, category, tagline, activities, and event counts. Return `canManage` or an admin-specific view only after permission lookup. Convert the frontend's fee display to integer paisa at the API boundary. Free/paid event registration and Interest/Going are independent. The club request form must add campus need and expected impact to match the ERD.
 - **Resources/Chat:** discovery exposes only opted-in resource-profile fields. Current mock's all-messages snapshot must become owner-scoped conversation pages. REST with refresh/polling is the initial chat transport; WebSocket/realtime is deferred until justified. No claim of cryptographic E2EE.
 - **Transport:** keep a dated four-window schedule and route variants. Recurrent Admin input materializes a bounded date range with a shared series ID; edits/deletes must specify one occurrence or the whole future series. Reject double-booked bus/driver assignments. Public queries do not reveal past dates.
-- **Forum/News:** text-only posts/comments. News categories are `news`, `update`, `announcement`; only published items enter the public list. Private report details stay in Admin APIs. Announcements/updates generate idempotent notification jobs.
+- **Forum/News:** text-only posts/comments. News categories are `news`, `update`, `announcement`; only published items enter the public list. Private report details stay in Admin APIs. Announcements/updates generate idempotent shared notifications.
 - **Assistant/RAG:** crawl only explicitly allowlisted public CUET HTTPS hosts, extract HTML/PDF content with LangChain, and persist source metadata plus local `embeddinggemma:300m` vectors in PostgreSQL JSON. The bounded service ranks at most 10,000 chunks by cosine similarity, returns a no-context result below threshold, and asks local `qwen3:1.7b` for a grounded answer without visible source metadata. Retrieved text is untrusted data, never an instruction or source of API permissions. See the [source policy](RAG_Knowledge_Source_Policy.md) and [RAG sequence](Sequence_Diagram.md#campus-assistant-query).
 
 ## Verification gates for each feature

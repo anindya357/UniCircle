@@ -12,8 +12,7 @@ from tests.fakes import FakeNotificationRepository
 def test_cuet_email_validation_and_normalization() -> None:
     assert normalize_cuet_email(" Anika@CUET.AC.BD ") == "anika@cuet.ac.bd"
     assert (
-        normalize_cuet_email(" Anika@STUDENT.CUET.AC.BD ")
-        == "anika@student.cuet.ac.bd"
+        normalize_cuet_email(" Anika@STUDENT.CUET.AC.BD ") == "anika@student.cuet.ac.bd"
     )
     with pytest.raises(ValueError, match="cuet.ac.bd"):
         normalize_cuet_email("anika@example.com")
@@ -79,6 +78,42 @@ def test_notification_deduplication_and_owner_scoping(
     marked = service.mark_mine_read("user-1", first.id)
     assert marked is not None and marked.read_at is not None
     assert service.mark_mine_read("user-1", first.id).read_at == marked.read_at
+    assert service.mark_all_mine_read("user-1") == 0
+    assert service.mark_all_mine_read("user-2") == 1
+
+
+def test_notification_updates_content_without_duplicate(
+    notification_repository: FakeNotificationRepository,
+) -> None:
+    service = NotificationService(notification_repository)
+    original = service.publish(
+        NotificationDraft(
+            user_id="user-1",
+            kind="campus-update",
+            title="Original title",
+            body="Original summary",
+            dedupe_key="news:8",
+            link="/news/8",
+            related_object_type="news",
+            related_object_id="8",
+        )
+    )
+    updated = service.publish(
+        NotificationDraft(
+            user_id="user-1",
+            kind="campus-announcement",
+            title="Updated title",
+            body="Updated summary",
+            dedupe_key="news:8",
+            link="/news/8",
+            related_object_type="news",
+            related_object_id="8",
+        )
+    )
+    assert updated.id == original.id
+    assert updated.kind == "campus-announcement"
+    assert updated.title == "Updated title"
+    assert service.list_mine("user-1", Pagination()).total == 1
 
 
 def test_notification_rejects_external_links_and_empty_content(
@@ -104,5 +139,16 @@ def test_notification_rejects_external_links_and_empty_content(
                 title=" ",
                 body="Body",
                 dedupe_key="news-2:user-1",
+            )
+        )
+    with pytest.raises(ValueError, match="must be set together"):
+        service.publish(
+            NotificationDraft(
+                user_id="user-1",
+                kind="announcement",
+                title="Incomplete reference",
+                body="Both reference fields are required.",
+                dedupe_key="news-3:user-1",
+                related_object_type="news",
             )
         )

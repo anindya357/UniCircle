@@ -1,12 +1,9 @@
-"""Owner-scoped notification behavior; persistence arrives with Phase 7."""
+"""Shared validation and owner-scoped notification behavior."""
 
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import Annotated, Protocol
+from typing import Protocol
 
-from fastapi import Depends
-
-from app.core.errors import AppError
 from app.core.pagination import Page, Pagination
 from app.core.validation import require_nonblank
 
@@ -19,6 +16,8 @@ class NotificationDraft:
     body: str
     dedupe_key: str
     link: str | None = None
+    related_object_type: str | None = None
+    related_object_id: str | None = None
 
 
 @dataclass(frozen=True)
@@ -41,6 +40,8 @@ class NotificationRepository(Protocol):
         self, user_id: str, notification_id: str, *, now: datetime
     ) -> NotificationRecord | None: ...
 
+    def mark_all_read(self, user_id: str, *, now: datetime) -> int: ...
+
 
 class NotificationService:
     def __init__(self, repository: NotificationRepository) -> None:
@@ -54,6 +55,29 @@ class NotificationService:
         dedupe_key = require_nonblank(
             draft.dedupe_key, field="dedupe_key", max_length=200
         )
+        related_object_type = (
+            require_nonblank(
+                draft.related_object_type,
+                field="related_object_type",
+                max_length=64,
+            )
+            if draft.related_object_type is not None
+            else None
+        )
+        related_object_id = (
+            require_nonblank(
+                draft.related_object_id,
+                field="related_object_id",
+                max_length=128,
+            )
+            if draft.related_object_id is not None
+            else None
+        )
+        if (related_object_type is None) != (related_object_id is None):
+            raise ValueError(
+                "Notification related_object_type and related_object_id "
+                "must be set together"
+            )
         if draft.link and (
             not draft.link.startswith("/") or draft.link.startswith("//")
         ):
@@ -66,6 +90,8 @@ class NotificationService:
                 body=body,
                 dedupe_key=dedupe_key,
                 link=draft.link,
+                related_object_type=related_object_type,
+                related_object_id=related_object_id,
             )
         )
 
@@ -94,16 +120,6 @@ class NotificationService:
             user_id, notification_id, now=datetime.now(UTC)
         )
 
-
-def get_notification_repository() -> NotificationRepository:
-    raise AppError(
-        status_code=503,
-        code="notification_store_unavailable",
-        message="Notification storage is not configured yet.",
-    )
-
-
-def get_notification_service(
-    repository: Annotated[NotificationRepository, Depends(get_notification_repository)],
-) -> NotificationService:
-    return NotificationService(repository)
+    def mark_all_mine_read(self, user_id: str) -> int:
+        user_id = require_nonblank(user_id, field="user_id", max_length=128)
+        return self.repository.mark_all_read(user_id, now=datetime.now(UTC))

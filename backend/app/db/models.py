@@ -138,6 +138,41 @@ class AuthRateLimit(Base):
     attempt_count: Mapped[int] = mapped_column(Integer, nullable=False)
 
 
+class Notification(Base):
+    """One owner-scoped notification emitted by any UniCircle feature."""
+
+    __tablename__ = "notifications"
+    __table_args__ = (
+        UniqueConstraint(
+            "recipient_id", "dedupe_key", name="uq_notification_recipient_dedupe"
+        ),
+        CheckConstraint(
+            "(related_object_type IS NULL AND related_object_id IS NULL) OR "
+            "(related_object_type IS NOT NULL AND related_object_id IS NOT NULL)",
+            name="complete_related_object",
+        ),
+        Index("ix_notifications_recipient_created", "recipient_id", "created_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    recipient_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    type: Mapped[str] = mapped_column(String(64), nullable=False)
+    title: Mapped[str] = mapped_column(String(160), nullable=False)
+    message: Mapped[str] = mapped_column(String(1000), nullable=False)
+    related_object_type: Mapped[str | None] = mapped_column(String(64))
+    related_object_id: Mapped[str | None] = mapped_column(String(128))
+    href: Mapped[str | None] = mapped_column(String(500))
+    dedupe_key: Mapped[str] = mapped_column(String(200), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    read_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class Department(Base, TimestampMixin):
     """Academic department, sourced from CUET's public department pages."""
 
@@ -737,6 +772,7 @@ class RagQueryAudit(Base):
     """Minimal query audit used for per-user rate and cost safeguards."""
 
     __tablename__ = "rag_query_audits"
+    __table_args__ = (Index("ix_rag_query_rate_window", "user_id", "created_at"),)
 
     id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4

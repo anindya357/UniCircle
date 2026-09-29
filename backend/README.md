@@ -120,7 +120,7 @@ No campus Admin editing API is enabled.
 ## Club & Event Hub
 
 Revision `ddcf224a1d10` adds club membership/admin, club-creation request,
-event, interest, registration, and event-notification tables. Apply migrations
+event, interest, registration, and the original event-notification table. Apply migrations
 before starting the backend. To create the ten existing clubs and assign the
 sole active, verified student as their initial admin, run once from `backend/`:
 
@@ -218,6 +218,20 @@ item back to draft removes its notifications and hides it from General Users.
 Notification links point to the live news detail route and use the existing
 owner-scoped read and mark-all-read endpoints. The news list/detail pages and
 Admin publishing workspace now use these APIs rather than prototype data.
+
+## Shared notifications
+
+Revision `c31f2a9d8e40` adds the consolidated `notifications` table and backfills
+existing event, club-membership, and campus update/announcement notices. New
+producers use the shared repository and unique `(recipient_id, dedupe_key)`
+constraint, so retries update current content without duplicating delivery.
+
+Authenticated users list only their inbox with `GET /api/v1/notifications/me`,
+mark one item through `PUT /api/v1/notifications/{id}/read`, and mark every
+unread item through `PUT /api/v1/notifications/read-all`. Both write endpoints
+scope their update by the current authenticated recipient; another user's ID is
+returned as not found. The response contract remains compatible with the
+global frontend notification menu.
 
 ## Campus AI Assistant / RAG
 

@@ -17,9 +17,8 @@ from app.db.models import (
     ClubCreationRequest,
     ClubEvent,
     ClubMember,
-    ClubMembershipNotification,
     ClubMembershipRequest,
-    EventNotification,
+    Notification,
     User,
 )
 from app.db.session import get_db
@@ -226,8 +225,19 @@ def test_paid_registration_and_event_notifications(stack):
     future = end.replace(tzinfo=UTC) + timedelta(seconds=1)
     assert reconcile_event_notifications(db, future) == 2
     assert reconcile_event_notifications(db, future) == 0
-    assert db.scalar(select(func.count()).select_from(EventNotification)) == 2
-    assert len(client.get("/api/v1/notifications/events/me").json()["data"]) == 2
+    assert (
+        db.scalar(
+            select(func.count())
+            .select_from(Notification)
+            .where(Notification.related_object_type == "event")
+        )
+        == 2
+    )
+    event_notifications = client.get("/api/v1/notifications/me").json()["data"]
+    assert {item["type"] for item in event_notifications} == {
+        "event-started",
+        "event-finished",
+    }
     current["user"] = first
     assert (
         len(client.get(f"/api/v1/events/{event_id}/registrations").json()["data"]) == 1
@@ -312,7 +322,14 @@ def test_membership_recruitment_approval_and_notification(stack):
     assert approved.status_code == 200
     assert db.get(ClubMember, (club_id, second.id)) is not None
     assert db.get(ClubMembershipRequest, uuid.UUID(request_id)).status == "approved"
-    assert db.scalar(select(func.count()).select_from(ClubMembershipNotification)) == 1
+    assert (
+        db.scalar(
+            select(func.count())
+            .select_from(Notification)
+            .where(Notification.type == "club-membership-approved")
+        )
+        == 1
+    )
     current["user"] = second
     updated = client.get(f"/api/v1/clubs/{club_id}").json()["data"]
     assert updated["isMember"] is True
