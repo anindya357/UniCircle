@@ -26,11 +26,9 @@ export class ApiCampusAssistantService implements CampusAssistantService {
         signal: AbortSignal.timeout(190_000),
       });
     } catch (cause) {
-      throw new ServiceError(
-        "Cannot reach the Campus AI Assistant.",
-        "network",
-        { cause },
-      );
+      throw new ServiceError("Cannot reach the Campus AI Assistant.", "network", {
+        cause,
+      });
     }
     const result = await response.json().catch(() => null);
     if (!response.ok || !result || !("data" in result)) {

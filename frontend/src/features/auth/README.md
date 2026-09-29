@@ -15,7 +15,7 @@ Next.js route handlers. Start FastAPI and set `BACKEND_API_URL` in
 - Protected pages check the live backend session on the server; the Admin page
   additionally requires the persisted App Admin role.
 
-Other feature pages still use mock data until their backend phases. Authentication
-itself no longer uses the mock auth/session services. Real registration requires a
-reachable PostgreSQL backend and working SMTP credentials; without SMTP it fails
-closed rather than pretending an email was sent.
+All production features now use the typed API service layer. ESLint rejects imports
+from the removed `src/mocks` tree so a feature cannot silently fall back to local
+data. Real registration requires a reachable PostgreSQL backend and working SMTP
+credentials; without SMTP it fails closed rather than pretending an email was sent.

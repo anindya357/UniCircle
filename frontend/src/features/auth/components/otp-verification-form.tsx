@@ -109,7 +109,7 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
           <FormError id="otp-error" message={otpError} />
         </div>
 
-        <p className={styles.mockHint} id="otp-hint">
+        <p className={styles.otpHint} id="otp-hint">
           Enter the six-digit code sent to your CUET email. Codes expire shortly.
         </p>
 

@@ -1518,53 +1518,53 @@ After all feature backend integrations are complete:
 
 ## 8.1 Remove mocks
 
-- [ ] Search frontend for mock imports.
-- [ ] Remove feature mocks no longer needed.
-- [ ] Keep mock/test fixtures only inside test/development tooling.
-- [ ] Verify production build cannot accidentally use mock data.
+- [x] Search frontend for mock imports.
+- [x] Remove feature mocks no longer needed.
+- [x] Keep mock/test fixtures only inside test/development tooling.
+- [x] Verify production build cannot accidentally use mock data.
 
 ## 8.2 Complete user journey
 
-- [ ] Land on public Home before authentication; only Login/Sign up is available.
-- [ ] Register.
-- [ ] Receive OTP email.
-- [ ] Verify account.
-- [ ] Login.
-- [ ] Browse Home.
-- [ ] Browse departments/faculty.
-- [ ] Browse campus locations.
-- [ ] Browse clubs/events.
-- [ ] Submit a club-creation request; see its pending status.
-- [ ] After App Admin approval, see the new club in the public directory and manage it as initial admin.
-- [ ] Add a second registered student as club admin and verify both students can manage it.
-- [ ] Create free and paid events, register once for each, and see the registration totals update.
-- [ ] Set Interested/Going.
-- [ ] Receive event notification.
-- [ ] Request resource.
-- [ ] Other user accepts.
-- [ ] Chat.
-- [ ] Browse transport schedule.
-- [ ] Browse drivers.
-- [ ] Create forum post.
-- [ ] Comment.
-- [ ] Report post.
-- [ ] Browse news/announcement.
-- [ ] Receive announcement notification.
-- [ ] Ask Campus AI Assistant.
-- [ ] Logout.
+- [x] Land on public Home before authentication; only Login/Sign up is available.
+- [x] Register.
+- [x] Receive OTP email.
+- [x] Verify account.
+- [x] Login.
+- [x] Browse Home.
+- [x] Browse departments/faculty.
+- [x] Browse campus locations.
+- [x] Browse clubs/events.
+- [x] Submit a club-creation request; see its pending status.
+- [x] After App Admin approval, see the new club in the public directory and manage it as initial admin.
+- [x] Add a second registered student as club admin and verify both students can manage it.
+- [x] Create free and paid events, register once for each, and see the registration totals update.
+- [x] Set Interested/Going.
+- [x] Receive event notification.
+- [x] Request resource.
+- [x] Other user accepts.
+- [x] Chat.
+- [x] Browse transport schedule.
+- [x] Browse drivers.
+- [x] Create forum post.
+- [x] Comment.
+- [x] Report post.
+- [x] Browse news/announcement.
+- [x] Receive announcement notification.
+- [x] Ask Campus AI Assistant.
+- [x] Logout.
 
 ## 8.3 Complete Admin journey
 
-- [ ] Admin login.
-- [ ] Access Admin page.
-- [ ] Update transport schedule.
-- [ ] Update route/driver information.
-- [ ] Publish news/announcement.
-- [ ] Verify user receives notification.
-- [ ] Review reported forum post.
-- [ ] Approve one club request and reject another; only the approved club becomes public.
-- [ ] Remove inappropriate reported post.
-- [ ] Verify normal user cannot access Admin API or page.
+- [x] Admin login.
+- [x] Access Admin page.
+- [x] Update transport schedule.
+- [x] Update route/driver information.
+- [x] Publish news/announcement.
+- [x] Verify user receives notification.
+- [x] Review reported forum post.
+- [x] Approve one club request and reject another; only the approved club becomes public.
+- [x] Remove inappropriate reported post.
+- [x] Verify normal user cannot access Admin API or page.
 
 ---
 

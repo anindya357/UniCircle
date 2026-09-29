@@ -410,7 +410,7 @@
   text-overflow: ellipsis;
 }
 
-.mockHint {
+.otpHint {
   padding: 0.75rem 0.9rem;
   border-radius: var(--radius-sm);
   color: #6d571e;

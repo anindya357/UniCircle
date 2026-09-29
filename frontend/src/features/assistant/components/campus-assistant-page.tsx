@@ -172,7 +172,6 @@ export function CampusAssistantPage() {
               </button>
             ))}
           </div>
-
         </aside>
 
         <div className={styles.chatPanel}>
