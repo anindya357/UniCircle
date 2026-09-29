@@ -367,6 +367,7 @@ erDiagram
 erDiagram
     USER ||--o{ NEWS_ITEM : publishes
     USER ||--o{ NOTIFICATION : receives
+    USER ||--o{ ADMIN_AUDIT_LOG : performs
     RAG_SOURCE ||--o{ RAG_CHUNK : contains
     USER ||--o{ RAG_QUERY_AUDIT : asks
 
@@ -402,6 +403,15 @@ erDiagram
         datetime read_at
         datetime created_at
     }
+    ADMIN_AUDIT_LOG {
+        uuid id PK
+        uuid actor_id FK
+        string action
+        string target_type
+        string target_id
+        json details
+        datetime created_at
+    }
     RAG_SOURCE {
         uuid id PK
         string url UK
@@ -433,6 +443,7 @@ erDiagram
 ```
 
 - Only App Admin can create or manage news. `NEWS_ITEM.status` is `draft` or `published`; only published items appear to General Users. `NOTIFICATION` is the consolidated owner-scoped inbox for event transitions, club membership approvals, and campus updates/announcements. Unique `(recipient_id, dedupe_key)` prevents duplicate delivery; the related-object pair is either fully populated or fully null. Publishing an **update or announcement** creates recipient rows in the same transaction; ordinary news does not notify everyone. Moving an item back to draft removes its corresponding notifications. Event start/finish detection remains separately scheduled and creates each transition only once. Migration `c31f2a9d8e40` backfills the earlier feature-owned notification rows without changing the frontend contract.
+- `ADMIN_AUDIT_LOG` is append-only application data for successful sensitive App Admin mutations. It records the live Admin actor, stable action/target identifiers, safe structured metadata, and timestamp in the same transaction as the change. It never stores credentials, tokens, OTPs, payment transaction IDs, or full request bodies; only an App Admin may list it.
 - `RAG_SOURCE` is restricted to approved CUET URLs. `RAG_CHUNK` has unique `(source_id, chunk_index)` and stores the selected local `embeddinggemma:300m` vector in PostgreSQL JSON for bounded cosine retrieval. `RAG_QUERY_AUDIT` stores no raw question or answer; its digest/outcome rows support per-user rate limits. No chat-transcript storage is required by the current AI-assistant workflow.
 
 ## Authentication and migration decisions

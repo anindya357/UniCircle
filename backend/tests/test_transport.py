@@ -11,7 +11,13 @@ from sqlalchemy.pool import StaticPool
 
 from app.core.auth import AuthIdentity, get_current_user
 from app.db.base import Base
-from app.db.models import BusDriver, TransportBus, TransportSchedule, User
+from app.db.models import (
+    AdminAuditLog,
+    BusDriver,
+    TransportBus,
+    TransportSchedule,
+    User,
+)
 from app.db.session import get_db
 from app.main import create_app
 from app.modules.transport.seed import seed_transport
@@ -210,3 +216,4 @@ def test_only_admin_can_manage_schedules_drivers_routes_and_buses(stack):
     )
     assert client.delete("/api/v1/admin/transport/buses/test-bus").status_code == 204
     assert client.delete("/api/v1/admin/transport/routes/test-route").status_code == 204
+    assert db.scalar(select(func.count()).select_from(AdminAuditLog)) == 10

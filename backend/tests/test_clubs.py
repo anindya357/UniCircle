@@ -12,6 +12,7 @@ from sqlalchemy.pool import StaticPool
 from app.core.auth import AuthIdentity, get_current_user
 from app.db.base import Base
 from app.db.models import (
+    AdminAuditLog,
     Club,
     ClubAdmin,
     ClubCreationRequest,
@@ -126,6 +127,22 @@ def test_seed_and_admin_permissions(stack):
     assert client.delete(f"/api/v1/clubs/{club}/admins/{first.id}").status_code == 200
     current["user"] = second
     assert client.get("/api/v1/clubs/administered").json()["data"][0]["id"] == club
+    other_club = "andromeda-space-robotics"
+    other = client.get(f"/api/v1/clubs/{other_club}").json()["data"]
+    assert (
+        client.put(
+            f"/api/v1/clubs/{other_club}",
+            json={
+                "name": other["name"],
+                "short_name": other["shortName"],
+                "category": other["category"],
+                "tagline": other["tagline"],
+                "description": other["description"],
+                "activities": other["activities"],
+            },
+        ).status_code
+        == 403
+    )
 
 
 def test_club_request_review_is_private_and_idempotent(stack):
@@ -176,6 +193,14 @@ def test_club_request_review_is_private_and_idempotent(stack):
         db.scalar(select(func.count()).select_from(Club).where(Club.id == club_id)) == 1
     )
     assert db.get(ClubAdmin, (club_id, first.id)) is not None
+    history = client.get("/api/v1/admin/club-requests?status=approved")
+    assert history.status_code == 200
+    assert history.json()["data"]["total"] == 1
+    assert history.json()["data"]["items"][0]["reviewerId"] == str(owner.id)
+    audit = db.scalar(
+        select(AdminAuditLog).where(AdminAuditLog.action == "club_request.approved")
+    )
+    assert audit is not None and audit.target_id == request_id
 
 
 def test_paid_registration_and_event_notifications(stack):

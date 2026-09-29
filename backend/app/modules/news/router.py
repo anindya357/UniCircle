@@ -9,6 +9,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
 from app.api.schemas import ApiResponse
+from app.core.audit import record_admin_action
 from app.core.auth import AuthIdentity, get_current_admin, get_current_user
 from app.core.errors import AppError
 from app.core.notifications import NotificationDraft, NotificationService
@@ -172,6 +173,14 @@ def create_news_item(
     db.add(item)
     db.flush()
     sync_notifications(db, item)
+    record_admin_action(
+        db,
+        admin,
+        action="news.created",
+        target_type="campus_news_item",
+        target_id=str(item.id),
+        details={"type": item.kind, "status": item.status},
+    )
     db.commit()
     db.refresh(item)
     return ApiResponse(data=admin_data(db, item))
@@ -179,11 +188,19 @@ def create_news_item(
 
 @router.put("/admin/news/{item_id}", response_model=ApiResponse[dict])
 def update_news_item(
-    item_id: uuid.UUID, body: NewsItemIn, db: Db, _admin: CurrentAdmin
+    item_id: uuid.UUID, body: NewsItemIn, db: Db, admin: CurrentAdmin
 ) -> ApiResponse[dict]:
     item = get_item(db, item_id)
     apply_input(item, body)
     sync_notifications(db, item)
+    record_admin_action(
+        db,
+        admin,
+        action="news.updated",
+        target_type="campus_news_item",
+        target_id=str(item.id),
+        details={"type": item.kind, "status": item.status},
+    )
     db.commit()
     db.refresh(item)
     return ApiResponse(data=admin_data(db, item))
@@ -191,7 +208,7 @@ def update_news_item(
 
 @router.put("/admin/news/{item_id}/status", response_model=ApiResponse[dict])
 def set_news_status(
-    item_id: uuid.UUID, body: PublishStatusIn, db: Db, _admin: CurrentAdmin
+    item_id: uuid.UUID, body: PublishStatusIn, db: Db, admin: CurrentAdmin
 ) -> ApiResponse[dict]:
     item = get_item(db, item_id)
     item.status = body.status
@@ -200,13 +217,30 @@ def set_news_status(
     if body.status == "draft":
         item.published_at = None
     sync_notifications(db, item)
+    record_admin_action(
+        db,
+        admin,
+        action="news.status_changed",
+        target_type="campus_news_item",
+        target_id=str(item.id),
+        details={"status": item.status},
+    )
     db.commit()
     db.refresh(item)
     return ApiResponse(data=admin_data(db, item))
 
 
 @router.delete("/admin/news/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_news_item(item_id: uuid.UUID, db: Db, _admin: CurrentAdmin) -> Response:
-    db.delete(get_item(db, item_id))
+def delete_news_item(item_id: uuid.UUID, db: Db, admin: CurrentAdmin) -> Response:
+    item = get_item(db, item_id)
+    record_admin_action(
+        db,
+        admin,
+        action="news.deleted",
+        target_type="campus_news_item",
+        target_id=str(item.id),
+        details={"type": item.kind, "status": item.status},
+    )
+    db.delete(item)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)

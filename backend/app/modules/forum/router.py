@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.api.schemas import ApiResponse
+from app.core.audit import record_admin_action
 from app.core.auth import AuthIdentity, get_current_admin, get_current_user
 from app.core.errors import AppError
 from app.db.models import ForumComment, ForumPost, ForumReport, User
@@ -313,5 +314,13 @@ def moderate_report(
             report.status = "post-removed"
             report.reviewer_id = uuid.UUID(admin.id)
             report.resolved_at = now
+    record_admin_action(
+        db,
+        admin,
+        action=f"forum_report.{body.decision}",
+        target_type="forum_report",
+        target_id=str(item.id),
+        details={"postId": str(item.post_id)},
+    )
     db.commit()
     return ApiResponse(data=report_data(db, item))

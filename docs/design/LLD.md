@@ -68,6 +68,7 @@ The table lists a compact API surface, not a promise to build all endpoints at o
 | News | `GET /news`, `GET /news/{id}` | U; published items only, newest first |
 | News management | `POST /admin/news`, `PUT/DELETE /admin/news/{id}`, `PUT /admin/news/{id}/status` | A; update/announcement publication and notifications commit together |
 | Notifications | `GET /notifications/me`, `PUT /notifications/{id}/read`, `PUT /notifications/read-all` | U; own rows only, unread/read timestamps |
+| Admin audit | `GET /admin/audit-logs` | A; bounded/filterable append-only records; no secret or payment data |
 | Assistant | `POST /assistant/questions` | U; bounded question and grounded answer/status; sources remain internal; rate-limited |
 
 Implementation must define exact Pydantic request/response schemas before each route is added. Do not expose the mock-only aggregate snapshots directly: `ClubEventSnapshot`, `ResourceSharingSnapshot`, `ForumSnapshot`, `TransportSnapshot`, and `AdminSnapshot` currently bundle unrelated private and public data. The frontend service adapters should compose their screens from scoped, paginated real endpoints instead. The mock `mutualConnections` field has no data source and is omitted from the live resource-discovery DTO.
@@ -86,6 +87,7 @@ Implementation must define exact Pydantic request/response schemas before each r
 | Forum report | open → resolved or post_removed | Only App Admin; removal soft-deletes post and hides comments in reads |
 | News | draft → published | Publish timestamp and recipient notifications commit together; only published news is visible |
 | Notification | unread → read | Owner-scoped update; repeated mark-as-read is idempotent |
+| Admin mutation | authorized request → committed change + audit | Audit row and sensitive change commit or roll back together |
 
 Event `upcoming/ongoing/finished` is derived from UTC start/end times, not manually edited. `attendeeCount` counts Going interest rows; `registeredCount` counts submitted registrations, including paid submissions awaiting review. The external event worker locks eligible event rows and creates shared notification rows with unique `(recipient_id,dedupe_key)`, so retries do not duplicate user-visible notices. News publication and membership approval create their notifications inside the source transaction. No in-process development timer should be mistaken for durable production scheduling.
 

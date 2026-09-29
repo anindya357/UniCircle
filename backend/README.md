@@ -233,6 +233,28 @@ scope their update by the current authenticated recipient; another user's ID is
 returned as not found. The response contract remains compatible with the
 global frontend notification menu.
 
+## App Admin integration
+
+App Admin accounts cannot be created through public registration. Provision them
+only with `python -m app.modules.auth.provision_admin`; the dedicated Admin login
+does not accept General User credentials. Every `/api/v1/admin/*` endpoint checks
+the current live account through `get_current_admin`. Frontend route guards and
+hidden navigation are usability controls, not authorization controls.
+
+The Admin workspace uses live APIs for transport management, campus publishing,
+forum moderation, and club-request review. The club-request API returns pending
+and reviewed history, and approval atomically creates the club plus its initial
+student administrator. Club management endpoints separately verify the
+student-to-club mapping on every mutation, preventing an administrator of one
+club from changing another club.
+
+Revision `e42a7b1c9d50` adds append-only `admin_audit_logs`. Successful club
+review, forum moderation, campus publishing, and transport mutations add an
+audit row in the same transaction. Records contain actor, action, target, time,
+and safe operational metadata only—never passwords, JWTs, OTPs, payment IDs, or
+request bodies. App Admins can inspect the bounded trail through
+`GET /api/v1/admin/audit-logs`; General Users receive `403`.
+
 ## Campus AI Assistant / RAG
 
 Revision `a18d6c9e4f20` adds approved knowledge sources, embedded chunks, and

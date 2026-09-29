@@ -12,6 +12,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.schemas import ApiResponse
+from app.core.audit import record_admin_action
 from app.core.auth import AuthIdentity, get_current_admin, get_current_user
 from app.core.errors import AppError
 from app.db.models import BusDriver, TransportBus, TransportRoute, TransportSchedule
@@ -320,6 +321,13 @@ def create_route(body: RouteIn, db: Db, _admin: CurrentAdmin) -> ApiResponse[dic
     item = TransportRoute(id=body.id or slug(body.name))
     update_route(item, body)
     db.add(item)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_route.created",
+        target_type="transport_route",
+        target_id=item.id,
+    )
     commit(db, "A route with this name or identifier already exists.")
     return ApiResponse(data=route_data(item))
 
@@ -330,6 +338,13 @@ def update_route_endpoint(
 ) -> ApiResponse[dict]:
     item = route_or_404(db, item_id)
     update_route(item, body)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_route.updated",
+        target_type="transport_route",
+        target_id=item.id,
+    )
     commit(db, "A route with this name already exists.")
     return ApiResponse(data=route_data(item))
 
@@ -343,6 +358,13 @@ def delete_route(item_id: str, db: Db, _admin: CurrentAdmin) -> None:
         .where(TransportSchedule.route_id == item_id)
     ):
         fail(409, "route_in_use", "Remove assigned schedules before this route.")
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_route.deleted",
+        target_type="transport_route",
+        target_id=item.id,
+    )
     db.delete(item)
     db.commit()
 
@@ -361,6 +383,13 @@ def create_bus(body: BusIn, db: Db, _admin: CurrentAdmin) -> ApiResponse[dict]:
     item = TransportBus(id=body.id or slug(body.name))
     update_bus(item, body)
     db.add(item)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_bus.created",
+        target_type="transport_bus",
+        target_id=item.id,
+    )
     commit(db, "A bus with this name, registration, or identifier already exists.")
     return ApiResponse(data=bus_data(item))
 
@@ -371,6 +400,13 @@ def update_bus_endpoint(
 ) -> ApiResponse[dict]:
     item = bus_or_404(db, item_id)
     update_bus(item, body)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_bus.updated",
+        target_type="transport_bus",
+        target_id=item.id,
+    )
     commit(db, "A bus with this name or registration already exists.")
     return ApiResponse(data=bus_data(item))
 
@@ -390,6 +426,13 @@ def delete_bus(item_id: str, db: Db, _admin: CurrentAdmin) -> None:
     )
     if references or assigned:
         fail(409, "bus_in_use", "Remove schedules and driver assignments first.")
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_bus.deleted",
+        target_type="transport_bus",
+        target_id=item.id,
+    )
     db.delete(item)
     db.commit()
 
@@ -408,9 +451,16 @@ def update_driver(item: BusDriver, body: DriverIn, db: Session) -> None:
     "/admin/transport/drivers", response_model=ApiResponse[dict], status_code=201
 )
 def create_driver(body: DriverIn, db: Db, _admin: CurrentAdmin) -> ApiResponse[dict]:
-    item = BusDriver()
+    item = BusDriver(id=uuid.uuid4())
     update_driver(item, body, db)
     db.add(item)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_driver.created",
+        target_type="transport_driver",
+        target_id=str(item.id),
+    )
     commit(db, "A driver with this phone number already exists.")
     return ApiResponse(
         data=driver_data(item, db.get(TransportBus, item.assigned_bus_id))
@@ -423,6 +473,13 @@ def update_driver_endpoint(
 ) -> ApiResponse[dict]:
     item = driver_or_404(db, item_id)
     update_driver(item, body, db)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_driver.updated",
+        target_type="transport_driver",
+        target_id=str(item.id),
+    )
     commit(db, "A driver with this phone number already exists.")
     return ApiResponse(
         data=driver_data(item, db.get(TransportBus, item.assigned_bus_id))
@@ -438,6 +495,13 @@ def delete_driver(item_id: uuid.UUID, db: Db, _admin: CurrentAdmin) -> None:
         .where(TransportSchedule.driver_id == item_id)
     ):
         fail(409, "driver_in_use", "Remove assigned schedules before this driver.")
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_driver.deleted",
+        target_type="transport_driver",
+        target_id=str(item.id),
+    )
     db.delete(item)
     db.commit()
 
@@ -468,9 +532,16 @@ def update_schedule(item: TransportSchedule, body: ScheduleIn, db: Session) -> N
 def create_schedule(
     body: ScheduleIn, db: Db, _admin: CurrentAdmin
 ) -> ApiResponse[dict]:
-    item = TransportSchedule()
+    item = TransportSchedule(id=uuid.uuid4())
     update_schedule(item, body, db)
     db.add(item)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_schedule.created",
+        target_type="transport_schedule",
+        target_id=str(item.id),
+    )
     commit(db, "This bus already has a schedule at that date and start time.")
     return ApiResponse(data=schedule_data(item, db.get(TransportBus, item.bus_id)))
 
@@ -481,11 +552,26 @@ def update_schedule_endpoint(
 ) -> ApiResponse[dict]:
     item = schedule_or_404(db, item_id)
     update_schedule(item, body, db)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_schedule.updated",
+        target_type="transport_schedule",
+        target_id=str(item.id),
+    )
     commit(db, "This bus already has a schedule at that date and start time.")
     return ApiResponse(data=schedule_data(item, db.get(TransportBus, item.bus_id)))
 
 
 @router.delete("/admin/transport/schedules/{item_id}", status_code=204)
 def delete_schedule(item_id: uuid.UUID, db: Db, _admin: CurrentAdmin) -> None:
-    db.delete(schedule_or_404(db, item_id))
+    item = schedule_or_404(db, item_id)
+    record_admin_action(
+        db,
+        _admin,
+        action="transport_schedule.deleted",
+        target_type="transport_schedule",
+        target_id=str(item.id),
+    )
+    db.delete(item)
     db.commit()

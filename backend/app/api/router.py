@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 
+from app.modules.admin.router import router as admin_router
 from app.modules.assistant.router import router as assistant_router
 from app.modules.auth.router import profile_router
 from app.modules.auth.router import router as auth_router
@@ -15,6 +16,7 @@ from app.modules.resources.router import router as resources_router
 from app.modules.transport.router import router as transport_router
 
 api_router = APIRouter(prefix="/api/v1")
+api_router.include_router(admin_router)
 api_router.include_router(auth_router)
 api_router.include_router(profile_router)
 api_router.include_router(directory_router)

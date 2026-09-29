@@ -11,7 +11,7 @@ from sqlalchemy.pool import StaticPool
 
 from app.core.auth import AuthIdentity, get_current_user
 from app.db.base import Base
-from app.db.models import ForumComment, ForumPost, ForumReport, User
+from app.db.models import AdminAuditLog, ForumComment, ForumPost, ForumReport, User
 from app.db.session import get_db
 from app.main import create_app
 
@@ -199,3 +199,4 @@ def test_report_review_and_soft_post_removal(stack):
     assert db.get(ForumPost, uuid.UUID(removed_post_id)).removed_at is not None
     assert db.scalar(select(func.count()).select_from(ForumComment)) == 1
     assert db.get(ForumReport, uuid.UUID(removed_report_id)).reviewer_id == admin.id
+    assert db.scalar(select(func.count()).select_from(AdminAuditLog)) == 2

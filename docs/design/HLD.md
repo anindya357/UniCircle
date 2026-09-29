@@ -66,7 +66,8 @@ Feature modules own their schemas, routes, services, repositories, and tests. Sh
 2. General User, Club Admin, and App Admin are different permission scopes. Club Admin is a student-to-club relationship, not a global JWT role. Every mutation checks current database state.
 3. Public club/event and news DTOs omit individual event registrations, bKash transaction IDs, home addresses, and private contact information. The public event count is derived from registration rows.
 4. Account and notification queries are owner-scoped. Conversation participants and resource-request participants are verified on every access.
-5. Secrets live in ignored local `.env` or a production secret manager, never in browser-visible `NEXT_PUBLIC_*` values or repository source. `.env` placeholders are intentionally nonfunctional.
+5. App Admin mutations write privacy-minimal audit rows in the same transaction. The audit API is itself App Admin-only and excludes secrets, payment identifiers, and request bodies.
+6. Secrets live in ignored local `.env` or a production secret manager, never in browser-visible `NEXT_PUBLIC_*` values or repository source. `.env` placeholders are intentionally nonfunctional.
 
 ## Deployment shape and operations
 

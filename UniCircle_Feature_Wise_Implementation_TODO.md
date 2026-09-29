@@ -1501,14 +1501,14 @@ Notification sources currently required:
 
 # Backend Special Feature — Admin Page Integration
 
-- [ ] Ensure Admin identity cannot be self-registered.
-- [ ] Protect all Admin endpoints server-side.
-- [ ] Never rely only on hidden frontend buttons.
-- [ ] Connect every Admin page to its actual API.
-- [ ] Connect the club-request review queue, approve/reject actions, and reviewed history to App Admin APIs.
-- [ ] Ensure a club admin cannot access another club's management endpoints.
-- [ ] Add audit/logging strategy for sensitive Admin operations if approved.
-- [ ] Verify normal General User receives `403`/appropriate denial for Admin endpoints.
+- [x] Ensure Admin identity cannot be self-registered.
+- [x] Protect all Admin endpoints server-side.
+- [x] Never rely only on hidden frontend buttons.
+- [x] Connect every Admin page to its actual API.
+- [x] Connect the club-request review queue, approve/reject actions, and reviewed history to App Admin APIs.
+- [x] Ensure a club admin cannot access another club's management endpoints.
+- [x] Add privacy-minimal, append-only audit logging for sensitive App Admin operations.
+- [x] Verify normal General User receives `403`/appropriate denial for Admin endpoints.
 
 ---
 

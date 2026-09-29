@@ -10,7 +10,8 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.api.schemas import ApiResponse
-from app.core.auth import AuthIdentity, get_current_user
+from app.core.audit import record_admin_action
+from app.core.auth import AuthIdentity, get_current_admin, get_current_user
 from app.core.errors import AppError
 from app.core.notifications import NotificationDraft, NotificationService
 from app.db.models import (
@@ -42,6 +43,7 @@ from app.modules.notifications.repository import SqlNotificationRepository
 router = APIRouter(tags=["clubs-events"])
 Db = Annotated[Session, Depends(get_db)]
 CurrentUser = Annotated[AuthIdentity, Depends(get_current_user)]
+CurrentAdmin = Annotated[AuthIdentity, Depends(get_current_admin)]
 
 
 def fail(status: int, code: str, message: str) -> None:
@@ -55,11 +57,6 @@ def uid(user: AuthIdentity) -> uuid.UUID:
 def student(user: AuthIdentity) -> None:
     if user.role != "student":
         fail(403, "student_required", "A verified student account is required.")
-
-
-def admin(user: AuthIdentity) -> None:
-    if user.role != "admin":
-        fail(403, "app_admin_required", "App Admin access is required.")
 
 
 def club_or_404(db: Session, club_id: str, *, lock: bool = False) -> Club:
@@ -329,12 +326,11 @@ def submit_request(body: ClubRequestIn, db: Db, user: CurrentUser) -> ApiRespons
 @router.get("/admin/club-requests", response_model=ApiResponse[dict])
 def review_queue(
     db: Db,
-    user: CurrentUser,
+    _admin: CurrentAdmin,
     status: Literal["pending", "approved", "rejected"] | None = None,
     page: Annotated[int, Query(ge=1)] = 1,
     size: Annotated[int, Query(ge=1, le=100)] = 20,
 ) -> ApiResponse[dict]:
-    admin(user)
     query = select(ClubCreationRequest)
     if status:
         query = query.where(ClubCreationRequest.status == status)
@@ -358,9 +354,8 @@ def review_queue(
     "/admin/club-requests/{request_id}/review", response_model=ApiResponse[dict]
 )
 def review_request(
-    request_id: uuid.UUID, body: ReviewIn, db: Db, user: CurrentUser
+    request_id: uuid.UUID, body: ReviewIn, db: Db, admin: CurrentAdmin
 ) -> ApiResponse[dict]:
-    admin(user)
     item = db.scalar(
         select(ClubCreationRequest)
         .where(ClubCreationRequest.id == request_id)
@@ -399,9 +394,17 @@ def review_request(
         )
         item.approved_club_id = club_id
     item.status = body.decision
-    item.reviewer_id = uid(user)
+    item.reviewer_id = uid(admin)
     item.reviewed_at = datetime.now(UTC)
     item.review_note = body.note
+    record_admin_action(
+        db,
+        admin,
+        action=f"club_request.{body.decision}",
+        target_type="club_creation_request",
+        target_id=str(item.id),
+        details={"approvedClubId": item.approved_club_id},
+    )
     db.commit()
     db.refresh(item)
     return ApiResponse(data=request_data(db, item))
