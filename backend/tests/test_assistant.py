@@ -4,18 +4,22 @@ import uuid
 from datetime import UTC, datetime
 
 import pytest
+from bs4 import BeautifulSoup
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
 
 from app.core.auth import AuthIdentity, get_current_user
+from app.core.errors import AppError
 from app.db.base import Base
-from app.db.models import RagChunk, RagSource, User
+from app.db.models import RagChunk, RagQueryAudit, RagSource, User
 from app.main import create_app
+from app.modules.assistant.ingest import clean_text, parse_page_date
 from app.modules.assistant.policy import SourcePolicy
 from app.modules.assistant.router import get_assistant_service
-from app.modules.assistant.service import RagAssistantService
+from app.modules.assistant.service import RagAssistantService, cosine_similarity
 
 
 class FakeEmbeddings:
@@ -28,6 +32,11 @@ class FakeChat:
         assert question == "Where is CUET?"
         assert "Raozan" in context
         return "CUET is in Raozan, Chattogram."
+
+
+class FailingChat:
+    def answer(self, *, question: str, context: str) -> str:
+        raise RuntimeError("private provider detail must not leave the API")
 
 
 class FakeRouteService:
@@ -83,6 +92,33 @@ def test_source_policy_restricts_hosts_protocols_and_portals():
     assert policy.canonicalize("https://cuet.ac.bd/files/notice.pdf") is not None
 
 
+def test_text_preprocessing_dates_and_chunk_boundaries():
+    raw = " CUET\u00a0Campus  \n\nCUET Campus\nEngineering   education "
+    assert clean_text(raw) == "CUET Campus\nEngineering education"
+    dated = BeautifulSoup(
+        '<meta property="article:published_time" content="2026-09-28T10:30:00Z">',
+        "html.parser",
+    )
+    assert parse_page_date(dated) == datetime(2026, 9, 28, 10, 30, tzinfo=UTC)
+    assert parse_page_date(BeautifulSoup("<time>unknown</time>", "html.parser")) is None
+
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=80,
+        chunk_overlap=15,
+        separators=["\n\n", "\n", ". ", " ", ""],
+    )
+    chunks = splitter.split_text(" ".join(f"CUET-{index}" for index in range(60)))
+    assert len(chunks) > 1
+    assert all(0 < len(chunk) <= 80 for chunk in chunks)
+
+
+def test_cosine_similarity_retrieval_helper():
+    assert cosine_similarity([1.0, 0.0], [1.0, 0.0]) == pytest.approx(1.0)
+    assert cosine_similarity([1.0, 0.0], [0.0, 1.0]) == pytest.approx(0.0)
+    assert cosine_similarity([], []) == -1.0
+    assert cosine_similarity([0.0, 0.0], [1.0, 0.0]) == -1.0
+
+
 def test_grounded_retrieval_returns_answer_without_sources(assistant_stack):
     db, user, settings = assistant_stack
     source = RagSource(
@@ -117,6 +153,56 @@ def test_grounded_retrieval_returns_answer_without_sources(assistant_stack):
     assert "[1]" not in result["answer"]
 
 
+def test_retrieval_ranks_the_relevant_cuet_chunk_first(assistant_stack):
+    db, _, settings = assistant_stack
+    relevant = RagSource(
+        url="https://cuet.ac.bd/about",
+        title="About CUET",
+        content_type="text/html",
+        content_hash="e" * 64,
+        status="active",
+        crawled_at=datetime.now(UTC),
+        source_metadata={},
+    )
+    unrelated = RagSource(
+        url="https://cuet.ac.bd/notice",
+        title="Notices",
+        content_type="text/html",
+        content_hash="f" * 64,
+        status="active",
+        crawled_at=datetime.now(UTC),
+        source_metadata={},
+    )
+    db.add_all([relevant, unrelated])
+    db.flush()
+    db.add_all(
+        [
+            RagChunk(
+                source_id=relevant.id,
+                chunk_index=0,
+                content="CUET is situated in Raozan, Chattogram.",
+                content_hash="1" * 64,
+                embedding=[1.0, 0.0],
+            ),
+            RagChunk(
+                source_id=unrelated.id,
+                chunk_index=0,
+                content="A general notice was published.",
+                content_hash="2" * 64,
+                embedding=[0.0, 1.0],
+            ),
+        ]
+    )
+    db.commit()
+
+    matches = RagAssistantService(
+        db, settings, embeddings=FakeEmbeddings(), chat=FakeChat()
+    )._retrieve("Where is CUET?")
+
+    assert matches[0].source.url == "https://cuet.ac.bd/about"
+    assert matches[0].score == pytest.approx(1.0)
+
+
 def test_empty_knowledge_returns_not_found_without_model_call(assistant_stack):
     db, user, settings = assistant_stack
     service = RagAssistantService(db, settings)
@@ -125,6 +211,42 @@ def test_empty_knowledge_returns_not_found_without_model_call(assistant_stack):
 
     assert result["status"] == "not-found"
     assert "sources" not in result
+
+
+def test_external_model_failure_is_a_safe_service_error(assistant_stack):
+    db, user, settings = assistant_stack
+    source = RagSource(
+        url="https://cuet.ac.bd/about",
+        title="About CUET",
+        content_type="text/html",
+        content_hash="c" * 64,
+        status="active",
+        crawled_at=datetime.now(UTC),
+        source_metadata={"loader": "WebBaseLoader"},
+    )
+    db.add(source)
+    db.flush()
+    db.add(
+        RagChunk(
+            source_id=source.id,
+            chunk_index=0,
+            content="CUET is situated in Raozan, Chattogram.",
+            content_hash="d" * 64,
+            embedding=[1.0, 0.0],
+        )
+    )
+    db.commit()
+    service = RagAssistantService(
+        db, settings, embeddings=FakeEmbeddings(), chat=FailingChat()
+    )
+
+    with pytest.raises(AppError) as caught:
+        service.ask(str(user.id), "Where is CUET?")
+
+    assert caught.value.status_code == 503
+    assert "private provider detail" not in caught.value.message
+    audit = db.scalar(select(RagQueryAudit).where(RagQueryAudit.user_id == user.id))
+    assert audit is not None and audit.status == "failed"
 
 
 def test_assistant_endpoint_is_authenticated_and_validated(settings):

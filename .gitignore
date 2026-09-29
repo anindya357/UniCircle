@@ -43,5 +43,6 @@ Thumbs.db
 
 # Local runtime data
 *.log
+backend/tests/.e2e-runtime.db*
 tmp/
 temp/

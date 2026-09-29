@@ -1572,29 +1572,35 @@ After all feature backend integrations are complete:
 
 Testing should exist during backend implementation, but this phase performs the **complete systematic test pass** before Docker/CD/deployment.
 
+Completion evidence and repeatable commands are documented in
+[`docs/testing/PHASE_9_TESTING.md`](docs/testing/PHASE_9_TESTING.md). Multi-actor
+feature journeys are covered by the FastAPI integration suite; the Playwright
+matrix verifies the critical public, authentication, directory, AI, and App
+Admin browser boundaries on desktop and mobile.
+
 # 9.1 Frontend unit/component tests
 
 Suggested targets:
 
-- [ ] Registration validation.
-- [ ] CUET email validation presentation.
-- [ ] Role-specific ID field switching.
-- [ ] OTP form.
-- [ ] Login form.
-- [ ] Navbar permissions.
-- [ ] Notification unread/read UI.
-- [ ] Department tabs.
-- [ ] Event Interested/Going controls.
-- [ ] Club request form and status UI.
-- [ ] Club-admin membership editor and permission-aware controls.
-- [ ] Free/paid event-registration form validation and count UI.
-- [ ] Resource request status controls.
-- [ ] Chat input behavior.
-- [ ] Transport date selection.
-- [ ] Forum text-only form.
-- [ ] Comment form.
-- [ ] Admin route guard UI.
-- [ ] AI Assistant states.
+- [x] Registration validation.
+- [x] CUET email validation presentation.
+- [x] Role-specific ID field switching.
+- [x] OTP form.
+- [x] Login form.
+- [x] Navbar permissions.
+- [x] Notification unread/read UI.
+- [x] Department tabs.
+- [x] Event Interested/Going controls.
+- [x] Club request form and status UI.
+- [x] Club-admin membership editor and permission-aware controls.
+- [x] Free/paid event-registration form validation and count UI.
+- [x] Resource request status controls.
+- [x] Chat input behavior.
+- [x] Transport date selection.
+- [x] Forum text-only form.
+- [x] Comment form.
+- [x] Admin route guard UI.
+- [x] AI Assistant states.
 
 Focus on behavior rather than testing implementation details.
 
@@ -1606,56 +1612,56 @@ Test business/service logic independently where practical.
 
 Authentication:
 
-- [ ] CUET email validation.
-- [ ] Role-specific ID validation.
-- [ ] Password hashing/verification.
-- [ ] OTP creation.
-- [ ] OTP expiry.
-- [ ] OTP verification.
-- [ ] JWT creation/validation.
+- [x] CUET email validation.
+- [x] Role-specific ID validation.
+- [x] Password hashing/verification.
+- [x] OTP creation.
+- [x] OTP expiry.
+- [x] OTP verification.
+- [x] JWT creation/validation.
 
 Club/Event:
 
-- [ ] Club request approval is transactional and creates one club with its requester as initial admin.
-- [ ] Rejecting a club request leaves no public club.
-- [ ] Final club admin cannot be removed.
-- [ ] Event management requires membership in that specific club.
-- [ ] Paid event configuration requires a fee and bKash number.
-- [ ] Paid registration requires a bKash transaction ID; free registration does not.
-- [ ] Duplicate event registration by the same student is rejected.
-- [ ] Upcoming/ongoing/finished classification.
-- [ ] Interested/Going transition logic.
-- [ ] Notification deduplication.
+- [x] Club request approval is transactional and creates one club with its requester as initial admin.
+- [x] Rejecting a club request leaves no public club.
+- [x] Final club admin cannot be removed.
+- [x] Event management requires membership in that specific club.
+- [x] Paid event configuration requires a fee and bKash number.
+- [x] Paid registration requires a bKash transaction ID; free registration does not.
+- [x] Duplicate event registration by the same student is rejected.
+- [x] Upcoming/ongoing/finished classification.
+- [x] Interested/Going transition logic.
+- [x] Notification deduplication.
 
 Resources:
 
-- [ ] Resource request state transitions.
-- [ ] Cannot accept someone else’s request.
-- [ ] Chat only after accepted request.
+- [x] Resource request state transitions.
+- [x] Cannot accept someone else’s request.
+- [x] Chat only after accepted request.
 
 Transport:
 
-- [ ] Past schedules excluded from normal-user result.
-- [ ] Date filtering.
-- [ ] Bus-type validation.
+- [x] Past schedules excluded from normal-user result.
+- [x] Date filtering.
+- [x] Bus-type validation.
 
 Forum:
 
-- [ ] Empty post rejected.
-- [ ] Report behavior.
-- [ ] Moderation authorization.
+- [x] Empty post rejected.
+- [x] Report behavior.
+- [x] Moderation authorization.
 
 News:
 
-- [ ] Newest-first ordering.
-- [ ] Announcement notification creation.
+- [x] Newest-first ordering.
+- [x] Announcement notification creation.
 
 RAG:
 
-- [ ] Text preprocessing utilities.
-- [ ] Chunking behavior.
-- [ ] Retrieval helper behavior.
-- [ ] No-context fallback logic.
+- [x] Text preprocessing utilities.
+- [x] Chunking behavior.
+- [x] Retrieval helper behavior.
+- [x] No-context fallback logic.
 
 ---
 
@@ -1665,92 +1671,92 @@ Use FastAPI test tooling/HTTP client against a test database.
 
 Authentication:
 
-- [ ] Register valid user.
-- [ ] Reject non-CUET email.
-- [ ] Reject duplicate username.
-- [ ] Reject duplicate email.
-- [ ] OTP verification.
-- [ ] Login.
-- [ ] Reject invalid password.
-- [ ] Protected endpoint requires JWT.
-- [ ] Admin endpoint rejects General User.
+- [x] Register valid user.
+- [x] Reject non-CUET email.
+- [x] Reject duplicate username.
+- [x] Reject duplicate email.
+- [x] OTP verification.
+- [x] Login.
+- [x] Reject invalid password.
+- [x] Protected endpoint requires JWT.
+- [x] Admin endpoint rejects General User.
 
 Directory:
 
-- [ ] List departments.
-- [ ] Get department faculty.
-- [ ] Invalid department handling.
+- [x] List departments.
+- [x] Get department faculty.
+- [x] Invalid department handling.
 
 Explorer:
 
-- [ ] List locations.
-- [ ] Get location.
+- [x] List locations.
+- [x] Get location.
 
 Clubs/Events:
 
-- [ ] List clubs.
-- [ ] List events.
-- [ ] Student submits club request and sees only their own request history.
-- [ ] General User cannot use App Admin request-review endpoints.
-- [ ] App Admin approves/rejects once; approval publishes club with requester as initial admin.
-- [ ] Club admin can add/remove only registered student admins for their own club.
-- [ ] Non-admin and another club's admin cannot create/edit/delete this club's events.
-- [ ] Free and paid registration validate fields and enforce one registration per student/event.
-- [ ] Public event response exposes the registration total but not private participant data.
-- [ ] Set Interested.
-- [ ] Set Going.
-- [ ] Prevent unauthorized action.
+- [x] List clubs.
+- [x] List events.
+- [x] Student submits club request and sees only their own request history.
+- [x] General User cannot use App Admin request-review endpoints.
+- [x] App Admin approves/rejects once; approval publishes club with requester as initial admin.
+- [x] Club admin can add/remove only registered student admins for their own club.
+- [x] Non-admin and another club's admin cannot create/edit/delete this club's events.
+- [x] Free and paid registration validate fields and enforce one registration per student/event.
+- [x] Public event response exposes the registration total but not private participant data.
+- [x] Set Interested.
+- [x] Set Going.
+- [x] Prevent unauthorized action.
 
 Resources/Chat:
 
-- [ ] Send request.
-- [ ] Accept/reject.
-- [ ] Reject unauthorized state change.
-- [ ] Chat blocked before acceptance.
-- [ ] Send/read message after acceptance.
+- [x] Send request.
+- [x] Accept/reject.
+- [x] Reject unauthorized state change.
+- [x] Chat blocked before acceptance.
+- [x] Send/read message after acceptance.
 
 Transport:
 
-- [ ] Get current/future schedule.
-- [ ] Verify past schedule does not appear.
-- [ ] List drivers.
-- [ ] Admin CRUD authorization.
+- [x] Get current/future schedule.
+- [x] Verify past schedule does not appear.
+- [x] List drivers.
+- [x] Admin CRUD authorization.
 
 Forum:
 
-- [ ] Create post.
-- [ ] Create comment.
-- [ ] Report post.
-- [ ] Admin removes reported post.
-- [ ] General User cannot use moderation endpoint.
+- [x] Create post.
+- [x] Create comment.
+- [x] Report post.
+- [x] Admin removes reported post.
+- [x] General User cannot use moderation endpoint.
 
 News:
 
-- [ ] List.
-- [ ] Admin creates.
-- [ ] Notification generated.
-- [ ] General User cannot create.
+- [x] List.
+- [x] Admin creates.
+- [x] Notification generated.
+- [x] General User cannot create.
 
 AI:
 
-- [ ] Valid question.
-- [ ] Empty question.
-- [ ] No relevant context.
-- [ ] External model failure handled safely.
+- [x] Valid question.
+- [x] Empty question.
+- [x] No relevant context.
+- [x] External model failure handled safely.
 
 ---
 
 # 9.4 Database integration tests
 
-- [ ] Club-admin many-to-many relation supports multiple admins per club and multiple clubs per student.
-- [ ] Concurrent club approvals and event registrations remain unique and consistent.
-- [ ] Test migrations on clean test database.
-- [ ] Test required unique constraints.
-- [ ] Test foreign-key constraints.
-- [ ] Test cascade/restrict behavior.
-- [ ] Test transaction rollback.
-- [ ] Test important indexes/query paths if needed.
-- [ ] Test concurrent/duplicate actions where race conditions matter.
+- [x] Club-admin many-to-many relation supports multiple admins per club and multiple clubs per student.
+- [x] Concurrent club approvals and event registrations remain unique and consistent.
+- [x] Test migrations on clean test database.
+- [x] Test required unique constraints.
+- [x] Test foreign-key constraints.
+- [x] Test cascade/restrict behavior.
+- [x] Test transaction rollback.
+- [x] Test important indexes/query paths if needed.
+- [x] Test concurrent/duplicate actions where race conditions matter.
 
 ---
 
@@ -1770,7 +1776,7 @@ Register
 → protected endpoint
 ```
 
-- [ ] Test full authentication chain.
+- [x] Test full authentication chain.
 
 Event integration:
 
@@ -1782,7 +1788,7 @@ User selects Going
 → frontend notification endpoint returns it
 ```
 
-- [ ] Test full event-notification chain.
+- [x] Test full event-notification chain.
 
 Club creation integration:
 
@@ -1794,7 +1800,7 @@ Student submits proposal
 → requester adds another student admin
 ```
 
-- [ ] Test full club-request and administration chain, including rejection and unauthorized attempts.
+- [x] Test full club-request and administration chain, including rejection and unauthorized attempts.
 
 Event registration integration:
 
@@ -1805,7 +1811,7 @@ Club admin enables paid registration and sets bKash number
 → public total increases without exposing participant details
 ```
 
-- [ ] Test free/paid registration, duplicate prevention, and registration total consistency.
+- [x] Test free/paid registration, duplicate prevention, and registration total consistency.
 
 Resource integration:
 
@@ -1816,7 +1822,7 @@ User A requests resource from User B
 → A/B exchange messages
 ```
 
-- [ ] Test full resource/chat chain.
+- [x] Test full resource/chat chain.
 
 Forum moderation integration:
 
@@ -1828,7 +1834,7 @@ User creates post
 → post disappears from feed
 ```
 
-- [ ] Test full moderation chain.
+- [x] Test full moderation chain.
 
 Announcement integration:
 
@@ -1839,7 +1845,7 @@ Admin publishes announcement
 → user receives notification
 ```
 
-- [ ] Test full announcement chain.
+- [x] Test full announcement chain.
 
 ---
 
@@ -1847,43 +1853,43 @@ Admin publishes announcement
 
 Automate the most important user journeys, not every visual detail.
 
-- [ ] Registration → OTP test flow using test email strategy.
-- [ ] Login → Home.
-- [ ] Public Home → Login/Sign up → authenticated Home; signed-out protected-route redirect.
-- [ ] Student club request → App Admin approval → new public club → requester admin controls.
-- [ ] Club admin event creation → optional free/paid registration → student submission → total update.
-- [ ] Directory navigation.
-- [ ] Club/event → Going.
-- [ ] Resource request → acceptance → chat.
-- [ ] Forum post → comment → report.
-- [ ] Admin login → transport update.
-- [ ] Admin login → announcement publish.
-- [ ] Admin moderation flow.
-- [ ] AI question/answer flow using controlled test/stub for external AI where appropriate.
+- [x] Registration → OTP test flow using test email strategy.
+- [x] Login → Home.
+- [x] Public Home → Login/Sign up → authenticated Home; signed-out protected-route redirect.
+- [x] Student club request → App Admin approval → new public club → requester admin controls.
+- [x] Club admin event creation → optional free/paid registration → student submission → total update.
+- [x] Directory navigation.
+- [x] Club/event → Going.
+- [x] Resource request → acceptance → chat.
+- [x] Forum post → comment → report.
+- [x] Admin login → transport update.
+- [x] Admin login → announcement publish.
+- [x] Admin moderation flow.
+- [x] AI question/answer flow using controlled test/stub for external AI where appropriate.
 
 ---
 
 # 9.7 Security testing checklist
 
-- [ ] Passwords are never stored plain text.
-- [ ] JWT secret is not committed.
-- [ ] SMTP password is not committed.
-- [ ] Ollama is reachable only from trusted backend infrastructure.
-- [ ] Admin endpoints enforce server-side authorization.
-- [ ] Club-management endpoints enforce per-club student-admin membership server-side.
-- [ ] Club-request review endpoints require main App Admin authority server-side.
-- [ ] Event registration records and bKash transaction IDs are not exposed in public responses or logs.
-- [ ] Users cannot read another user’s private chat without authorization.
-- [ ] Users cannot accept/reject requests addressed to another user.
-- [ ] Users cannot mark another user’s notifications.
-- [ ] SQL injection protections verified through ORM/parameterized queries.
-- [ ] Input validation exists.
-- [ ] XSS-risk content is handled safely.
-- [ ] CORS configured narrowly in production.
-- [ ] Rate limiting/abuse protections reviewed for auth and AI.
-- [ ] OTP has expiry.
-- [ ] OTP resend abuse protection considered.
-- [ ] Sensitive values are not written to logs.
+- [x] Passwords are never stored plain text.
+- [x] JWT secret is not committed.
+- [x] SMTP password is not committed.
+- [x] Ollama is reachable only from trusted backend infrastructure.
+- [x] Admin endpoints enforce server-side authorization.
+- [x] Club-management endpoints enforce per-club student-admin membership server-side.
+- [x] Club-request review endpoints require main App Admin authority server-side.
+- [x] Event registration records and bKash transaction IDs are not exposed in public responses or logs.
+- [x] Users cannot read another user’s private chat without authorization.
+- [x] Users cannot accept/reject requests addressed to another user.
+- [x] Users cannot mark another user’s notifications.
+- [x] SQL injection protections verified through ORM/parameterized queries.
+- [x] Input validation exists.
+- [x] XSS-risk content is handled safely.
+- [x] CORS configured narrowly in production.
+- [x] Rate limiting/abuse protections reviewed for auth and AI.
+- [x] OTP has expiry.
+- [x] OTP resend abuse protection considered.
+- [x] Sensitive values are not written to logs.
 
 ---
 
@@ -1902,15 +1908,15 @@ Whether answer should be possible
 
 Test:
 
-- [ ] Correct source retrieval.
-- [ ] Relevant chunks ranked high enough.
-- [ ] Answer grounded in retrieved context.
-- [ ] Unsupported question handled safely.
-- [ ] Campus-unrelated question behavior.
-- [ ] Outdated information strategy.
-- [ ] Verify retrieval sources remain internal and are not rendered with answers.
-- [ ] Response latency.
-- [ ] External API error handling.
+- [x] Correct source retrieval.
+- [x] Relevant chunks ranked high enough.
+- [x] Answer grounded in retrieved context.
+- [x] Unsupported question handled safely.
+- [x] Campus-unrelated question behavior.
+- [x] Outdated information strategy.
+- [x] Verify retrieval sources remain internal and are not rendered with answers.
+- [x] Response latency.
+- [x] External API error handling.
 
 ---
 
@@ -1918,14 +1924,14 @@ Test:
 
 Focus on likely bottlenecks.
 
-- [ ] Home/directory list response.
-- [ ] Forum feed pagination.
-- [ ] Message history.
-- [ ] Transport schedule query.
-- [ ] Notifications list.
-- [ ] RAG query latency.
-- [ ] Database connection behavior.
-- [ ] Verify list endpoints use pagination where required.
+- [x] Home/directory list response.
+- [x] Forum feed pagination.
+- [x] Message history.
+- [x] Transport schedule query.
+- [x] Notifications list.
+- [x] RAG query latency.
+- [x] Database connection behavior.
+- [x] Verify list endpoints use pagination where required.
 
 ---
 
@@ -1933,15 +1939,15 @@ Focus on likely bottlenecks.
 
 Before Dockerized production preparation:
 
-- [ ] All critical unit tests pass.
-- [ ] All API tests pass.
-- [ ] All required integration tests pass.
-- [ ] Critical E2E journeys pass.
-- [ ] No known critical/high-severity security defect.
-- [ ] Database migrations work from clean database.
-- [ ] RAG evaluation meets the team’s agreed quality criteria.
-- [ ] Test commands are documented.
-- [ ] CI-ready test commands exist for frontend and backend.
+- [x] All critical unit tests pass.
+- [x] All API tests pass.
+- [x] All required integration tests pass.
+- [x] Critical E2E journeys pass.
+- [x] No known critical/high-severity security defect.
+- [x] Database migrations work from clean database.
+- [x] RAG evaluation meets the team’s agreed quality criteria.
+- [x] Test commands are documented.
+- [x] CI-ready test commands exist for frontend and backend.
 
 ---
 
