@@ -348,3 +348,106 @@ Sessions expire after `JWT_ACCESS_TOKEN_MINUTES`; there is no refresh token.
 .\.venv\Scripts\python -m ruff check app tests migrations
 .\.venv\Scripts\python -m ruff format --check app tests migrations
 ```
+
+## Backend Docker image (Phase 10.1)
+
+From the repository root, with Docker Desktop using Linux containers:
+
+```powershell
+docker build --tag unicircle-backend:phase10.1 ./backend
+```
+
+The two-stage image uses the official Python 3.12 slim Bookworm base pinned to
+an immutable digest, installs only production dependencies from the hash-locked
+`requirements.lock`, and runs Uvicorn as UID/GID `10001`. The lock is resolved
+for Linux/Python 3.12, not copied from the Windows development virtualenv.
+The final image contains the application, reviewed CUET JSON snapshots, and
+Alembic configuration/migrations. It excludes development tools, tests, local
+virtualenvs, caches, agent instruction files, and environment files. Code is
+root-owned so the non-root service cannot modify it.
+
+Prepare an ignored runtime environment file; never supply secrets as build
+arguments or copy them into a Dockerfile:
+
+```powershell
+Copy-Item .env .env.docker
+```
+
+Edit `.env.docker` before running. Set `APP_ENV=production` and retain your
+configured JWT/OTP secrets and SMTP settings. For PostgreSQL running on this
+Windows laptop, replace only the `localhost`/`127.0.0.1` host in `DATABASE_URL`
+with `host.docker.internal`, retaining the database, port, username, and
+password. Container `localhost` refers to the container itself. A future Compose
+database will instead use its service name. Point `OLLAMA_BASE_URL` at a private
+Ollama endpoint reachable from Docker (usually
+`http://host.docker.internal:11434` on Docker Desktop); verify host network and
+firewall access separately. Do not expose Ollama publicly.
+
+Run the backend on the usual port:
+
+```powershell
+docker run --detach --name unicircle-backend --publish 127.0.0.1:8000:8000 --env-file .env.docker unicircle-backend:phase10.1
+Invoke-RestMethod http://127.0.0.1:8000/health
+docker inspect --format '{{.State.Health.Status}}' unicircle-backend
+docker logs unicircle-backend
+```
+
+If port 8000 is occupied by your local backend, use
+`--publish 127.0.0.1:8010:8000` and request port 8010 instead. The health response
+is `{"data":{"status":"ok","service":"unicircle-api"}}`. Docker checks it
+every 30 seconds, with a 20-second startup grace period. `/health` proves API
+liveness only; it does not prove database, SMTP, or model-service readiness.
+Production settings validation still runs on startup and refuses incomplete
+security/SMTP configuration.
+
+Apply migrations explicitly before serving a new revision, using the same image
+and runtime configuration:
+
+```powershell
+docker run --rm --env-file .env.docker unicircle-backend:phase10.1 python -m alembic upgrade head
+```
+
+Existing seed, admin-provisioning, ingestion, and notification commands can also
+run in this image by replacing the command after the image name. Migrations and
+seeds are deliberately not executed automatically by each API container.
+Uvicorn runs without development reload; its exec-form startup receives Docker
+termination signals and shuts down gracefully.
+
+To stop and remove just the API container:
+
+```powershell
+docker stop unicircle-backend
+docker rm unicircle-backend
+```
+
+### Updating the dependency lock
+
+Recompile when changing `pyproject.toml`, then rebuild and test. From the
+repository root, use the same Linux/Python base and pinned pip-tools version:
+
+```powershell
+docker run --rm --mount "type=bind,source=$PWD/backend,target=/src" --workdir /src python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 sh -c "python -m pip install pip-tools==7.6.1 && pip-compile --generate-hashes --strip-extras --no-emit-index-url --no-emit-trusted-host --output-file=requirements.lock pyproject.toml"
+```
+
+Add `--upgrade` to `pip-compile` for an intentional dependency refresh. Review
+and commit the resulting lock, and update/test the base digest periodically to
+receive OS/Python security fixes. See
+[Docker's image-building guidance](https://docs.docker.com/build/building/best-practices/)
+and [pip-tools' reproducibility guidance](https://pip-tools.readthedocs.io/en/stable/).
+Frontend images and Compose integration remain subsequent Phase 10 steps.
+
+### Repeatable image smoke check
+
+After building, run from the repository root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File backend/scripts/verify_docker.ps1
+```
+
+This uses synthetic runtime settings and a temporary container on a random
+loopback port. It checks missing-secret rejection, HTTP health, Docker health,
+non-root/read-only execution, runtime dependencies, migration availability,
+snapshot inclusion, environment/dev-file exclusion, and graceful shutdown. It
+removes its own test container afterward and never accesses the real database,
+sends email, or calls Ollama. An image smoke check does not replace the existing
+feature integration suite or external-service connectivity testing.

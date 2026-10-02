@@ -1957,19 +1957,29 @@ Dockerization comes after the application is functionally integrated and tested.
 
 # 10.1 Backend Docker image
 
-- [ ] Create backend `Dockerfile`.
-- [ ] Use production-appropriate Python base image.
-- [ ] Install dependencies reproducibly.
-- [ ] Copy application.
-- [ ] Run as non-root where practical.
-- [ ] Expose application port.
-- [ ] Add health-check strategy.
-- [ ] Configure production ASGI startup command.
-- [ ] Ensure secrets are passed at runtime, not baked into image.
-- [ ] Add `.dockerignore`.
-- [ ] Build image locally.
-- [ ] Run backend container locally.
-- [ ] Test `/health`.
+- [x] Create backend `Dockerfile`.
+- [x] Use production-appropriate Python base image.
+- [x] Install dependencies reproducibly.
+- [x] Copy application.
+- [x] Run as non-root where practical.
+- [x] Expose application port.
+- [x] Add health-check strategy.
+- [x] Configure production ASGI startup command.
+- [x] Ensure secrets are passed at runtime, not baked into image.
+- [x] Add `.dockerignore`.
+- [x] Build image locally.
+- [x] Run backend container locally.
+- [x] Test `/health`.
+
+Validated on 3 October 2026: `unicircle-backend:phase10.1` builds with a
+digest-pinned Python 3.12 slim base and hash-locked production dependencies.
+The repeatable `backend/scripts/verify_docker.ps1` check passed production
+configuration rejection, HTTP/Docker health, non-root/read-only execution,
+image exclusions, bundled migrations/snapshots, dependency consistency, and
+graceful shutdown. The 19 health/configuration/authentication checks passed
+both locally and inside Linux. Smoke settings are synthetic; database, SMTP,
+and Ollama connectivity remain separate integration checks. See
+`backend/README.md` for build, runtime environment, and migration commands.
 
 ---
 
