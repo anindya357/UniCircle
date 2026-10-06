@@ -63,3 +63,46 @@ The Community Forum uses the authenticated FastAPI forum endpoints through the
 same-origin `/api/forum/*` handler. Posts and comments are text-only. Reporting
 state survives reloads, and the App Admin report queue uses the live moderation
 API to dismiss reports or soft-remove posts from the General User feed.
+
+## Production Docker image (Phase 10.2)
+
+From the repository root:
+
+```powershell
+docker build --tag unicircle-frontend:phase10.2 ./frontend
+docker run --detach --name unicircle-frontend --publish 127.0.0.1:3000:3000 --env BACKEND_API_URL=http://host.docker.internal:8000 unicircle-frontend:phase10.2
+```
+
+The image uses a digest-pinned Node.js 22 slim base, `npm ci`, and a three-stage
+build. The runtime serves Next.js standalone output with `node server.js` as
+the non-root `node` account, with campus media/public files and `.next/static`
+copied separately. Development dependencies, tests, local environment files,
+agent instructions, and build caches are excluded. Image optimization may write
+to `.next/cache`; application code remains root-owned. `/` is the Docker liveness
+check and remains available without a backend connection.
+
+`BACKEND_API_URL` is a server-only runtime value. Docker Desktop uses
+`host.docker.internal` for a host backend; a future Compose backend will use its
+service name. Never pass database/JWT/SMTP secrets to this image. No public build
+variables are currently required; `NEXT_PUBLIC_API_URL` is the unused legacy
+placeholder and does not control authenticated BFF requests. Any future
+`NEXT_PUBLIC_*` value is public and frozen during the build, so never use it for
+secrets. Existing production Secure/HttpOnly cookie behavior is retained; use
+HTTPS for deployed authenticated sessions.
+
+To run the smoke test from `frontend/` after the container becomes healthy:
+
+```powershell
+node scripts/verify_docker.mjs http://127.0.0.1:3000 unicircle-frontend
+```
+
+It uses the installed Playwright/Edge tooling to check Home, campus images/video,
+login, role-specific registration validation, protected-route redirects, layout
+overflow, and browser errors on desktop/mobile. It also checks Docker health,
+non-root execution, runtime file exclusions, and absence of baked runtime
+credentials. Screenshots go to ignored `tmp/docker-frontend/`. This test does not
+register real users or send email. Use `docker stop unicircle-frontend` followed
+by `docker rm unicircle-frontend` to remove only the API-facing frontend container.
+This Next.js version returns exit code 143 after graceful Docker SIGTERM cleanup;
+that signal-based exit is expected, not an application crash.
+See [the Docker guide](../docs/docker/README.md) for local PostgreSQL setup.

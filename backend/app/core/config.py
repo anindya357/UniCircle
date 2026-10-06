@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     app_env: Literal["development", "testing", "production"] = "development"
     frontend_url: HttpUrl = HttpUrl("http://localhost:3000")
     database_url: str = LOCAL_DATABASE_URL
+    database_startup_timeout_seconds: int = Field(default=60, ge=1, le=300)
+    database_startup_retry_seconds: float = Field(default=2.0, ge=0.1, le=30)
     jwt_secret: SecretStr | None = None
     jwt_issuer: str = "unicircle-api"
     jwt_audience: str = "unicircle-web"

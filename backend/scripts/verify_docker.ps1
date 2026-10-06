@@ -1,4 +1,4 @@
-param([string]$Image = 'unicircle-backend:phase10.1')
+param([string]$Image = 'unicircle-backend:phase10.3')
 
 $ErrorActionPreference = 'Stop'
 $containerName = 'unicircle-backend-smoke-' + [guid]::NewGuid().ToString('N').Substring(0, 12)
@@ -35,7 +35,10 @@ try {
         '--env', 'OTP_PEPPER=container-smoke-otp-key-not-for-real-use-0987654321',
         '--env', 'SMTP_HOST=smtp.invalid', '--env', 'SMTP_USERNAME=smoke',
         '--env', 'SMTP_PASSWORD=container-smoke-password',
-        '--env', 'SMTP_FROM_EMAIL=smoke@cuet.ac.bd', $Image
+        '--env', 'SMTP_FROM_EMAIL=smoke@cuet.ac.bd', $Image,
+        # Liveness-only smoke deliberately bypasses the database startup gate.
+        # The PostgreSQL smoke script verifies the default gated startup separately.
+        'python', '-m', 'uvicorn', 'app.main:app', '--host', '0.0.0.0', '--port', '8000', '--no-server-header'
     )
     & docker @runArgs | Out-Null
     if ($LASTEXITCODE -ne 0) { throw 'Could not start the smoke container.' }

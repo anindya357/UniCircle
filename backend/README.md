@@ -349,12 +349,12 @@ Sessions expire after `JWT_ACCESS_TOKEN_MINUTES`; there is no refresh token.
 .\.venv\Scripts\python -m ruff format --check app tests migrations
 ```
 
-## Backend Docker image (Phase 10.1)
+## Backend Docker image (Phases 10.1 and 10.3)
 
 From the repository root, with Docker Desktop using Linux containers:
 
 ```powershell
-docker build --tag unicircle-backend:phase10.1 ./backend
+docker build --tag unicircle-backend:phase10.3 ./backend
 ```
 
 The two-stage image uses the official Python 3.12 slim Bookworm base pinned to
@@ -386,7 +386,7 @@ firewall access separately. Do not expose Ollama publicly.
 Run the backend on the usual port:
 
 ```powershell
-docker run --detach --name unicircle-backend --publish 127.0.0.1:8000:8000 --env-file .env.docker unicircle-backend:phase10.1
+docker run --detach --name unicircle-backend --publish 127.0.0.1:8000:8000 --env-file .env.docker unicircle-backend:phase10.3
 Invoke-RestMethod http://127.0.0.1:8000/health
 docker inspect --format '{{.State.Health.Status}}' unicircle-backend
 docker logs unicircle-backend
@@ -400,11 +400,24 @@ liveness only; it does not prove database, SMTP, or model-service readiness.
 Production settings validation still runs on startup and refuses incomplete
 security/SMTP configuration.
 
+The default container command first probes PostgreSQL with authenticated
+`SELECT 1` queries, retrying for `DATABASE_STARTUP_TIMEOUT_SECONDS` (default 60)
+at `DATABASE_STARTUP_RETRY_SECONDS` intervals (default 2). Each connection attempt
+has a short timeout. It exits unsuccessfully if the database remains unavailable
+and never logs the URL/password or raw connection error. After readiness it
+replaces the process with Uvicorn so graceful termination still works. This gate
+does not apply migrations or check schema/model/SMTP readiness. Native `run.cmd`
+behavior is unchanged. For a release command that needs the same readiness gate:
+
+```powershell
+docker run --rm --env-file .env.docker unicircle-backend:phase10.3 python -m app.db.wait
+```
+
 Apply migrations explicitly before serving a new revision, using the same image
 and runtime configuration:
 
 ```powershell
-docker run --rm --env-file .env.docker unicircle-backend:phase10.1 python -m alembic upgrade head
+docker run --rm --env-file .env.docker unicircle-backend:phase10.3 python -m alembic upgrade head
 ```
 
 Existing seed, admin-provisioning, ingestion, and notification commands can also
@@ -434,14 +447,15 @@ and commit the resulting lock, and update/test the base digest periodically to
 receive OS/Python security fixes. See
 [Docker's image-building guidance](https://docs.docker.com/build/building/best-practices/)
 and [pip-tools' reproducibility guidance](https://pip-tools.readthedocs.io/en/stable/).
-Frontend images and Compose integration remain subsequent Phase 10 steps.
+Local PostgreSQL is documented in [the Docker guide](../docs/docker/README.md).
+Full frontend/backend Compose integration remains Phase 10.4.
 
 ### Repeatable image smoke check
 
 After building, run from the repository root:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File backend/scripts/verify_docker.ps1
+powershell -ExecutionPolicy Bypass -File backend/scripts/verify_docker.ps1 -Image unicircle-backend:phase10.3
 ```
 
 This uses synthetic runtime settings and a temporary container on a random
@@ -451,3 +465,6 @@ snapshot inclusion, environment/dev-file exclusion, and graceful shutdown. It
 removes its own test container afterward and never accesses the real database,
 sends email, or calls Ollama. An image smoke check does not replace the existing
 feature integration suite or external-service connectivity testing.
+The liveness-only check overrides the default command to avoid contacting a
+database; `scripts/verify_postgres_docker.ps1` separately tests the default gated
+startup against a real, isolated PostgreSQL container.

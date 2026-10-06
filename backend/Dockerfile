@@ -36,5 +36,6 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
     CMD ["python", "-c", "import json, urllib.request; r = urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3); d = json.load(r); assert r.status == 200 and d['data']['status'] == 'ok' and d['data']['service'] == 'unicircle-api'"]
 
-# Exec form forwards termination signals; migrations run as an explicit release step.
-CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--no-server-header"]
+# Wait for an authenticated database probe, then exec Uvicorn for signal forwarding.
+# Reviewed migrations still run as an explicit release step.
+CMD ["python", "-m", "app.db.wait", "--exec-api"]

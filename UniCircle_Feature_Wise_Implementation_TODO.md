@@ -1985,27 +1985,49 @@ and Ollama connectivity remain separate integration checks. See
 
 # 10.2 Frontend Docker image
 
-- [ ] Create frontend `Dockerfile`.
-- [ ] Use a multi-stage production build where appropriate.
-- [ ] Install dependencies reproducibly.
-- [ ] Build Next.js production output.
-- [ ] Keep runtime image minimal.
-- [ ] Run as non-root where practical.
-- [ ] Add `.dockerignore`.
-- [ ] Pass only safe/public build variables appropriately.
-- [ ] Build locally.
-- [ ] Run frontend container locally.
+- [x] Create frontend `Dockerfile`.
+- [x] Use a multi-stage production build where appropriate.
+- [x] Install dependencies reproducibly.
+- [x] Build Next.js production output.
+- [x] Keep runtime image minimal.
+- [x] Run as non-root where practical.
+- [x] Add `.dockerignore`.
+- [x] Pass only safe/public build variables appropriately.
+- [x] Build locally.
+- [x] Run frontend container locally.
+
+Validated on 7 October 2026: `unicircle-frontend:phase10.2` builds using a
+digest-pinned Node.js 22 slim base, `npm ci`, and Next.js standalone output.
+The non-root runtime includes campus media/static assets, excludes local
+secrets and development tools, and accepts server-only `BACKEND_API_URL` at
+runtime; no public build variables are needed. Docker health and desktop/mobile
+Home, media, login, registration validation, protected-route redirects, and
+overflow checks passed using `frontend/scripts/verify_docker.mjs`.
+All 21 frontend unit tests passed. Authenticated API journeys in the combined
+Docker environment remain part of Phase 10.4. See `frontend/README.md`.
 
 ---
 
 # 10.3 PostgreSQL for local Docker environment
 
-- [ ] Add PostgreSQL service to `compose.yaml`.
-- [ ] Configure database environment variables.
-- [ ] Add persistent development volume.
-- [ ] Add health check.
-- [ ] Ensure backend waits/retries appropriately for database readiness.
-- [ ] Do not use development database credentials in production.
+- [x] Add PostgreSQL service to `compose.yaml`.
+- [x] Configure database environment variables.
+- [x] Add persistent development volume.
+- [x] Add health check.
+- [x] Ensure backend waits/retries appropriately for database readiness.
+- [x] Do not use development database credentials in production.
+
+Validated on 7 October 2026: the digest-pinned PostgreSQL 16 Alpine service
+uses local-only `.env.compose` settings, a persistent named volume, loopback
+port 55432, SCRAM authentication, and a health check. The updated backend image
+(`unicircle-backend:phase10.3`) waits for authenticated PostgreSQL readiness
+with bounded retries before starting Uvicorn; migrations remain explicit.
+`scripts/verify_postgres_docker.ps1` passed database health, rejected-password,
+container-recreation persistence, delayed database recovery, and graceful API
+shutdown checks using isolated test resources, which were removed afterward.
+All 109 backend tests (including the new readiness tests) and backend image
+smoke checks passed. Production credentials must remain separate. See
+`docs/docker/README.md`.
 
 ---
 
