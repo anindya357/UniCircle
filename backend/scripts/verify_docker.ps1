@@ -25,7 +25,7 @@ try {
 
     Write-Output 'Starting a non-root API container with a read-only filesystem...'
     $runArgs = @(
-        'run', '--detach', '--name', $containerName,
+        'run', '--detach', '--init', '--name', $containerName,
         '--read-only', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
         '--tmpfs', '/tmp:rw,noexec,nosuid,size=64m',
         '--publish', '127.0.0.1::8000',
@@ -102,7 +102,10 @@ print('Non-root permissions, runtime dependencies, migrations, snapshots, and im
     & docker stop --time 15 $containerName | Out-Null
     if ($LASTEXITCODE -ne 0) { throw 'Could not stop the API container.' }
     $exitCode = (& docker inspect --format '{{.State.ExitCode}}' $containerName | Out-String).Trim()
-    if ($exitCode -ne '0') { throw "API did not exit gracefully: $exitCode" }
+    $shutdownLogs = (& docker logs $containerName 2>&1 | Out-String)
+    if ($exitCode -notin @('0', '143') -or $shutdownLogs -notmatch 'Application shutdown complete\.') {
+        throw "API did not complete graceful shutdown: exit=$exitCode"
+    }
     Write-Output 'Graceful shutdown passed. Backend image verification complete.'
 } catch {
     if ($containerStarted) { & docker logs --tail 30 $containerName }

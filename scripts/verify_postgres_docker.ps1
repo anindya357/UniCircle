@@ -3,6 +3,7 @@ param([string]$BackendImage = 'unicircle-backend:phase10.3')
 $ErrorActionPreference = 'Stop'
 $project = 'unicircle-pg-smoke-' + [guid]::NewGuid().ToString('N').Substring(0, 12)
 $backendName = "$project-api"
+$probeNetwork = "$project-probe"
 $composePath = Join-Path (Split-Path $PSScriptRoot -Parent) 'compose.yaml'
 $keys = @('POSTGRES_DB', 'POSTGRES_USER', 'POSTGRES_PASSWORD', 'POSTGRES_PORT')
 $previous = @{}
@@ -14,6 +15,7 @@ $env:POSTGRES_PORT = '0'
 $composeArgs = @('compose', '--project-name', $project, '--file', $composePath)
 $created = $false
 $backendCreated = $false
+$probeCreated = $false
 
 function Invoke-Compose {
     param([string[]]$Arguments)
@@ -50,7 +52,12 @@ try {
     # Stop only the smoke database, start API while it is unavailable, then recover it.
     Invoke-Compose @('stop', 'postgres')
     $databaseUrl = "postgresql+psycopg://${env:POSTGRES_USER}:${env:POSTGRES_PASSWORD}@postgres:5432/${env:POSTGRES_DB}"
-    $apiArgs = @('run', '--detach', '--name', $backendName, '--network', "${project}_default",
+    # The DB network is internal. A separate test-only bridge allows the host
+    # to probe API health without exposing the actual database network.
+    & docker network create $probeNetwork | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw 'Could not create smoke probe network.' }
+    $probeCreated = $true
+    $apiArgs = @('run', '--detach', '--name', $backendName, '--network', $probeNetwork,
         '--publish', '127.0.0.1::8000', '--env', 'APP_ENV=production', '--env', "DATABASE_URL=$databaseUrl",
         '--env', 'DATABASE_STARTUP_TIMEOUT_SECONDS=60', '--env', 'DATABASE_STARTUP_RETRY_SECONDS=1',
         '--env', 'JWT_SECRET=postgres-smoke-jwt-key-not-for-real-use-1234567890',
@@ -60,6 +67,8 @@ try {
     & docker @apiArgs | Out-Null
     if ($LASTEXITCODE -ne 0) { throw 'Could not launch gated backend container.' }
     $backendCreated = $true
+    & docker network connect "${project}_database" $backendName
+    if ($LASTEXITCODE -ne 0) { throw 'Could not connect smoke API to database network.' }
     $binding = (& docker port $backendName 8000/tcp | Out-String).Trim()
     $waiting = $false
     for ($attempt = 0; $attempt -lt 15; $attempt++) {
@@ -84,6 +93,7 @@ try {
     Write-Output 'PostgreSQL and backend startup verification complete.'
 } finally {
     if ($backendCreated) { & docker rm --force $backendName | Out-Null }
+    if ($probeCreated) { & docker network rm $probeNetwork | Out-Null }
     if ($created) {
         # The unique project and volume were created only by this script.
         if ($project -notmatch '^unicircle-pg-smoke-[0-9a-f]{12}$') { throw 'Unexpected cleanup scope.' }

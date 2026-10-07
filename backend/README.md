@@ -439,7 +439,7 @@ Recompile when changing `pyproject.toml`, then rebuild and test. From the
 repository root, use the same Linux/Python base and pinned pip-tools version:
 
 ```powershell
-docker run --rm --mount "type=bind,source=$PWD/backend,target=/src" --workdir /src python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 sh -c "python -m pip install pip-tools==7.6.1 && pip-compile --generate-hashes --strip-extras --no-emit-index-url --no-emit-trusted-host --output-file=requirements.lock pyproject.toml"
+docker run --rm --mount "type=bind,source=$PWD/backend,target=/src" --workdir /src python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258 sh -c "python -m pip install pip-tools==7.6.1 && pip-compile --generate-hashes --strip-extras --no-emit-index-url --no-emit-trusted-host --output-file=requirements.lock pyproject.toml"
 ```
 
 Add `--upgrade` to `pip-compile` for an intentional dependency refresh. Review
@@ -448,7 +448,9 @@ receive OS/Python security fixes. See
 [Docker's image-building guidance](https://docs.docker.com/build/building/best-practices/)
 and [pip-tools' reproducibility guidance](https://pip-tools.readthedocs.io/en/stable/).
 Local PostgreSQL is documented in [the Docker guide](../docs/docker/README.md).
-Full frontend/backend Compose integration remains Phase 10.4.
+Full Compose integration, ordered migrations and hardening are documented in
+[the Docker guide](../docs/docker/README.md). Use `scripts/build_docker.ps1` for
+commit-SHA/version tags instead of the older phase-specific smoke tags above.
 
 ### Repeatable image smoke check
 

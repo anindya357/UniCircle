@@ -1,3 +1,4 @@
+import { formatMessageTime } from "@/features/assistant/lib/format-message-time";
 import type { CampusAssistantMessage } from "@/features/assistant/types/campus-assistant";
 
 import styles from "./campus-assistant-page.module.css";
@@ -5,15 +6,6 @@ import styles from "./campus-assistant-page.module.css";
 type AssistantMessageProps = Readonly<{
   message: CampusAssistantMessage;
 }>;
-
-const messageTimeFormatter = new Intl.DateTimeFormat("en-BD", {
-  hour: "numeric",
-  minute: "2-digit",
-});
-
-function formatMessageTime(value: string) {
-  return messageTimeFormatter.format(new Date(value));
-}
 
 function ResponseText({ children }: Readonly<{ children: string }>) {
   return children.split("\n\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>);

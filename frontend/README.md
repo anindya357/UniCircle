@@ -82,8 +82,8 @@ to `.next/cache`; application code remains root-owned. `/` is the Docker livenes
 check and remains available without a backend connection.
 
 `BACKEND_API_URL` is a server-only runtime value. Docker Desktop uses
-`host.docker.internal` for a host backend; a future Compose backend will use its
-service name. Never pass database/JWT/SMTP secrets to this image. No public build
+`host.docker.internal` for a host backend; Compose uses `http://backend:8000`.
+Never pass database/JWT/SMTP secrets to this image. No public build
 variables are currently required; `NEXT_PUBLIC_API_URL` is the unused legacy
 placeholder and does not control authenticated BFF requests. Any future
 `NEXT_PUBLIC_*` value is public and frozen during the build, so never use it for
@@ -106,3 +106,18 @@ by `docker rm unicircle-frontend` to remove only the API-facing frontend contain
 This Next.js version returns exit code 143 after graceful Docker SIGTERM cleanup;
 that signal-based exit is expected, not an application crash.
 See [the Docker guide](../docs/docker/README.md) for local PostgreSQL setup.
+
+## Integrated Docker stack (Phases 10.4 and 10.5)
+
+The full stack, ordered migrations, runtime secrets, private networking,
+read-only/non-root hardening, versioned builds and vulnerability gate are covered
+in [docs/docker/README.md](../docs/docker/README.md). For isolated production-image
+browser/API/PostgreSQL journeys after a build, run from this directory:
+
+```powershell
+node scripts/verify_compose.mjs IMAGE_TAG
+```
+
+The test uses production images, a temporary database, synthetic users, and an
+isolated TLS/authenticated SMTP capture fixture. It never sends external email
+or calls your real model service, and removes only its own Docker resources.
