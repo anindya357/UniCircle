@@ -71,8 +71,15 @@ Ollama stays in the existing E-drive host installation. The backend-only
 `OLLAMA_BASE_URL` defaults to `http://host.docker.internal:11434` on Docker Desktop;
 verify model-service/firewall reachability without exposing it publicly. Linux
 hosts need an explicitly reachable private model endpoint. Do not move/download
-models into app images. The new DB needs explicit knowledge ingestion before
-grounded answers are available:
+models into app images.
+
+The current host endpoint is reachable from Docker, but its `/api/tags` response
+returned no models during this review. Confirm that your existing E-drive model
+directory is used by the running Ollama process and that both configured model
+tags appear in `ollama list` before testing live RAG. No model files or global
+Ollama settings were changed by this phase.
+
+The new DB needs explicit knowledge ingestion before grounded answers are available:
 
 ```powershell
 docker compose --env-file .env.compose exec backend python -m app.modules.assistant.ingest

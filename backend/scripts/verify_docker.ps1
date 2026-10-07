@@ -102,7 +102,13 @@ print('Non-root permissions, runtime dependencies, migrations, snapshots, and im
     & docker stop --time 15 $containerName | Out-Null
     if ($LASTEXITCODE -ne 0) { throw 'Could not stop the API container.' }
     $exitCode = (& docker inspect --format '{{.State.ExitCode}}' $containerName | Out-String).Trim()
+    # Docker preserves Uvicorn's stderr. Windows PowerShell must capture that
+    # stream without treating normal INFO logs as terminating native errors.
+    $ErrorActionPreference = 'Continue'
     $shutdownLogs = (& docker logs $containerName 2>&1 | Out-String)
+    $logExit = $LASTEXITCODE
+    $ErrorActionPreference = 'Stop'
+    if ($logExit -ne 0) { throw 'Could not read API shutdown logs.' }
     if ($exitCode -notin @('0', '143') -or $shutdownLogs -notmatch 'Application shutdown complete\.') {
         throw "API did not complete graceful shutdown: exit=$exitCode"
     }

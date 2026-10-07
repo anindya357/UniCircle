@@ -123,6 +123,20 @@ try {
   console.log(
     "Migrations, health, private routing, read-only/non-root permissions, and secret exclusions passed.",
   );
+  // Reuse the public-page/media and runtime-file exclusion checks as well.
+  execFileSync(
+    process.execPath,
+    [
+      fileURLToPath(new URL("./verify_docker.mjs", import.meta.url)),
+      baseURL,
+      ids.frontend,
+    ],
+    {
+      cwd: fileURLToPath(new URL("../", import.meta.url)),
+      env,
+      stdio: "inherit",
+    },
+  );
   console.log(
     compose(
       ["exec", "-T", "backend", "python", "-"],
@@ -477,18 +491,35 @@ try {
       "/profile",
       "/notifications",
     ]) {
-      const response = await student.page.goto(path, { waitUntil: "networkidle" });
+      // Live notifications/polling and map tiles need not go network-idle.
+      // Wait for document/assets and the rendered UI instead.
+      const response = await student.page.goto(path, {
+        waitUntil: "load",
+        timeout: 60_000,
+      });
       assert.equal(response.status(), 200, path);
-      await expect(student.page.locator("main")).toBeVisible();
+      // Next.js streaming can temporarily retain a hidden fallback main.
+      // Require exactly one visible main, not an arbitrary first match.
+      await expect(
+        student.page.locator("main:visible"),
+        `Main content at ${path} (${viewport.width}px)`,
+      ).toHaveCount(1, { timeout: 30_000 });
       await expect(
         student.page.getByText("Page not found", { exact: true }),
       ).toHaveCount(0);
-      assert(
-        await student.page.evaluate(
-          () => document.documentElement.scrollWidth <= window.innerWidth + 1,
-        ),
-        `Overflow at ${path}`,
-      );
+      await student.page.evaluate(() => document.fonts.ready);
+      await expect
+        .poll(
+          () =>
+            student.page.evaluate(
+              () => document.documentElement.scrollWidth <= window.innerWidth + 1,
+            ),
+          {
+            timeout: 10_000,
+            message: `Overflow at ${path} (${viewport.width}px)`,
+          },
+        )
+        .toBe(true);
     }
     await student.page.screenshot({
       path: `${root}/tmp/docker-compose/${viewport.width}-authenticated.png`,

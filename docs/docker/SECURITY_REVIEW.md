@@ -13,7 +13,9 @@ high/critical findings, including those without available patches. Reports are
 local ignored artifacts in `tmp/docker-security/reports/`; rerun before every
 release because vulnerability data changes.
 
-The verification build `phase10.5-dirty` was scanned on 7 October 2026 UTC:
+Clean-checkout images tagged `ba42f16abe59` (full source revision
+`ba42f16abe59dc1a65cc17e62039ace5fe231b62`) were scanned on 7 October 2026 UTC.
+Results match the earlier `phase10.5-dirty` verification build:
 
 | Runtime image                  | High | Critical | Findings with a reported fix |
 | ------------------------------ | ---: | -------: | ---------------------------: |
@@ -23,7 +25,7 @@ The verification build `phase10.5-dirty` was scanned on 7 October 2026 UTC:
 
 These are scanner package/finding counts, not confirmed exploitable application
 paths. The scan reports no high/critical Python production-package findings,
-no high/critical frontend Node-package findings, and no Alpine OS findings.
+no high/critical frontend Node-package findings, and no high/critical Alpine OS findings.
 This does not establish that lower-severity vulnerabilities are absent.
 
 Before available patches and runtime-tool removal, the backend/frontend scans

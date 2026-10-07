@@ -2043,30 +2043,71 @@ postgres
 
 Plus other infrastructure only if required by the finalized architecture.
 
-- [ ] Create shared network.
-- [ ] Configure service names.
-- [ ] Configure backend → PostgreSQL connection.
-- [ ] Configure frontend → backend URL.
-- [ ] Configure volumes.
-- [ ] Configure health checks.
-- [ ] Verify application starts from a clean clone using documented commands.
-- [ ] Apply database migrations in the Docker workflow.
-- [ ] Verify all main user flows in Docker environment.
+- [x] Create shared network.
+- [x] Configure service names.
+- [x] Configure backend → PostgreSQL connection.
+- [x] Configure frontend → backend URL.
+- [x] Configure volumes.
+- [x] Configure health checks.
+- [x] Verify application starts from a clean clone using documented commands.
+- [x] Apply database migrations in the Docker workflow.
+- [x] Verify all main user flows in Docker environment.
+
+The integrated stack includes frontend, backend, PostgreSQL and a one-shot
+Alembic migration job with ordered health/startup dependencies. App traffic and
+the internal database network are separated; no API host port is published.
+Database data persists in a named volume. Clean-checkout builds and startup use
+commit-tagged production images without native `.env`, virtual environments or
+`node_modules`. Test configuration uses synthetic secrets/accounts and an
+isolated TLS/authenticated mail-capture service, never the real database.
+
+Automated Docker checks cover desktop/mobile public pages and campus media,
+registration/OTP/login/logout, Secure/HttpOnly sessions, directory/explorer,
+club/event administration and permissions, registration/interest/membership,
+resource acceptance/private chat, forum moderation, announcements/notifications,
+transport administration, authenticated pages, persistence and graceful shutdown.
+The assistant empty-index fallback is tested. External SMTP-provider delivery
+and populated-corpus model inference require separate environment acceptance;
+the reachable host Ollama currently reports no installed model tags. Existing
+native settings/data and global model configuration were not changed.
+See `docs/docker/README.md` and `frontend/scripts/verify_compose.mjs`.
 
 ---
 
 # 10.5 Production Docker hardening
 
-- [ ] Minimize image sizes.
-- [ ] Pin/reproduce dependencies.
-- [ ] Remove development-only tools from production image where possible.
-- [ ] Run containers as non-root where practical.
-- [ ] Configure production logging to stdout/stderr.
-- [ ] Configure graceful shutdown.
-- [ ] Verify health endpoints.
-- [ ] Verify no `.env`/secret file is copied into image.
-- [ ] Scan/review dependencies and images.
-- [ ] Tag images using commit SHA/version.
+- [x] Minimize image sizes.
+- [x] Pin/reproduce dependencies.
+- [x] Remove development-only tools from production image where possible.
+- [x] Run containers as non-root where practical.
+- [x] Configure production logging to stdout/stderr.
+- [x] Configure graceful shutdown.
+- [x] Verify health endpoints.
+- [x] Verify no `.env`/secret file is copied into image.
+- [x] Scan/review dependencies and images.
+- [x] Tag images using commit SHA/version.
+
+Digest-pinned multi-stage images contain only runtime artifacts/locked
+dependencies; frontend npm/npx/Corepack/Yarn and development tools are excluded.
+Available base-package fixes and a compatible `source-map-js` patch were applied.
+All app/migration/database containers are non-root with read-only roots, dropped
+capabilities, no-new-privileges and bounded writable tmpfs/PIDs. Logs are rotated
+stdout/stderr; init-managed shutdown is verified, including API shutdown-complete
+logs. Build helpers use commit-SHA/version tags and OCI revision labels; verified
+clean-checkout images are tagged `ba42f16abe59`. The production preparation
+overlay removes the database host port without choosing a hosting provider.
+All 109 backend tests and 24 frontend tests pass, along with production builds,
+image smoke checks and isolated database persistence/startup-recovery checks.
+
+**Security review is complete, but production release is not approved.**
+The high/critical image gate still fails: backend 55, frontend 49 and PostgreSQL
+22 findings remain after available patches. No findings were suppressed or
+accepted automatically. The production npm audit reports zero findings, while
+development-toolchain findings are documented for a reviewed future upgrade.
+Resolve remaining image findings or obtain explicit documented risk acceptance
+before deployment. See `docs/docker/SECURITY_REVIEW.md` and
+`scripts/scan_docker.ps1`. Production HTTPS, secrets, backups, resource policy and
+real SMTP/RAG acceptance remain deployment prerequisites, not silently completed.
 
 ---
 
