@@ -490,3 +490,17 @@ feature integration suite or external-service connectivity testing.
 The liveness-only check overrides the default command to avoid contacting a
 database; `scripts/verify_postgres_docker.ps1` separately tests the default gated
 startup against a real, isolated PostgreSQL container.
+
+## Continuous integration (Phase 11)
+
+GitHub Actions now runs Ruff lint/format checks, validates the curated knowledge
+files, runs the complete unit/API suite, applies Alembic to disposable PostgreSQL
+and runs PostgreSQL-specific HTTP integration tests. Docker builds are checked
+after both frontend and backend jobs succeed. See the
+[CI guide](../.github/workflows/README.md) for commands, reports, branch policy
+and security boundaries. Test tools are pinned in `requirements-ci.txt`.
+
+PostgreSQL tests use `CI_TEST_DATABASE_URL` only, require a disposable database
+named `unicircle_ci`, and migrate/drop their own randomly generated schemas.
+They skip when that variable is absent; they never reuse the normal application
+database. SMTP is faked and no real CUET user, email or model server is involved.

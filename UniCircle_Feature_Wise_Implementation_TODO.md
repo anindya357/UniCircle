@@ -2132,41 +2132,54 @@ Trigger on pull requests.
 
 Frontend job:
 
-- [ ] Install dependencies.
-- [ ] Lint.
-- [ ] Type-check.
-- [ ] Run frontend unit/component tests.
-- [ ] Build Next.js production bundle.
+- [x] Install dependencies.
+- [x] Lint.
+- [x] Type-check.
+- [x] Run frontend unit/component tests.
+- [x] Build Next.js production bundle.
 
 Backend job:
 
-- [ ] Install Python dependencies.
-- [ ] Lint/format check according to team standard.
-- [ ] Run backend unit tests.
-- [ ] Start test PostgreSQL service.
-- [ ] Run migration.
-- [ ] Run API/integration tests.
+- [x] Install Python dependencies.
+- [x] Lint/format check according to team standard.
+- [x] Run backend unit tests.
+- [x] Start test PostgreSQL service.
+- [x] Run migration.
+- [x] Run API/integration tests.
 
 Docker job:
 
-- [ ] Build backend image.
-- [ ] Build frontend image.
-- [ ] Fail CI if Docker build fails.
+- [x] Build backend image.
+- [x] Build frontend image.
+- [x] Fail CI if Docker build fails.
 
 Optional later:
 
 - [ ] Dependency/security scan.
 - [ ] Coverage report.
-- [ ] Upload test artifacts/reports.
+- [x] Upload test artifacts/reports.
+
+Implemented in `.github/workflows/ci.yml` for pull requests to `main`, pushes to
+`main`, and manual runs. PostgreSQL-specific tests use migrated, disposable
+schemas and explicit test-only credentials; SMTP/LLM services are faked. Local
+verification: 122 backend tests and 24 frontend tests passed, frontend lint,
+type-check/build, backend lint/format and workflow validation passed. Full Linux
+PostgreSQL/Docker validation runs in GitHub Actions. See the CI workflow README.
 
 ---
 
 # 11.2 CI branch protection
 
 - [ ] Require CI before merge to `main`.
-- [ ] Require appropriate review.
-- [ ] Prevent direct production deployment from unreviewed feature branches.
-- [ ] Keep production secrets unavailable to pull requests from untrusted contexts.
+- [x] Require appropriate review.
+- [x] Prevent direct production deployment from unreviewed feature branches.
+- [x] Keep production secrets unavailable to pull requests from untrusted contexts.
+
+Preserve the existing one-reviewer rule, stale-approval dismissal, conversation
+resolution and owner/admin bypass for the requested direct `main` workflow.
+Add the stable `CI gate` required check after its first successful Actions run.
+The workflow has read-only permissions, immutable action pins, no production
+secrets, no image publishing and no deployment steps. Phase 12 is not started.
 
 ---
 
