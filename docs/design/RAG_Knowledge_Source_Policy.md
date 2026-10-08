@@ -1,43 +1,78 @@
 # RAG knowledge-source policy
 
-## Approved scope
+## Default: reviewed local knowledge
 
-The initial UniCircle knowledge base accepts public HTTPS pages and public PDF
-documents on exactly `cuet.ac.bd`. Related CUET subdomains are not trusted by
-suffix matching and must be reviewed and explicitly added to
-`RAG_ALLOWED_HOSTS` before ingestion. The initial seed is
-`https://cuet.ac.bd/`.
+The 2026-10-08 requirement replaces whole-site scraping as the runtime corpus.
+`backend/app/modules/assistant/knowledge/CUET_Knowledge_Base.md` is authoritative;
+the `.txt` file is its deterministic plain-text companion. Both ship with the
+backend. Ingestion validates consistency and never indexes both copies.
 
-An acceptable source is public, CUET-controlled, campus-related, readable
-without authentication, and useful for students. Login/admin/student portals,
-API routes, social sites, unrelated external links, media/static assets,
-archives, office documents, and query-string variants are excluded. A redirect
-outside the allowlist is rejected.
+The independently written summary contains stable section IDs, factual text,
+public evidence URLs, review dates and review-after dates. Sources include CUET
+documents, government institutional information, QS/THE/EduRank's own tables,
+dated reputable reporting, and attributed OpenStreetMap-derived campus markers.
+Community food listings establish cafeteria identity, not verified prices or
+opening hours. Map positions are approximate, not navigation guarantees.
+Prototype pages and old summaries are cross-checked; navigation-only extraction
+cannot establish academic or personnel counts.
 
-## Crawl and refresh controls
+Rankings identify publisher and edition. Current appointments take precedence
+over old biographies. Historical pro-VC appointments are not current appointments;
+inability to identify a holder does not prove vacancy. No dummy names, fabricated
+phones, unverified room directions, live admission dates or invented teacher
+headcounts belong in this corpus.
 
-The ingestion CLI uses a same-host breadth-first crawl with configured page and
-depth limits, a descriptive user agent, `robots.txt` checks, request throttling,
-timeouts, a 15 MB document limit, URL canonicalization, and content hashing.
-HTML is extracted with LangChain `WebBaseLoader`; PDF text uses `PyPDFLoader`.
-The recursive splitter removes blank/repeated lines and creates overlapping
-chunks.
+## Ingestion and refresh
 
-Re-running the command is the refresh strategy. Unchanged hashes are not
-re-embedded. A temporary refresh failure keeps previously indexed content
-available and records the error. Run a reviewed refresh weekly or after major
-CUET publishing changes; do not run it inside an API request.
+Run `python -m app.modules.assistant.ingest --check` to validate files without
+database/model access. After editing Markdown, use `--export-txt` in a writable
+checkout, review the companion, and run ingestion without crawler flags.
+In Docker, rebuild the backend image after editing the corpus and run the
+existing ingestion command inside the backend container.
 
-## Storage, retrieval, and safety
+LangChain splits each section independently; chunks repeat their topic and
+as-of date. Ollama embeds with the configured model; chunks and evidence metadata
+are stored in PostgreSQL. All vectors are prepared and validated before an
+atomic commit. Provider failures cannot remove the last good index. Unchanged
+sections skip embedding; model changes and `--force` rebuild vectors.
 
-Local `embeddinggemma:300m` vectors are stored with chunks in PostgreSQL JSON and
-ranked by cosine similarity in the bounded query service. This keeps the first
-deployment self-contained. If the corpus grows beyond the current 10,000-chunk
-retrieval ceiling, migrate the same model to pgvector or a separately approved
-vector engine before increasing that ceiling.
+Re-verify leadership weekly, rankings monthly, and campus/academic facts on their
+recorded quarterly/half-yearly dates. Ingestion updates index time, not research
+validity. Update review dates only after checking evidence. Unknown administrative
+appointments should be confirmed with the Registrar.
 
-Every answer returns the source URL, title, and excerpt. Retrieved web text is
-untrusted reference data and cannot grant permissions or override the system
-prompt. Raw questions and conversations are not retained; only a SHA-256
-question digest, outcome, source count, user ID, and timestamp are stored for
-rate/cost safeguards.
+## Retrieval and privacy
+
+`RAG_KNOWLEDGE_MODE=curated` is the default. Retrieve only local sources whose
+corpus hash matches the bundled document, pipeline version and embedding model
+match, and review period includes today in Bangladesh time. Legacy website rows
+remain stored for recovery but cannot contaminate curated answers. Removed
+sections and old snapshots are excluded. Expired sections produce a no-context
+answer rather than a stale current appointment. Admin knowledge status counts
+eligible sources/chunks and reports review-due sections.
+
+Cosine similarity ranks a bounded corpus; low-scoring chunks are not sent to Qwen.
+Retrieved content remains untrusted data, never instructions or authority.
+The prompt respects dates and uncertainty. Evidence URLs stay in files/database
+for maintenance; answers return no source cards, URLs or citation markers.
+Audits store a question hash, user ID, outcome, source count and timestamp,
+not raw questions or conversations. Ollama stays backend-only.
+
+## Optional legacy crawler
+
+`--web` explicitly invokes the strict approved-host HTTPS crawler with robots
+checks, throttling, page/depth/download limits, `WebBaseLoader` for HTML and
+`PyPDFLoader` for PDFs. Adding a host requires review; portals, assets and unrelated
+sources remain blocked. Web results enter retrieval only if an operator
+deliberately selects `RAG_KNOWLEDGE_MODE=web`. Manually consulting external
+evidence does not expand that crawler allowlist. There is no scraping or online
+research inside a question request.
+
+## Verification boundary
+
+Deterministic-provider tests cover local loading, file parity, grounding
+contracts, old-source exclusion, review expiry, corpus/model compatibility,
+idempotency and failure preservation. Live answer quality requires both configured
+model tags and real embeddings. At this implementation check the local Ollama
+`/api/tags` returned no models; live index rebuilding remains a pending acceptance
+step, not a claimed pass.

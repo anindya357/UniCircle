@@ -269,22 +269,42 @@ ollama pull embeddinggemma:300m
 Then run from `backend/`:
 
 ```powershell
-.\.venv\Scripts\python -m app.modules.assistant.ingest --max-pages 500
+.\.venv\Scripts\python -m app.modules.assistant.ingest --check
+.\.venv\Scripts\python -m app.modules.assistant.ingest
 ```
 
-The crawler starts at `https://cuet.ac.bd/`, follows only explicitly allowed
-HTTPS hosts, respects crawl limits and `robots.txt`, excludes portals/assets,
-uses LangChain `WebBaseLoader` for HTML and `PyPDFLoader` for PDFs, and stores
-source URL/title/date metadata. Re-run the same command for an incremental
-refresh; unchanged content hashes are not re-embedded. Review
-`docs/design/RAG_Knowledge_Source_Policy.md` before adding any CUET subdomain.
+The default corpus is `app/modules/assistant/knowledge/CUET_Knowledge_Base.md`,
+with a matching `.txt` companion. Sixteen independently written, reviewed
+sections cover campus location, academics, institutes, halls, ITBI, TSC,
+rankings and leadership, with evidence URLs, review dates and explicit unknowns.
+There are no website requests during local ingestion or question answering.
+Edit the Markdown, run `python -m app.modules.assistant.ingest --export-txt`
+using your activated project environment, check both files, then run ingestion.
+Re-indexing is atomic; model failure leaves the previous index intact. Unchanged
+sections skip embedding; model changes or `--force` rebuild vectors. Docker
+images include both files, so rebuild the backend after editing the corpus.
+
+`RAG_KNOWLEDGE_MODE=curated` is the default. Old scraped sources remain in the
+database but are excluded from curated retrieval; no users or other app data
+are deleted. Retrieval also excludes removed/changed snapshots, embeddings
+from another model, and sections past their review date. Re-verify facts and
+update dates before refreshing; re-running ingestion does not renew review dates.
+Leadership needs weekly review, rankings monthly review, and general campus
+facts quarterly/half-yearly review. Admin knowledge status reports review-due
+sections. Unknown pro-VC and teacher-headcount information is not fabricated.
+
+The legacy crawler remains an explicit research tool:
+`python -m app.modules.assistant.ingest --web --max-pages 500`.
+It still applies the strict approved-host/robots policy. Scraped results do not
+enter assistant answers unless an operator explicitly selects
+`RAG_KNOWLEDGE_MODE=web`. See `docs/design/RAG_Knowledge_Source_Policy.md`.
 
 Authenticated users ask through `POST /api/v1/assistant/ask`. The service
 retrieves relevant chunks, sends only those public excerpts and the question to
 the locally hosted Qwen model, returns a clean answer without citation/source
 metadata, and emits a no-context response when retrieval confidence is insufficient. Per-user fixed-window limits and output
 limits bound resource usage. `GET /api/v1/admin/assistant/knowledge` reports
-corpus counts to App Admins. Browser requests use the same-origin Next.js proxy;
+eligible corpus counts and review-due sections to App Admins. Browser requests use the same-origin Next.js proxy;
 the Ollama service is never exposed to browser JavaScript.
 
 ## Transport

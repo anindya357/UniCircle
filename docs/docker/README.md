@@ -79,7 +79,10 @@ directory is used by the running Ollama process and that both configured model
 tags appear in `ollama list` before testing live RAG. No model files or global
 Ollama settings were changed by this phase.
 
-The new DB needs explicit knowledge ingestion before grounded answers are available:
+The new DB needs explicit knowledge ingestion before grounded answers are available.
+This now loads the bundled reviewed CUET Markdown/TXT corpus, not the website
+crawler. Rebuild the backend image after corpus changes. Configured Qwen and
+embedding models must be present; ingestion failure leaves any prior index intact:
 
 ```powershell
 docker compose --env-file .env.compose exec backend python -m app.modules.assistant.ingest

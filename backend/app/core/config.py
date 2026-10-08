@@ -42,6 +42,7 @@ class Settings(BaseSettings):
     ollama_base_url: str = "http://127.0.0.1:11434"
     ollama_chat_model: str = "qwen3:1.7b"
     ollama_embedding_model: str = "embeddinggemma:300m"
+    rag_knowledge_mode: Literal["curated", "web"] = "curated"
     rag_allowed_hosts: str = "cuet.ac.bd"
     rag_seed_urls: str = "https://cuet.ac.bd/"
     rag_max_pages: int = Field(default=500, ge=1, le=5000)

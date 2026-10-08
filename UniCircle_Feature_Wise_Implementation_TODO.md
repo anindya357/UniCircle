@@ -1428,9 +1428,20 @@ Admin:
 
 # Backend Feature 10 — Campus AI Assistant / RAG
 
-The workflow says the knowledge base will be created from CUET’s main website and related CUET websites/articles, and answers must be based on the knowledge base.
+Updated requirement (2026-10-08): use an independently written, reviewed CUET
+knowledge base in matching Markdown and TXT files. Research may use official
+university/government pages, original ranking publishers, reliable reporting
+and attributed campus maps; do not rely on inaccurate whole-site scraping.
+Answers remain grounded in the reviewed local corpus and omit displayed sources.
 
 ## 7.33 RAG ingestion foundation
+
+- [x] Create curated CUET Markdown and plain-text knowledge files with review dates and evidence links.
+- [x] Cover location, faculties/departments, institutes, halls, ITBI, TSC, rankings and administration; label unconfirmed facts.
+- [x] Make local section-aware ingestion the default; retain web crawling only as an explicit opt-in.
+- [x] Rebuild atomically and reject invalid or incompatible embeddings.
+- [x] Exclude legacy scrapes, changed snapshots and review-expired sections from curated answers.
+- [ ] Rebuild the live curated index and evaluate actual Qwen answers after the running Ollama server exposes both configured model tags (currently `/api/tags` is empty).
 
 - [x] Finalize approved knowledge-source list.
 - [x] Define “official/acceptable CUET source” policy.

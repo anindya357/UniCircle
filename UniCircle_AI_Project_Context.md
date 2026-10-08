@@ -815,10 +815,20 @@ Its purpose is to answer campus-related questions using a CUET knowledge base.
 
 ## 20.1 Knowledge Sources
 
-The workflow states that campus information will be taken from:
+Updated requirement (2026-10-08): maintain a reviewed, independently written
+`CUET_Knowledge_Base.md` and its matching `.txt` companion under the backend
+assistant module. These local files are the default runtime knowledge source.
+Research may use:
 
 - CUET main website.
 - Related CUET websites/articles.
+- Government institutional information, original ranking publishers, reliable
+  dated reporting, and attributed campus maps for otherwise unavailable facts.
+
+Every section records evidence URLs, its review date and a review-after date.
+Unknown or conflicting facts are labelled; historical appointments and exact
+map directions must not be invented. No indiscriminate website scrape enters
+the curated index. Old web chunks remain stored but are not retrieved by default.
 
 The approved system design should define exactly which sources are trusted/allowed.
 
@@ -829,7 +839,7 @@ Do not indiscriminately scrape or ingest arbitrary websites.
 Conceptual flow:
 
 ```text
-Approved CUET content
+Reviewed local CUET Markdown/TXT (web crawling is explicit research opt-in)
 → load/extract text
 → clean/process
 → chunk

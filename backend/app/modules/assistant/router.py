@@ -11,6 +11,11 @@ from app.core.auth import AuthIdentity, get_current_admin, get_current_user
 from app.core.config import Settings, get_settings
 from app.db.models import RagChunk, RagSource
 from app.db.session import get_db
+from app.modules.assistant.curated import (
+    knowledge_today,
+    load_knowledge,
+    source_is_eligible,
+)
 from app.modules.assistant.schemas import AssistantQuestion
 from app.modules.assistant.service import RagAssistantService
 
@@ -37,23 +42,41 @@ def ask_assistant(
 def knowledge_status(
     db: Annotated[Session, Depends(get_db)],
     _admin: Annotated[AuthIdentity, Depends(get_current_admin)],
+    settings: Annotated[Settings, Depends(get_settings)],
 ) -> ApiResponse[dict]:
+    snapshot = load_knowledge() if settings.rag_knowledge_mode == "curated" else None
+    eligible = [
+        source
+        for source in db.scalars(
+            select(RagSource).where(RagSource.status.in_(("active", "unchanged")))
+        )
+        if source_is_eligible(source, settings, snapshot)
+    ]
     source_count = db.scalar(select(func.count()).select_from(RagSource)) or 0
-    active_count = (
+    active_count = len(eligible)
+    chunk_count = (
         db.scalar(
             select(func.count())
-            .select_from(RagSource)
-            .where(RagSource.status.in_(("active", "unchanged")))
+            .select_from(RagChunk)
+            .where(RagChunk.source_id.in_([source.id for source in eligible]))
         )
         or 0
     )
-    chunk_count = db.scalar(select(func.count()).select_from(RagChunk)) or 0
-    latest = db.scalar(select(func.max(RagSource.crawled_at)))
+    latest = max((source.crawled_at for source in eligible), default=None)
     return ApiResponse(
         data={
             "sourceCount": source_count,
             "activeSourceCount": active_count,
             "chunkCount": chunk_count,
             "lastCrawledAt": latest.isoformat() if latest else None,
+            "knowledgeMode": settings.rag_knowledge_mode,
+            "bundledSectionCount": len(snapshot.sections) if snapshot else 0,
+            "reviewDueSections": [
+                section.key
+                for section in snapshot.sections
+                if section.review_after < knowledge_today()
+            ]
+            if snapshot
+            else [],
         }
     )

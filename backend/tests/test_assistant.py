@@ -1,7 +1,7 @@
 """Campus AI Assistant source policy, retrieval, and API contracts."""
 
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 
 import pytest
 from bs4 import BeautifulSoup
@@ -16,6 +16,14 @@ from app.core.errors import AppError
 from app.db.base import Base
 from app.db.models import RagChunk, RagQueryAudit, RagSource, User
 from app.main import create_app
+from app.modules.assistant.curated import (
+    CURATED_PREFIX,
+    KNOWLEDGE_FILE,
+    ingest_curated,
+    load_knowledge,
+    plain_text,
+    source_is_eligible,
+)
 from app.modules.assistant.ingest import clean_text, parse_page_date
 from app.modules.assistant.policy import SourcePolicy
 from app.modules.assistant.router import get_assistant_service
@@ -50,6 +58,8 @@ class FakeRouteService:
 
 @pytest.fixture
 def assistant_stack(settings):
+    # Legacy web retrieval remains supported only when explicitly selected.
+    settings = settings.model_copy(update={"rag_knowledge_mode": "web"})
     engine = create_engine(
         "sqlite+pysqlite://",
         connect_args={"check_same_thread": False},
@@ -75,6 +85,14 @@ def assistant_stack(settings):
     yield db, user, settings
     db.close()
     engine.dispose()
+
+
+@pytest.fixture(autouse=True)
+def fixed_knowledge_review_date(monkeypatch):
+    # Retrieval tests must not expire just because CI runs after the snapshot date.
+    monkeypatch.setattr(
+        "app.modules.assistant.curated.knowledge_today", lambda: date(2026, 10, 8)
+    )
 
 
 def test_source_policy_restricts_hosts_protocols_and_portals():
@@ -128,7 +146,7 @@ def test_grounded_retrieval_returns_answer_without_sources(assistant_stack):
         content_hash="a" * 64,
         status="active",
         crawled_at=datetime.now(UTC),
-        source_metadata={"loader": "WebBaseLoader"},
+        source_metadata={"embeddingModel": settings.ollama_embedding_model},
     )
     db.add(source)
     db.flush()
@@ -162,7 +180,7 @@ def test_retrieval_ranks_the_relevant_cuet_chunk_first(assistant_stack):
         content_hash="e" * 64,
         status="active",
         crawled_at=datetime.now(UTC),
-        source_metadata={},
+        source_metadata={"embeddingModel": settings.ollama_embedding_model},
     )
     unrelated = RagSource(
         url="https://cuet.ac.bd/notice",
@@ -171,7 +189,7 @@ def test_retrieval_ranks_the_relevant_cuet_chunk_first(assistant_stack):
         content_hash="f" * 64,
         status="active",
         crawled_at=datetime.now(UTC),
-        source_metadata={},
+        source_metadata={"embeddingModel": settings.ollama_embedding_model},
     )
     db.add_all([relevant, unrelated])
     db.flush()
@@ -222,7 +240,7 @@ def test_external_model_failure_is_a_safe_service_error(assistant_stack):
         content_hash="c" * 64,
         status="active",
         crawled_at=datetime.now(UTC),
-        source_metadata={"loader": "WebBaseLoader"},
+        source_metadata={"embeddingModel": settings.ollama_embedding_model},
     )
     db.add(source)
     db.flush()
@@ -265,3 +283,242 @@ def test_assistant_endpoint_is_authenticated_and_validated(settings):
     assert response.status_code == 200
     assert response.json()["data"]["status"] == "answered"
     assert invalid.status_code == 422
+
+
+class FakeDocumentEmbeddings:
+    def __init__(self):
+        self.calls = 0
+
+    def embed_documents(self, texts):
+        self.calls += 1
+        return [[1.0, 0.0] for _ in texts]
+
+
+def curated_settings(settings):
+    return settings.model_copy(update={"rag_knowledge_mode": "curated"})
+
+
+def test_curated_documents_are_synced_and_cover_requested_topics():
+    snapshot = load_knowledge()
+    assert len(snapshot.sections) == 16
+    topics = {section.key: section.text for section in snapshot.sections}
+    assert "18 academic departments" in topics["academic-counts"]
+    assert "five academic faculties" in topics["academic-counts"]
+    assert "nine student halls" in topics["halls"]
+    assert "four named research institutes" in topics["institutes"]
+    assert "1401+" in topics["rankings"] and "2027" in topics["rankings"]
+    assert "1401-1600" in topics["rankings"]
+    assert "Sheikh Shariful Alam" in topics["vice-chancellor"]
+    assert "could not be reliably established" in topics["pro-vc"]
+    assert "Saiful Islam" in topics["student-welfare"]
+    assert "22.46242" in topics["tsc"]
+    assert "22.46082" in topics["incubator"]
+    assert all(
+        section.sources and section.reviewed <= section.review_after
+        for section in snapshot.sections
+    )
+    markdown = KNOWLEDGE_FILE.read_text(encoding="utf-8")
+    assert KNOWLEDGE_FILE.with_suffix(".txt").read_text(encoding="utf-8") == (
+        plain_text(markdown)
+    )
+
+
+def test_curated_ingestion_is_offline_atomic_idempotent_and_model_aware(
+    assistant_stack, monkeypatch
+):
+    db, _, settings = assistant_stack
+    settings = curated_settings(settings)
+    embedder = FakeDocumentEmbeddings()
+
+    def no_network(*args, **kwargs):
+        raise AssertionError("Curated file loading must not scrape a website")
+
+    monkeypatch.setattr("requests.Session.get", no_network)
+    first = ingest_curated(db, settings, embedder=embedder)
+    second = ingest_curated(db, settings, embedder=embedder)
+    assert first["updated"] == 16 and first["chunks"] >= 16
+    assert second["unchanged"] == 16 and second["updated"] == 0
+    assert embedder.calls == 1
+    source = db.scalar(
+        select(RagSource).where(RagSource.url == CURATED_PREFIX + "vice-chancellor")
+    )
+    assert source.source_metadata["evidenceUrls"]
+    assert source.source_metadata["reviewedAt"] == "2026-10-08"
+    assert source_is_eligible(
+        source, settings, load_knowledge(), today=date(2026, 10, 8)
+    )
+    new_model = settings.model_copy(
+        update={"ollama_embedding_model": "different-model"}
+    )
+    third = ingest_curated(db, new_model, embedder=embedder)
+    assert third["updated"] == 16 and embedder.calls == 2
+    fourth = ingest_curated(db, new_model, embedder=embedder, force=True)
+    assert fourth["updated"] == 16 and embedder.calls == 3
+
+
+@pytest.mark.parametrize(
+    "bad_vector", [[], [0.0, 0.0], [float("nan"), 0.0], [float("inf"), 0.0]]
+)
+def test_invalid_vectors_never_replace_good_curated_index(assistant_stack, bad_vector):
+    db, _, settings = assistant_stack
+    settings = curated_settings(settings)
+    ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+    before = list(db.scalars(select(RagChunk.id)))
+
+    class BadEmbedder:
+        def embed_documents(self, texts):
+            return [bad_vector for _ in texts]
+
+    with pytest.raises(ValueError, match="invalid vector"):
+        ingest_curated(db, settings, embedder=BadEmbedder(), force=True)
+    assert list(db.scalars(select(RagChunk.id))) == before
+
+
+def test_provider_failure_preserves_existing_snapshot(assistant_stack):
+    db, _, settings = assistant_stack
+    settings = curated_settings(settings)
+    ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+    before = list(db.scalars(select(RagChunk.id)))
+
+    class UnavailableEmbedder:
+        def embed_documents(self, texts):
+            raise RuntimeError("Offline model server")
+
+    with pytest.raises(RuntimeError):
+        ingest_curated(db, settings, embedder=UnavailableEmbedder(), force=True)
+    assert list(db.scalars(select(RagChunk.id))) == before
+
+
+def test_curated_retrieval_excludes_legacy_scrapes_and_returns_no_sources(
+    assistant_stack,
+):
+    db, user, settings = assistant_stack
+    settings = curated_settings(settings)
+    db.add(
+        RagSource(
+            url="https://cuet.ac.bd/about",
+            title="Old navigation scrape",
+            content_type="text/html",
+            status="active",
+            crawled_at=datetime.now(UTC),
+            source_metadata={"embeddingModel": settings.ollama_embedding_model},
+        )
+    )
+    db.commit()
+    service = RagAssistantService(db, settings)
+    assert service._retrieve("Where is CUET?") == []
+    ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+    service = RagAssistantService(
+        db, settings, embeddings=FakeEmbeddings(), chat=FakeChat()
+    )
+    matches = service._retrieve("Where is CUET?")
+    assert matches
+    assert all(match.source.url.startswith(CURATED_PREFIX) for match in matches)
+    result = service.ask(str(user.id), "Where is CUET?")
+    assert result == {"answer": "CUET is in Raozan, Chattogram.", "status": "answered"}
+
+
+def test_eligibility_excludes_expired_changed_and_mismatched_model_sections(
+    assistant_stack,
+):
+    db, _, settings = assistant_stack
+    settings = curated_settings(settings)
+    ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+    source = db.scalar(
+        select(RagSource).where(RagSource.url == CURATED_PREFIX + "vice-chancellor")
+    )
+    snapshot = load_knowledge()
+    assert not source_is_eligible(source, settings, snapshot, today=date(2026, 10, 16))
+    assert not source_is_eligible(source, settings, snapshot, today=date(2026, 10, 7))
+    source.source_metadata = {**source.source_metadata, "corpusHash": "old"}
+    assert not source_is_eligible(source, settings, snapshot, today=date(2026, 10, 8))
+    source.source_metadata = {
+        **source.source_metadata,
+        "corpusHash": snapshot.digest,
+        "embeddingModel": "wrong-model",
+    }
+    assert not source_is_eligible(source, settings, snapshot, today=date(2026, 10, 8))
+
+
+def test_parser_rejects_unsynced_or_duplicated_sections(tmp_path):
+    path = tmp_path / "knowledge.md"
+    markdown = KNOWLEDGE_FILE.read_text(encoding="utf-8")
+    path.write_text(markdown, encoding="utf-8")
+    path.with_suffix(".txt").write_text("different content", encoding="utf-8")
+    with pytest.raises(ValueError, match="out of sync"):
+        load_knowledge(path)
+    duplicate = (
+        markdown
+        + "\n## identity | Duplicate\n"
+        + markdown.split("## identity | CUET identity, location and address\n", 1)[
+            1
+        ].split("\n## history", 1)[0]
+    )
+    path.write_text(duplicate, encoding="utf-8")
+    path.with_suffix(".txt").write_text(plain_text(duplicate), encoding="utf-8")
+    with pytest.raises(ValueError, match="unique stable slugs"):
+        load_knowledge(path)
+
+
+def test_nonfinite_cosine_vectors_are_rejected():
+    assert cosine_similarity([float("nan"), 0.0], [1.0, 0.0]) == -1
+    assert cosine_similarity([float("inf"), 0.0], [1.0, 0.0]) == -1
+
+
+def test_only_relevant_chunks_enter_prompt_and_evidence_urls_stay_internal(
+    assistant_stack,
+):
+    db, user, settings = assistant_stack
+    settings = curated_settings(settings)
+    ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+    for chunk in db.scalars(select(RagChunk)):
+        source = db.get(RagSource, chunk.source_id)
+        chunk.embedding = (
+            [1.0, 0.0] if source.url == CURATED_PREFIX + "rankings" else [0.0, 1.0]
+        )
+    db.commit()
+
+    class RankingChat:
+        def answer(self, *, question, context):
+            assert "QS World University Rankings 2027" in context
+            assert "THE" in context and "1401-1600" in context
+            assert "Sheikh Shariful Alam" not in context
+            assert "https://" not in context and CURATED_PREFIX not in context
+            assert "Reviewed: 2026-10-08" in context
+            return "QS 2027: 1401+. THE 2027: 1401-1600."
+
+    service = RagAssistantService(
+        db, settings, embeddings=FakeEmbeddings(), chat=RankingChat()
+    )
+    result = service.ask(str(user.id), "What is CUET's world rank?")
+    assert result["status"] == "answered"
+    assert "sources" not in result
+
+
+def test_admin_knowledge_status_counts_only_eligible_curated_data(assistant_stack):
+    from app.modules.assistant.router import knowledge_status
+
+    db, user, settings = assistant_stack
+    settings = curated_settings(settings)
+    stats = ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+    db.add(
+        RagSource(
+            url="https://cuet.ac.bd/stale-navigation",
+            title="Old scrape",
+            content_type="text/html",
+            status="active",
+            crawled_at=datetime.now(UTC),
+            source_metadata={"embeddingModel": settings.ollama_embedding_model},
+        )
+    )
+    db.commit()
+    data = knowledge_status(
+        db,
+        AuthIdentity(id=str(user.id), role="admin", is_active=True, is_verified=True),
+        settings,
+    ).data
+    assert data["sourceCount"] == 17
+    assert data["activeSourceCount"] == 16
+    assert data["chunkCount"] == stats["chunks"]
+    assert data["knowledgeMode"] == "curated"
+    assert data["reviewDueSections"] == []

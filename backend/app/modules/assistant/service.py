@@ -14,6 +14,12 @@ from sqlalchemy.orm import Session
 from app.core.config import Settings
 from app.core.errors import AppError
 from app.db.models import RagChunk, RagQueryAudit, RagSource
+from app.modules.assistant.curated import (
+    CURATED_PREFIX,
+    knowledge_today,
+    load_knowledge,
+    source_is_eligible,
+)
 
 SYSTEM_PROMPT = """You are the UniCircle Campus AI Assistant.
 Answer only from the CUET source excerpts supplied below.
@@ -22,6 +28,9 @@ Do not invent names, dates, phone numbers, policies, links, or procedures.
 If the excerpts do not answer the question, say that the indexed CUET information
 does not contain enough information. Do not include citations, source numbers,
 source URLs, or a source list in the answer.
+Respect each excerpt's review date and uncertainty statements. Identify rankings
+by publisher and edition, not a single universal rank. Never present a former
+officeholder as current. If current information is unverified, say so explicitly.
 Keep the answer concise and useful to CUET students."""
 
 
@@ -85,6 +94,8 @@ class OllamaChatProvider:
 def cosine_similarity(left: list[float], right: list[float]) -> float:
     if len(left) != len(right) or not left:
         return -1.0
+    if not all(math.isfinite(value) for value in (*left, *right)):
+        return -1.0
     dot = sum(a * b for a, b in zip(left, right, strict=True))
     left_norm = math.sqrt(sum(value * value for value in left))
     right_norm = math.sqrt(sum(value * value for value in right))
@@ -141,13 +152,26 @@ class RagAssistantService:
         return audit
 
     def _retrieve(self, question: str) -> list[RetrievedChunk]:
+        snapshot = (
+            load_knowledge() if self.settings.rag_knowledge_mode == "curated" else None
+        )
+        scope = (
+            RagSource.url.startswith(CURATED_PREFIX)
+            if snapshot is not None
+            else ~RagSource.url.startswith(CURATED_PREFIX)
+        )
         rows = self.db.execute(
             select(RagChunk, RagSource)
             .join(RagSource, RagSource.id == RagChunk.source_id)
-            .where(RagSource.status.in_(("active", "unchanged")))
+            .where(RagSource.status.in_(("active", "unchanged")), scope)
             .order_by(RagSource.crawled_at.desc(), RagChunk.chunk_index)
             .limit(10_000)
         ).all()
+        rows = [
+            (chunk, source)
+            for chunk, source in rows
+            if source_is_eligible(source, self.settings, snapshot)
+        ]
         if not rows:
             return []
         embeddings = self._embeddings or OllamaEmbeddingProvider(self.settings)
@@ -187,14 +211,21 @@ class RagAssistantService:
             context_parts: list[str] = []
             source_ids: set[uuid.UUID] = set()
             for match in matches:
+                if match.score < self.settings.rag_similarity_threshold:
+                    continue
                 source_ids.add(match.source.id)
+                reviewed_at = match.source.source_metadata.get("reviewedAt", "unknown")
                 context_parts.append(
                     f"Title: {match.source.title}\n"
-                    f"URL: {match.source.url}\n"
+                    f"Reviewed: {reviewed_at}\n"
                     f"Excerpt: {match.chunk.content}"
                 )
             chat = self._chat or OllamaChatProvider(self.settings)
-            answer = chat.answer(question=question, context="\n\n".join(context_parts))
+            answer = chat.answer(
+                question=question,
+                context=f"Question date: {knowledge_today().isoformat()}\n\n"
+                + "\n\n".join(context_parts),
+            )
             answer = re.sub(r"\s*\[\d+\]", "", answer).strip()
             audit.status = "answered"
             audit.source_count = len(source_ids)

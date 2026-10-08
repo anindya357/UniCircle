@@ -1,4 +1,4 @@
-r"""Controlled CUET crawler and LangChain ingestion CLI.
+r"""Curated CUET knowledge ingestion, with an explicit optional web crawler.
 
 Run from backend/ after applying migrations:
     .\.venv\Scripts\python -m app.modules.assistant.ingest
@@ -19,7 +19,6 @@ from urllib.parse import urlsplit
 
 import requests
 from bs4 import BeautifulSoup
-from langchain_community.document_loaders import PyPDFLoader, WebBaseLoader
 from langchain_ollama import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sqlalchemy import delete, select
@@ -28,6 +27,12 @@ from sqlalchemy.orm import Session
 from app.core.config import Settings, get_settings
 from app.db.models import RagChunk, RagSource
 from app.db.session import get_session_factory
+from app.modules.assistant.curated import (
+    KNOWLEDGE_FILE,
+    ingest_curated,
+    load_knowledge,
+    plain_text,
+)
 from app.modules.assistant.policy import SourcePolicy
 
 logger = logging.getLogger(__name__)
@@ -158,6 +163,8 @@ class CuetKnowledgeIngestor:
         return response
 
     def _load_pdf(self, url: str, response: requests.Response) -> LoadedPage:
+        from langchain_community.document_loaders import PyPDFLoader
+
         content = response.content
         if len(content) > MAX_DOWNLOAD_BYTES:
             raise ValueError("PDF exceeds the ingestion size limit")
@@ -175,6 +182,8 @@ class CuetKnowledgeIngestor:
         )
 
     def _load_html(self, url: str, response: requests.Response) -> LoadedPage:
+        from langchain_community.document_loaders import WebBaseLoader
+
         raw = response.content
         if len(raw) > MAX_DOWNLOAD_BYTES:
             raise ValueError("HTML document exceeds the ingestion size limit")
@@ -362,7 +371,16 @@ class CuetKnowledgeIngestor:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Ingest approved CUET web knowledge")
+    parser = argparse.ArgumentParser(description="Ingest reviewed local CUET knowledge")
+    parser.add_argument(
+        "--web", action="store_true", help="Explicitly use legacy crawler"
+    )
+    parser.add_argument(
+        "--check", action="store_true", help="Validate local files only"
+    )
+    parser.add_argument(
+        "--export-txt", action="store_true", help="Refresh TXT mirror without indexing"
+    )
     parser.add_argument("--seed", action="append", help="Approved seed URL; repeatable")
     parser.add_argument("--max-pages", type=int)
     parser.add_argument("--max-depth", type=int)
@@ -373,7 +391,31 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     args = parse_args()
+    if args.export_txt:
+        KNOWLEDGE_FILE.with_suffix(".txt").write_text(
+            plain_text(KNOWLEDGE_FILE.read_text(encoding="utf-8")),
+            encoding="utf-8",
+        )
+        load_knowledge()
+        print("CUET TXT companion refreshed; run ingestion to update the index")
+        return
+    if args.check:
+        snapshot = load_knowledge()
+        print(f"CUET knowledge files valid: {len(snapshot.sections)} reviewed sections")
+        return
     settings = get_settings()
+    if not args.web:
+        if args.seed or args.max_pages or args.max_depth is not None:
+            raise SystemExit(
+                "Crawler options require --web; default ingestion uses local files"
+            )
+        with get_session_factory()() as db:
+            result = ingest_curated(db, settings, force=args.force)
+        print(
+            "Curated RAG ingestion complete: "
+            + ", ".join(f"{key}={value}" for key, value in result.items())
+        )
+        return
     seeds = tuple(args.seed) if args.seed else settings.rag_seeds
     if not seeds:
         raise SystemExit("No RAG seed URLs are configured")
@@ -390,6 +432,8 @@ def main() -> None:
         f"processed={result.processed}, updated={result.updated}, "
         f"unchanged={result.unchanged}, failed={result.failed}, chunks={result.chunks}"
     )
+    if result.failed:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
