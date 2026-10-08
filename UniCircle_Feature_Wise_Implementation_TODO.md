@@ -2164,20 +2164,26 @@ Implemented in `.github/workflows/ci.yml` for pull requests to `main`, pushes to
 schemas and explicit test-only credentials; SMTP/LLM services are faked. Local
 verification: 122 backend tests and 24 frontend tests passed, frontend lint,
 type-check/build, backend lint/format and workflow validation passed. Full Linux
-PostgreSQL/Docker validation runs in GitHub Actions. See the CI workflow README.
+PostgreSQL/Docker validation passed in GitHub Actions, including all four real
+PostgreSQL API integration tests and both production image builds:
+https://github.com/anindya357/UniCircle/actions/runs/37803956482
+See the CI workflow README. Optional scans and coverage are still deferred.
 
 ---
 
 # 11.2 CI branch protection
 
-- [ ] Require CI before merge to `main`.
+- [x] Require CI before merge to `main`.
 - [x] Require appropriate review.
 - [x] Prevent direct production deployment from unreviewed feature branches.
 - [x] Keep production secrets unavailable to pull requests from untrusted contexts.
 
 Preserve the existing one-reviewer rule, stale-approval dismissal, conversation
 resolution and owner/admin bypass for the requested direct `main` workflow.
-Add the stable `CI gate` required check after its first successful Actions run.
+GitHub branch protection now requires the stable `CI gate` check from GitHub
+Actions and an up-to-date branch before PR merge, verified through the GitHub API.
+Owner/admin bypass remains enabled; direct owner pushes run CI afterwards and
+must be checked before release.
 The workflow has read-only permissions, immutable action pins, no production
 secrets, no image publishing and no deployment steps. Phase 12 is not started.
 
