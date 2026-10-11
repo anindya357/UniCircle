@@ -15,10 +15,18 @@ from sqlalchemy.orm import Session
 
 from app.core.config import Settings
 from app.db.models import RagChunk, RagSource
+from app.modules.assistant.embeddings import create_embedding_provider
 
 KNOWLEDGE_FILE = Path(__file__).with_name("knowledge") / "CUET_Knowledge_Base.md"
 CURATED_PREFIX = "unicircle://cuet/curated/v1/"
 PIPELINE_VERSION = 1
+
+
+def curated_source_prefix(settings: Settings) -> str:
+    # Keep cloud vectors separate so local Ollama retrieval remains usable.
+    if settings.rag_embedding_provider == "fastembed":
+        return CURATED_PREFIX + "fastembed-bge-small-en-v1.5/"
+    return CURATED_PREFIX
 
 
 def knowledge_today() -> date:
@@ -98,14 +106,18 @@ def source_is_eligible(
     today: date | None = None,
 ) -> bool:
     metadata = source.source_metadata or {}
-    if metadata.get("embeddingModel") != settings.ollama_embedding_model:
+    if metadata.get("embeddingModel") != settings.assistant_embedding_model:
         return False
     if settings.rag_knowledge_mode == "web":
         return not source.url.startswith(CURATED_PREFIX)
     if snapshot is None or metadata.get("corpusHash") != snapshot.digest:
         return False
     section = next(
-        (item for item in snapshot.sections if source.url == CURATED_PREFIX + item.key),
+        (
+            item
+            for item in snapshot.sections
+            if source.url == curated_source_prefix(settings) + item.key
+        ),
         None,
     )
     return bool(
@@ -125,6 +137,7 @@ def ingest_curated(
 ) -> dict[str, int]:
     """Prepare every embedding before atomically replacing the curated snapshot."""
     snapshot = load_knowledge(path)
+    prefix = curated_source_prefix(settings)
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=settings.rag_chunk_size,
         chunk_overlap=settings.rag_chunk_overlap,
@@ -133,14 +146,14 @@ def ingest_curated(
     existing = {
         source.url: source
         for source in db.scalars(
-            select(RagSource).where(RagSource.url.startswith(CURATED_PREFIX))
+            select(RagSource).where(RagSource.url.startswith(prefix))
         )
     }
     prepared = []
     documents: list[str] = []
     now = datetime.now(UTC)
     for section in snapshot.sections:
-        source = existing.get(CURATED_PREFIX + section.key)
+        source = existing.get(prefix + section.key)
         # Repeated headings preserve topic context even in long split sections.
         chunks = [
             f"{section.title}\nReviewed as of {section.reviewed.isoformat()}.\n{part}"
@@ -151,7 +164,7 @@ def ingest_curated(
             source
             and source.content_hash == digest
             and source.source_metadata.get("embeddingModel")
-            == settings.ollama_embedding_model
+            == settings.assistant_embedding_model
             and source.chunks
             and not force
         )
@@ -162,12 +175,7 @@ def ingest_curated(
     vectors: list[list[float]] = []
     if documents:
         if embedder is None:
-            from langchain_ollama import OllamaEmbeddings
-
-            embedder = OllamaEmbeddings(
-                base_url=settings.ollama_base_url,
-                model=settings.ollama_embedding_model,
-            )
+            embedder = create_embedding_provider(settings)
         vectors = embedder.embed_documents(documents)
         if len(vectors) != len(documents):
             raise ValueError("Embedding provider returned an unexpected vector count")
@@ -184,7 +192,7 @@ def ingest_curated(
     try:
         for section, source, chunks, digest, unchanged, start in prepared:
             if source is None:
-                source = RagSource(url=CURATED_PREFIX + section.key)
+                source = RagSource(url=prefix + section.key)
                 db.add(source)
             source.title = section.title
             source.content_type = "text/markdown"
@@ -197,7 +205,7 @@ def ingest_curated(
             source.error_message = None
             source.source_metadata = {
                 "loader": "CuratedLocalKnowledge",
-                "embeddingModel": settings.ollama_embedding_model,
+                "embeddingModel": settings.assistant_embedding_model,
                 "corpusHash": snapshot.digest,
                 "pipelineVersion": PIPELINE_VERSION,
                 "reviewedAt": section.reviewed.isoformat(),

@@ -22,6 +22,7 @@ from app.modules.assistant.curated import (
     load_knowledge,
     source_is_eligible,
 )
+from app.modules.assistant.embeddings import create_embedding_provider
 
 logger = logging.getLogger(__name__)
 
@@ -272,7 +273,7 @@ class RagAssistantService:
                 "No eligible RAG chunks for mode=%s model=%s; "
                 "rebuild the knowledge index",
                 self.settings.rag_knowledge_mode,
-                self.settings.ollama_embedding_model,
+                self.settings.assistant_embedding_model,
             )
             raise AppError(
                 status_code=503,
@@ -282,7 +283,7 @@ class RagAssistantService:
                     "administrator to rebuild the knowledge index."
                 ),
             )
-        embeddings = self._embeddings or OllamaEmbeddingProvider(self.settings)
+        embeddings = self._embeddings or create_embedding_provider(self.settings)
         query_vector = embeddings.embed_query(question)
         ranked = sorted(
             (

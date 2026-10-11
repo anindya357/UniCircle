@@ -47,6 +47,8 @@ class Settings(BaseSettings):
     ollama_base_url: str = "http://127.0.0.1:11434"
     ollama_chat_model: str = "qwen3:1.7b"
     ollama_embedding_model: str = "embeddinggemma:300m"
+    rag_embedding_provider: Literal["ollama", "fastembed"] = "ollama"
+    fastembed_model: Literal["BAAI/bge-small-en-v1.5"] = "BAAI/bge-small-en-v1.5"
     rag_knowledge_mode: Literal["curated", "web"] = "curated"
     rag_allowed_hosts: str = "cuet.ac.bd"
     rag_seed_urls: str = "https://cuet.ac.bd/"
@@ -89,6 +91,12 @@ class Settings(BaseSettings):
 
     def require_otp_key(self) -> bytes:
         return self._required_key(self.otp_pepper, "OTP_PEPPER")
+
+    @property
+    def assistant_embedding_model(self) -> str:
+        if self.rag_embedding_provider == "fastembed":
+            return f"fastembed:{self.fastembed_model}"
+        return self.ollama_embedding_model
 
     @property
     def assistant_chat_provider(self) -> Literal["groq", "ollama"]:

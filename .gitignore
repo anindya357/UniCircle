@@ -48,3 +48,5 @@ Thumbs.db
 backend/tests/.e2e-runtime.db*
 tmp/
 temp/
+.vercel/
+backend/app/modules/assistant/embedding_models/

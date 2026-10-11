@@ -19,7 +19,6 @@ from urllib.parse import urlsplit
 
 import requests
 from bs4 import BeautifulSoup
-from langchain_ollama import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
@@ -33,6 +32,7 @@ from app.modules.assistant.curated import (
     load_knowledge,
     plain_text,
 )
+from app.modules.assistant.embeddings import create_embedding_provider
 from app.modules.assistant.policy import SourcePolicy
 
 logger = logging.getLogger(__name__)
@@ -112,10 +112,7 @@ class CuetKnowledgeIngestor:
             {"User-Agent": USER_AGENT, "Accept": "text/html,application/pdf"}
         )
         self.robots: dict[str, robotparser.RobotFileParser | None] = {}
-        self.embedder = OllamaEmbeddings(
-            base_url=settings.ollama_base_url,
-            model=settings.ollama_embedding_model,
-        )
+        self.embedder = create_embedding_provider(settings)
         self.splitter = RecursiveCharacterTextSplitter(
             chunk_size=settings.rag_chunk_size,
             chunk_overlap=settings.rag_chunk_overlap,
@@ -304,7 +301,7 @@ class CuetKnowledgeIngestor:
             "loader": "PyPDFLoader"
             if page.content_type == "application/pdf"
             else "WebBaseLoader",
-            "embeddingModel": self.settings.ollama_embedding_model,
+            "embeddingModel": self.settings.assistant_embedding_model,
         }
         self.db.add_all(
             [
