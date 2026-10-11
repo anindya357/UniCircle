@@ -1,13 +1,13 @@
 .pageShell {
-  width: min(calc(100% - 2rem), 76rem);
+  width: var(--page-width);
 }
 
 .hero {
   position: relative;
   display: grid;
-  min-height: 20.5rem;
-  padding: clamp(1.65rem, 3.5vw, 2.75rem);
-  gap: clamp(1.5rem, 4vw, 3.25rem);
+  min-height: auto;
+  padding: var(--banner-padding);
+  gap: var(--banner-gap);
   overflow: hidden;
   border-radius: 1.65rem;
   align-items: center;
@@ -53,9 +53,9 @@
 .hero h1 {
   max-width: 48rem;
   margin-top: 0.7rem;
-  font-size: clamp(2.5rem, 4.7vw, 4.15rem);
+  font-size: var(--type-page-title);
   font-weight: 840;
-  line-height: 0.94;
+  line-height: 1.08;
   letter-spacing: -0.064em;
 }
 
@@ -679,13 +679,13 @@
 @media (max-width: 58rem) {
   .hero {
     min-height: auto;
-    padding: 1.6rem 1.2rem 1.2rem;
+    padding: var(--banner-padding);
     border-radius: 1.3rem;
     grid-template-columns: 1fr;
   }
 
   .hero h1 {
-    font-size: clamp(2.35rem, 9vw, 3.5rem);
+    font-size: var(--type-page-title);
   }
 
   .heroStatus {
@@ -711,11 +711,11 @@
 
 @media (max-width: 40rem) {
   .pageShell {
-    width: min(calc(100% - 1rem), 76rem);
+    width: var(--page-width);
   }
 
   .hero h1 {
-    font-size: clamp(2.2rem, 10vw, 3.1rem);
+    font-size: var(--type-page-title);
   }
 
   .suggestions,

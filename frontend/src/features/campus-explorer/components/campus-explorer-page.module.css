@@ -1,6 +1,6 @@
 .heading {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--banner-gap);
   align-items: end;
   grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.7fr);
 }
@@ -17,8 +17,8 @@
 .heading h1 {
   max-width: 48rem;
   margin-top: 0.6rem;
-  font-size: clamp(2.5rem, 4.8vw, 4.4rem);
-  line-height: 0.95;
+  font-size: var(--type-page-title);
+  line-height: 1.08;
   letter-spacing: -0.065em;
 }
 .heading > p {
@@ -29,7 +29,7 @@
 .explorer {
   display: grid;
   min-height: 38rem;
-  margin-top: clamp(2rem, 4vw, 3.5rem);
+  margin-top: var(--section-spacing);
   overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: 1.5rem;
@@ -227,8 +227,8 @@
 }
 .detailMain h2 {
   margin-top: 0.4rem;
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  line-height: 1;
+  font-size: var(--type-section-title);
+  line-height: 1.15;
   letter-spacing: -0.04em;
 }
 .detailMain address {
@@ -276,7 +276,7 @@
 }
 @media (max-width: 42rem) {
   .heading h1 {
-    font-size: clamp(2.3rem, 10vw, 3.35rem);
+    font-size: var(--type-page-title);
   }
   .explorer {
     border-radius: 1.1rem;

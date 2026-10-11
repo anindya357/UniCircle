@@ -23,8 +23,8 @@
 .hero {
   display: grid;
   min-width: 0;
-  padding: clamp(1.35rem, 3vw, 2.4rem);
-  gap: clamp(1rem, 3vw, 2rem);
+  padding: var(--banner-padding);
+  gap: var(--banner-gap);
   align-items: center;
   grid-template-columns: auto minmax(0, 1fr);
   border-radius: 1.25rem;
@@ -68,8 +68,8 @@
 .identity h1 {
   margin-top: 0.45rem;
   overflow-wrap: anywhere;
-  font-size: clamp(1.85rem, 4vw, 3.2rem);
-  line-height: 1.04;
+  font-size: var(--type-page-title);
+  line-height: 1.08;
   letter-spacing: -0.045em;
 }
 

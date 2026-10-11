@@ -1,14 +1,14 @@
 .pageShell,
 .unauthorizedShell {
-  width: min(calc(100% - 2rem), 76rem);
+  width: var(--page-width);
 }
 
 .hero {
   position: relative;
   display: grid;
-  min-height: 19rem;
-  padding: clamp(1.6rem, 3.5vw, 2.75rem);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  min-height: auto;
+  padding: var(--banner-padding);
+  gap: var(--banner-gap);
   overflow: hidden;
   border-radius: 1.6rem;
   align-items: center;
@@ -54,8 +54,8 @@
 .hero h1 {
   max-width: 47rem;
   margin-top: 0.65rem;
-  font-size: clamp(2.45rem, 4.7vw, 4.1rem);
-  line-height: 0.94;
+  font-size: var(--type-page-title);
+  line-height: 1.08;
   letter-spacing: -0.063em;
 }
 
@@ -156,7 +156,7 @@
 
 .overviewSection,
 .managerSection {
-  margin-top: clamp(2.4rem, 5vw, 4rem);
+  margin-top: var(--section-spacing);
 }
 
 .sectionHeading {
@@ -172,8 +172,8 @@
 
 .sectionHeading h2 {
   margin-top: 0.35rem;
-  font-size: clamp(2rem, 4vw, 3.45rem);
-  line-height: 0.98;
+  font-size: var(--type-section-title);
+  line-height: 1.15;
   letter-spacing: -0.055em;
 }
 
@@ -768,8 +768,8 @@
 .unauthorizedState h1 {
   max-width: 42rem;
   margin-top: 0.5rem;
-  font-size: clamp(1.8rem, 4vw, 3.4rem);
-  line-height: 1;
+  font-size: var(--type-page-title);
+  line-height: 1.08;
   letter-spacing: -0.055em;
 }
 
@@ -928,7 +928,7 @@
 @media (max-width: 60rem) {
   .hero {
     min-height: auto;
-    padding: 1.6rem 1.2rem 1.2rem;
+    padding: var(--banner-padding);
     border-radius: 1.25rem;
     grid-template-columns: 1fr;
   }
@@ -1023,11 +1023,11 @@
 @media (max-width: 34rem) {
   .pageShell,
   .unauthorizedShell {
-    width: min(calc(100% - 1rem), 76rem);
+    width: var(--page-width);
   }
 
   .hero h1 {
-    font-size: clamp(2.2rem, 10vw, 3.1rem);
+    font-size: var(--type-page-title);
   }
 
   .hero > dl {

@@ -1,13 +1,13 @@
 .pageShell {
-  width: min(calc(100% - 2rem), 76rem);
+  width: var(--page-width);
 }
 
 .hero {
   position: relative;
   display: grid;
-  min-height: 24rem;
-  padding: clamp(1.75rem, 4vw, 3.25rem);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  min-height: auto;
+  padding: var(--banner-padding);
+  gap: var(--banner-gap);
   overflow: hidden;
   border-radius: 1.75rem;
   align-items: end;
@@ -55,9 +55,9 @@
 .hero h1 {
   max-width: 49rem;
   margin-top: 0.8rem;
-  font-size: clamp(2.5rem, 4.6vw, 4.35rem);
+  font-size: var(--type-page-title);
   font-weight: 820;
-  line-height: 0.92;
+  line-height: 1.08;
   letter-spacing: -0.065em;
 }
 
@@ -204,7 +204,7 @@
 
 .clubDirectory,
 .eventDirectory {
-  margin-top: clamp(3.75rem, 7vw, 6.5rem);
+  margin-top: var(--section-spacing);
 }
 
 .sectionHeading {
@@ -217,9 +217,9 @@
 .sectionHeading h2 {
   max-width: 49rem;
   margin-top: 0.45rem;
-  font-size: clamp(2.35rem, 4.7vw, 4.5rem);
+  font-size: var(--type-section-title);
   font-weight: 820;
-  line-height: 0.96;
+  line-height: 1.15;
   letter-spacing: -0.058em;
 }
 
@@ -413,9 +413,9 @@
 .clubDetailHero .clubIdentity h1 {
   max-width: 56rem;
   margin-top: 0.35rem;
-  font-size: clamp(2.35rem, 4.7vw, 4.35rem);
+  font-size: var(--type-page-title);
   font-weight: 820;
-  line-height: 0.94;
+  line-height: 1.08;
   letter-spacing: -0.065em;
 }
 
@@ -442,7 +442,7 @@
 }
 
 .clubDetailContent {
-  margin-top: clamp(3.5rem, 7vw, 6rem);
+  margin-top: var(--section-spacing);
   padding: clamp(1.25rem, 4vw, 3.5rem);
   border: 1px solid var(--color-border);
   border-radius: 1.25rem;
@@ -491,9 +491,9 @@
 
 .clubIdentity h2 {
   margin-top: 0.35rem;
-  font-size: clamp(2.15rem, 4.5vw, 4.2rem);
+  font-size: var(--type-section-title);
   font-weight: 820;
-  line-height: 0.98;
+  line-height: 1.15;
   letter-spacing: -0.058em;
 }
 
@@ -547,7 +547,7 @@
 
 .clubDetailsGrid {
   display: grid;
-  margin-top: clamp(3rem, 6vw, 5rem);
+  margin-top: var(--section-spacing);
   padding-top: clamp(2rem, 4vw, 3rem);
   gap: clamp(2rem, 5vw, 4rem);
   border-top: 1px solid var(--color-border);
@@ -652,13 +652,13 @@
 }
 
 .clubEvents {
-  margin-top: clamp(3.5rem, 7vw, 6rem);
+  margin-top: var(--section-spacing);
   padding-top: clamp(2rem, 4vw, 3rem);
   border-top: 1px solid var(--color-border);
 }
 
 .clubEvents .sectionHeading h2 {
-  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-size: var(--type-section-title);
 }
 
 .clubEventSections {
@@ -1204,7 +1204,7 @@
 }
 
 .clubAdminWorkspace {
-  margin-top: clamp(2rem, 5vw, 3.5rem);
+  margin-top: var(--section-spacing);
   padding: clamp(1.1rem, 3vw, 1.8rem);
   border: 1px solid #b8d1c4;
   border-radius: 1.2rem;
@@ -1423,8 +1423,8 @@
 .eventDetailHero h1 {
   max-width: 46rem;
   margin-top: 0.45rem;
-  font-size: clamp(2rem, 5vw, 3.8rem);
-  line-height: 0.98;
+  font-size: var(--type-page-title);
+  line-height: 1.08;
   letter-spacing: -0.055em;
 }
 
@@ -1774,7 +1774,7 @@
 
 .membershipRequestHero h1 {
   margin-top: 0.35rem;
-  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-size: var(--type-page-title);
   letter-spacing: -0.055em;
 }
 
@@ -1905,14 +1905,14 @@
 @media (max-width: 48rem) {
   .hero {
     min-height: auto;
-    padding: 1.65rem 1.15rem 1.15rem;
-    gap: 1.5rem;
+    padding: var(--banner-padding);
+    gap: var(--banner-gap);
     border-radius: 1.25rem;
     grid-template-columns: 1fr;
   }
 
   .hero h1 {
-    font-size: clamp(2.3rem, 10vw, 3.35rem);
+    font-size: var(--type-page-title);
   }
 
   .heroStats {
@@ -1976,7 +1976,7 @@
   }
 
   .hubNavigationLink {
-    min-height: 6.5rem;
+    min-height: 5.25rem;
   }
 
   .clubTabs {
@@ -1984,7 +1984,7 @@
   }
 
   .clubTab {
-    min-height: 6.75rem;
+    min-height: 5.75rem;
   }
 
   .clubIdentity {
@@ -2013,14 +2013,17 @@
 
 @media (max-width: 24rem) {
   .heroStats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .heroStats > div {
-    min-height: 4.8rem;
-    grid-template-columns: auto minmax(0, 1fr);
-    border-right: 0;
-    border-bottom: 1px solid rgb(255 255 255 / 13%);
+    min-height: 4.5rem;
+    padding: 0.6rem 0.35rem;
+    grid-template-columns: 1fr;
+    border-right: 1px solid rgb(255 255 255 / 13%);
+    border-bottom: 0;
+    justify-items: center;
+    text-align: center;
   }
 }
 

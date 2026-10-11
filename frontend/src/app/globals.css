@@ -13,6 +13,15 @@
   --radius-sm: 0.5rem;
   --radius-md: 1rem;
   --radius-lg: 1.5rem;
+  --page-max-width: 70rem;
+  --page-gutter: clamp(1rem, 2.5vw, 2rem);
+  --page-width: min(calc(100% - 2 * var(--page-gutter)), var(--page-max-width));
+  --page-spacing: clamp(1.25rem, 2.5vw, 2rem);
+  --section-spacing: clamp(1.75rem, 3vw, 2.75rem);
+  --banner-padding: clamp(1.25rem, 2.5vw, 2rem);
+  --banner-gap: clamp(1rem, 2.2vw, 1.75rem);
+  --type-page-title: clamp(1.875rem, 1.25rem + 2vw, 3rem);
+  --type-section-title: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
 }
 
 html {
@@ -21,8 +30,7 @@ html {
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -90,9 +98,31 @@ button {
 }
 
 .app-shell {
-  width: max(90% - 2rem, 76rem);
+  width: var(--page-width);
+  min-width: 0;
   margin-inline: auto;
-  padding-block: clamp(2rem, 6vw, 5rem);
+  padding-block: var(--page-spacing);
+}
+
+/* Let text and media reflow instead of masking an oversized layout. */
+main h1,
+main h2,
+main h3,
+main p {
+  overflow-wrap: anywhere;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+@media (max-width: 40rem) {
+  input,
+  textarea,
+  select {
+    font-size: 1rem;
+  }
 }
 
 .empty-state p,
@@ -105,9 +135,9 @@ button {
 .error-state,
 .loading-state {
   display: grid;
-  min-height: 16rem;
-  margin-top: 2rem;
-  padding: 2rem;
+  min-height: 12rem;
+  margin-top: 1.25rem;
+  padding: var(--banner-padding);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-md);
   place-content: center;

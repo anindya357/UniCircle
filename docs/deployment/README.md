@@ -85,9 +85,13 @@ JavaScript runtime errors. The welcome text and local campus imagery render.
 
 Still requires manual checks: successful existing-user/admin login, OTP email
 delivery, authenticated feature workflows and a deployed assistant conversation.
-The mobile welcome banner clips its heading/description at 390 px despite no
-document-level horizontal scrollbar; record this as a follow-up layout issue,
-not a passed responsive-UI check. No cosmetic redesign was included in deployment.
+The initial mobile clipping issue was fixed in a subsequent responsive-layout
+update: shared containers now fit the viewport, banners/typography are compact,
+and the welcome message, images and introductory video are preserved. Browser
+regression checks cover 320, 390, 768 and 1366 CSS-pixel widths, public account
+screens, authenticated pages, club details, mobile navigation and admin panels.
+Authenticated layout checks use only the disposable local test fixture, not
+production credentials or records. See `frontend/tests/e2e/responsive-layout.spec.ts`.
 Preview environment secrets/database isolation and an ongoing backup policy also
 remain to be configured. Do not use the production database for automated tests.
 

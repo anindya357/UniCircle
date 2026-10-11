@@ -1,14 +1,14 @@
 .pageShell,
 .detailPageShell {
-  width: min(calc(100% - 2rem), 76rem);
+  width: var(--page-width);
 }
 
 .hero {
   position: relative;
   display: grid;
-  min-height: 23rem;
-  padding: clamp(1.75rem, 4vw, 3.25rem);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  min-height: auto;
+  padding: var(--banner-padding);
+  gap: var(--banner-gap);
   overflow: hidden;
   border-radius: 1.75rem;
   align-items: center;
@@ -59,9 +59,9 @@
 .hero h1 {
   max-width: 48rem;
   margin-top: 0.75rem;
-  font-size: clamp(2.5rem, 4.6vw, 4.3rem);
+  font-size: var(--type-page-title);
   font-weight: 830;
-  line-height: 0.94;
+  line-height: 1.08;
   letter-spacing: -0.063em;
 }
 
@@ -154,7 +154,7 @@
 }
 
 .newsSection {
-  margin-top: clamp(3.75rem, 7vw, 6rem);
+  margin-top: var(--section-spacing);
 }
 
 .sectionHeading {
@@ -166,8 +166,8 @@
 
 .sectionHeading h2 {
   margin-top: 0.4rem;
-  font-size: clamp(2.25rem, 4.4vw, 4rem);
-  line-height: 0.98;
+  font-size: var(--type-section-title);
+  line-height: 1.15;
   letter-spacing: -0.055em;
 }
 
@@ -358,8 +358,8 @@
 
 .detailHero {
   position: relative;
-  min-height: 20rem;
-  padding: clamp(1.75rem, 4vw, 3.25rem);
+  min-height: auto;
+  padding: var(--banner-padding);
   overflow: hidden;
   border-top: 0.4rem solid #48a678;
   border-radius: 1.5rem;
@@ -419,8 +419,8 @@
 .detailHero h1 {
   max-width: 59rem;
   margin-top: 1rem;
-  font-size: clamp(2.35rem, 4.7vw, 4.3rem);
-  line-height: 0.98;
+  font-size: var(--type-page-title);
+  line-height: 1.08;
   letter-spacing: -0.06em;
 }
 
@@ -434,7 +434,7 @@
 
 .detailLayout {
   display: grid;
-  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  margin-top: var(--section-spacing);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: start;
   grid-template-columns: minmax(0, 1.4fr) minmax(17rem, 0.6fr);
@@ -519,14 +519,14 @@
 @media (max-width: 58rem) {
   .hero {
     min-height: auto;
-    padding: 1.65rem 1.15rem 1.15rem;
-    gap: 1.5rem;
+    padding: var(--banner-padding);
+    gap: var(--banner-gap);
     border-radius: 1.25rem;
     grid-template-columns: 1fr;
   }
 
   .hero h1 {
-    font-size: clamp(2.3rem, 10vw, 3.35rem);
+    font-size: var(--type-page-title);
   }
 
   .heroSummary {
@@ -552,7 +552,7 @@
 @media (max-width: 40rem) {
   .pageShell,
   .detailPageShell {
-    width: min(calc(100% - 1rem), 76rem);
+    width: var(--page-width);
   }
 
   .sectionHeading {
@@ -583,12 +583,12 @@
 
   .detailHero {
     min-height: auto;
-    padding: 1.6rem 1.2rem;
+    padding: var(--banner-padding);
     border-radius: 1.2rem;
   }
 
   .detailHero h1 {
-    font-size: clamp(2.2rem, 10vw, 3.2rem);
+    font-size: var(--type-page-title);
   }
 }
 

@@ -1,5 +1,5 @@
 .pageShell {
-  width: min(calc(100% - 2rem), 76rem);
+  width: var(--page-width);
 }
 
 .chatError {
@@ -24,8 +24,8 @@
 
 .heading {
   display: flex;
-  padding: clamp(1.4rem, 3vw, 2.25rem);
-  gap: 1.5rem;
+  padding: var(--banner-padding);
+  gap: var(--banner-gap);
   align-items: flex-end;
   justify-content: space-between;
   border-radius: 1.4rem;
@@ -46,8 +46,8 @@
 
 .heading h1 {
   margin-top: 0.4rem;
-  font-size: clamp(2.3rem, 4.5vw, 3.8rem);
-  line-height: 0.95;
+  font-size: var(--type-page-title);
+  line-height: 1.08;
   letter-spacing: -0.06em;
 }
 
@@ -445,15 +445,15 @@
 
 @media (max-width: 38rem) {
   .pageShell {
-    width: min(calc(100% - 1rem), 76rem);
+    width: var(--page-width);
   }
 
   .heading {
-    padding: 1.2rem;
+    padding: var(--banner-padding);
   }
 
   .heading h1 {
-    font-size: clamp(2.2rem, 10vw, 3.1rem);
+    font-size: var(--type-page-title);
   }
 
   .chatHeader {

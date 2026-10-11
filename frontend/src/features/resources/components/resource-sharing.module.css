@@ -1,5 +1,5 @@
 .pageShell {
-  width: min(calc(100% - 2rem), 76rem);
+  width: var(--page-width);
 }
 
 .resourceError {
@@ -95,9 +95,9 @@
 .hero {
   position: relative;
   display: grid;
-  min-height: 24rem;
-  padding: clamp(1.75rem, 4vw, 3.25rem);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  min-height: auto;
+  padding: var(--banner-padding);
+  gap: var(--banner-gap);
   overflow: hidden;
   border-radius: 1.75rem;
   align-items: center;
@@ -144,9 +144,9 @@
 .hero h1 {
   max-width: 47rem;
   margin-top: 0.8rem;
-  font-size: clamp(2.5rem, 4.6vw, 4.35rem);
+  font-size: var(--type-page-title);
   font-weight: 830;
-  line-height: 0.92;
+  line-height: 1.08;
   letter-spacing: -0.066em;
 }
 
@@ -285,7 +285,7 @@
 
 .discoverySection,
 .requestCentre {
-  margin-top: clamp(3.75rem, 7vw, 6.5rem);
+  margin-top: var(--section-spacing);
 }
 
 .sectionHeading {
@@ -298,9 +298,9 @@
 .sectionHeading h2 {
   max-width: 48rem;
   margin-top: 0.45rem;
-  font-size: clamp(2.35rem, 4.7vw, 4.5rem);
+  font-size: var(--type-section-title);
   font-weight: 820;
-  line-height: 0.96;
+  line-height: 1.15;
   letter-spacing: -0.058em;
 }
 
@@ -701,7 +701,7 @@
 
 .requestModal h2 {
   margin-top: 0.3rem;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-size: var(--type-section-title);
   letter-spacing: -0.05em;
 }
 
@@ -774,14 +774,14 @@
   }
   .hero {
     min-height: auto;
-    padding: 1.65rem 1.15rem 1.15rem;
-    gap: 1.5rem;
+    padding: var(--banner-padding);
+    gap: var(--banner-gap);
     border-radius: 1.25rem;
     grid-template-columns: 1fr;
   }
 
   .hero h1 {
-    font-size: clamp(2.3rem, 10vw, 3.35rem);
+    font-size: var(--type-page-title);
   }
 
   .heroSummary {
@@ -797,7 +797,7 @@
 
 @media (max-width: 38rem) {
   .pageShell {
-    width: min(calc(100% - 1rem), 76rem);
+    width: var(--page-width);
   }
 
   .discoveryFilters,

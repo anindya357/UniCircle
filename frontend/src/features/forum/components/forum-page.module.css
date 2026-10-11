@@ -1,13 +1,13 @@
 .pageShell {
-  width: min(calc(100% - 2rem), 76rem);
+  width: var(--page-width);
 }
 
 .hero {
   position: relative;
   display: grid;
-  min-height: 23rem;
-  padding: clamp(1.75rem, 4vw, 3.25rem);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  min-height: auto;
+  padding: var(--banner-padding);
+  gap: var(--banner-gap);
   overflow: hidden;
   border-radius: 1.75rem;
   align-items: end;
@@ -57,9 +57,9 @@
 .hero h1 {
   max-width: 48rem;
   margin-top: 0.75rem;
-  font-size: clamp(2.5rem, 4.6vw, 4.3rem);
+  font-size: var(--type-page-title);
   font-weight: 830;
-  line-height: 0.94;
+  line-height: 1.08;
   letter-spacing: -0.063em;
 }
 
@@ -291,7 +291,7 @@
 
 .forumLayout {
   display: grid;
-  margin-top: clamp(3.75rem, 7vw, 6rem);
+  margin-top: var(--section-spacing);
   gap: 1.25rem;
   align-items: start;
   grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.32fr);
@@ -310,8 +310,8 @@
 
 .sectionHeading h2 {
   margin-top: 0.35rem;
-  font-size: clamp(2.15rem, 4vw, 3.65rem);
-  line-height: 1;
+  font-size: var(--type-section-title);
+  line-height: 1.15;
   letter-spacing: -0.055em;
 }
 
@@ -640,7 +640,7 @@
 .communitySidebar h2 {
   margin-top: 0.4rem;
   font-size: clamp(1.35rem, 2.5vw, 1.9rem);
-  line-height: 1.05;
+  line-height: 1.15;
   letter-spacing: -0.04em;
 }
 
@@ -715,14 +715,14 @@
 @media (max-width: 54rem) {
   .hero {
     min-height: auto;
-    padding: 1.65rem 1.15rem 1.15rem;
-    gap: 1.5rem;
+    padding: var(--banner-padding);
+    gap: var(--banner-gap);
     border-radius: 1.25rem;
     grid-template-columns: 1fr;
   }
 
   .hero h1 {
-    font-size: clamp(2.3rem, 10vw, 3.35rem);
+    font-size: var(--type-page-title);
   }
 
   .heroStats {
@@ -754,7 +754,7 @@
 
 @media (max-width: 40rem) {
   .pageShell {
-    width: min(calc(100% - 1rem), 76rem);
+    width: var(--page-width);
   }
 
   .composerCard > header {
@@ -804,14 +804,26 @@
 
 @media (max-width: 27rem) {
   .heroStats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .heroStats > div {
-    min-height: 4rem;
-    grid-template-columns: 3.7rem minmax(0, 1fr);
-    border-right: 0;
-    border-bottom: 1px solid rgb(255 255 255 / 13%);
+    min-height: 4.5rem;
+    padding: 0.6rem 0.35rem;
+    grid-template-columns: 1fr;
+    border-right: 1px solid rgb(255 255 255 / 13%);
+    border-bottom: 0;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .heroStats strong {
+    font-size: 1.6rem;
+  }
+
+  .heroStats span {
+    font-size: 0.7rem;
+    overflow-wrap: anywhere;
   }
 
   .postMeta,

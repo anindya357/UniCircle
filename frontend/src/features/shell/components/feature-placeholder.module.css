@@ -1,6 +1,6 @@
 .hero {
   max-width: 52rem;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: var(--banner-padding);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
@@ -10,8 +10,8 @@
 .hero h1 {
   max-width: 44rem;
   margin-top: 0.55rem;
-  font-size: clamp(2rem, 4.5vw, 3.6rem);
-  line-height: 1;
+  font-size: var(--type-page-title);
+  line-height: 1.08;
   letter-spacing: -0.055em;
 }
 
