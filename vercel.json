@@ -12,13 +12,12 @@
       "root": "backend",
       "framework": "fastapi",
       "entrypoint": "app.main:app",
-      "installCommand": "pip install -r requirements.lock && pip install '.[cloud]' && pip check",
       "buildCommand": "python -m app.modules.assistant.prepare_model",
       "functions": {
         "app/main.py": {
           "maxDuration": 300,
-          "includeFiles": "app/modules/assistant/embedding_models/**",
-          "excludeFiles": "{tests/**,.venv/**,__pycache__/**}"
+          "includeFiles": "app/modules/assistant/embedding_models/bundled/**",
+          "excludeFiles": "{tests/**,.venv/**,__pycache__/**,app/modules/assistant/embedding_models/blobs/**,app/modules/assistant/embedding_models/models--*/**}"
         }
       }
     }

@@ -6,18 +6,22 @@ from pathlib import Path
 from app.core.config import Settings
 
 MODEL_CACHE = Path(__file__).with_name("embedding_models")
+BUNDLED_MODEL = MODEL_CACHE / "bundled"
 
 
 @lru_cache(maxsize=2)
 def load_fastembed(model_name: str, offline: bool):
     from fastembed import TextEmbedding
 
+    if offline and not BUNDLED_MODEL.is_dir():
+        raise RuntimeError("Bundled embedding model is missing; run prepare_model")
     return TextEmbedding(
         model_name=model_name,
         cache_dir=str(MODEL_CACHE),
         threads=1,
         providers=["CPUExecutionProvider"],
         local_files_only=offline,
+        specific_model_path=str(BUNDLED_MODEL) if BUNDLED_MODEL.is_dir() else None,
     )
 
 

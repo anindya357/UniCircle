@@ -34,6 +34,14 @@ dev = [
   "ruff>=0.11,<1",
 ]
 
+# Vercel's automatic uv installation includes the CPU-only cloud group, while
+# the existing Docker requirements.lock remains valid for local Ollama builds.
+[dependency-groups]
+cloud = ["fastembed==0.8.1"]
+
+[tool.uv]
+default-groups = ["cloud"]
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["app*"]
