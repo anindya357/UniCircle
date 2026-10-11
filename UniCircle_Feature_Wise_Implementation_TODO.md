@@ -1434,6 +1434,12 @@ university/government pages, original ranking publishers, reliable reporting
 and attributed campus maps; do not rely on inaccurate whole-site scraping.
 Answers remain grounded in the reviewed local corpus and omit displayed sources.
 
+Chat-provider update (2026-10-12): use Groq-hosted `qwen/qwen3.8-27b` when the
+backend-only `GROQ_API_KEY` is configured. Keep the existing Ollama embedding
+index compatible; deploying without the development laptop still requires a
+reachable embedding service or a separately implemented hosted embedding provider
+and re-indexing. Real environment files and credentials must never be committed.
+
 ## 7.33 RAG ingestion foundation
 
 - [x] Create curated CUET Markdown and plain-text knowledge files with review dates and evidence links.
@@ -1441,7 +1447,7 @@ Answers remain grounded in the reviewed local corpus and omit displayed sources.
 - [x] Make local section-aware ingestion the default; retain web crawling only as an explicit opt-in.
 - [x] Rebuild atomically and reject invalid or incompatible embeddings.
 - [x] Exclude legacy scrapes, changed snapshots and review-expired sections from curated answers.
-- [ ] Rebuild the live curated index and evaluate actual Qwen answers after the running Ollama server exposes both configured model tags (currently `/api/tags` is empty).
+- [x] Rebuild the live curated index and verify grounded answers; re-use the index with Groq Qwen and the unchanged Ollama embedding model.
 
 - [x] Finalize approved knowledge-source list.
 - [x] Define “official/acceptable CUET source” policy.
@@ -1463,12 +1469,16 @@ Answers remain grounded in the reviewed local corpus and omit displayed sources.
 - [x] Retrieve relevant chunks.
 - [x] Construct context.
 - [x] Construct controlled prompt.
-- [x] Call local Ollama/Qwen from backend only.
+- [x] Call Groq-hosted Qwen from backend only when configured; retain explicit local Ollama chat support.
+- [x] Load a masked Groq key from ignored environment files and pass it only at backend runtime.
+- [x] Handle Groq quota, authentication/model-access, timeout and invalid-response failures safely.
+- [x] Preserve existing embeddings, controlled prompts, no-context handling and source-free answers.
+- [ ] Provision deployment embeddings independent of the developer's laptop before public launch.
 - [x] Generate grounded answer.
 - [x] Return answer.
 - [x] Keep retrieved-source metadata internal to the RAG service.
 - [x] Handle no relevant context.
-- [x] Handle Ollama/model failure.
+- [x] Handle Groq and Ollama/model failure.
 - [x] Add rate/cost safeguards according to approved architecture.
 
 ## 7.35 Frontend connection

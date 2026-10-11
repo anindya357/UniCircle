@@ -47,8 +47,9 @@ appointments should be confirmed with the Registrar.
 corpus hash matches the bundled document, pipeline version and embedding model
 match, and review period includes today in Bangladesh time. Legacy website rows
 remain stored for recovery but cannot contaminate curated answers. Removed
-sections and old snapshots are excluded. Expired sections produce a no-context
-answer rather than a stale current appointment. Admin knowledge status counts
+sections and old snapshots are excluded. Expired sections cannot supply a stale
+current appointment. An entirely ineligible index returns a setup error; a ready
+index with insufficient relevance returns a no-context answer. Admin status counts
 eligible sources/chunks and reports review-due sections.
 
 Cosine similarity ranks a bounded corpus; low-scoring chunks are not sent to Qwen.
@@ -57,6 +58,19 @@ The prompt respects dates and uncertainty. Evidence URLs stay in files/database
 for maintenance; answers return no source cards, URLs or citation markers.
 Audits store a question hash, user ID, outcome, source count and timestamp,
 not raw questions or conversations. Ollama stays backend-only.
+
+Chat generation uses Groq-hosted `qwen/qwen3.8-27b` when the backend has a
+`GROQ_API_KEY` (`RAG_CHAT_PROVIDER=auto`); explicit `groq` and `ollama` selections
+are also supported. Only the question and retrieved public excerpts are sent
+to Groq, not account records or authentication credentials. The key is masked
+in settings and kept in ignored environment files/deployment secret settings.
+Upstream errors and keys never appear in public API responses. Respect the
+provider's shared quota; no unrelated question should spend chat quota.
+
+Embeddings remain Ollama `embeddinggemma:300m`. Changing the chat provider does
+not alter or rebuild the vectors. A cloud deployment must provision a reachable
+embedding server or implement another embedding provider and re-index; hosting
+chat alone does not eliminate the laptop dependency for retrieval.
 
 ## Optional legacy crawler
 
@@ -72,7 +86,9 @@ research inside a question request.
 
 Deterministic-provider tests cover local loading, file parity, grounding
 contracts, old-source exclusion, review expiry, corpus/model compatibility,
-idempotency and failure preservation. Live answer quality requires both configured
-model tags and real embeddings. At this implementation check the local Ollama
-`/api/tags` returned no models; live index rebuilding remains a pending acceptance
-step, not a claimed pass.
+idempotency and failure preservation. Groq contract tests cover provider selection,
+masked credentials, prompts, output/timeout bounds, upstream quota/auth failures,
+malformed responses and authenticated API/audit behavior. On 2026-10-12 a live
+location question retrieved five eligible chunks from the existing curated index
+and received a grounded answer from Groq `qwen/qwen3.8-27b`. This verifies the
+development setup, not production embedding hosting or every possible answer.

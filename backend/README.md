@@ -258,15 +258,53 @@ request bodies. App Admins can inspect the bounded trail through
 ## Campus AI Assistant / RAG
 
 Revision `a18d6c9e4f20` adds approved knowledge sources, embedded chunks, and
-privacy-minimal query audits. Apply the migration, install Ollama, and make the
-configured local models available before building the initial CUET snapshot:
+privacy-minimal query audits. Apply the migration and make the configured
+Ollama embedding model available before building the initial CUET snapshot:
 
 ```powershell
-ollama pull qwen3:1.7b
 ollama pull embeddinggemma:300m
 ```
 
-Then run from `backend/`:
+### Hosted Qwen chat on Groq
+
+Put `GROQ_API_KEY` in the ignored repository `.env` or backend `.env`, never in
+frontend variables, source code, images, or GitHub. Restart the backend after
+changing settings. `RAG_CHAT_PROVIDER=auto` (the default) selects Groq whenever
+the key is nonempty; it selects local Ollama chat only when no key is present.
+Set `RAG_CHAT_PROVIDER=groq` to require Groq or `ollama` to explicitly use local
+chat. An invalid key or a failed Groq request does **not** silently fall back to
+Ollama. The real key is held as a masked `SecretStr` in settings.
+
+The hosted model defaults to `GROQ_CHAT_MODEL=qwen/qwen3.8-27b`. This is a
+[Groq preview model](https://console.groq.com/docs/model/qwen/qwen3.8-27b), so
+review availability before deployment. Requests disable reasoning, hide reasoning
+output, cap completion length (`GROQ_MAX_OUTPUT_TOKENS=512`) and use a bounded
+timeout (`GROQ_TIMEOUT_SECONDS=60`). Provider quota exhaustion returns a safe
+429, while invalid credentials/model access, network failures and unusable
+responses return safe 503 errors without upstream bodies or keys.
+Existing per-user limits still apply; Groq's shared request/token quota can be
+exhausted sooner. See [Groq rate limits](https://console.groq.com/docs/rate-limits).
+
+Only the question and retrieved public CUET excerpts are sent to Groq; user
+records, email addresses, tokens and other account data are not added to the
+prompt. Users should not include private information in their questions.
+Answers retain the existing no-sources presentation and reviewed-corpus rules.
+The existing Python HTTP client is used; no frontend SDK or framework migration
+is required.
+
+**Embeddings still use Ollama's `embeddinggemma:300m`.** Switching chat models
+does not change vector dimensions or require re-indexing. Keep the embedding
+server reachable for both ingestion and each question. This change alone does
+not remove the laptop dependency for deployment: provision a reachable private
+embedding service, or implement a hosted embedding provider and rebuild the
+index with that provider before switching retrieval. If explicitly choosing
+local chat, also install `ollama pull qwen3:1.7b`.
+
+Docker Compose passes the Groq settings at runtime. Its `--env-file .env.compose`
+must contain the key separately; it does not automatically copy the root `.env`.
+Do not print resolved Compose configuration containing real secrets.
+
+To build the knowledge index, run from `backend/`:
 
 ```powershell
 .\.venv\Scripts\python -m app.modules.assistant.ingest --check
@@ -323,8 +361,9 @@ enter assistant answers unless an operator explicitly selects
 
 Authenticated users ask through `POST /api/v1/assistant/ask`. The service
 retrieves relevant chunks, sends only those public excerpts and the question to
-the locally hosted Qwen model, returns a clean answer without citation/source
-metadata, and emits a no-context response when retrieval confidence is insufficient. Per-user fixed-window limits and output
+the configured Groq or local Ollama chat provider, returns a clean answer without
+citation/source metadata, and emits a no-context response when retrieval confidence
+is insufficient. Per-user fixed-window limits and output
 limits bound resource usage. `GET /api/v1/admin/assistant/knowledge` reports
 eligible corpus counts and review-due sections to App Admins. Browser requests use the same-origin Next.js proxy;
 the Ollama service is never exposed to browser JavaScript.

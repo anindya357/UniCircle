@@ -2,11 +2,13 @@
 
 import uuid
 from datetime import UTC, date, datetime
+from types import SimpleNamespace
 
 import pytest
 from bs4 import BeautifulSoup
 from fastapi.testclient import TestClient
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from pydantic import SecretStr
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
@@ -231,6 +233,74 @@ def test_empty_knowledge_returns_setup_error_without_model_call(assistant_stack)
     assert caught.value.code == "assistant_knowledge_not_ready"
     audit = db.scalar(select(RagQueryAudit).where(RagQueryAudit.user_id == user.id))
     assert audit.status == "failed"
+
+
+@pytest.mark.parametrize("upstream_status", [200, 429, 401, 500])
+def test_groq_is_used_by_authenticated_rag_and_errors_are_audited(
+    assistant_stack, monkeypatch, upstream_status
+):
+    db, user, settings = assistant_stack
+    settings = curated_settings(settings).model_copy(
+        update={"groq_api_key": SecretStr("test-only-private-key")}
+    )
+    ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+
+    def post(url, **kwargs):
+        assert kwargs["json"]["model"] == "qwen/qwen3.8-27b"
+        prompt = kwargs["json"]["messages"][1]["content"]
+        assert "Raozan" in prompt
+        assert str(user.id) not in prompt and user.email not in prompt
+        return SimpleNamespace(
+            status_code=upstream_status,
+            json=lambda: {
+                "choices": [{"message": {"content": "CUET is in Raozan. [1]"}}],
+                "error": {"message": "test-only-private-key"},
+            },
+        )
+
+    monkeypatch.setattr("app.modules.assistant.service.requests.post", post)
+    app = create_app(settings)
+    app.dependency_overrides[get_current_user] = lambda: AuthIdentity(
+        id=str(user.id), role="student", is_active=True, is_verified=True
+    )
+    app.dependency_overrides[get_assistant_service] = lambda: RagAssistantService(
+        db, settings, embeddings=FakeEmbeddings()
+    )
+    with TestClient(app) as client:
+        response = client.post(
+            "/api/v1/assistant/ask", json={"question": "Where is CUET?"}
+        )
+    assert "test-only-private-key" not in response.text
+    if upstream_status == 200:
+        assert response.status_code == 200
+        assert response.json()["data"] == {
+            "answer": "CUET is in Raozan.",
+            "status": "answered",
+        }
+    else:
+        assert response.status_code == (429 if upstream_status == 429 else 503)
+    audit = db.scalar(select(RagQueryAudit).where(RagQueryAudit.user_id == user.id))
+    assert audit.status == ("answered" if upstream_status == 200 else "failed")
+
+
+def test_groq_is_not_called_when_context_is_unrelated(assistant_stack, monkeypatch):
+    db, user, settings = assistant_stack
+    settings = curated_settings(settings).model_copy(
+        update={"groq_api_key": SecretStr("test-only-private-key")}
+    )
+    ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+    for chunk in db.scalars(select(RagChunk)):
+        chunk.embedding = [0.0, 1.0]
+    db.commit()
+
+    def no_call(*args, **kwargs):
+        pytest.fail("Unrelated questions must not spend Groq quota")
+
+    monkeypatch.setattr("app.modules.assistant.service.requests.post", no_call)
+    result = RagAssistantService(db, settings, embeddings=FakeEmbeddings()).ask(
+        str(user.id), "Unrelated question"
+    )
+    assert result["status"] == "not-found"
 
 
 def test_unrelated_question_still_returns_not_found_from_a_ready_index(assistant_stack):

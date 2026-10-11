@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Protocol
 
+import requests
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -92,6 +93,97 @@ class OllamaChatProvider:
         if not isinstance(response.content, str) or not response.content.strip():
             raise RuntimeError("Ollama returned an empty answer")
         return response.content.strip()
+
+
+class GroqChatProvider:
+    """Backend-only hosted Qwen; never expose upstream bodies or credentials."""
+
+    ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
+
+    def __init__(self, settings: Settings) -> None:
+        self._settings = settings
+        try:
+            self._key = settings.require_groq_key()
+        except ValueError:
+            raise AppError(
+                status_code=503,
+                code="assistant_not_configured",
+                message="The Campus AI Assistant's Groq API key is not configured.",
+            ) from None
+
+    def answer(self, *, question: str, context: str) -> str:
+        try:
+            response = requests.post(
+                self.ENDPOINT,
+                headers={"Authorization": f"Bearer {self._key}"},
+                json={
+                    "model": self._settings.groq_chat_model,
+                    "messages": [
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {
+                            "role": "user",
+                            "content": (
+                                f"CUET SOURCE EXCERPTS:\n{context}\n\n"
+                                f"QUESTION:\n{question}"
+                            ),
+                        },
+                    ],
+                    "max_completion_tokens": self._settings.groq_max_output_tokens,
+                    "reasoning_effort": "none",
+                    "reasoning_format": "hidden",
+                },
+                timeout=(5, self._settings.groq_timeout_seconds),
+                # Never forward the Authorization header to a redirect target.
+                allow_redirects=False,
+            )
+        except requests.RequestException:
+            raise AppError(
+                status_code=503,
+                code="assistant_unavailable",
+                message="The Campus AI Assistant could not reach Groq. Please retry.",
+            ) from None
+
+        if response.status_code == 429:
+            raise AppError(
+                status_code=429,
+                code="assistant_provider_rate_limited",
+                message=(
+                    "The AI provider's usage limit has been reached. "
+                    "Please try again later."
+                ),
+            )
+        if response.status_code in (401, 403, 404):
+            raise AppError(
+                status_code=503,
+                code="assistant_not_configured",
+                message=(
+                    "The Campus AI Assistant's Groq key or model access needs "
+                    "attention. Please contact an administrator."
+                ),
+            )
+        if response.status_code != 200:
+            raise AppError(
+                status_code=503,
+                code="assistant_provider_failed",
+                message="Groq could not complete this request. Please retry later.",
+            )
+        try:
+            content = response.json()["choices"][0]["message"]["content"]
+            if not isinstance(content, str) or not content.strip():
+                raise ValueError("Empty completion")
+        except (ValueError, KeyError, IndexError, TypeError):
+            raise AppError(
+                status_code=503,
+                code="assistant_provider_failed",
+                message="Groq returned no usable answer. Please retry.",
+            ) from None
+        return content.strip()
+
+
+def create_chat_provider(settings: Settings) -> ChatProvider:
+    if settings.assistant_chat_provider == "groq":
+        return GroqChatProvider(settings)
+    return OllamaChatProvider(settings)
 
 
 def cosine_similarity(left: list[float], right: list[float]) -> float:
@@ -236,7 +328,7 @@ class RagAssistantService:
                     f"Reviewed: {reviewed_at}\n"
                     f"Excerpt: {match.chunk.content}"
                 )
-            chat = self._chat or OllamaChatProvider(self.settings)
+            chat = self._chat or create_chat_provider(self.settings)
             answer = chat.answer(
                 question=question,
                 context=f"Question date: {knowledge_today().isoformat()}\n\n"

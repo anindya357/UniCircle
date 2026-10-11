@@ -39,6 +39,11 @@ class Settings(BaseSettings):
     smtp_username: str | None = None
     smtp_password: SecretStr | None = None
     smtp_from_email: str | None = None
+    rag_chat_provider: Literal["auto", "groq", "ollama"] = "auto"
+    groq_api_key: SecretStr | None = None
+    groq_chat_model: str = Field(default="qwen/qwen3.8-27b", min_length=1)
+    groq_timeout_seconds: int = Field(default=60, ge=5, le=120)
+    groq_max_output_tokens: int = Field(default=512, ge=64, le=2048)
     ollama_base_url: str = "http://127.0.0.1:11434"
     ollama_chat_model: str = "qwen3:1.7b"
     ollama_embedding_model: str = "embeddinggemma:300m"
@@ -84,6 +89,20 @@ class Settings(BaseSettings):
 
     def require_otp_key(self) -> bytes:
         return self._required_key(self.otp_pepper, "OTP_PEPPER")
+
+    @property
+    def assistant_chat_provider(self) -> Literal["groq", "ollama"]:
+        if self.rag_chat_provider != "auto":
+            return self.rag_chat_provider
+        raw = self.groq_api_key.get_secret_value() if self.groq_api_key else ""
+        return "groq" if raw.strip() else "ollama"
+
+    def require_groq_key(self) -> str:
+        raw = self.groq_api_key.get_secret_value() if self.groq_api_key else ""
+        key = raw.strip()
+        if not key or key.startswith("replace-"):
+            raise ValueError("GROQ_API_KEY is not configured")
+        return key
 
     def require_smtp_configuration(self) -> tuple[str, int, str, str, str, str]:
         host = self.smtp_host or ""
