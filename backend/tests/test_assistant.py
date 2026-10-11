@@ -221,14 +221,70 @@ def test_retrieval_ranks_the_relevant_cuet_chunk_first(assistant_stack):
     assert matches[0].score == pytest.approx(1.0)
 
 
-def test_empty_knowledge_returns_not_found_without_model_call(assistant_stack):
+def test_empty_knowledge_returns_setup_error_without_model_call(assistant_stack):
     db, user, settings = assistant_stack
     service = RagAssistantService(db, settings)
 
-    result = service.ask(str(user.id), "What is available?")
+    with pytest.raises(AppError) as caught:
+        service.ask(str(user.id), "What is available?")
+    assert caught.value.status_code == 503
+    assert caught.value.code == "assistant_knowledge_not_ready"
+    audit = db.scalar(select(RagQueryAudit).where(RagQueryAudit.user_id == user.id))
+    assert audit.status == "failed"
 
+
+def test_unrelated_question_still_returns_not_found_from_a_ready_index(assistant_stack):
+    db, user, settings = assistant_stack
+    ingest_curated(db, curated_settings(settings), embedder=FakeDocumentEmbeddings())
+    for chunk in db.scalars(select(RagChunk)):
+        chunk.embedding = [0.0, 1.0]
+    db.commit()
+    service = RagAssistantService(
+        db, curated_settings(settings), embeddings=FakeEmbeddings(), chat=FailingChat()
+    )
+    result = service.ask(str(user.id), "An unrelated question")
     assert result["status"] == "not-found"
     assert "sources" not in result
+
+
+def test_missing_index_error_reaches_the_api(assistant_stack):
+    db, user, settings = assistant_stack
+    settings = curated_settings(settings)
+    app = create_app(settings)
+    app.dependency_overrides[get_current_user] = lambda: AuthIdentity(
+        id=str(user.id), role="student", is_active=True, is_verified=True
+    )
+    app.dependency_overrides[get_assistant_service] = lambda: RagAssistantService(
+        db, settings
+    )
+    with TestClient(app) as client:
+        response = client.post(
+            "/api/v1/assistant/ask", json={"question": "Where is CUET?"}
+        )
+    assert response.status_code == 503
+    assert response.json()["error"]["code"] == "assistant_knowledge_not_ready"
+    assert "rebuild" in response.json()["error"]["message"]
+
+
+@pytest.mark.parametrize("problem", ["snapshot", "embedding-model", "expired"])
+def test_ineligible_index_is_a_setup_error_not_an_unanswered_question(
+    assistant_stack, monkeypatch, problem
+):
+    db, user, settings = assistant_stack
+    settings = curated_settings(settings)
+    ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
+    if problem == "expired":
+        monkeypatch.setattr(
+            "app.modules.assistant.curated.knowledge_today", lambda: date(2028, 1, 1)
+        )
+    else:
+        key = "corpusHash" if problem == "snapshot" else "embeddingModel"
+        for source in db.scalars(select(RagSource)):
+            source.source_metadata = {**source.source_metadata, key: "out-of-date"}
+        db.commit()
+    with pytest.raises(AppError) as caught:
+        RagAssistantService(db, settings).ask(str(user.id), "Where is CUET?")
+    assert caught.value.code == "assistant_knowledge_not_ready"
 
 
 def test_external_model_failure_is_a_safe_service_error(assistant_stack):
@@ -406,7 +462,9 @@ def test_curated_retrieval_excludes_legacy_scrapes_and_returns_no_sources(
     )
     db.commit()
     service = RagAssistantService(db, settings)
-    assert service._retrieve("Where is CUET?") == []
+    with pytest.raises(AppError) as caught:
+        service.ask(str(user.id), "Where is CUET?")
+    assert caught.value.code == "assistant_knowledge_not_ready"
     ingest_curated(db, settings, embedder=FakeDocumentEmbeddings())
     service = RagAssistantService(
         db, settings, embeddings=FakeEmbeddings(), chat=FakeChat()

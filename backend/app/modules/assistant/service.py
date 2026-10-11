@@ -1,6 +1,7 @@
 """Source-grounded retrieval and answer generation."""
 
 import hashlib
+import logging
 import math
 import re
 import uuid
@@ -20,6 +21,8 @@ from app.modules.assistant.curated import (
     load_knowledge,
     source_is_eligible,
 )
+
+logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = """You are the UniCircle Campus AI Assistant.
 Answer only from the CUET source excerpts supplied below.
@@ -173,7 +176,20 @@ class RagAssistantService:
             if source_is_eligible(source, self.settings, snapshot)
         ]
         if not rows:
-            return []
+            logger.warning(
+                "No eligible RAG chunks for mode=%s model=%s; "
+                "rebuild the knowledge index",
+                self.settings.rag_knowledge_mode,
+                self.settings.ollama_embedding_model,
+            )
+            raise AppError(
+                status_code=503,
+                code="assistant_knowledge_not_ready",
+                message=(
+                    "The CUET knowledge base is not ready. Please ask an "
+                    "administrator to rebuild the knowledge index."
+                ),
+            )
         embeddings = self._embeddings or OllamaEmbeddingProvider(self.settings)
         query_vector = embeddings.embed_query(question)
         ranked = sorted(

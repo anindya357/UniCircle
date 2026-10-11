@@ -293,6 +293,28 @@ Leadership needs weekly review, rankings monthly review, and general campus
 facts quarterly/half-yearly review. Admin knowledge status reports review-due
 sections. Unknown pro-VC and teacher-headcount information is not fabricated.
 
+### Troubleshooting empty or unavailable knowledge
+
+Having scraped pages in the database does **not** mean the curated corpus has
+been indexed. After switching to curated mode or changing the Markdown document,
+run `python -m app.modules.assistant.ingest` from the activated backend environment
+(without `--web`). Check the admin knowledge-status endpoint for eligible sources
+and chunks, rather than the total number of old source records.
+
+No eligible chunks now produces HTTP 503 with `assistant_knowledge_not_ready`,
+not a misleading answer saying every question is unrelated. This also covers a
+stale snapshot, a different embedding model or an entirely expired corpus. A
+ready index with genuinely insufficient retrieval confidence still returns the
+normal `not-found` answer. The fix is to index/review the corpus, not weaken the
+similarity threshold or feed excluded old scrapes into answers.
+
+If `ollama list` is empty although model files exist on E:, check **Ollama desktop
+Settings → model storage** as well as the `OLLAMA_MODELS` environment variable.
+The desktop app can have an explicit old folder saved in its settings. On this
+development machine both should point to `E:\OllamaModels`; restart Ollama after
+correcting the folder. Existing model files do not need to be downloaded again.
+See [Ollama's model-location and environment-variable guidance](https://docs.ollama.com/faq).
+
 The legacy crawler remains an explicit research tool:
 `python -m app.modules.assistant.ingest --web --max-pages 500`.
 It still applies the strict approved-host/robots policy. Scraped results do not
