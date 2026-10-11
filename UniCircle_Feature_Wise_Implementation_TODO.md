@@ -2251,7 +2251,7 @@ Tasks:
 
 # PHASE 13 — PRODUCTION DEPLOYMENT PLAN
 
-> Select the concrete provider based on the finalized deployment design, course constraints, budget/free-tier limits, Docker support, database support, storage needs, and RAG/vector-store requirements.
+> Selected: existing Neon project/branch plus one Vercel Services project for Next.js and FastAPI. Production: https://unicircle-cuet.vercel.app. Groq chat and bundled CPU FastEmbed embeddings remove the laptop/Ollama requirement. See `docs/deployment/README.md` for release evidence and remaining manual checks.
 
 # 13.1 Production infrastructure
 
@@ -2271,42 +2271,43 @@ Logging/monitoring
 
 Tasks:
 
-- [ ] Create production project/account/resources.
-- [ ] Create production PostgreSQL database.
+- [x] Create production project/account/resources.
+- [x] Configure the user-selected production Neon PostgreSQL database.
 - [ ] Configure backup policy.
-- [ ] Configure database SSL if required.
-- [ ] Create production application secrets.
-- [ ] Configure SMTP production credentials.
-- [ ] Provision the Ollama runtime and configured local models.
-- [ ] Configure production vector store.
+- [x] Configure database SSL if required.
+- [x] Configure production application secrets in Vercel Secret variables.
+- [x] Configure SMTP production credentials (delivery smoke test still pending).
+- [x] Configure Groq chat and bundle the CPU embedding model; no production Ollama server required.
+- [x] Configure production vector storage in Neon and add a separate cloud knowledge index.
 - [ ] Configure media/storage if used.
-- [ ] Configure frontend production URL.
-- [ ] Configure backend production URL.
-- [ ] Configure production CORS.
-- [ ] Configure HTTPS.
+- [x] Configure frontend production URL.
+- [x] Configure private backend service binding (`BACKEND_API_URL`).
+- [x] Configure production CORS.
+- [x] Configure HTTPS.
 - [ ] Configure domain/DNS if using custom domain.
 
 ---
 
 # 13.2 Production database release
 
-- [ ] Apply migrations against production using controlled migration job/process.
-- [ ] Verify migration success.
+- [x] Restore the initial schema and existing records through a controlled transactional copy, as explicitly requested.
+- [x] Verify schema revision and every table's row count/content fingerprint after copying.
+- [ ] Apply future migrations through a controlled release job/process.
 - [ ] Seed only required base data.
 - [ ] Create/configure Admin account through a secure method.
-- [ ] Verify required departments/base reference data.
-- [ ] Never load development/test users into production.
+- [x] Verify required departments/base reference data were preserved.
+- [ ] Review any development/test accounts in the user-requested existing-data copy before wider use; do not add automated-test accounts to production.
 
 ---
 
 # 13.3 Production backend release
 
-- [ ] Deploy production backend image.
-- [ ] Configure environment variables.
-- [ ] Verify database connectivity.
+- [x] Deploy FastAPI through Vercel's native Python runtime (the existing Docker image remains an alternative).
+- [x] Configure environment variables.
+- [x] Verify database connectivity through the deployed authentication API.
 - [ ] Verify SMTP connectivity.
-- [ ] Verify Ollama/RAG dependencies and model availability.
-- [ ] Verify `/health`.
+- [x] Verify cloud RAG dependencies and bundled model availability during the production build.
+- [x] Verify backend `/health` through the public `/api/health` frontend route.
 - [ ] Verify logs.
 - [ ] Verify Admin authentication.
 
@@ -2314,12 +2315,14 @@ Tasks:
 
 # 13.4 Production frontend release
 
-- [ ] Deploy production Next.js application.
-- [ ] Configure correct backend API URL.
-- [ ] Verify no mock mode is enabled.
+- [x] Deploy production Next.js application.
+- [x] Configure correct private backend service binding.
+- [x] Verify production services use API implementations, not mock mode.
 - [ ] Verify no development secret is bundled.
 - [ ] Verify static/media assets.
 - [ ] Verify responsive UI.
+
+> Public home/login, registration-field rendering and protected-route redirects passed browser checks with no runtime errors. Mobile welcome-banner text clips at 390 px and remains a follow-up; authenticated flows and OTP delivery are not yet marked complete. The release is live, but the complete production smoke checklist below still requires manual verification.
 
 ---
 

@@ -32,6 +32,8 @@ Install the backend's `cloud` extra. The build runs
 model into the function bundle and verifying offline loading. Production requests
 load only the bundled files, without Hugging Face downloads or Ollama calls.
 Groq generates answers using the configured Qwen model and server-only key.
+The model artifact hash is checked during builds to prevent silent changes to
+the embedding space used by the existing Neon index.
 
 Index the reviewed MD/TXT knowledge using the same model against Neon before
 release: `python -m app.modules.assistant.ingest`. Cloud vectors use a separate
@@ -61,4 +63,26 @@ Rollback to a known-good deployment with `vercel rollback <deployment-url>`;
 database migrations and data changes need their own compatible rollback plan.
 Configure Neon restore retention and regular backups separately; the initial
 local archive is not an ongoing production backup policy.
+
+## Initial release verification — 12 October 2026
+
+Production: https://unicircle-cuet.vercel.app (project `unicircle-cuet`). The
+GitHub repository is connected for subsequent deployments from `main`.
+The production deployment was staged, tested, then promoted without changing its
+build. The optimized FastAPI bundle is approximately 120 MB.
+
+Verified: 164 backend tests, 24 frontend tests, frontend type/lint checks, backend
+lint/format checks, offline embedding loading, separate Neon cloud indexing and
+four retrieval topics, and a Groq answer using Neon context. Public browser checks
+confirmed home/login rendering, ten registration inputs, private-service health,
+the correct nonexistent-user login rejection, protected assistant redirect and no
+JavaScript runtime errors. The welcome text and local campus imagery render.
+
+Still requires manual checks: successful existing-user/admin login, OTP email
+delivery, authenticated feature workflows and a deployed assistant conversation.
+The mobile welcome banner clips its heading/description at 390 px despite no
+document-level horizontal scrollbar; record this as a follow-up layout issue,
+not a passed responsive-UI check. No cosmetic redesign was included in deployment.
+Preview environment secrets/database isolation and an ongoing backup policy also
+remain to be configured. Do not use the production database for automated tests.
 
