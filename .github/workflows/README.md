@@ -2,11 +2,14 @@
 
 [`ci.yml`](ci.yml) runs on pull requests targeting `main`, pushes to `main`,
 and manual **Actions → CI → Run workflow** requests. Superseded runs for the
-same branch/PR are cancelled. This is CI only; Phase 12 deployment is not enabled.
+same branch/PR are cancelled. CI itself never deploys. Phase 12 uses Vercel's
+Git integration with a required **CI gate** Deployment Check and
+[`cd.yml`](cd.yml) for post-promotion, commit-specific production smoke checks.
+See [the release runbook](../../docs/deployment/CD.md).
 
 | Check | What must pass |
 | --- | --- |
-| Frontend checks | Locked npm install, ESLint (zero warnings), TypeScript, Vitest unit/component tests, Next.js production build |
+| Frontend checks | Locked npm install, ESLint (zero warnings), TypeScript, release-harness tests, Vitest unit/component tests, Next.js production build |
 | Backend checks | Hash-locked runtime install, pinned test tools, Ruff lint/format, knowledge-base validation, all unit/in-process API tests, Alembic upgrade, PostgreSQL HTTP/API tests |
 | Docker (backend/frontend) | Both production Dockerfiles build, runtime user is non-root; backend includes valid curated knowledge files |
 | CI gate | All of the above succeeded; failure, cancellation or skipped prerequisites cannot pass |
@@ -67,7 +70,8 @@ up-to-date, require one approving review and dismiss stale approvals. Preserve
 the repository owner's existing administrator bypass for the requested direct
 `main` workflow; contributors' PR merges require review and passing CI. Admin
 bypass means an owner can still push directly before CI finishes, so a green
-run on the pushed commit should be confirmed before release.
+run on the pushed commit is required by Vercel before assigning the production
+domain. Direct pushes do not bypass that Vercel check.
 
 Actions use immutable commit pins, checkout does not persist Git credentials,
 and the workflow grants only `contents: read`. No repository/environment

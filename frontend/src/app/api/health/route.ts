@@ -11,7 +11,11 @@ export async function GET() {
     });
     const result = await response.json();
     if (!response.ok || result?.data?.status !== "ok") throw new Error();
-    return NextResponse.json({ status: "ok" }, { headers });
+    // Public commit metadata, not credentials. CD must verify this exact build,
+    // rather than accidentally passing smoke checks against an older release.
+    const candidate = process.env.VERCEL_GIT_COMMIT_SHA;
+    const revision = candidate && /^[a-f0-9]{40}$/.test(candidate) ? candidate : null;
+    return NextResponse.json({ status: "ok", revision }, { headers });
   } catch {
     return NextResponse.json({ status: "unavailable" }, { status: 503, headers });
   }

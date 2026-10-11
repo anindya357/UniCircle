@@ -43,6 +43,11 @@ knowledge review expiry dates and provider free-tier rate limits.
 
 ## Release and rollback
 
+Phase 12's automated main-branch release gate, smoke workflow and controlled
+migration/rollback commands are documented in [the CD runbook](CD.md).
+The manual staged-release steps below remain an operator recovery procedure;
+normal main pushes now wait for the required Vercel **CI gate** check.
+
 Use Node 24 on Vercel and Python 3.12 for the backend. Keep the project root at the
 repository root; `vercel.json` defines each service's directory and private binding.
 

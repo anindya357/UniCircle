@@ -180,6 +180,7 @@ def test_dotenv_selects_groq_and_masks_key(tmp_path):
     env_file = tmp_path / ".env"
     env_file.write_text("GROQ_API_KEY=test-only-private-key\n", encoding="utf-8")
     configured = Settings(
+        app_env="development",
         database_url=LOCAL_DATABASE_URL,
         rag_chat_provider="auto",
         _env_file=env_file,

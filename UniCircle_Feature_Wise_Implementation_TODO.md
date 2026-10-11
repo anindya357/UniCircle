@@ -2203,6 +2203,8 @@ secrets, no image publishing and no deployment steps. Phase 12 is not started.
 
 # 12.1 Decide release trigger
 
+> Selected: push/merge to `main`, using the existing Vercel Git integration for both Services. A production-only Vercel Deployment Check requires the exact commit's GitHub `CI gate` before domain assignment. `.github/workflows/cd.yml` verifies the public release after promotion. See `docs/deployment/CD.md` for the complete migration, secrets, smoke-test and rollback runbook. No separate branch or registry is required.
+
 Recommended options:
 
 ```text
@@ -2213,12 +2215,14 @@ Version tag / GitHub Release
 
 Tasks:
 
-- [ ] Choose one release strategy.
-- [ ] Document it.
+- [x] Choose one release strategy: push/merge to `main`.
+- [x] Document it in `docs/deployment/CD.md`.
 
 ---
 
 ## 12.2 CD workflow stages
+
+> Platform adaptation: Vercel builds immutable Git-SHA-versioned frontend/backend artifacts, not published Docker images. CI still builds both SHA-tagged Docker images. Reviewed, backward-compatible migrations run as an explicit operator step before a schema-dependent release; no production secrets enter GitHub Actions. Live smoke tests run after promotion and fail CD without automatically rolling back user traffic/data.
 
 ```text
 main/tag
@@ -2235,17 +2239,17 @@ main/tag
 
 Tasks:
 
-- [ ] Store production secrets in GitHub/environment secret management.
-- [ ] Never place secrets directly in workflow YAML.
-- [ ] Build versioned image.
-- [ ] Push image to selected registry if deployment platform requires it.
-- [ ] Deploy backend.
-- [ ] Run/apply Alembic migrations using a controlled strategy.
-- [ ] Deploy frontend.
-- [ ] Verify backend health.
-- [ ] Verify frontend availability.
-- [ ] Run post-deployment smoke tests.
-- [ ] Define rollback procedure.
+- [x] Store production secrets in Vercel production environment secret management; CD requires no production GitHub secrets.
+- [x] Never place secrets directly in workflow YAML.
+- [x] Build versioned Vercel artifacts and SHA-tagged Docker images in CI.
+- [x] Registry publishing: not applicable to the selected native Vercel deployment.
+- [x] Deploy backend through the connected Vercel Services project, gated by CI.
+- [x] Run/apply Alembic migrations using a controlled strategy: `python -m app.db.release` preflight; explicit guarded apply after backup/review only. Current Neon head verified; no new migrations needed.
+- [x] Deploy frontend atomically with backend through Vercel Services.
+- [x] Verify backend liveness through `/api/health` and the private service binding.
+- [x] Verify frontend availability for the exact deployed Git SHA.
+- [x] Run post-deployment read-only smoke tests with `CD`; authenticated/OTP/AI manual checks remain separately tracked in Phase 13.
+- [x] Define code rollback, schema compatibility, data-restoration approval and automatic-assignment recovery procedure.
 
 ---
 
