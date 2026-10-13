@@ -136,3 +136,33 @@ class AdminLoginRequest(AuthRequest):
         if not password or len(password.encode("utf-8")) > 1024:
             raise ValueError("Password must contain 1-1024 bytes")
         return value
+
+
+class ChallengeRequest(AuthRequest):
+    challenge_id: str = Field(alias="challengeId", min_length=20, max_length=1024)
+
+
+class ChallengeVerificationRequest(ChallengeRequest):
+    otp: str
+
+    @field_validator("otp")
+    @classmethod
+    def validate_otp(cls, value: str) -> str:
+        return OtpVerificationRequest.validate_otp(value)
+
+
+class ResetPasswordRequest(AuthRequest):
+    reset_token: SecretStr = Field(alias="resetToken")
+    password: SecretStr
+
+    @field_validator("reset_token")
+    @classmethod
+    def validate_token(cls, value: SecretStr) -> SecretStr:
+        if not 20 <= len(value.get_secret_value()) <= 64:
+            raise ValueError("Invalid password reset authorization")
+        return value
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, value: SecretStr) -> SecretStr:
+        return RegistrationRequest.validate_password(value)

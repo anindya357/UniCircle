@@ -2,11 +2,11 @@ import { AuthPage } from "@/features/auth/components/auth-page";
 import { GeneralLoginForm } from "@/features/auth/components/general-login-form";
 
 type LoginPageProps = Readonly<{
-  searchParams: Promise<{ verified?: string; email?: string }>;
+  searchParams: Promise<{ verified?: string; email?: string; reset?: string }>;
 }>;
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
-  const { verified, email } = await searchParams;
+  const { verified, email, reset } = await searchParams;
 
   return (
     <AuthPage
@@ -24,6 +24,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       <GeneralLoginForm
         initialIdentifier={email}
         registrationVerified={verified === "1"}
+        passwordReset={reset === "1"}
       />
     </AuthPage>
   );

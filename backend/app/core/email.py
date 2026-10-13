@@ -21,6 +21,10 @@ class VerificationEmailSender(Protocol):
         self, recipient: str, code: str, expires_in_minutes: int
     ) -> None: ...
 
+    def send_auth_code(
+        self, recipient: str, code: str, expires_in_minutes: int, purpose: str
+    ) -> None: ...
+
 
 class SmtpVerificationEmailSender:
     def __init__(self, settings: Settings) -> None:
@@ -28,6 +32,11 @@ class SmtpVerificationEmailSender:
 
     def send_verification_code(
         self, recipient: str, code: str, expires_in_minutes: int
+    ) -> None:
+        self.send_auth_code(recipient, code, expires_in_minutes, "email_verification")
+
+    def send_auth_code(
+        self, recipient: str, code: str, expires_in_minutes: int, purpose: str
     ) -> None:
         recipient = normalize_cuet_email(recipient)
         host, port, username, password, sender, tls_mode = (
@@ -41,11 +50,15 @@ class SmtpVerificationEmailSender:
         message = EmailMessage()
         message["From"] = sender
         message["To"] = recipient
-        message["Subject"] = "Your UniCircle verification code"
+        action = {
+            "email_verification": "verification",
+            "password_reset": "password reset",
+        }[purpose]
+        message["Subject"] = f"Your UniCircle {action} code"
         message.set_content(
-            f"Your UniCircle verification code is {code}. "
+            f"Your UniCircle {action} code is {code}. "
             f"It expires in {expires_in_minutes} minutes. "
-            "If you did not request this, ignore this message."
+            "Never share this code. If you did not request this, ignore this message."
         )
         context = ssl.create_default_context()
         try:

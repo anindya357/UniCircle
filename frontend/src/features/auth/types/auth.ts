@@ -36,3 +36,11 @@ export type AdminLoginInput = Readonly<{
 export type AuthenticationResult = Readonly<{
   user: SessionUser;
 }>;
+
+export type EmailCodeResult = Readonly<{
+  flow: "reset";
+  email: string;
+  expiresAt?: string;
+}>;
+
+export type OtpPurpose = "registration" | "reset";

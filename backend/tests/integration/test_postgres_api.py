@@ -26,6 +26,7 @@ from app.db.models import Notification, User
 from app.db.session import get_db
 from app.main import create_app
 from tests import test_auth_integration as auth_cases
+from tests import test_email_auth_flows as recovery_cases
 from tests.fakes import FakeVerificationEmailSender
 from tests.test_news import payload
 
@@ -110,6 +111,12 @@ def test_real_postgres_registration_otp_login_profile_and_logout(postgres_stack)
 
 def test_real_postgres_student_subdomain_registration(postgres_stack):
     auth_cases.test_student_subdomain_registration_otp_and_email_login(postgres_stack)
+
+
+def test_real_postgres_password_recovery_and_session_revocation(postgres_stack):
+    recovery_cases.test_reset_requires_code_single_use_grant_and_revokes_sessions(
+        postgres_stack
+    )
 
 
 def test_real_jwt_authorization_news_and_notifications(postgres_stack):

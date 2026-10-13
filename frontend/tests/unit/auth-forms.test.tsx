@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { GeneralLoginForm } from "@/features/auth/components/general-login-form";
 import { OtpVerificationForm } from "@/features/auth/components/otp-verification-form";
 import { RegistrationForm } from "@/features/auth/components/registration-form";
+import { PasswordRecoveryForm } from "@/features/auth/components/password-recovery-form";
 import {
   isPasswordValid,
   validateCuetEmail,
@@ -14,14 +15,18 @@ import {
 
 const mocks = vi.hoisted(() => ({
   push: vi.fn(),
+  replace: vi.fn(),
   register: vi.fn(),
   verifyOtp: vi.fn(),
   resendOtp: vi.fn(),
   loginGeneral: vi.fn(),
+  forgotPassword: vi.fn(),
+  verifyResetOtp: vi.fn(),
+  resetPassword: vi.fn(),
 }));
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mocks.push }),
+  useRouter: () => ({ push: mocks.push, replace: mocks.replace }),
 }));
 
 vi.mock("@/services", () => ({
@@ -30,6 +35,9 @@ vi.mock("@/services", () => ({
     verifyOtp: mocks.verifyOtp,
     resendOtp: mocks.resendOtp,
     loginGeneral: mocks.loginGeneral,
+    forgotPassword: mocks.forgotPassword,
+    verifyResetOtp: mocks.verifyResetOtp,
+    resetPassword: mocks.resetPassword,
   },
 }));
 
@@ -53,6 +61,10 @@ describe("authentication forms", () => {
     mocks.verifyOtp.mockReset();
     mocks.resendOtp.mockReset();
     mocks.loginGeneral.mockReset();
+    mocks.replace.mockReset();
+    mocks.forgotPassword.mockReset();
+    mocks.verifyResetOtp.mockReset();
+    mocks.resetPassword.mockReset();
   });
 
   test("registration presents validation and switches the role-specific ID", async () => {
@@ -106,5 +118,56 @@ describe("authentication forms", () => {
     expect(await screen.findByText("Username or email is required.")).toBeVisible();
     expect(screen.getByText("Password is required.")).toBeVisible();
     expect(mocks.loginGeneral).not.toHaveBeenCalled();
+  });
+
+  test("login offers password recovery", () => {
+    render(<GeneralLoginForm />);
+    expect(screen.getByRole("link", { name: "Forgot password?" })).toHaveAttribute(
+      "href",
+      "/forgot-password",
+    );
+  });
+
+  test("forgot password validates institutional email and opens reset OTP", async () => {
+    const user = userEvent.setup();
+    mocks.forgotPassword.mockResolvedValue({ flow: "reset" });
+    render(<PasswordRecoveryForm />);
+    await user.type(screen.getByLabelText("CUET email"), "student@gmail.com");
+    await user.click(screen.getByRole("button", { name: "Send reset code" }));
+    expect(mocks.forgotPassword).not.toHaveBeenCalled();
+    await user.clear(screen.getByLabelText("CUET email"));
+    await user.type(screen.getByLabelText("CUET email"), "student@student.cuet.ac.bd");
+    await user.click(screen.getByRole("button", { name: "Send reset code" }));
+    expect(mocks.push).toHaveBeenCalledWith("/verify-otp?purpose=reset");
+  });
+
+  test("reset code is verified before navigating to the new-password form", async () => {
+    const user = userEvent.setup();
+    mocks.verifyResetOtp.mockResolvedValue({ verified: true });
+    render(<OtpVerificationForm email="student@student.cuet.ac.bd" purpose="reset" />);
+    await user.type(screen.getByLabelText(/Verification code/), "123456");
+    await user.click(screen.getByRole("button", { name: "Verify reset code" }));
+    expect(mocks.verifyResetOtp).toHaveBeenCalledWith("123456");
+    expect(mocks.verifyOtp).not.toHaveBeenCalled();
+    expect(mocks.push).toHaveBeenCalledWith("/reset-password");
+  });
+
+  test("new password must meet policy and match confirmation", async () => {
+    const user = userEvent.setup();
+    mocks.resetPassword.mockResolvedValue(undefined);
+    render(<PasswordRecoveryForm reset />);
+    await user.type(
+      screen.getByLabelText("New password", { exact: true }),
+      "ChangedPass123",
+    );
+    await user.type(screen.getByLabelText("Confirm new password"), "DifferentPass123");
+    await user.click(screen.getByRole("button", { name: "Set new password" }));
+    expect(await screen.findByText("Passwords do not match.")).toBeVisible();
+    expect(mocks.resetPassword).not.toHaveBeenCalled();
+    await user.clear(screen.getByLabelText("Confirm new password"));
+    await user.type(screen.getByLabelText("Confirm new password"), "ChangedPass123");
+    await user.click(screen.getByRole("button", { name: "Set new password" }));
+    expect(mocks.resetPassword).toHaveBeenCalledWith("ChangedPass123");
+    expect(mocks.replace).toHaveBeenCalledWith("/login?reset=1");
   });
 });

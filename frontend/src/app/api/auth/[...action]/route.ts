@@ -3,6 +3,11 @@ import { randomBytes, timingSafeEqual } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 
 import { isSameOrigin } from "@/lib/server/same-origin";
+import {
+  resetCodeCookie,
+  resetGrantCookie,
+  readEmailFlowCookie,
+} from "@/features/auth/lib/email-flow-cookie";
 
 const sessionCookie = "unicircle_session";
 const csrfCookie = "unicircle_csrf";
@@ -12,6 +17,10 @@ const postPaths: Record<string, string> = {
   "verify-otp": "/verify-otp",
   "resend-otp": "/resend-otp",
   login: "/login",
+  "forgot-password": "/forgot-password",
+  "password-reset/verify-otp": "/password-reset/verify-otp",
+  "password-reset/resend-otp": "/password-reset/resend-otp",
+  "reset-password": "/reset-password",
   "admin/login": "/admin/login",
   logout: "/logout",
 };
@@ -56,7 +65,7 @@ async function callBackend(
       ...(options.token ? { Authorization: `Bearer ${options.token}` } : {}),
     },
     cache: "no-store",
-    signal: AbortSignal.timeout(10_000),
+    signal: AbortSignal.timeout(options.method === "POST" ? 45_000 : 10_000),
   });
 }
 
@@ -131,14 +140,85 @@ export async function POST(request: NextRequest, context: RouteContext) {
   if (!request.headers.get("content-type")?.startsWith("application/json")) {
     return error(415, "unsupported_media_type", "JSON is required.");
   }
-  const body = await request.text();
+  let body = await request.text();
   if (body.length > 8_192)
     return error(413, "payload_too_large", "Request is too large.");
   try {
+    JSON.parse(body);
+  } catch {
+    return error(400, "invalid_request", "Invalid JSON.");
+  }
+  try {
+    const input: Record<string, unknown> = JSON.parse(body);
+    if (!input || typeof input !== "object" || Array.isArray(input))
+      return error(400, "invalid_request", "Invalid request.");
+    if (action.startsWith("password-reset/")) {
+      const flow = readEmailFlowCookie(request.cookies.get(resetCodeCookie)?.value);
+      if (!flow) return error(400, "invalid_otp", "Verification expired. Start again.");
+      // Never accept a browser-supplied challenge or reset grant.
+      if (action.endsWith("resend-otp")) input.email = flow.email;
+      else input.challengeId = flow.challengeId;
+    }
+    if (action === "reset-password") {
+      const grant = request.cookies.get(resetGrantCookie)?.value;
+      if (!grant) return error(400, "invalid_otp", "Verify your email code first.");
+      input.resetToken = grant;
+    }
+    body = JSON.stringify(input);
     const upstream = await callBackend(path, { method: "POST", body });
+    if (!upstream.ok) return upstreamResponse(upstream);
+    if (action === "reset-password") {
+      const response = await upstreamResponse(upstream);
+      for (const name of [resetGrantCookie, resetCodeCookie, sessionCookie, csrfCookie])
+        response.cookies.delete(name);
+      return response;
+    }
+    if (action === "forgot-password" || action === "password-reset/resend-otp") {
+      const data = (await upstream.json())?.data;
+      const maxAge = Math.floor((Date.parse(data?.expiresAt) - Date.now()) / 1000);
+      if (
+        !data ||
+        data.flow !== "reset" ||
+        typeof data.challengeId !== "string" ||
+        typeof data.email !== "string" ||
+        !Number.isFinite(maxAge) ||
+        maxAge <= 0
+      )
+        return error(502, "backend_error", "Invalid verification response.");
+      const response = NextResponse.json(
+        { data: { flow: data.flow, email: data.email, expiresAt: data.expiresAt } },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+      response.cookies.set(
+        resetCodeCookie,
+        JSON.stringify({ challengeId: data.challengeId, email: data.email }),
+        { ...cookieOptions(), maxAge },
+      );
+      response.cookies.delete(resetGrantCookie);
+      return response;
+    }
+    if (action === "password-reset/verify-otp") {
+      const data = (await upstream.json())?.data;
+      const maxAge = Math.floor((Date.parse(data?.expiresAt) - Date.now()) / 1000);
+      if (
+        typeof data?.resetToken !== "string" ||
+        !Number.isFinite(maxAge) ||
+        maxAge <= 0
+      )
+        return error(502, "backend_error", "Invalid password reset response.");
+      const response = NextResponse.json(
+        { data: { verified: true } },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+      response.cookies.set(resetGrantCookie, data.resetToken, {
+        ...cookieOptions(),
+        maxAge,
+      });
+      response.cookies.delete(resetCodeCookie);
+      return response;
+    }
     if (action !== "login" && action !== "admin/login")
       return upstreamResponse(upstream);
-    if (!upstream.ok) return upstreamResponse(upstream);
     const payload = await upstream.json();
     const data = payload?.data;
     if (!data || typeof data.token !== "string" || !data.user || !data.expiresAt) {
@@ -149,7 +229,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
       );
     }
     const maxAge = Math.floor((Date.parse(data.expiresAt) - Date.now()) / 1000);
-    if (maxAge <= 0)
+    if (!Number.isFinite(maxAge) || maxAge <= 0)
       return error(502, "backend_error", "The authentication session has expired.");
     const response = NextResponse.json(
       { data: { user: data.user } },

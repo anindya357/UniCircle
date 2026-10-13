@@ -295,6 +295,17 @@ the second is used by student addresses. Other subdomains are not assumed valid.
 
 ## 4.3 Login page
 
+### October 2026 authentication update
+
+- [x] Open sign-up OTP immediately after a successful **Create account**, on mobile and desktop.
+- [x] Keep mobile OTP/recovery headers compact, with numeric code entry and one-time-code autofill.
+- [x] Show retry/resend code entry when account creation succeeds but SMTP delivery fails.
+- [x] Resume the same pending registration safely after a lost response; never overwrite a registered account.
+- [x] Keep normal sign-in password-only; registration OTP activates the account.
+- [x] Add **Forgot password?** → email code → verified new-password form → return to sign-in.
+- [x] Support new-password strength/confirmation validation and invalid-code feedback.
+- [x] Verify the completed registration and recovery browser journeys at mobile and desktop widths (including 320px/390px/1366px reflow and refresh).
+
 - [x] Create General User login.
 - [x] Allow username or CUET email identifier.
 - [x] Add password input.
@@ -1011,6 +1022,18 @@ registration-to-login journey have not yet been confirmed.
 - [x] Never hard-code production Admin secrets in repository source.
 
 ## 7.5 Connect Authentication frontend
+
+### Email-code password recovery (October 2026)
+
+- [x] Reuse existing TLS SMTP settings for password-reset codes; no additional provider/key required.
+- [x] Implement forgot-password, reset-code verification/resend, and new-password endpoints.
+- [x] Separate registration/recovery OTP purposes; enforce expiry, cooldown, single use, and attempt/rate limits.
+- [x] Give generic recovery acknowledgements/errors for unknown/inactive accounts; do not expose provider details.
+- [x] Store only hashed, ten-minute reset grants in the existing OTP table; no migration/data replacement required.
+- [x] Keep reset challenge IDs/grants in HttpOnly BFF cookies, not browser storage or URLs.
+- [x] Reset the password and revoke all prior sessions/challenges atomically; serialize concurrent logins by user lock.
+- [x] Add isolated security tests with captured mail plus a disposable PostgreSQL CI recovery test.
+- [ ] Confirm real production inbox delivery with the account owner (test SMTP capture does not prove delivery).
 
 - [x] Replace mock registration call.
 - [x] Connect OTP submission.

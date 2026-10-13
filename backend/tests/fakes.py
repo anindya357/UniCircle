@@ -29,6 +29,11 @@ class FakeVerificationEmailSender:
             raise RuntimeError("fake provider failure")
         self.sent.append((recipient, code, expires_in_minutes))
 
+    def send_auth_code(
+        self, recipient: str, code: str, expires_in_minutes: int, purpose: str
+    ) -> None:
+        self.send_verification_code(recipient, code, expires_in_minutes)
+
 
 class FakeOtpStore:
     def __init__(self) -> None:

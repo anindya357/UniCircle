@@ -38,12 +38,41 @@ The current frontend `SessionUser` assumes every account has CUET email, usernam
 | `POST /auth/verify-otp` | Public, rate-limited | Consume valid OTP and verify account |
 | `POST /auth/resend-otp` | Public, rate-limited | Generic acknowledgement; resend only when eligible |
 | `POST /auth/login` | Public, rate-limited | General User JWT/session for BFF only |
+| `POST /auth/forgot-password` | Public, rate-limited | Generic recovery acknowledgement; eligible account receives an SMTP code |
+| `POST /auth/password-reset/verify-otp` | Public, challenge-bound and rate-limited | Valid recovery code creates a short-lived reset grant for the BFF only |
+| `POST /auth/password-reset/resend-otp` | Public, email-scoped and rate-limited | Generic recovery acknowledgement; BFF uses the email from its recovery cookie; SMTP cooldown applies |
+| `POST /auth/reset-password` | Verified, single-use reset grant | Hash new password, revoke sessions, remove pending challenges atomically |
 | `POST /auth/admin/login` | Public, rate-limited | Provisioned App Admin JWT/session for BFF only |
 | `GET /auth/me` | Authenticated | Safe current-user DTO from live account |
 | `POST /auth/logout` | Authenticated | Revoke current session |
 | `PATCH /users/me` | Authenticated | Update allowed profile fields; no role/ID/verification edits |
 
 ## Feature module boundaries and routes
+
+### Implemented recovery invariant (October 2026)
+
+Normal sign-in is password-only; OTP entry follows **Create account** during
+sign-up. Existing pending sign-up retries require the same email, username,
+role/university ID and the correct password; no existing account data is replaced.
+On mobile, OTP/recovery pages use the compact auth shell so the form, not the
+decorative banner, occupies the initial viewport.
+
+Password-reset codes use a purpose and private-challenge-bound HMAC distinct from
+registration OTPs. The BFF injects an HttpOnly, signed recovery ticket for the
+requested email and strips secret grants from responses. Codes obey configured
+expiry, cooldown and attempt
+limits. Verified recovery creates a separate `password_reset_grant` row whose
+ID/digest is the SHA-256 hash of a random 256-bit token; it is not a login JWT.
+The grant expires after ten minutes. Reset consumes it, updates the Argon2 password
+hash, revokes every existing session, and deletes pending OTPs in one transaction
+under the user-row lock. Both login and reset use that lock, preventing an
+old-password login from creating a session after a concurrent reset. The existing
+OTP/session schema is reused; migration state and current accounts are preserved.
+
+Recovery tickets use a separate derived signing key, issuer/audience, expiry and
+random nonce; they are not login tokens or reset grants. Known and unknown emails
+get the same randomized ticket shape, including repeated requests during cooldown.
+A ticket alone can neither sign in nor reset a password without a valid email code.
 
 The table lists a compact API surface, not a promise to build all endpoints at once. All IDs are validated UUIDs; user IDs for owner-scoped actions come from the session, **not** request bodies. `U` means verified General User, `S` student, `C` mapped admin of the specified club, and `A` App Admin. Public Home is static and has no content API for now.
 

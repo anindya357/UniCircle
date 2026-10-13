@@ -2,6 +2,7 @@ import type {
   AdminLoginInput,
   AuthenticationResult,
   GeneralLoginInput,
+  EmailCodeResult,
   OtpVerificationInput,
   RegistrationInput,
   RegistrationResult,
@@ -89,6 +90,22 @@ export class ApiAuthService implements AuthService {
     return authRequest<AuthenticationResult>("login", "POST", input).then(
       ({ user }) => ({ user: normalizeSessionUser(user) }),
     );
+  }
+
+  forgotPassword(email: string): Promise<EmailCodeResult> {
+    return authRequest("forgot-password", "POST", { email });
+  }
+
+  verifyResetOtp(otp: string): Promise<{ verified: boolean }> {
+    return authRequest("password-reset/verify-otp", "POST", { otp });
+  }
+
+  resendResetOtp(): Promise<EmailCodeResult> {
+    return authRequest("password-reset/resend-otp", "POST", {});
+  }
+
+  resetPassword(password: string): Promise<void> {
+    return authRequest("reset-password", "POST", { password });
   }
 
   loginAdmin(input: AdminLoginInput): Promise<AuthenticationResult> {

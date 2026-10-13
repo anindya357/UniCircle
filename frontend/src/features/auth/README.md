@@ -7,8 +7,18 @@ Next.js route handlers. Start FastAPI and set `BACKEND_API_URL` in
 - `/register` collects first name, last name, home address, username, role, and the
   corresponding Student/Teacher/Staff ID. It validates all required fields, the exact
   `@cuet.ac.bd` or `@student.cuet.ac.bd` domain, and password strength.
-- `/verify-otp` submits the emailed code and supports resend/cooldown feedback.
+- After `Create account`, `/verify-otp?email=...` opens on mobile and desktop.
+  Its compact mobile header keeps code entry visible, with numeric keyboard,
+  one-time-code autofill, invalid-code feedback, and resend/cooldown behavior.
+  A failed SMTP send still opens code entry with a retry notice. Repeating the
+  same pending registration with the correct password resumes verification.
 - `/login` signs in a verified General User and redirects to Home.
+- `Forgot password?` opens `/forgot-password` → `/verify-otp?purpose=reset`
+  → `/reset-password` → `/login?reset=1`. Sign-in remains password-only.
+- Recovery challenge IDs and the verified reset grant stay in short-lived
+  HttpOnly cookies, never browser storage or URLs. Reset grants are hashed in
+  the database, single-use, and expire after ten minutes. Saving a valid new
+  password revokes all previous sessions and clears pending OTPs/reset grants.
 - `/admin/login` signs in a separately provisioned App Admin.
 - The BFF keeps the JWT in a host-only HttpOnly cookie and uses a separate CSRF
   cookie/header for authenticated writes. It never stores the JWT in browser storage.

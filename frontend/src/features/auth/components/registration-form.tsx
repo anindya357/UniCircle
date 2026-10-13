@@ -99,6 +99,9 @@ export function RegistrationForm() {
       setFormError(getAuthErrorMessage(error));
       if (error instanceof ServiceError && error.code === "email-unavailable") {
         setPendingEmail(email.trim().toLowerCase());
+        router.push(
+          `${routes.auth.verifyOtp}?email=${encodeURIComponent(email.trim().toLowerCase())}&deliveryFailed=1`,
+        );
       }
     } finally {
       setIsSubmitting(false);

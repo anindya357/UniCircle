@@ -9,13 +9,22 @@ import { routes } from "@/config/routes";
 import { authPolicy } from "@/features/auth/config/auth-policy";
 import { getAuthErrorMessage } from "@/features/auth/lib/auth-error";
 import { validateOtp } from "@/features/auth/lib/auth-validation";
+import type { OtpPurpose } from "@/features/auth/types/auth";
 import { authService } from "@/services";
 
 import styles from "./auth.module.css";
 
-type OtpVerificationFormProps = Readonly<{ email?: string }>;
+type OtpVerificationFormProps = Readonly<{
+  email?: string;
+  purpose?: OtpPurpose;
+  deliveryFailed?: boolean;
+}>;
 
-export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
+export function OtpVerificationForm({
+  email,
+  purpose = "registration",
+  deliveryFailed = false,
+}: OtpVerificationFormProps) {
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState<string | null>(null);
@@ -23,7 +32,9 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
-  const [cooldown, setCooldown] = useState<number>(authPolicy.otpResendCooldownSeconds);
+  const [cooldown, setCooldown] = useState<number>(
+    deliveryFailed ? 0 : authPolicy.otpResendCooldownSeconds,
+  );
 
   useEffect(() => {
     if (cooldown <= 0) return;
@@ -41,8 +52,15 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
 
     setIsSubmitting(true);
     try {
-      await authService.verifyOtp({ email, otp });
-      router.push(`${routes.auth.login}?verified=1&email=${encodeURIComponent(email)}`);
+      if (purpose === "reset") {
+        await authService.verifyResetOtp(otp);
+        router.push(routes.auth.resetPassword);
+      } else {
+        await authService.verifyOtp({ email, otp });
+        router.push(
+          `${routes.auth.login}?verified=1&email=${encodeURIComponent(email)}`,
+        );
+      }
     } catch (error) {
       setFormError(getAuthErrorMessage(error));
     } finally {
@@ -56,12 +74,13 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
     setStatusMessage(null);
     setIsResending(true);
     try {
-      await authService.resendOtp(email);
+      if (purpose === "reset") await authService.resendResetOtp();
+      else await authService.resendOtp(email);
       setOtp("");
       setOtpError(null);
       setCooldown(authPolicy.otpResendCooldownSeconds);
       setStatusMessage(
-        "If your account is pending, a new code will be sent when email delivery is available.",
+        "If your account is eligible, a new code will be sent. Check your inbox and spam folder.",
       );
     } catch (error) {
       setFormError(getAuthErrorMessage(error));
@@ -74,19 +93,31 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
     <>
       {email ? (
         <div className={styles.emailTarget}>
-          <span>Code sent to</span>
+          <span>{purpose === "reset" ? "Recovery email" : "Your CUET email"}</span>
           <strong>{email}</strong>
         </div>
       ) : (
         <div className={styles.formAlert} role="alert">
-          No registration email was provided. Please register again.
+          This verification request has expired or is missing. Please start again.
         </div>
       )}
 
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
-        {formError ? <div className={styles.formAlert}>{formError}</div> : null}
+        {deliveryFailed ? (
+          <div className={styles.formAlert} role="alert">
+            Your account was created, but the email could not be sent. Use Resend code
+            to try again.
+          </div>
+        ) : null}
+        {formError ? (
+          <div className={styles.formAlert} role="alert">
+            {formError}
+          </div>
+        ) : null}
         {statusMessage ? (
-          <div className={styles.formSuccess}>{statusMessage}</div>
+          <div className={styles.formSuccess} role="status">
+            {statusMessage}
+          </div>
         ) : null}
 
         <div className={styles.field}>
@@ -97,8 +128,12 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
             className={styles.otpInput}
             id="otp"
             name="otp"
+            type="text"
             inputMode="numeric"
             autoComplete="one-time-code"
+            pattern="[0-9]{6}"
+            enterKeyHint="done"
+            autoFocus
             maxLength={authPolicy.otpLength}
             value={otp}
             onChange={(event) => setOtp(event.target.value.replace(/\D/g, ""))}
@@ -110,7 +145,10 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
         </div>
 
         <p className={styles.otpHint} id="otp-hint">
-          Enter the six-digit code sent to your CUET email. Codes expire shortly.
+          {purpose === "reset"
+            ? "If this email belongs to an active account, you will receive a six-digit code. "
+            : "Enter the six-digit code sent to your CUET email. "}
+          Check spam too. Codes expire after 10 minutes.
         </p>
 
         <button
@@ -118,7 +156,11 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
           type="submit"
           disabled={isSubmitting || !email}
         >
-          {isSubmitting ? "Verifying..." : "Verify account"}
+          {isSubmitting
+            ? "Verifying..."
+            : purpose === "reset"
+              ? "Verify reset code"
+              : "Verify account"}
         </button>
 
         <div className={styles.resendRow}>
@@ -138,7 +180,15 @@ export function OtpVerificationForm({ email }: OtpVerificationFormProps) {
       </form>
 
       <p className={styles.formFooter}>
-        <Link href={routes.auth.register}>Use a different email</Link>
+        <Link
+          href={
+            purpose === "registration"
+              ? routes.auth.register
+              : routes.auth.forgotPassword
+          }
+        >
+          Start again
+        </Link>
       </p>
     </>
   );

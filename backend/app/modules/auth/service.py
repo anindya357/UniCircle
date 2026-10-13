@@ -123,7 +123,7 @@ class AuthService:
             raise _unavailable("Email verification") from exc
         prepared = prepare_registration(request)
         exists = self.db.scalar(
-            select(User.id).where(
+            select(User).where(
                 (func.lower(User.username) == prepared.username.casefold())
                 | (func.lower(User.email) == prepared.email)
                 | (
@@ -133,6 +133,21 @@ class AuthService:
             )
         )
         if exists is not None:
+            # Recover a pending sign-up if SMTP/the browser response failed.
+            # Never overwrite an existing account or resume with a wrong password.
+            if (
+                exists.is_active
+                and exists.verified_at is None
+                and exists.email == prepared.email
+                and exists.username.casefold() == prepared.username.casefold()
+                and exists.role == prepared.role
+                and exists.university_id == prepared.university_id
+                and verify_password(
+                    request.password.get_secret_value(), exists.password_hash
+                )
+            ):
+                self.resend(prepared.email, network)
+                return prepared.email
             raise AppError(
                 status_code=409,
                 code="account_conflict",
@@ -210,17 +225,19 @@ class AuthService:
         normalized = identifier.casefold()
         if admin:
             user = self.db.scalar(
-                select(User).where(
-                    func.lower(User.admin_id) == normalized, User.role == "admin"
-                )
+                select(User)
+                .where(func.lower(User.admin_id) == normalized, User.role == "admin")
+                .with_for_update()
             )
         else:
             user = self.db.scalar(
-                select(User).where(
+                select(User)
+                .where(
                     User.role != "admin",
                     (func.lower(User.username) == normalized)
                     | (func.lower(User.email) == normalized),
                 )
+                .with_for_update()
             )
         password_valid = verify_password(
             password, user.password_hash if user else _DUMMY_HASH

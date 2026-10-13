@@ -6,22 +6,24 @@ from pathlib import Path
 from typing import Annotated
 
 from fastapi import Depends
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.core.config import Settings
-from app.core.otp import OtpCheckResult
+from app.core.otp import OtpService
 from app.core.security import hash_password
 from app.db.base import Base
 from app.db.models import ClubEvent, User
 from app.db.session import get_db
 from app.main import create_app
 from app.modules.assistant.router import get_assistant_service
+from app.modules.auth.persistence import DatabaseOtpStore
 from app.modules.auth.service import AuthService, get_auth_service
 from app.modules.campus.seed import seed_campus
 from app.modules.clubs.seed import seed_clubs
 from app.modules.directory.seed import seed_directory
 from app.modules.transport.seed import seed_transport
+from tests.fakes import FakeVerificationEmailSender
 
 settings = Settings(
     app_env="testing",
@@ -102,28 +104,26 @@ def e2e_db():
         yield db
 
 
-class FixedOtp:
-    def __init__(self, db: Session) -> None:
-        self.db = db
+class FixedOtp(OtpService):
+    """Only code generation/delivery are fake; actual persistence/policy is used."""
 
-    def issue_email_verification(self, _email: str) -> str:
+    @staticmethod
+    def new_code() -> str:
         return "123456"
-
-    def verify_email(self, email: str, code: str) -> OtpCheckResult:
-        if code != "123456":
-            return OtpCheckResult.INVALID
-        user = self.db.scalar(select(User).where(User.email == email))
-        if user is None:
-            return OtpCheckResult.INVALID
-        user.verified_at = datetime.now(UTC)
-        self.db.commit()
-        return OtpCheckResult.VERIFIED
 
 
 def e2e_auth_service(
     db: Annotated[Session, Depends(get_db)],
 ) -> AuthService:
-    return AuthService(db, settings, FixedOtp(db))
+    return AuthService(
+        db,
+        settings,
+        FixedOtp(
+            store=DatabaseOtpStore(db),
+            sender=FakeVerificationEmailSender(),
+            settings=settings,
+        ),
+    )
 
 
 class FixedAssistant:

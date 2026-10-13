@@ -14,11 +14,13 @@ import styles from "./auth.module.css";
 type GeneralLoginFormProps = Readonly<{
   initialIdentifier?: string;
   registrationVerified?: boolean;
+  passwordReset?: boolean;
 }>;
 
 export function GeneralLoginForm({
   initialIdentifier = "",
   registrationVerified = false,
+  passwordReset = false,
 }: GeneralLoginFormProps) {
   const [identifier, setIdentifier] = useState(initialIdentifier);
   const [password, setPassword] = useState("");
@@ -38,7 +40,10 @@ export function GeneralLoginForm({
 
     setIsSubmitting(true);
     try {
-      await authService.loginGeneral({ identifier: identifier.trim(), password });
+      await authService.loginGeneral({
+        identifier: identifier.trim(),
+        password,
+      });
       window.location.assign(routes.home);
     } catch (error) {
       setFormError(getAuthErrorMessage(error));
@@ -55,7 +60,16 @@ export function GeneralLoginForm({
             Your CUET email is verified. You can now sign in.
           </div>
         ) : null}
-        {formError ? <div className={styles.formAlert}>{formError}</div> : null}
+        {passwordReset ? (
+          <div className={styles.formSuccess} role="status">
+            Password changed. Sign in with your new password.
+          </div>
+        ) : null}
+        {formError ? (
+          <div className={styles.formAlert} role="alert">
+            {formError}
+          </div>
+        ) : null}
 
         <div className={styles.field}>
           <label htmlFor="identifier">
@@ -89,6 +103,10 @@ export function GeneralLoginForm({
           />
           <FormError id="login-password-error" message={passwordError} />
         </div>
+
+        <Link className={styles.inlineLink} href={routes.auth.forgotPassword}>
+          Forgot password?
+        </Link>
 
         <button className={styles.submitButton} type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Signing in..." : "Sign in"}

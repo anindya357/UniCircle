@@ -4,6 +4,8 @@ export const routes = {
     register: "/register",
     verifyOtp: "/verify-otp",
     login: "/login",
+    forgotPassword: "/forgot-password",
+    resetPassword: "/reset-password",
     adminLogin: "/admin/login",
   },
   directory: "/directory",

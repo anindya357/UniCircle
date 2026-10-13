@@ -17,13 +17,16 @@ from app.core.security import AccessTokenClaims
 from app.core.validation import require_nonblank
 from app.db.models import User
 from app.db.session import get_db
+from app.modules.auth.email_flows import EmailCodeFlows
 from app.modules.auth.persistence import revoke_session
 from app.modules.auth.schemas import (
     AdminLoginRequest,
+    ChallengeVerificationRequest,
     GeneralLoginRequest,
     OtpVerificationRequest,
     RegistrationRequest,
     ResendOtpRequest,
+    ResetPasswordRequest,
 )
 from app.modules.auth.service import AuthService, get_auth_service
 
@@ -204,6 +207,61 @@ def login(
     )
     return ApiResponse(
         data=LoginResponse(token=token, expiresAt=expires_at, user=session_user(user))
+    )
+
+
+@router.post("/forgot-password", response_model=ApiResponse[dict])
+def forgot_password(
+    payload: ResendOtpRequest,
+    request: Request,
+    service: Annotated[AuthService, Depends(get_auth_service)],
+) -> ApiResponse[dict]:
+    return ApiResponse(
+        data=EmailCodeFlows(service).forgot_password(
+            payload.email, network_identity(request)
+        )
+    )
+
+
+@router.post("/password-reset/verify-otp", response_model=ApiResponse[dict])
+def verify_reset_code(
+    payload: ChallengeVerificationRequest,
+    request: Request,
+    service: Annotated[AuthService, Depends(get_auth_service)],
+) -> ApiResponse[dict]:
+    return ApiResponse(
+        data=EmailCodeFlows(service).verify(
+            payload.challenge_id,
+            payload.otp,
+            "password_reset",
+            network_identity(request),
+        )
+    )
+
+
+@router.post("/password-reset/resend-otp", response_model=ApiResponse[dict])
+def resend_reset_code(
+    payload: ResendOtpRequest,
+    request: Request,
+    service: Annotated[AuthService, Depends(get_auth_service)],
+) -> ApiResponse[dict]:
+    return ApiResponse(
+        data=EmailCodeFlows(service).forgot_password(
+            payload.email, network_identity(request)
+        )
+    )
+
+
+@router.post("/reset-password", status_code=status.HTTP_204_NO_CONTENT)
+def reset_password(
+    payload: ResetPasswordRequest,
+    request: Request,
+    service: Annotated[AuthService, Depends(get_auth_service)],
+) -> None:
+    EmailCodeFlows(service).reset_password(
+        payload.reset_token.get_secret_value(),
+        payload.password.get_secret_value(),
+        network_identity(request),
     )
 
 

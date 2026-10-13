@@ -14,6 +14,7 @@ type AuthPageProps = Readonly<{
   panelItems: readonly string[];
   children: ReactNode;
   admin?: boolean;
+  compactMobile?: boolean;
 }>;
 
 export function AuthPage({
@@ -25,9 +26,13 @@ export function AuthPage({
   panelItems,
   children,
   admin = false,
+  compactMobile = false,
 }: AuthPageProps) {
   return (
-    <main className={styles.page} id="main-content">
+    <main
+      className={`${styles.page} ${compactMobile ? styles.compactMobile : ""}`}
+      id="main-content"
+    >
       <section className={`${styles.contextPanel} ${admin ? styles.adminPanel : ""}`}>
         <Link className={styles.brand} href={routes.home}>
           <span aria-hidden="true">U</span>

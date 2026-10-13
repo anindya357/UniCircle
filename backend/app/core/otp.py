@@ -77,7 +77,7 @@ class OtpService:
         recipient = normalize_cuet_email(email)
         key = self.settings.require_otp_key()
         now = datetime.now(UTC)
-        code = f"{secrets.randbelow(1_000_000):06d}"
+        code = self.new_code()
         challenge = OtpChallenge(
             id=secrets.token_urlsafe(18),
             recipient=recipient,
@@ -100,6 +100,10 @@ class OtpService:
             self.store.discard(challenge.id)
             raise
         return challenge.expires_at
+
+    @staticmethod
+    def new_code() -> str:
+        return f"{secrets.randbelow(1_000_000):06d}"
 
     def verify_email(self, email: str, code: str) -> OtpCheckResult:
         recipient = normalize_cuet_email(email)

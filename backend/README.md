@@ -55,6 +55,26 @@ database; the in-memory stores under `tests/` are test fixtures only. Registrati
 fails closed if SMTP is not configured. Real SMTP delivery must be validated
 with the selected provider before production use.
 
+### Sign-up OTP and forgotten passwords
+
+General-user sign-in remains password-only and requires a verified account.
+Registration sends an email-verification code; a correctly authenticated retry
+of the same pending registration resumes code entry without replacing user data.
+
+Password recovery reuses the configured TLS SMTP sender:
+`POST /api/v1/auth/forgot-password` → `/password-reset/verify-otp`
+→ `/reset-password`. A browser uses the same-origin Next.js BFF, which keeps
+challenge IDs/reset grants in HttpOnly cookies and never exposes grants to client
+JavaScript. Recovery acknowledges known/unknown emails generically; invalid,
+expired, or exhausted reset codes share a safe error. Resends are rate-limited.
+Only a valid code creates a ten-minute, single-use reset grant; its hash is stored
+under a distinct purpose in the existing `otp_challenges` table. A new password
+uses the registration password policy and revokes all old sessions/challenges in
+one user-locked transaction. Login takes the same user lock to serialize against
+password changes. No schema migration or production-data replacement is required.
+Provisioned App Admins have no email account and retain their separate ID/password
+login; they cannot use the public General User recovery flow.
+
 The default development URL is
 `postgresql+psycopg://unicircle_dev@localhost:5432/unicircle_dev`. On a local
 PostgreSQL installation that trusts local connections, create a dedicated role

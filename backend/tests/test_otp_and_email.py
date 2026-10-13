@@ -123,8 +123,9 @@ class FakeSmtpConnection:
         type(self).message = message
 
 
+@pytest.mark.parametrize("purpose", ["email_verification", "password_reset"])
 def test_smtp_sender_upgrades_to_tls_before_authentication(
-    settings: Settings, monkeypatch: pytest.MonkeyPatch
+    settings: Settings, monkeypatch: pytest.MonkeyPatch, purpose: str
 ) -> None:
     FakeSmtpConnection.events = []
     FakeSmtpConnection.message = None
@@ -138,7 +139,7 @@ def test_smtp_sender_upgrades_to_tls_before_authentication(
         }
     )
     sender = SmtpVerificationEmailSender(configured)
-    sender.send_verification_code("anika@cuet.ac.bd", "123456", 10)
+    sender.send_auth_code("anika@cuet.ac.bd", "123456", 10, purpose)
 
     assert FakeSmtpConnection.events.index(
         "starttls"
@@ -146,6 +147,9 @@ def test_smtp_sender_upgrades_to_tls_before_authentication(
     assert FakeSmtpConnection.message is not None
     assert FakeSmtpConnection.message["To"] == "anika@cuet.ac.bd"
     assert "123456" in FakeSmtpConnection.message.get_content()
+    assert ("password reset" in FakeSmtpConnection.message["Subject"]) == (
+        purpose == "password_reset"
+    )
 
 
 def test_smtp_sender_fails_closed_without_credentials(settings: Settings) -> None:

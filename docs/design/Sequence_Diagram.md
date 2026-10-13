@@ -1,6 +1,6 @@
 # UniCircle sequence diagrams
 
-Status: **planned Phase 7 behavior**, not implemented APIs. Participants show transaction ordering. For readability, diagrams after authentication omit the Next.js BFF hop; all browser calls still pass through it. Every BFF mutation checks origin/CSRF; every protected FastAPI action verifies JWT, active session, live user, and object-level permission as described in the [LLD](LLD.md).
+Status: authentication and email-code password recovery are implemented; other diagrams retain their original working-design status. Participants show transaction ordering. For readability, diagrams after authentication omit the Next.js BFF hop; all browser calls still pass through it. Every BFF mutation checks origin/CSRF; every protected FastAPI action verifies JWT, active session, live user, and object-level permission as described in the [LLD](LLD.md).
 
 ## Registration, verification, and login
 
@@ -55,6 +55,41 @@ sequenceDiagram
 ```
 
 Resend follows the registration challenge-issuance path but first enforces cooldown and rate limits; it gives a generic public response where account existence could otherwise be inferred. The API never returns an OTP. SMTP acceptance does not guarantee inbox delivery, so the UI must allow a safe resend after cooldown.
+
+## Email-code password recovery
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Web as Mobile or desktop UI
+    participant BFF as Next.js auth handler
+    participant API as FastAPI recovery service
+    participant DB as PostgreSQL
+    participant SMTP
+    User->>Web: Select Forgot password and submit CUET email
+    Web->>BFF: POST forgot-password
+    BFF->>API: Validated recovery request
+    API->>DB: Rate limit; lock eligible user; persist purpose-bound code hash
+    API->>SMTP: Send reset code through existing TLS SMTP configuration
+    API-->>BFF: Generic acknowledgement and opaque challenge
+    BFF-->>Web: HttpOnly challenge cookie; navigate to reset-code screen
+    User->>Web: Enter received code
+    Web->>BFF: POST reset OTP (no client-visible secret challenge)
+    BFF->>API: Cookie-bound challenge and code
+    API->>DB: Lock user; enforce expiry/attempts; consume code; hash reset grant
+    API-->>BFF: Ten-minute reset grant (not a session)
+    BFF-->>Web: HttpOnly grant cookie; open new-password form
+    User->>Web: Submit matching strong new password
+    BFF->>API: New password and cookie-bound grant
+    API->>DB: Atomically update password, revoke sessions, delete challenges
+    API-->>BFF: Reset complete
+    BFF-->>Web: Clear auth cookies; return to login with success notice
+    User->>Web: Sign in normally with the new password
+```
+
+Unknown/inactive emails receive the same public acknowledgement without email.
+Invalid/expired/exhausted recovery codes share a generic error. Failed SMTP sends
+discard their challenge; captured-email tests are not proof of inbox delivery.
 
 ## Protected request and logout
 
