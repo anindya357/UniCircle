@@ -2,10 +2,13 @@
 
 These project-owner-requested, **working** designs guide Phase 7. They describe intended behavior; they do not mean the tables, endpoints, worker, or AI integration are already implemented.
 
+The [API design](api_desing.md) is an implementation-aligned reference. Older diagrams may still describe planned contracts; consult the API catalogue and current source when integrating implemented endpoints.
+
 | Artifact | Purpose |
 | --- | --- |
 | [HLD](HLD.md) | System architecture, runtime components, trust boundaries, deployment shape |
 | [LLD](LLD.md) | Module responsibilities, planned API surface, state transitions, transaction rules |
+| [API design](api_desing.md) | Implemented API catalogue, BFF mappings, permissions, contracts, examples, and error/retry rules |
 | [ERD](ERD.md) | Logical entities, relationships, constraints, authentication/session storage |
 | [Document flow diagram](Document_Flow_Diagram.md) | Forms, review records, notifications, and development artifact handoffs |
 | [Data flow diagrams](Data_Flow_Diagram.md) | System context, processes, stores, and authentication data movement |
