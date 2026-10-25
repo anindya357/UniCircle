@@ -23,7 +23,7 @@ sequenceDiagram
     API->>SMTP: Send one-time code over TLS
     alt SMTP delivery fails
         API->>DB: Discard just-issued challenge
-        API-->>BFF: Safe delivery error; pending account remains
+        API-->>BFF: Safe delivery error#59; pending account remains
     else Accepted for delivery
         API-->>BFF: Email and next verification step
         BFF-->>Web: Navigate to OTP page
@@ -31,7 +31,7 @@ sequenceDiagram
     Applicant->>Web: Enter received six-digit code
     Web->>BFF: POST email and code
     BFF->>API: POST /api/v1/auth/verify-otp
-    API->>DB: Lock challenge and account; check digest, expiry, attempts
+    API->>DB: Lock challenge and account#59; check digest, expiry, attempts
     alt Invalid, expired, or exhausted
         API->>DB: Update attempt state if applicable
         API-->>BFF: Safe verification failure
@@ -43,9 +43,9 @@ sequenceDiagram
     Applicant->>Web: Submit username or CUET email and password
     Web->>BFF: POST login credentials
     BFF->>API: POST /api/v1/auth/login
-    API->>DB: Load user; compare hash; require active and verified
+    API->>DB: Load user#59; compare hash#59; require active and verified
     alt Credentials or account state invalid
-        API-->>BFF: Generic 401; no account enumeration
+        API-->>BFF: Generic 401#59; no account enumeration
     else Valid login
         API->>DB: Create revocable session with jti digest
         API-->>BFF: Short-lived JWT and safe user DTO
@@ -69,21 +69,21 @@ sequenceDiagram
     User->>Web: Select Forgot password and submit CUET email
     Web->>BFF: POST forgot-password
     BFF->>API: Validated recovery request
-    API->>DB: Rate limit; lock eligible user; persist purpose-bound code hash
+    API->>DB: Rate limit#59; lock eligible user#59; persist purpose-bound code hash
     API->>SMTP: Send reset code through existing TLS SMTP configuration
     API-->>BFF: Generic acknowledgement and opaque challenge
-    BFF-->>Web: HttpOnly challenge cookie; navigate to reset-code screen
+    BFF-->>Web: HttpOnly challenge cookie#59; navigate to reset-code screen
     User->>Web: Enter received code
     Web->>BFF: POST reset OTP (no client-visible secret challenge)
     BFF->>API: Cookie-bound challenge and code
-    API->>DB: Lock user; enforce expiry/attempts; consume code; hash reset grant
+    API->>DB: Lock user#59; enforce expiry/attempts#59; consume code#59; hash reset grant
     API-->>BFF: Ten-minute reset grant (not a session)
-    BFF-->>Web: HttpOnly grant cookie; open new-password form
+    BFF-->>Web: HttpOnly grant cookie#59; open new-password form
     User->>Web: Submit matching strong new password
     BFF->>API: New password and cookie-bound grant
     API->>DB: Atomically update password, revoke sessions, delete challenges
     API-->>BFF: Reset complete
-    BFF-->>Web: Clear auth cookies; return to login with success notice
+    BFF-->>Web: Clear auth cookies#59; return to login with success notice
     User->>Web: Sign in normally with the new password
 ```
 
@@ -140,18 +140,18 @@ sequenceDiagram
     Admin->>API: Review and approve request
     API->>DB: Lock pending request
     alt Already reviewed
-        API-->>Admin: Existing decision or conflict; no duplicate club
+        API-->>Admin: Existing decision or conflict#59; no duplicate club
     else Pending and valid student
-        API->>DB: Insert club; insert initial Club Admin; mark approved; commit
+        API->>DB: Insert club#59; insert initial Club Admin#59; mark approved#59; commit
         API-->>Admin: One approved club
     end
     Student->>API: Refresh request status and clubs
     API-->>Student: Approved status and club in directory
-    ClubAdmin->>API: Create event; choose none, free, or paid registration
-    API->>DB: Check club mapping; validate dates and payment configuration
+    ClubAdmin->>API: Create event#59; choose none, free, or paid registration
+    API->>DB: Check club mapping#59; validate dates and payment configuration
     API->>DB: Save event
     Student->>API: Register for enabled event
-    API->>DB: Lock/check event window; verify student; insert unique registration
+    API->>DB: Lock/check event window#59; verify student#59; insert unique registration
     alt Paid event
         API->>DB: Save bKash transaction ID as pending_review
         ClubAdmin->>API: Review claimed payment
@@ -178,17 +178,17 @@ sequenceDiagram
     participant API as FastAPI resource/chat service
     participant DB as PostgreSQL
     Requester->>API: Send resource request to another user
-    API->>DB: Reject self-request; insert pending request
+    API->>DB: Reject self-request#59; insert pending request
     Recipient->>API: Accept own received request
-    API->>DB: Lock pending request; set accepted; create one conversation
+    API->>DB: Lock pending request#59; set accepted#59; create one conversation
     DB-->>API: Conversation ID
     Requester->>API: Refresh own requests
     API-->>Requester: Accepted request and conversation available
     Requester->>API: Post message in conversation
-    API->>DB: Verify requester/recipient membership; save text
+    API->>DB: Verify requester/recipient membership#59; save text
     Recipient->>API: Refresh or poll conversation messages
     API-->>Recipient: New participant-visible message
-    Note over API,DB: Non-participants receive denial; no E2EE claim
+    Note over API,DB: Non-participants receive denial#59; no E2EE claim
 ```
 
 REST with refresh/polling is the initial transport. Realtime sockets require a separate design and test pass if later requested.
@@ -236,7 +236,7 @@ sequenceDiagram
     Index-->>API: Ranked chunk IDs and scores
     API->>Sources: Resolve allowed source URLs and current metadata
     alt No sufficiently relevant context
-        API-->>BFF: not-found result; no invented answer
+        API-->>BFF: not-found result#59; no invented answer
     else Grounded context found
         API->>Model: Question plus bounded, untrusted evidence as data
         Model-->>API: Candidate answer
