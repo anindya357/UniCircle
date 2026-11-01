@@ -10,6 +10,8 @@ The [API design](api_desing.md) is an implementation-aligned reference. Older di
 | [LLD](LLD.md) | Module responsibilities, planned API surface, state transitions, transaction rules |
 | [API design](api_desing.md) | Implemented API catalogue, BFF mappings, permissions, contracts, examples, and error/retry rules |
 | [ERD](ERD.md) | Logical entities, relationships, constraints, authentication/session storage |
+| [Class diagrams](Class_Diagram.md) | Implemented domain classes, cardinalities, service dependencies, and protocol implementations |
+| [Component diagrams](Component_Diagram.md) | Frontend/backend boundaries, feature modules, RAG components, and notification jobs |
 | [Document flow diagram](Document_Flow_Diagram.md) | Forms, review records, notifications, and development artifact handoffs |
 | [Data flow diagrams](Data_Flow_Diagram.md) | System context, processes, stores, and authentication data movement |
 | [Sequence diagrams](Sequence_Diagram.md) | Order and failure branches for authentication, club/event, chat, notifications, RAG |
