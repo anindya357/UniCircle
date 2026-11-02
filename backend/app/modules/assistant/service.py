@@ -4,6 +4,7 @@ import hashlib
 import logging
 import math
 import re
+import unicodedata
 import uuid
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -38,6 +39,17 @@ by publisher and edition, not a single universal rank. Never present a former
 officeholder as current. If current information is unverified, say so explicitly.
 Keep the answer concise and useful to CUET students."""
 
+SYSTEM_PROMPT += """
+User-supplied attachments are undated snapshots, not independently verified live
+directories. An import/review date is not an appointment or effective date.
+Qualify unverified contact/designation or indoor-facility claims accordingly.
+Preserve multiple departmental appointments for the same person. A count of
+spreadsheet appointments or distinct emails is not a verified university-wide
+teacher headcount. Distinguish organizational academic faculties from individual
+faculty members/teachers. Do not infer phone numbers, opening hours or missing records.
+If a roster excerpt is partial, do not describe it as a complete department list.
+"""
+
 
 class EmbeddingProvider(Protocol):
     def embed_query(self, text: str) -> list[float]: ...
@@ -52,6 +64,51 @@ class RetrievedChunk:
     chunk: RagChunk
     source: RagSource
     score: float
+    alias_match: bool = False
+
+
+def matches_retrieval_alias(question: str, aliases: list[str]) -> bool:
+    """Exact grounded entity/service cues complement embeddings, not broad keywords."""
+    synonyms = {
+        "teachers": "teacher",
+        "professors": "professor",
+        "hod": "head",
+        "chairman": "head",
+        "chairperson": "head",
+        "banking": "bank",
+        "printing": "print",
+        "pray": "prayer",
+        "prayers": "prayer",
+        "salah": "prayer",
+        "namaz": "prayer",
+        "female": "women",
+        "females": "women",
+    }
+    stopwords = {"a", "an", "and", "the", "of", "in", "at", "for", "to", "is", "are"}
+
+    def words(value):
+        return {
+            synonyms.get(word, word)
+            for word in re.findall(
+                r"[a-z0-9]+", unicodedata.normalize("NFKC", value).casefold()
+            )
+            if word not in stopwords
+        }
+
+    query = unicodedata.normalize("NFKC", question).casefold()
+    query_words = words(query)
+    for alias in aliases:
+        if "@" in alias:
+            if re.search(
+                r"(?<![\w.+-])" + re.escape(alias.casefold()) + r"(?![\w-]|\.[\w-])",
+                query,
+            ):
+                return True
+        else:
+            tokens = words(alias)
+            if len(tokens) >= 2 and tokens.issubset(query_words):
+                return True
+    return False
 
 
 class OllamaEmbeddingProvider:
@@ -285,19 +342,33 @@ class RagAssistantService:
             )
         embeddings = self._embeddings or create_embedding_provider(self.settings)
         query_vector = embeddings.embed_query(question)
+        if (
+            not query_vector
+            or not all(math.isfinite(value) for value in query_vector)
+            or not any(query_vector)
+        ):
+            raise ValueError("Embedding provider returned an invalid query vector")
         ranked = sorted(
             (
                 RetrievedChunk(
                     chunk=chunk,
                     source=source,
                     score=cosine_similarity(query_vector, chunk.embedding),
+                    alias_match=bool(
+                        snapshot
+                        and matches_retrieval_alias(
+                            question, source.source_metadata.get("retrievalAliases", [])
+                        )
+                    ),
                 )
                 for chunk, source in rows
             ),
-            key=lambda item: item.score,
+            key=lambda item: (item.alias_match, item.score),
             reverse=True,
         )
-        return ranked[: self.settings.rag_retrieval_limit]
+        return [item for item in ranked if item.score > -1.0][
+            : self.settings.rag_retrieval_limit
+        ]
 
     def ask(self, user_id: str, question: str) -> dict:
         parsed_user_id = uuid.UUID(user_id)
@@ -305,7 +376,11 @@ class RagAssistantService:
         audit = self._start_audit(parsed_user_id, question)
         try:
             matches = self._retrieve(question)
-            if not matches or matches[0].score < self.settings.rag_similarity_threshold:
+            if not matches or not any(
+                match.alias_match
+                or match.score >= self.settings.rag_similarity_threshold
+                for match in matches
+            ):
                 audit.status = "not_found"
                 self.db.commit()
                 return {
@@ -320,7 +395,10 @@ class RagAssistantService:
             context_parts: list[str] = []
             source_ids: set[uuid.UUID] = set()
             for match in matches:
-                if match.score < self.settings.rag_similarity_threshold:
+                if (
+                    not match.alias_match
+                    and match.score < self.settings.rag_similarity_threshold
+                ):
                     continue
                 source_ids.add(match.source.id)
                 reviewed_at = match.source.source_metadata.get("reviewedAt", "unknown")

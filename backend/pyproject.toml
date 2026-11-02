@@ -49,7 +49,7 @@ include = ["app*"]
 [tool.setuptools.package-data]
 "app.modules.directory" = ["cuet_directory.json"]
 "app.modules.campus" = ["cuet_campus.json"]
-"app.modules.assistant" = ["knowledge/*.md", "knowledge/*.txt"]
+"app.modules.assistant" = ["knowledge/*.md", "knowledge/*.txt", "knowledge/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

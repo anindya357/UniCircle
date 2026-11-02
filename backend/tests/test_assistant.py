@@ -95,6 +95,12 @@ def fixed_knowledge_review_date(monkeypatch):
     monkeypatch.setattr(
         "app.modules.assistant.curated.knowledge_today", lambda: date(2026, 10, 8)
     )
+    monkeypatch.setattr(
+        "app.modules.assistant.router.knowledge_today", lambda: date(2026, 10, 8)
+    )
+    monkeypatch.setattr(
+        "app.modules.assistant.service.knowledge_today", lambda: date(2026, 10, 8)
+    )
 
 
 def test_source_policy_restricts_hosts_protocols_and_portals():
@@ -426,7 +432,7 @@ def curated_settings(settings):
 
 def test_curated_documents_are_synced_and_cover_requested_topics():
     snapshot = load_knowledge()
-    assert len(snapshot.sections) == 16
+    assert len(snapshot.sections) == 390
     topics = {section.key: section.text for section in snapshot.sections}
     assert "18 academic departments" in topics["academic-counts"]
     assert "five academic faculties" in topics["academic-counts"]
@@ -461,10 +467,12 @@ def test_curated_ingestion_is_offline_atomic_idempotent_and_model_aware(
 
     monkeypatch.setattr("requests.Session.get", no_network)
     first = ingest_curated(db, settings, embedder=embedder)
+    first_calls = embedder.calls
     second = ingest_curated(db, settings, embedder=embedder)
-    assert first["updated"] == 16 and first["chunks"] >= 16
-    assert second["unchanged"] == 16 and second["updated"] == 0
-    assert embedder.calls == 1
+    section_count = len(load_knowledge().sections)
+    assert first["updated"] == section_count and first["chunks"] >= section_count
+    assert second["unchanged"] == section_count and second["updated"] == 0
+    assert first_calls > 0 and embedder.calls == first_calls
     source = db.scalar(
         select(RagSource).where(RagSource.url == CURATED_PREFIX + "vice-chancellor")
     )
@@ -477,9 +485,9 @@ def test_curated_ingestion_is_offline_atomic_idempotent_and_model_aware(
         update={"ollama_embedding_model": "different-model"}
     )
     third = ingest_curated(db, new_model, embedder=embedder)
-    assert third["updated"] == 16 and embedder.calls == 2
+    assert third["updated"] == section_count and embedder.calls == 2 * first_calls
     fourth = ingest_curated(db, new_model, embedder=embedder, force=True)
-    assert fourth["updated"] == 16 and embedder.calls == 3
+    assert fourth["updated"] == section_count and embedder.calls == 3 * first_calls
 
 
 @pytest.mark.parametrize(
@@ -645,8 +653,18 @@ def test_admin_knowledge_status_counts_only_eligible_curated_data(assistant_stac
         AuthIdentity(id=str(user.id), role="admin", is_active=True, is_verified=True),
         settings,
     ).data
-    assert data["sourceCount"] == 17
+    assert data["sourceCount"] == len(load_knowledge().sections) + 1
     assert data["activeSourceCount"] == 16
-    assert data["chunkCount"] == stats["chunks"]
+    eligible_ids = [
+        source.id
+        for source in db.scalars(select(RagSource))
+        if source_is_eligible(source, settings, load_knowledge())
+    ]
+    assert data["chunkCount"] == len(
+        list(
+            db.scalars(select(RagChunk.id).where(RagChunk.source_id.in_(eligible_ids)))
+        )
+    )
+    assert data["chunkCount"] <= stats["chunks"]
     assert data["knowledgeMode"] == "curated"
     assert data["reviewDueSections"] == []

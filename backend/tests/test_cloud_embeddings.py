@@ -35,7 +35,8 @@ def test_production_embeddings_use_offline_cpu_cache(settings, monkeypatch):
             assert text == "Where is CUET?"
             yield Vector()
 
-        def passage_embed(self, texts):
+        def passage_embed(self, texts, *, batch_size):
+            assert batch_size == 16
             yield from (Vector() for _ in texts)
 
     def load(model, offline):

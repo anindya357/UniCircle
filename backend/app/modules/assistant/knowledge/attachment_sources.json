@@ -1,0 +1,22 @@
+{
+  "tsc-notes": {
+    "filename": "TSC.txt",
+    "sha256": "9f2360476b1c62d519d0dcf1356bf7ddfe6bc985f8072d71e36fecc5abde6a5a",
+    "importedAt": "2026-11-02",
+    "sourceEffectiveDate": null,
+    "independentlyVerified": false,
+    "scope": "CUET TSC facilities and floor labels supplied by the project owner."
+  },
+  "faculty-workbook": {
+    "filename": "CUET Faculty DeptNameEmailDesignation (1).xlsx",
+    "sha256": "fb6c790be27d906cde0a530e347c0affa9877f6d68dde36d8a6d1e59bdf497f8",
+    "importedAt": "2026-11-02",
+    "sourceEffectiveDate": null,
+    "independentlyVerified": false,
+    "sheet": "Sheet1",
+    "appointmentRows": 360,
+    "distinctEmailContacts": 354,
+    "departmentLabels": 17,
+    "scope": "User-supplied CUET Department/Name/Email/Designation snapshot; not independently verified live appointments."
+  }
+}

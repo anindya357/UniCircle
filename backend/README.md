@@ -332,15 +332,42 @@ To build the knowledge index, run from `backend/`:
 ```
 
 The default corpus is `app/modules/assistant/knowledge/CUET_Knowledge_Base.md`,
-with a matching `.txt` companion. Sixteen independently written, reviewed
-sections cover campus location, academics, institutes, halls, ITBI, TSC,
-rankings and leadership, with evidence URLs, review dates and explicit unknowns.
+with a matching `.txt` companion and `knowledge/attachment_sources.json` for
+attachment provenance. The corpus now has 390 sections: the original 16 campus
+topics, two additional TSC service/floor sections, a faculty-workbook scope note,
+17 department rosters, and 354 faculty-contact records. These preserve all 360
+department appointments from the supplied workbook, including six contacts with
+roles in two departments. Coverage is 17 department labels, not a verified total
+of all currently employed CUET teachers. DEM is absent from the supplied list.
+
+The source attachments are `TSC.txt` and
+`CUET Faculty DeptNameEmailDesignation (1).xlsx`, imported on 2026-11-02.
+Neither supplies an effective date. Their SHA-256 fingerprints, filenames,
+scope and import date are bundled; original D-drive files are not needed at
+runtime. Snapshot evidence is not presented as independently verified current
+employment, headship, opening hours, prices or room numbers. TSC floor labels
+remain exactly as supplied: ground floor, second floor and third floor.
 There are no website requests during local ingestion or question answering.
 Edit the Markdown, run `python -m app.modules.assistant.ingest --export-txt`
 using your activated project environment, check both files, then run ingestion.
 Re-indexing is atomic; model failure leaves the previous index intact. Unchanged
 sections skip embedding; model changes or `--force` rebuild vectors. Docker
-images include both files, so rebuild the backend after editing the corpus.
+images include the Markdown, TXT and provenance registry, so rebuild the backend
+after editing the corpus. Pipeline version 2 requires a fresh index; run ingestion
+for each embedding provider used by the deployment. Do not copy Ollama vectors
+into the FastEmbed namespace.
+
+Faculty name/email/department/role data stays in one atomic record per distinct
+email, retaining multiple appointments. Department rosters support list/count
+questions. Specific name, full-email, department/role and TSC service aliases
+complement semantic ranking; generic single words do not bypass the relevance
+gate. Alias matches still require an eligible corpus, review window, pipeline
+version and embedding model, and invalid vectors are rejected.
+Embedding requests are capped at 16 chunks, including the local FastEmbed batch,
+to bound memory for the larger faculty corpus. Vectors are validated across all
+batches before any index replacement; CLI logs report progress, not content.
+Unrelated questions retain the no-context behavior. Source cards and URLs remain
+absent from the public answer.
 
 `RAG_KNOWLEDGE_MODE=curated` is the default. Old scraped sources remain in the
 database but are excluded from curated retrieval; no users or other app data

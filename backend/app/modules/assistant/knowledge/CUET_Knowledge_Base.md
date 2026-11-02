@@ -1,7 +1,8 @@
 # CUET curated knowledge base
 
-Research snapshot: 2026-10-08 (Asia/Dhaka). This is an independently written,
-reviewed summary, not a live scrape or an official university announcement.
+Public-source research snapshot: 2026-10-08 (Asia/Dhaka).
+User-supplied TSC notes and faculty workbook imported: 2026-11-02 (Asia/Dhaka).
+This is a maintained knowledge summary, not a live scrape or an official announcement.
 Markdown is authoritative; the TXT companion is its plain-text mirror.
 Source links are maintenance evidence, not material to display in chat answers.
 Missing facts are explicitly unknown. Do not turn historical appointments,
@@ -40,6 +41,7 @@ planning and the supporting sciences.
 ## academic-counts | Number of CUET departments, faculties and undergraduate programs
 Reviewed: 2026-10-08
 Review after: 2027-01-08
+Aliases: CUET department count; CUET departments; CUET undergraduate departments
 Sources:
 - https://v2.cuet.ac.bd/vcmsg
 - https://www.cuet.ac.bd/admin/academic%20council%20list.pdf
@@ -60,6 +62,7 @@ complete academic structure. Planned expansion is not counted as existing.
 ## faculties | Names of the five CUET academic faculties
 Reviewed: 2026-10-08
 Review after: 2027-01-08
+Aliases: CUET academic faculties; CUET faculties
 Sources:
 - https://beta.cuet.ac.bd/departments
 - https://www.cuet.ac.bd/admin/academic%20council%20list.pdf
@@ -305,3 +308,6345 @@ room numbers or exact navigation routes. Absence of information is not proof
 that a service or position does not exist. Answers should explicitly say when
 the reviewed knowledge lacks enough information. No scraping, online search
 or private university-portal access occurs while answering a question.
+
+## tsc-services | CUET TSC services: Pubali Bank, printing, shops and mobile banking
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: campus-service
+Aliases: Pubali Bank; Rupali store; TSC banking; TSC printing; TSC stationery; TSC groceries; TSC bKash; TSC Nagad
+Locator: TSC.txt, paragraph 1
+Sources:
+- attachment://tsc-notes
+
+Facts:
+The user-supplied TSC notes describe the following facilities at CUET's Teacher-Student Centre (TSC):
+- A digital banking branch of Pubali Bank is in the TSC Cafeteria area.
+- A stationery/book store sells stationery items and books and provides mobile-banking money transactions such as bKash and Nagad.
+- A printing shop allows students to print documents, reports and study materials.
+- There are two grocery shops inside TSC. One is named Rupali store; the other shop's name is not supplied.
+Pubali Bank and Rupali store are different facilities; do not interchange their names.
+The notes do not specify the exact shop floors, room numbers, opening hours, prices, bank account numbers or service charges. Their effective date is not stated; these are supplied campus notes, not independently verified live service listings.
+
+## tsc-floors | CUET TSC floors: student cafeteria, teachers' cafeteria, DSW office, programs and women's prayer space
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: campus-service
+Aliases: TSC student cafeteria; TSC teachers cafeteria; DSW office; TSC DSW; TSC club programs; TSC meetings; TSC women prayer; TSC salah
+Locator: TSC.txt, paragraph 1
+Sources:
+- attachment://tsc-notes
+
+Facts:
+The user-supplied notes place the following facilities inside CUET's Teacher-Student Centre (TSC):
+- Ground floor: the cafeteria for students.
+- Second floor: the cafeteria for teachers and the head office of the Directorate of Students' Welfare (DSW).
+- Third floor: space for club programs, occasions and meetings, plus a place where Muslim female students can perform salah/prayer.
+Preserve the floor labels exactly as supplied (ground, second, third). The source does not explain an alternative floor-numbering convention; do not renumber these floors or invent a first-floor assignment.
+No indoor room number, accessibility route, opening time, prayer timetable or current DSW officeholder is established by these notes. The source effective date is not stated; the information is a supplied campus snapshot, not independently verified live directions.
+
+## faculty-workbook-scope | CUET supplied faculty workbook: coverage, counts and uncertainty
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-overview
+Aliases: CUET teacher count; total CUET teachers; faculty spreadsheet; faculty email count
+Locator: Sheet1!A1:D361
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied faculty workbook contains 360 department-appointment rows across 17 department labels and 354 distinct email contact addresses. Six email contacts appear under two departments with different appointments; do not collapse away either role or count those six twice as distinct contacts.
+The columns are Department, Name, Email and Designation. Names, email addresses and role descriptions are taken from the supplied rows. A Department Head designation belongs to the listed department; it is not a university-wide appointment.
+Coverage by department: CSE: 39; EEE: 45; CE: 41; ME: 40; ETE: 23; MIE: 14; WRE: 10; PME: 22; MME: 8; URP: 19; Architecture: 21; Chemistry: 13; Physics: 16; Mathematics: 19; HUM: 16; BME: 9; NE: 5.
+The workbook does not include DEM (Disaster Engineering and Management). A missing department row does not prove that the department or its staff do not exist.
+The workbook does not state a collection or effective date. The 2026-11-02 review date records importing/checking the attachment, not verifying present employment, rank or department-head appointments. These counts describe this file only, not an independently verified current university-wide teacher headcount. No faculty phone numbers, office rooms or research interests are supplied. In this context faculty means teachers, not CUET's five organizational academic faculties.
+
+## faculty-department-cse | CUET Computer Science and Engineering (CSE) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: CSE faculty; CSE teachers; CSE professors; CSE faculty count; Computer Science and Engineering faculty; Computer Science and Engineering teachers
+Locator: Sheet1, CSE rows 2-40
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 39 faculty appointment rows for CUET's Computer Science and Engineering department (CSE), with 39 distinct email addresses within this department.
+Source-designated department head: Dr. Pranab Kumar Dhar (pranabdhar81@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Pranab Kumar Dhar - Department Head, Professor; email: pranabdhar81@cuet.ac.bd.
+2. Dr. Md. Ibrahim Khan - Professor; email: muhammad_ikhan@cuet.ac.bd.
+3. Prof. Dr. Kaushik Deb - Professor; email: debkaushik99@cuet.ac.bd.
+4. Dr. Mohammed Moshiul Hoque - Professor; email: moshiul_240@cuet.ac.bd.
+5. Prof. Dr. Mohammad Shamsul Arefin - Professor; email: sarefin@cuet.ac.bd.
+6. Dr. Asaduzzaman - Professor; email: asad@cuet.ac.bd.
+7. Dr. Md. Mokammel Haque - Professor; email: mokammel@cuet.ac.bd.
+8. Dr. A. H. M. Ashfak Habib - Professor; email: ashfak@cuet.ac.bd.
+9. Dr. Mahfuzulhoq Chowdhury - Professor; email: mahfuz@cuet.ac.bd.
+10. Muhammad Kamal Hossen - Associate Professor; email: mkhossen@cuet.ac.bd.
+11. Mohammad Obaidur Rahman - Associate Professor; email: obaidur_91@cuet.ac.bd.
+12. Md. Monjur Ul Hasan, PhD - Associate Professor; email: mmuhasan@cuet.ac.bd.
+13. Mir. Md. Saki Kowsar - Assistant Professor; email: sakikowsar@cuet.ac.bd.
+14. Rahma Bintey Mufiz Mukta - Assistant Professor; email: rahmamukta@cuet.ac.bd.
+15. Tahmina Khanam - Assistant Professor; email: tahmina_iict@cuet.ac.bd.
+16. Shayla Sharmin - Assistant Professor; email: shayla_sharmin@cuet.ac.bd.
+17. Animesh Chandra Roy - Assistant Professor; email: animesh_roy@cuet.ac.bd.
+18. Md. Sabir Hossain - Assistant Professor; email: sabir.cse@cuet.ac.bd.
+19. Md. Shafiul Alam Forhad - Assistant Professor; email: forhad0904063@cuet.ac.bd.
+20. Sharmistha Chanda Tista - Assistant Professor; email: tista_chanda@cuet.ac.bd.
+21. Md. Mynul Hasan - Assistant Professor; email: mynul@cuet.ac.bd.
+22. Annesha Das - Assistant Professor; email: annesha@cuet.ac.bd.
+23. Ashim Dey - Assistant Professor; email: ashim@cuet.ac.bd.
+24. Omar Sharif - Assistant Professor; email: omar.sharif@cuet.ac.bd.
+25. Md. Billal Hossain - Assistant Professor; email: mhbillal@cuet.ac.bd.
+26. Sabiha Anan - Assistant Professor; email: sabiha.anan@cuet.ac.bd.
+27. Md. Atiqul Islam Rizvi - Assistant Professor; email: atiqul.rizvi@cuet.ac.bd.
+28. Md. Rashadur Rahman - Assistant Professor; email: rashadur@cuet.ac.bd.
+29. Hasan Murad - Assistant Professor; email: hasanmurad@cuet.ac.bd.
+30. Saadman Sakib - Assistant Professor; email: saadman@cuet.ac.bd.
+31. Md. Al - Mamun Provath - Assistant Professor; email: am.provath@cuet.ac.bd.
+32. Shuhena Salam Aonty - Lecturer; email: shuhena@cuet.ac.bd.
+33. Maisha Fahmida - Lecturer; email: maisha.fahmida@cuet.ac.bd.
+34. Afroza Akter - Lecturer; email: afroza@cuet.ac.bd.
+35. Atiya Masuda Siddika - Lecturer; email: atiya.siddika@cuet.ac.bd.
+36. Ayesha Banu - Lecturer; email: ayesha.banu@cuet.ac.bd.
+37. Abir Hassan - Lecturer; email: abir.hassan@cuet.ac.bd.
+38. Md. Refaj Hossan - Lecturer; email: refaj.hossan@cuet.ac.bd.
+39. Symom Hossain Shohan - Lecturer; email: symom.hossain@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-eee | CUET Electrical and Electronic Engineering (EEE) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: EEE faculty; EEE teachers; EEE professors; EEE faculty count; Electrical and Electronic Engineering faculty; Electrical and Electronic Engineering teachers
+Locator: Sheet1, EEE rows 41-85
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 45 faculty appointment rows for CUET's Electrical and Electronic Engineering department (EEE), with 45 distinct email addresses within this department.
+Source-designated department head: Dr. Tofael Ahmed (tofael@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Tofael Ahmed - Department Head, Professor; email: tofael@cuet.ac.bd.
+2. Dr. Mahmud Abdul Matin Bhuiyan - Professor; email: mamatin@cuet.ac.bd.
+3. Dr. Muhammad Quamruzzaman - Professor; email: qzaman359@cuet.ac.bd.
+4. Dr. Quazi Delwar Hossain - Professor; email: quazi@cuet.ac.bd.
+5. Dr. Muhammad Ahsan Ullah - Professor; email: ahsan@cuet.ac.bd.
+6. Dr. Mohammad Rubaiyat Tanvir Hossain - Professor; email: mrthossain@cuet.ac.bd.
+7. Dr. Nur Mohammad - Professor; email: nur.mohammad@cuet.ac.bd.
+8. Dr. Muhammad Asad Rahman - Professor; email: asad31@cuet.ac.bd.
+9. Dr. Rashed Md. Murad Hasan - Professor; email: murad_eee@cuet.ac.bd.
+10. Dr. Nipu Kumar Das - Professor; email: nipudas@cuet.ac.bd.
+11. Dr. Ashoke Kumar Sen Gupta - Professor; email: aksengupta@cuet.ac.bd.
+12. Dr. Sampad Ghosh - Professor; email: sampad@cuet.ac.bd.
+13. Dr. Mehdi Hasan Chowdhury - Professor; email: mhchowdhury@cuet.ac.bd.
+14. Dr. Joyprokash Chakrabartty - Professor; email: joychakr@cuet.ac.bd.
+15. Dr. Md. Istiaque Reja - Professor; email: istiaque@cuet.ac.bd.
+16. Ainul Anam Shahjamal Khan - Associate Professor; email: shahjamal@cuet.ac.bd.
+17. Anuva Chowdhury - Associate Professor; email: anuvachy@cuet.ac.bd.
+18. Mrinmoy Dey - Associate Professor; email: mrinmoy@cuet.ac.bd.
+19. Dr. Nusrat Jahan - Associate Professor; email: nusratjahan@cuet.ac.bd.
+20. Dr. Md. Shamsul Arifin - Associate Professor; email: shamsul@cuet.ac.bd.
+21. Jobaida Akhtar - Assistant Professor; email: lilyjobaida@cuet.ac.bd.
+22. Rabiul Islam - Assistant Professor; email: rabiul.islam07@cuet.ac.bd.
+23. Sharmin Majumder - Assistant Professor; email: sharmin@cuet.ac.bd.
+24. Sheikh Alimur Razi - Assistant Professor; email: saraziee@cuet.ac.bd.
+25. Md. Manjurul Gani - Assistant Professor; email: gani@cuet.ac.bd.
+26. Naqib Sad Pathan - Assistant Professor; email: naqib09.eee@cuet.ac.bd.
+27. Jitu Prakash Dhar - Assistant Professor; email: jitu@cuet.ac.bd.
+28. EMK Ikball Ahamed - Assistant Professor; email: ikballahamed@cuet.ac.bd.
+29. Md. Saddam Hossain Razo - Assistant Professor; email: shrazo@cuet.ac.bd.
+30. Nipa Dhar - Assistant Professor; email: nipa@cuet.ac.bd.
+31. Mohammad Mahmudul Hasan Tareq - Assistant Professor; email: mmhtareq.eee@cuet.ac.bd.
+32. Fahim Mahmud - Assistant Professor; email: fahim@cuet.ac.bd.
+33. Sancoy Barua - Assistant Professor; email: sancoy@cuet.ac.bd.
+34. Tanha Zaman - Assistant Professor; email: tanha@cuet.ac.bd.
+35. Md. Kamrul Hasan - Assistant Professor; email: mkh21@cuet.ac.bd.
+36. Aditta Chowdhury - Assistant Professor; email: aditta.eee@cuet.ac.bd.
+37. Diba Das - Assistant Professor; email: diba.eee@cuet.ac.bd.
+38. Kamrul Hasan - Assistant Professor; email: kamrulhira@cuet.ac.bd.
+39. Sagar Mutsuddi - Assistant Professor; email: mutsuddisagar@cuet.ac.bd.
+40. Nusrat Jahan Iqra - Lecturer; email: iqra116@cuet.ac.bd.
+41. Kawshik Nath - Lecturer; email: kawshik2366@cuet.ac.bd.
+42. Md. Shafiul Islam Joy - Lecturer; email: shafiul@cuet.ac.bd.
+43. Ajmal Ahmed - Lecturer; email: ajmal.eee@cuet.ac.bd.
+44. Bibekananda Nath - Lecturer; email: bibek.eee@cuet.ac.bd.
+45. Tasreek Ahmed - Lecturer; email: tasreek07@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-ce | CUET Civil Engineering (CE) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: CE faculty; CE teachers; CE professors; CE faculty count; Civil Engineering faculty; Civil Engineering teachers
+Locator: Sheet1, CE rows 86-126
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 41 faculty appointment rows for CUET's Civil Engineering department (CE), with 41 distinct email addresses within this department.
+Source-designated department head: Dr. Md. Reaz Akter Mullick (reazmullick@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Md. Reaz Akter Mullick - Department Head, Professor; email: reazmullick@cuet.ac.bd.
+2. Prof. Dr. Swapan Kumar Palit - Professor; email: skpbd@cuet.ac.bd.
+3. Prof. Dr. Hazrat Ali - Professor; email: pdrmhali@cuet.ac.bd.
+4. Dr. Md. Rabiul Alam - Professor; email: rabiulalam@cuet.ac.bd.
+5. Dr. M. Abdur Rahman Bhuiyan - Professor; email: arbhuiyance@cuet.ac.bd.
+6. Dr. Md. Moinul Islam - Professor; email: mislam@cuet.ac.bd.
+7. Dr. Sudip Kumar Pal - Professor; email: sudip@cuet.ac.bd.
+8. Prof. Dr. Asiful Hoque - Professor; email: asifulhoque@cuet.ac.bd.
+9. Dr. Aysha Akter - Professor; email: aysha_akter@cuet.ac.bd.
+10. Dr. G. M. Sadiqul Islam - Professor; email: gmsislam@cuet.ac.bd.
+11. Dr. Mst. Farzana Rahman Zuthi - Professor; email: farzana@cuet.ac.bd.
+12. Dr. Bipul Chandra Mondal - Professor; email: bipul@cuet.ac.bd.
+13. Md. Aftabur Rahman - Professor; email: maftabur@cuet.ac.bd.
+14. Dr. Nusrat Hoque - Professor; email: nusrat_hoque@cuet.ac.bd.
+15. Dr. Md. Basir Zisan - Professor; email: basirzisan@cuet.ac.bd.
+16. Dr. Md. Shajib Ullah - Professor; email: mshajibuce@cuet.ac.bd.
+17. Sultan Mohammad Farooq - Associate Professor; email: farooq_sm@cuet.ac.bd.
+18. Mohammad Tarequl Alam - Associate Professor; email: tareq@cuet.ac.bd.
+19. Dr. Opu Chandra Debanath - Associate Professor; email: debnathopu@cuet.ac.bd.
+20. Shyamal Acharya - Assistant Professor; email: acharya_shyamal@cuet.ac.bd.
+21. Jhutan Chandra Kuri - Assistant Professor; email: jhutankuri@yahoo.com.
+22. Sanjoy Das - Assistant Professor; email: sanjoy07@cuet.ac.bd.
+23. Mohammad Altaf Hossain - Assistant Professor; email: altafsunny@cuet.ac.bd.
+24. Nafisa Tabassum - Assistant Professor; email: nafisa_t@cuet.ac.bd.
+25. Most. Mukta Banu - Assistant Professor; email: muktabanuce@cuet.ac.bd.
+26. Shovon Halder - Assistant Professor; email: shovonhalder@cuet.ac.bd.
+27. Md Mamun Hossain - Assistant Professor; email: mhossain@cuet.ac.bd.
+28. Azam Khan - Assistant Professor; email: azamkhance@cuet.ac.bd.
+29. Mohammad Saiful Islam - Assistant Professor; email: saiful.ce@cuet.ac.bd.
+30. Maisha Kabir - Assistant Professor; email: maisha@cuet.ac.bd.
+31. Md. Asifur Rahman - Assistant Professor; email: asifur@cuet.ac.bd.
+32. Md. Merajul Islam - Assistant Professor; email: meraj@cuet.ac.bd.
+33. Kamol Debnath Dip - Assistant Professor; email: kamoldip@cuet.ac.bd.
+34. Sabikun Nahar Nilu - Assistant Professor; email: sabikun@cuet.ac.bd.
+35. Md Zubair - Assistant Professor; email: zubair@cuet.ac.bd.
+36. Safkat Ar Rumman - Lecturer; email: safkat.rumman@cuet.ac.bd.
+37. Sumaya Sadia Toha - Lecturer; email: toha.sumaya@cuet.ac.bd.
+38. Md. Ehsanul Saad - Lecturer; email: ehsanul.saad@cuet.ac.bd.
+39. Fahim Shahriar - Lecturer; email: fahim.shahriar@cuet.ac.bd.
+40. Robiul Hossain Chy - Lecturer; email: robiul.hossain@cuet.ac.bd.
+41. Md. Reazul Haque Tanvir - Lecturer; email: reazul.tanvir@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-me | CUET Mechanical Engineering (ME) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: ME faculty; ME teachers; ME professors; ME faculty count; Mechanical Engineering faculty; Mechanical Engineering teachers
+Locator: Sheet1, ME rows 127-166
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 40 faculty appointment rows for CUET's Mechanical Engineering department (ME), with 40 distinct email addresses within this department.
+Source-designated department head: Dr. Muhammad Mostafa Kamal Bhuiya (mkamal@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Muhammad Mostafa Kamal Bhuiya - Department Head, Professor; email: mkamal@cuet.ac.bd.
+2. Dr. Bodius Salam - Professor; email: bsalam@cuet.ac.bd.
+3. Prof. Dr. Md. Mahbubul Alam - Professor; email: malam@cuet.ac.bd.
+4. Dr. Sajal Chandra Banik - Professor; email: baniksajal@cuet.ac.bd.
+5. Dr. Jamal Uddin Ahamed - Professor; email: jamal@cuet.ac.bd.
+6. Prof. Dr. Sheikh Muhammad Humayun Kabir - Professor; email: humayun@cuet.ac.bd.
+7. Dr. Kazi Afzalur Rahman - Professor; email: afzal@cuet.ac.bd.
+8. Dr. Mohammad Mizanur Rahman - Professor; email: mmrahman_me@cuet.ac.bd.
+9. Dr. Md. Sanaul Rabbi - Professor; email: rabbi@cuet.ac.bd.
+10. Dr. Md. Arafat Rahman - Professor; email: arafat@cuet.ac.bd.
+11. Dr. Prasanjit Das - Professor; email: prasanjit@cuet.ac.bd.
+12. Dr. Abu Shadat Muhammad Sayem - Professor; email: a.sayem@cuet.ac.bd.
+13. Prof. Md. Mamunur Roshid - Professor; email: mamuncuet2003@cuet.ac.bd.
+14. Dr. Md. Abu Mowazzem Hossain - Professor; email: mowazzem@cuet.ac.bd.
+15. Dr. Tilok Kumar Das - Professor; email: tilok@cuet.ac.bd.
+16. Md. Aminul Islam - Associate Professor; email: aislam@cuet.ac.bd.
+17. Syed Masrur Ahmmad - Associate Professor; email: masrur@cuet.ac.bd.
+18. Dr. Mostafizur Rahman - Associate Professor; email: mostafiz_rasel64@cuet.ac.bd.
+19. Muhammed Kamrul Islam - Assistant Professor; email: kamrul@cuet.ac.bd.
+20. Mr. Ratan Kumar Das - Assistant Professor; email: ratan.kumar@cuet.ac.bd.
+21. Bably Das - Assistant Professor; email: bably@cuet.ac.bd.
+22. Moham Ed Abdur Razzaq - Assistant Professor; email: a.razzaq@cuet.ac.bd.
+23. Farida Ahmed Koly - Assistant Professor; email: farida@cuet.ac.bd.
+24. Asma Ul Hosna - Assistant Professor; email: asma@cuet.ac.bd.
+25. Md. Imteaz Ahmed - Assistant Professor; email: imteaz@cuet.ac.bd.
+26. Sourav Paul - Assistant Professor; email: sourav@cuet.ac.bd.
+27. Safina-E-Tahura Siddiqui - Assistant Professor; email: safina@cuet.ac.bd.
+28. Md. Maruf Billah - Assistant Professor; email: maruf@cuet.ac.bd.
+29. Dr.Afnan Hasan - Assistant Professor; email: afnanhasan@cuet.ac.bd.
+30. Radheshyam Nath Jisu - Assistant Professor; email: radheshyam@cuet.ac.bd.
+31. Tafsirul Hassan - Assistant Professor; email: tafsirul.hassan@cuet.ac.bd.
+32. Mohammad Nezam Uddin Chy - Assistant Professor; email: nezam.uddin@cuet.ac.bd.
+33. Redoy Masum Meraz - Assistant Professor; email: meraz@cuet.ac.bd.
+34. Minhaz Ahmed - Assistant Professor; email: minhaz@cuet.ac.bd.
+35. Abdullah Al Rifat - Assistant Professor; email: aarifat@cuet.ac.bd.
+36. Abdullah- Al- Mamun - Assistant Professor; email: amamun@cuet.ac.bd.
+37. Protick Chandra Ghosh - Lecturer; email: protick@cuet.ac.bd.
+38. Md Tanvir Mahmud - Lecturer; email: tanvir@cuet.ac.bd.
+39. Tahsin Abid Ahmed - Lecturer; email: tahsin@cuet.ac.bd.
+40. Md. Farhan Imtiaz - Lecturer; email: farhan@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-ete | CUET Electronics and Telecommunication Engineering (ETE) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: ETE faculty; ETE teachers; ETE professors; ETE faculty count; Electronics and Telecommunication Engineering faculty; Electronics and Telecommunication Engineering teachers
+Locator: Sheet1, ETE rows 167-189
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 23 faculty appointment rows for CUET's Electronics and Telecommunication Engineering department (ETE), with 23 distinct email addresses within this department.
+Source-designated department head: Dr. Md. Jahedul Islam (jahed@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Md. Jahedul Islam - Department Head, Professor; email: jahed@cuet.ac.bd.
+2. Dr. Md. Azad Hossain - Professor; email: azad@cuet.ac.bd.
+3. Dr. Md. Saiful Islam - Professor.; email: saiful05eee@cuet.ac.bd.
+4. Piyas Chowdhury - Assistant Professor; email: piyas@cuet.ac.bd.
+5. Mohammad Anisur Rahman - Assistant Professor; email: anisur.rahaman@cuet.ac.bd.
+6. Dr. Nursadul Mamun - Assistant Professor; email: nursad.mamun@cuet.ac.bd.
+7. Md. Ahasan Kabir - Assistant Professor; email: akabirece@cuet.ac.bd.
+8. Sabrina Abedin - Assistant Professor; email: sabrina@cuet.ac.bd.
+9. Taieba Taher - Assistant Professor; email: taieba.athay@cuet.ac.bd.
+10. Khadija Akter - Assistant Professor; email: khadija.ete@cuet.ac.bd.
+11. Md. Farhad Hossain - Assistant Professor; email: farhad.hossain@cuet.ac.bd.
+12. Eftekhar Hossain - Assistant Professor; email: eftekhar.hossain@cuet.ac.bd.
+13. Md. Ibrahim Khalil - Assistant Professor; email: ibrahim.khalil@cuet.ac.bd.
+14. Priyanti Paul Tumpa - Assistant Professor; email: priyanti.ete@cuet.ac.bd.
+15. Arif Istiaque - Assistant Professor; email: arif.ete@cuet.ac.bd.
+16. Hafiza Akter Munira - Lecturer; email: hafiza.ete@cuet.ac.bd.
+17. Gazi Jannatul Ferdous - Lecturer; email: jannatul.ferdous@cuet.ac.bd.
+18. Farhin Sultana - Lecturer; email: farhin.sultana@cuet.ac.bd.
+19. Takowa Rahman - Lecturer; email: takowa.ete@cuet.ac.bd.
+20. Zarin Tasnim Maimuna - Lecturer; email: ztmaimuna.ete@cuet.ac.bd.
+21. Shamanza Chowdhury - Lecturer; email: shamanzachy@cuet.ac.bd.
+22. Israt Jahan - Lecturer; email: isratjahan@cuet.ac.bd.
+23. Shibasree Sen - Lecturer; email: shibasree@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-mie | CUET Mechatronics and Industrial Engineering (MIE) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: MIE faculty; MIE teachers; MIE professors; MIE faculty count; Mechatronics and Industrial Engineering faculty; Mechatronics and Industrial Engineering teachers
+Locator: Sheet1, MIE rows 190-203
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 14 faculty appointment rows for CUET's Mechatronics and Industrial Engineering department (MIE), with 14 distinct email addresses within this department.
+Source-designated department head: Dr. Prasanjit Das (prasanjit@cuet.ac.bd; Department Head).
+The supplied departmental roster is:
+1. Dr. Prasanjit Das - Department Head; email: prasanjit@cuet.ac.bd.
+2. Dr. Homayun Kabir - Associate Professor; email: homayun@cuet.ac.bd.
+3. Md. Abdur Rahman - Assistant Professor; email: abdurrahman@cuet.ac.bd.
+4. Monowar Wadud Hridoy - Assistant Professor; email: hridoy@cuet.ac.bd.
+5. Sanjeeb Roy - Assistant Professor; email: sanjeeb@cuet.ac.bd.
+6. S. M. Fahim Faisal - Assistant Professor; email: fahimfaisal@cuet.ac.bd.
+7. Tasnuva Jahan Nuva - Assistant Professor; email: tasnuvajahan@cuet.ac.bd.
+8. Tasmia Binte Hai - Assistant Professor; email: tasmia_heem@cuet.ac.bd.
+9. Md. Miraiz Hossain - Assistant Professor; email: miraizhossain@cuet.ac.bd.
+10. Kazi Naimur Rahman - Assistant Professor; email: naimur@cuet.ac.bd.
+11. Nusrat Sultana - Lecturer; email: nusratsultana@cuet.ac.bd.
+12. Emran Hasan - Lecturer; email: emran.hasan@cuet.ac.bd.
+13. Mimona Akther - Lecturer; email: mimona@cuet.ac.bd.
+14. Anik Saha - Lecturer; email: aniksaha@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-wre | CUET Water Resources Engineering (WRE) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: WRE faculty; WRE teachers; WRE professors; WRE faculty count; Water Resources Engineering faculty; Water Resources Engineering teachers
+Locator: Sheet1, WRE rows 204-213
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 10 faculty appointment rows for CUET's Water Resources Engineering department (WRE), with 10 distinct email addresses within this department.
+Source-designated department head: Dr. Mst. Farzana Rahman Zuthi (farzana@cuet.ac.bd; Department Head).
+The supplied departmental roster is:
+1. Dr. Mst. Farzana Rahman Zuthi - Department Head; email: farzana@cuet.ac.bd.
+2. Md. Samiun Basir - Assistant Professor; email: msbasirwre@cuet.ac.bd.
+3. Pollen Chakma - Assistant Professor; email: pollenchakma@cuet.ac.bd.
+4. Md. Mukdiul Islam - Assistant Professor; email: mukdiul@cuet.ac.bd.
+5. Md. Ashraful Islam - Assistant Professor; email: md_ashraful@cuet.ac.bd.
+6. Md. Tamim - Assistant Professor; email: mtamim@cuet.ac.bd.
+7. Priya Chowdhury - Lecturer; email: priya_chowdhury@cuet.ac.bd.
+8. Md. Ashraf Khan - Lecturer; email: ashraf.khan@cuet.ac.bd.
+9. Ronjan Kumar Paul - Lecturer; email: ronjan@cuet.ac.bd.
+10. Abdullah Al Mahmud - Lecturer; email: mahmud@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-pme | CUET Petroleum and Mining Engineering (PME) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: PME faculty; PME teachers; PME professors; PME faculty count; Petroleum and Mining Engineering faculty; Petroleum and Mining Engineering teachers
+Locator: Sheet1, PME rows 214-235
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 22 faculty appointment rows for CUET's Petroleum and Mining Engineering department (PME), with 22 distinct email addresses within this department.
+Source-designated department head: Dr. Abu Shadat Muhammad Sayem (a.sayem@cuet.ac.bd; Department Head).
+The supplied departmental roster is:
+1. Dr. Abu Shadat Muhammad Sayem - Department Head; email: a.sayem@cuet.ac.bd.
+2. Dr. Mohammad Islam Miah - Professor; email: islam.m@cuet.ac.bd.
+3. Zayed Bin Sultan - Assistant Professor; email: zbs@cuet.ac.bd.
+4. Md. Mizanur Rahman - Assistant Professor; email: mizanurpe@cuet.ac.bd.
+5. Md. Mostafijul Karim - Assistant Professor; email: mostafijpme@cuet.ac.bd.
+6. Istiaque Muhammad Khan - Assistant Professor; email: isti33@cuet.ac.bd.
+7. Md. Nahin Mahmood - Assistant Professor; email: nahin2582@cuet.ac.bd.
+8. Nadia Mahjabin - Assistant Professor; email: nadia.pme11@cuet.ac.bd.
+9. Mohammad Nezam Uddin - Assistant Professor; email: nezam@cuet.ac.bd.
+10. Aqif Hosain Khan - Assistant Professor; email: hosainaqif@cuet.ac.bd.
+11. Mohammad Mamun-Ur-Rashid - Assistant Professor; email: mamunpme@cuet.ac.bd.
+12. Sarwat Tanjil - Assistant Professor; email: sarwat.pme019@cuet.ac.bd.
+13. Amit Das - Assistant Professor; email: amitdas.pme008@cuet.ac.bd.
+14. Mohammed Adnan Noor Abir - Assistant Professor; email: adnan@cuet.ac.bd.
+15. Kakon Sultana - Assistant Professor; email: kakonpme@cuet.ac.bd.
+16. Aurpita Sen Gupta - Assistant Professor; email: aurpitapme@cuet.ac.bd.
+17. Md. Ashiqul Islam Shuvo - Lecturer; email: ashiqulshuvo@cuet.ac.bd.
+18. Bintun Zaman - Lecturer; email: bintunzaman@cuet.ac.bd.
+19. Mohammad Zahidul Islam - Lecturer; email: zahidulpme@cuet.ac.bd.
+20. Md. Rasel Rana - Lecturer; email: raselpme@cuet.ac.bd.
+21. Abu Shaim Biswas - Lecturer; email: shaim@cuet.ac.bd.
+22. Shrabony Talukdar - Lecturer; email: shrabony@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-mme | CUET Materials and Metallurgical Engineering (MME) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: MME faculty; MME teachers; MME professors; MME faculty count; Materials and Metallurgical Engineering faculty; Materials and Metallurgical Engineering teachers
+Locator: Sheet1, MME rows 236-243
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 8 faculty appointment rows for CUET's Materials and Metallurgical Engineering department (MME), with 8 distinct email addresses within this department.
+Source-designated department head: Prof. Md. Mamunur Roshid (mamuncuet2003@cuet.ac.bd; Department Head).
+The supplied departmental roster is:
+1. Prof. Md. Mamunur Roshid - Department Head; email: mamuncuet2003@cuet.ac.bd.
+2. Dr. Sazzad Ahmad - Professor; email: sazzad@cuet.ac.bd.
+3. Abu Sadat Md. Sayem Rahman - Assistant Professor; email: mdsayem@cuet.ac.bd.
+4. Mohammad Humaun Kabir - Lecturer; email: mkhumaun@cuet.ac.bd.
+5. Wasif Abu Dujana - Lecturer; email: wasif@cuet.ac.bd.
+6. Md. Saif Hasan - Lecturer; email: saif@cuet.ac.bd.
+7. Jesia Alam Jui - Lecturer; email: jesia@cuet.ac.bd.
+8. Md. Atiqul Islam - Lecturer; email: atiq@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-urp | CUET Urban and Regional Planning (URP) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: URP faculty; URP teachers; URP professors; URP faculty count; Urban and Regional Planning faculty; Urban and Regional Planning teachers
+Locator: Sheet1, URP rows 244-262
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 19 faculty appointment rows for CUET's Urban and Regional Planning department (URP), with 19 distinct email addresses within this department.
+Source-designated department head: Dr. Fowzia Gulshana Rashid lopa (lopafowzia@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Fowzia Gulshana Rashid lopa - Department Head, Professor; email: lopafowzia@cuet.ac.bd.
+2. Dr. Muhammad Rashidul Hasan - Professor; email: mrhasan@cuet.ac.bd.
+3. Debasish Roy Raja - Associate Professor; email: debasishroy@cuet.ac.bd.
+4. Rokshana Binta Samad - Associate Professor; email: rokshana_urp@cuet.ac.bd.
+5. Israt Jahan - Assistant Professor; email: israt_jahan@cuet.ac.bd.
+6. A.T.M. Shahjahan - Assistant Professor; email: shahjahan_urp@cuet.ac.bd.
+7. Sharmin Ara - Assistant Professor; email: sharmin.ara14@cuet.ac.bd.
+8. Md. Rabiul Islam - Assistant Professor; email: rabiul.urp@cuet.ac.bd.
+9. Sourav Das - Assistant Professor; email: souravurp09@cuet.ac.bd.
+10. Md. Shah Jalal Misuk - Assistant Professor; email: shahjalalmisuk@cuet.ac.bd.
+11. Tandra Das - Assistant Professor; email: tandradas.urp@cuet.ac.bd.
+12. Md. Kamrul Islam - Assistant Professor; email: kamrul.islam.cuet10@cuet.ac.bd.
+13. K. M. Ashraful Islam - Assistant Professor; email: ashraful.urp@cuet.ac.bd.
+14. Md. Rakibul Hasan Kauser - Assistant Professor; email: mrhkauser@cuet.ac.bd.
+15. Md. Nazmul Huda Naim - Assistant Professor; email: naim.mnh@cuet.ac.bd.
+16. Sajib Sarker - Assistant Professor; email: sajibsarker@cuet.ac.bd.
+17. Jobyda Sultana - Lecturer; email: jobyda.urp@cuet.ac.bd.
+18. Tanvir Mahmood - Lecturer; email: tanvirmahmood@cuet.ac.bd.
+19. Amrita Das - Lecturer; email: amritadas@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-architecture | CUET Architecture (Architecture) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: Architecture faculty; Architecture teachers; Architecture professors; Architecture faculty count; ARCH faculty
+Locator: Sheet1, Architecture rows 263-283
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 21 faculty appointment rows for CUET's Architecture department (Architecture/ARCH), with 21 distinct email addresses within this department.
+Source-designated department head: Prof. Dr. Sajal Chowdhury (sajal_c@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Prof. Dr. Sajal Chowdhury - Department Head, Professor; email: sajal_c@cuet.ac.bd.
+2. Ar. Kanu Kumar Das - Associate Professor; email: sreekanu@cuet.ac.bd.
+3. Md. Mustiafiz Al-Mamun - Associate Professor; email: mustiafiz@cuet.ac.bd.
+4. Dr. Nusrat Jannat - Associate Professor; email: nusratkeya@cuet.ac.bd.
+5. Shajib Paul - Assistant Professor; email: shajib_arch@cuet.ac.bd.
+6. Debsree Mandal - Assistant Professor; email: arch.debsree@cuet.ac.bd.
+7. Rezuana Islam - Assistant Professor; email: rezuanaislam@cuet.ac.bd.
+8. Biplob Kanti Biswas - Assistant Professor; email: biplobkantibiswas@cuet.ac.bd.
+9. Shaila Sharmin - Assistant Professor; email: shaila.sharmin@cuet.ac.bd.
+10. Amit Imtiaz - Assistant Professor; email: amitimtiaz@cuet.ac.bd.
+11. Sarah Binte Haque - Assistant Professor; email: arch.sarah026@cuet.ac.bd.
+12. Shuvra Das - Assistant Professor; email: shuvra_das@cuet.ac.bd.
+13. Syeda Tahmina Tasnim - Assistant Professor; email: moon.tahmina@cuet.ac.bd.
+14. Zakia Sultana - Assistant Professor; email: zakia@cuet.ac.bd.
+15. Nur Mohammad Khan - Assistant Professor; email: nurmkhan@cuet.ac.bd.
+16. Samira Binte Bashar - Lecturer; email: samira.proytee@cuet.ac.bd.
+17. Pranjib Paul - Lecturer; email: pranjibpaul@cuet.ac.bd.
+18. Md. Asifur Rahman - Lecturer; email: asifur_rahman@cuet.ac.bd.
+19. Md. Nasif Sadman - Lecturer; email: nasif.arch@cuet.ac.bd.
+20. Sadia Ibnat Raisa - Lecturer; email: sadia.ibnat@cuet.ac.bd.
+21. Ridhy Das Gupta - Lecturer; email: ridhy-das@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-chemistry | CUET Chemistry (Chemistry) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: Chemistry faculty; Chemistry teachers; Chemistry professors; Chemistry faculty count
+Locator: Sheet1, Chemistry rows 284-296
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 13 faculty appointment rows for CUET's Chemistry department (Chemistry), with 13 distinct email addresses within this department.
+Source-designated department head: Dr. Mst. Roksana Khatun (roksana@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Mst. Roksana Khatun - Department Head, Professor; email: roksana@cuet.ac.bd.
+2. Dr. Ranajit Kumar Sutradhar - Professor; email: ranajit@cuet.ac.bd.
+3. Dr. Md. Rezaul Karim - Professor; email: karim@cuet.ac.bd.
+4. Dr. A. H. Rashadul Hossain - Professor; email: rashad@cuet.ac.bd.
+5. Dr. Rajia Sultana - Professor; email: rajiasultana@cuet.ac.bd.
+6. Dr. M. K. Mohammad Ziaul Hyder - Professor; email: ziaulhyder@cuet.ac.bd.
+7. Dr. Ranjit Kumar Nath - Professor; email: rkn_chem@cuet.ac.bd.
+8. Professor Dr. Yunus Ahmed - Professor; email: yunusahmed@cuet.ac.bd.
+9. Dr. Arup Kumer Roy - Associate Professor; email: arupkumer@cuet.ac.bd.
+10. Dr. Saswata Rabi - Assistant Professor; email: rabichem16@cuet.ac.bd.
+11. Md. Din Islam - Assistant Professor; email: dinislam_chem@cuet.ac.bd.
+12. Ratul Kumar Shil - Assistant Professor; email: ratulchem88@cuet.ac.bd.
+13. Sanjida mukut - Lecturer; email: sanjida_mukut@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-physics | CUET Physics (Physics) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: Physics faculty; Physics teachers; Physics professors; Physics faculty count
+Locator: Sheet1, Physics rows 297-312
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 16 faculty appointment rows for CUET's Physics department (Physics), with 16 distinct email addresses within this department.
+Source-designated department head: Dr. Md. Ashraf Ali (ashrafphy31@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Md. Ashraf Ali - Department Head, Professor; email: ashrafphy31@cuet.ac.bd.
+2. Dr. H. M. A. R. Maruf - Professor; email: hasnat_maruf10@cuet.ac.bd.
+3. Dr. Md. Mohi Uddin - Professor; email: mohi@cuet.ac.bd.
+4. Dr. Mohammad Belal Hossen - Professor; email: mbhossen@cuet.ac.bd.
+5. Dr. Swapan Kumar Roy - Professor; email: skroy@cuet.ac.bd.
+6. Dr. Animesh Kumer Chakraborty - Professor; email: akc_physics@cuet.ac.bd.
+7. Nusrat Jahan - Professor; email: nusrat83@cuet.ac.bd.
+8. Dr. Md. Mukter Hossain - Professor; email: mukter_phy@cuet.ac.bd.
+9. Dr. Shaiful Kabir - Associate Professor; email: shaifulkabir@cuet.ac.bd.
+10. Mosammat Arjumanara Bagum - Assistant Professor; email: arjumancuetphy@cuet.ac.bd.
+11. Md. Abdul Jalil - Assistant Professor; email: majalil@cuet.ac.bd.
+12. Md. Zahid Hasan - Assistant Professor; email: mzahidhasan@cuet.ac.bd.
+13. Sinthia Binte Kholil - Assistant Professor; email: sinthiabintekholil@cuet.ac.bd.
+14. Md. Nadim Mahamud Nobin - Lecturer; email: nobinphy@cuet.ac.bd.
+15. Nafisa Tabassum - Lecturer; email: nafisaphy@cuet.ac.bd.
+16. Md. Abdul Aziz - Lecturer; email: md.abdul.aziz.phy@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-mathematics | CUET Mathematics (Mathematics) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: Mathematics faculty; Mathematics teachers; Mathematics professors; Mathematics faculty count; Math faculty
+Locator: Sheet1, Mathematics rows 313-331
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 19 faculty appointment rows for CUET's Mathematics department (Mathematics/Math), with 19 distinct email addresses within this department.
+Source-designated department head: Dr. Mohammad Shah Alam (shah@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Mohammad Shah Alam - Department Head, Professor; email: shah@cuet.ac.bd.
+2. Dr. Ashutose Saha - Professor; email: asaha61@cuet.ac.bd.
+3. Dr. Sunil Dhar - Professor; email: sdhar@cuet.ac.bd.
+4. Dr. Md. Yeakub Ali - Professor; email: yeakub@cuet.ac.bd.
+5. Dr. Mohammad Abu Kauser - Professor; email: kauser@cuet.ac.bd.
+6. Dr. Ujjwal Kumar Deb - Professor; email: ukdebmath@cuet.ac.bd.
+7. Dr. Musammet Tahmina Akter - Professor; email: tahmina13@cuet.ac.bd.
+8. Dr. Md. Delowar Hossain - Professor; email: delowar@cuet.ac.bd.
+9. Dr. Md. Golam Hafez - Professor; email: hafez@cuet.ac.bd.
+10. Dr. Mohammad Ali - Professor; email: mahethe75@cuet.ac.bd.
+11. Nurun Nahar - Assistant Professor; email: nahar@cuet.ac.bd.
+12. Md. Kamrul Hasan Chowdury - Assistant Professor; email: mkchowdury@cuet.ac.bd.
+13. Sushmita Banerjee - Assistant Professor; email: sushmita@cuet.ac.bd.
+14. Umma Imon - Assistant Professor; email: umma.imon@cuet.ac.bd.
+15. Umme Hani - Assistant Professor; email: ummehani@cuet.ac.bd.
+16. Selim Hussen - Assistant Professor; email: selimmath@cuet.ac.bd.
+17. Muhammad Shahnewaz Bhuyan - Lecturer; email: msbpalash@cuet.ac.bd.
+18. Md. Mamun Sarkar - Lecturer; email: msmath@cuet.ac.bd.
+19. Samen Bairagi - Lecturer; email: samen@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-hum | CUET Humanities (HUM) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: HUM faculty; HUM teachers; HUM professors; HUM faculty count; Humanities faculty; Humanities teachers
+Locator: Sheet1, HUM rows 332-347
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 16 faculty appointment rows for CUET's Humanities department (HUM), with 16 distinct email addresses within this department.
+Source-designated department head: Dr. Suman Dey (suman@cuet.ac.bd; Department Head, Professor).
+The supplied departmental roster is:
+1. Dr. Suman Dey - Department Head, Professor; email: suman@cuet.ac.bd.
+2. Dr. Mohammed Mostafa Kamal - Professor; email: mdmostafa_kamal@cuet.ac.bd.
+3. Dr. Mohammad Kamrul Hassan - Professor; email: mkhassan@cuet.ac.bd.
+4. Mohammad Shamsus Sadekin - Associate Professor; email: sadekinmba@cuet.ac.bd.
+5. Mrs. Forhad Jamila - Associate Professor; email: forhadjamila@cuet.ac.bd.
+6. Dr. Md. Abdul Hai - Associate Professor; email: hai@cuet.ac.bd.
+7. Rigan Mazumder - Assistant Professor; email: rigan@cuet.ac.bd.
+8. Nazma Afroz - Assistant Professor; email: nazma.afroz@cuet.ac.bd.
+9. Nurun Nesa - Assistant Professor; email: nesa@cuet.ac.bd.
+10. A.B.M Enamol Hassan - Assistant Professor; email: enamsoc@cuet.ac.bd.
+11. Nazmul Islam - Assistant Professor; email: apu.nazmulislam@cuet.ac.bd.
+12. Shamima Nasrin Mukta - Assistant Professor; email: s.mukta91@cuet.ac.bd.
+13. Nahida Sultana - Assistant Professor; email: chaityengdu@cuet.ac.bd.
+14. Mahmuda Akhter Khanam - Assistant Professor; email: mahmuda.econ@cuet.ac.bd.
+15. S M Mashiur Rahman - Assistant Professor; email: mashiuralif@cuet.ac.bd.
+16. Mowsumi Rani Dey - Assistant Professor; email: mowsumi22@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-bme | CUET Biomedical Engineering (BME) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: BME faculty; BME teachers; BME professors; BME faculty count; Biomedical Engineering faculty; Biomedical Engineering teachers
+Locator: Sheet1, BME rows 348-356
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 9 faculty appointment rows for CUET's Biomedical Engineering department (BME), with 9 distinct email addresses within this department.
+Source-designated department head: Dr. Nipu Kumar Das (nipudas@cuet.ac.bd; Department Head).
+The supplied departmental roster is:
+1. Dr. Nipu Kumar Das - Department Head; email: nipudas@cuet.ac.bd.
+2. Dr. Sumit Majumder - Assistant Professor; email: s.majumder@cuet.ac.bd.
+3. Md. Fazlul Karim Khondakar - Assistant Professor; email: fazlul@cuet.ac.bd.
+4. Md. Joynul Abedin - Lecturer; email: joynulabedin@cuet.ac.bd.
+5. Hasib Sarowar - Lecturer; email: hasib.bme@cuet.ac.bd.
+6. Reana Raen - Lecturer; email: reana.bme@cuet.ac.bd.
+7. Ayesha Binth Humayun - Lecturer; email: ayesha.bme@cuet.ac.bd.
+8. Nusrat Jahan Usha - Lecturer; email: nusrat@cuet.ac.bd.
+9. Md. Zahid Hasan - Lecturer; email: mzhasan@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-department-ne | CUET Nuclear Engineering (NE) faculty roster and supplied contact count
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-department
+Aliases: NE faculty; NE teachers; NE professors; NE faculty count; Nuclear Engineering faculty; Nuclear Engineering teachers
+Locator: Sheet1, NE rows 357-361
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+The supplied workbook lists 5 faculty appointment rows for CUET's Nuclear Engineering department (NE), with 5 distinct email addresses within this department.
+Source-designated department head: Dr. Nur Mohammad (nur.mohammad@cuet.ac.bd; Department Head).
+The supplied departmental roster is:
+1. Dr. Nur Mohammad - Department Head; email: nur.mohammad@cuet.ac.bd.
+2. Md. Masum Rana Pramanik - Assistant Professor; email: mdmasum@cuet.ac.bd.
+3. Mohammad Shafiqul Alam - Assistant Professor; email: msalam@cuet.ac.bd.
+4. Kazi Kamrun Naher Ononna - Lecturer; email: kazi.ononna@cuet.ac.bd.
+5. Moshammed Nishat Tasnim - Lecturer; email: mntasnim@cuet.ac.bd.
+This is an undated supplied directory snapshot, imported 2026-11-02, not independently verified current employment or appointment data. Shared contacts may hold additional roles in another department. No telephone numbers are supplied.
+
+## faculty-pranabdhar81-cuet-ac-bd | CUET faculty contact: Dr. Pranab Kumar Dhar (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Pranab Kumar Dhar; pranabdhar81@cuet.ac.bd; CSE head; Computer Science and Engineering head
+Locator: Sheet1!A2:D2
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Pranab Kumar Dhar.
+Contact email as supplied: pranabdhar81@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-muhammad-ikhan-cuet-ac-bd | CUET faculty contact: Dr. Md. Ibrahim Khan (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ibrahim Khan; muhammad_ikhan@cuet.ac.bd
+Locator: Sheet1!A3:D3
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Ibrahim Khan.
+Contact email as supplied: muhammad_ikhan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-debkaushik99-cuet-ac-bd | CUET faculty contact: Prof. Dr. Kaushik Deb (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kaushik Deb; debkaushik99@cuet.ac.bd
+Locator: Sheet1!A4:D4
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Dr. Kaushik Deb.
+Contact email as supplied: debkaushik99@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-moshiul-240-cuet-ac-bd | CUET faculty contact: Dr. Mohammed Moshiul Hoque (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammed Moshiul Hoque; moshiul_240@cuet.ac.bd
+Locator: Sheet1!A5:D5
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammed Moshiul Hoque.
+Contact email as supplied: moshiul_240@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sarefin-cuet-ac-bd | CUET faculty contact: Prof. Dr. Mohammad Shamsul Arefin (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Shamsul Arefin; sarefin@cuet.ac.bd
+Locator: Sheet1!A6:D6
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Dr. Mohammad Shamsul Arefin.
+Contact email as supplied: sarefin@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-asad-cuet-ac-bd | CUET faculty contact: Dr. Asaduzzaman (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Asaduzzaman; asad@cuet.ac.bd
+Locator: Sheet1!A7:D7
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Asaduzzaman.
+Contact email as supplied: asad@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mokammel-cuet-ac-bd | CUET faculty contact: Dr. Md. Mokammel Haque (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mokammel Haque; mokammel@cuet.ac.bd
+Locator: Sheet1!A8:D8
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Mokammel Haque.
+Contact email as supplied: mokammel@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ashfak-cuet-ac-bd | CUET faculty contact: Dr. A. H. M. Ashfak Habib (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: A. H. M. Ashfak Habib; ashfak@cuet.ac.bd
+Locator: Sheet1!A9:D9
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. A. H. M. Ashfak Habib.
+Contact email as supplied: ashfak@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mahfuz-cuet-ac-bd | CUET faculty contact: Dr. Mahfuzulhoq Chowdhury (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mahfuzulhoq Chowdhury; mahfuz@cuet.ac.bd
+Locator: Sheet1!A10:D10
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mahfuzulhoq Chowdhury.
+Contact email as supplied: mahfuz@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mkhossen-cuet-ac-bd | CUET faculty contact: Muhammad Kamal Hossen (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Muhammad Kamal Hossen; mkhossen@cuet.ac.bd
+Locator: Sheet1!A11:D11
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Muhammad Kamal Hossen.
+Contact email as supplied: mkhossen@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-obaidur-91-cuet-ac-bd | CUET faculty contact: Mohammad Obaidur Rahman (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Obaidur Rahman; obaidur_91@cuet.ac.bd
+Locator: Sheet1!A12:D12
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Obaidur Rahman.
+Contact email as supplied: obaidur_91@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mmuhasan-cuet-ac-bd | CUET faculty contact: Md. Monjur Ul Hasan, PhD (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Monjur Ul Hasan, PhD; mmuhasan@cuet.ac.bd
+Locator: Sheet1!A13:D13
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Monjur Ul Hasan, PhD.
+Contact email as supplied: mmuhasan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sakikowsar-cuet-ac-bd | CUET faculty contact: Mir. Md. Saki Kowsar (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mir. Saki Kowsar; sakikowsar@cuet.ac.bd
+Locator: Sheet1!A14:D14
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mir. Md. Saki Kowsar.
+Contact email as supplied: sakikowsar@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rahmamukta-cuet-ac-bd | CUET faculty contact: Rahma Bintey Mufiz Mukta (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rahma Bintey Mufiz Mukta; rahmamukta@cuet.ac.bd
+Locator: Sheet1!A15:D15
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Rahma Bintey Mufiz Mukta.
+Contact email as supplied: rahmamukta@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tahmina-iict-cuet-ac-bd | CUET faculty contact: Tahmina Khanam (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tahmina Khanam; tahmina_iict@cuet.ac.bd
+Locator: Sheet1!A16:D16
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tahmina Khanam.
+Contact email as supplied: tahmina_iict@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shayla-sharmin-cuet-ac-bd | CUET faculty contact: Shayla Sharmin (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shayla Sharmin; shayla_sharmin@cuet.ac.bd
+Locator: Sheet1!A17:D17
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shayla Sharmin.
+Contact email as supplied: shayla_sharmin@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-animesh-roy-cuet-ac-bd | CUET faculty contact: Animesh Chandra Roy (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Animesh Chandra Roy; animesh_roy@cuet.ac.bd
+Locator: Sheet1!A18:D18
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Animesh Chandra Roy.
+Contact email as supplied: animesh_roy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sabir-cse-cuet-ac-bd | CUET faculty contact: Md. Sabir Hossain (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sabir Hossain; sabir.cse@cuet.ac.bd
+Locator: Sheet1!A19:D19
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Sabir Hossain.
+Contact email as supplied: sabir.cse@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-forhad0904063-cuet-ac-bd | CUET faculty contact: Md. Shafiul Alam Forhad (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shafiul Alam Forhad; forhad0904063@cuet.ac.bd
+Locator: Sheet1!A20:D20
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Shafiul Alam Forhad.
+Contact email as supplied: forhad0904063@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tista-chanda-cuet-ac-bd | CUET faculty contact: Sharmistha Chanda Tista (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sharmistha Chanda Tista; tista_chanda@cuet.ac.bd
+Locator: Sheet1!A21:D21
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sharmistha Chanda Tista.
+Contact email as supplied: tista_chanda@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mynul-cuet-ac-bd | CUET faculty contact: Md. Mynul Hasan (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mynul Hasan; mynul@cuet.ac.bd
+Locator: Sheet1!A22:D22
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Mynul Hasan.
+Contact email as supplied: mynul@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-annesha-cuet-ac-bd | CUET faculty contact: Annesha Das (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Annesha Das; annesha@cuet.ac.bd
+Locator: Sheet1!A23:D23
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Annesha Das.
+Contact email as supplied: annesha@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ashim-cuet-ac-bd | CUET faculty contact: Ashim Dey (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ashim Dey; ashim@cuet.ac.bd
+Locator: Sheet1!A24:D24
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ashim Dey.
+Contact email as supplied: ashim@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-omar-sharif-cuet-ac-bd | CUET faculty contact: Omar Sharif (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Omar Sharif; omar.sharif@cuet.ac.bd
+Locator: Sheet1!A25:D25
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Omar Sharif.
+Contact email as supplied: omar.sharif@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mhbillal-cuet-ac-bd | CUET faculty contact: Md. Billal Hossain (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Billal Hossain; mhbillal@cuet.ac.bd
+Locator: Sheet1!A26:D26
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Billal Hossain.
+Contact email as supplied: mhbillal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sabiha-anan-cuet-ac-bd | CUET faculty contact: Sabiha Anan (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sabiha Anan; sabiha.anan@cuet.ac.bd
+Locator: Sheet1!A27:D27
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sabiha Anan.
+Contact email as supplied: sabiha.anan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-atiqul-rizvi-cuet-ac-bd | CUET faculty contact: Md. Atiqul Islam Rizvi (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Atiqul Islam Rizvi; atiqul.rizvi@cuet.ac.bd
+Locator: Sheet1!A28:D28
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Atiqul Islam Rizvi.
+Contact email as supplied: atiqul.rizvi@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rashadur-cuet-ac-bd | CUET faculty contact: Md. Rashadur Rahman (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rashadur Rahman; rashadur@cuet.ac.bd
+Locator: Sheet1!A29:D29
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Rashadur Rahman.
+Contact email as supplied: rashadur@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-hasanmurad-cuet-ac-bd | CUET faculty contact: Hasan Murad (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Hasan Murad; hasanmurad@cuet.ac.bd
+Locator: Sheet1!A30:D30
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Hasan Murad.
+Contact email as supplied: hasanmurad@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-saadman-cuet-ac-bd | CUET faculty contact: Saadman Sakib (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Saadman Sakib; saadman@cuet.ac.bd
+Locator: Sheet1!A31:D31
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Saadman Sakib.
+Contact email as supplied: saadman@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-am-provath-cuet-ac-bd | CUET faculty contact: Md. Al - Mamun Provath (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Al - Mamun Provath; am.provath@cuet.ac.bd
+Locator: Sheet1!A32:D32
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Al - Mamun Provath.
+Contact email as supplied: am.provath@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shuhena-cuet-ac-bd | CUET faculty contact: Shuhena Salam Aonty (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shuhena Salam Aonty; shuhena@cuet.ac.bd
+Locator: Sheet1!A33:D33
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shuhena Salam Aonty.
+Contact email as supplied: shuhena@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-maisha-fahmida-cuet-ac-bd | CUET faculty contact: Maisha Fahmida (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Maisha Fahmida; maisha.fahmida@cuet.ac.bd
+Locator: Sheet1!A34:D34
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Maisha Fahmida.
+Contact email as supplied: maisha.fahmida@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-afroza-cuet-ac-bd | CUET faculty contact: Afroza Akter (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Afroza Akter; afroza@cuet.ac.bd
+Locator: Sheet1!A35:D35
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Afroza Akter.
+Contact email as supplied: afroza@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-atiya-siddika-cuet-ac-bd | CUET faculty contact: Atiya Masuda Siddika (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Atiya Masuda Siddika; atiya.siddika@cuet.ac.bd
+Locator: Sheet1!A36:D36
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Atiya Masuda Siddika.
+Contact email as supplied: atiya.siddika@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ayesha-banu-cuet-ac-bd | CUET faculty contact: Ayesha Banu (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ayesha Banu; ayesha.banu@cuet.ac.bd
+Locator: Sheet1!A37:D37
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ayesha Banu.
+Contact email as supplied: ayesha.banu@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-abir-hassan-cuet-ac-bd | CUET faculty contact: Abir Hassan (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abir Hassan; abir.hassan@cuet.ac.bd
+Locator: Sheet1!A38:D38
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Abir Hassan.
+Contact email as supplied: abir.hassan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-refaj-hossan-cuet-ac-bd | CUET faculty contact: Md. Refaj Hossan (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Refaj Hossan; refaj.hossan@cuet.ac.bd
+Locator: Sheet1!A39:D39
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Refaj Hossan.
+Contact email as supplied: refaj.hossan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-symom-hossain-cuet-ac-bd | CUET faculty contact: Symom Hossain Shohan (CSE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Symom Hossain Shohan; symom.hossain@cuet.ac.bd
+Locator: Sheet1!A40:D40
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Symom Hossain Shohan.
+Contact email as supplied: symom.hossain@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Computer Science and Engineering (CSE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tofael-cuet-ac-bd | CUET faculty contact: Dr. Tofael Ahmed (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tofael Ahmed; tofael@cuet.ac.bd; EEE head; Electrical and Electronic Engineering head
+Locator: Sheet1!A41:D41
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Tofael Ahmed.
+Contact email as supplied: tofael@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mamatin-cuet-ac-bd | CUET faculty contact: Dr. Mahmud Abdul Matin Bhuiyan (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mahmud Abdul Matin Bhuiyan; mamatin@cuet.ac.bd
+Locator: Sheet1!A42:D42
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mahmud Abdul Matin Bhuiyan.
+Contact email as supplied: mamatin@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-qzaman359-cuet-ac-bd | CUET faculty contact: Dr. Muhammad Quamruzzaman (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Muhammad Quamruzzaman; qzaman359@cuet.ac.bd
+Locator: Sheet1!A43:D43
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Muhammad Quamruzzaman.
+Contact email as supplied: qzaman359@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-quazi-cuet-ac-bd | CUET faculty contact: Dr. Quazi Delwar Hossain (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Quazi Delwar Hossain; quazi@cuet.ac.bd
+Locator: Sheet1!A44:D44
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Quazi Delwar Hossain.
+Contact email as supplied: quazi@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ahsan-cuet-ac-bd | CUET faculty contact: Dr. Muhammad Ahsan Ullah (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Muhammad Ahsan Ullah; ahsan@cuet.ac.bd
+Locator: Sheet1!A45:D45
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Muhammad Ahsan Ullah.
+Contact email as supplied: ahsan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mrthossain-cuet-ac-bd | CUET faculty contact: Dr. Mohammad Rubaiyat Tanvir Hossain (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Rubaiyat Tanvir Hossain; mrthossain@cuet.ac.bd
+Locator: Sheet1!A46:D46
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammad Rubaiyat Tanvir Hossain.
+Contact email as supplied: mrthossain@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nur-mohammad-cuet-ac-bd | CUET faculty contact: Dr. Nur Mohammad (EEE, NE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nur Mohammad; nur.mohammad@cuet.ac.bd; NE head; Nuclear Engineering head
+Locator: Sheet1!A47:D47; Sheet1!A357:D357
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Nur Mohammad.
+Contact email as supplied: nur.mohammad@cuet.ac.bd.
+Departmental appointments in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+- Nuclear Engineering (NE): Department Head.
+The same email identifies these multiple appointments; preserve every department and its own designation.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-asad31-cuet-ac-bd | CUET faculty contact: Dr. Muhammad Asad Rahman (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Muhammad Asad Rahman; asad31@cuet.ac.bd
+Locator: Sheet1!A48:D48
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Muhammad Asad Rahman.
+Contact email as supplied: asad31@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-murad-eee-cuet-ac-bd | CUET faculty contact: Dr. Rashed Md. Murad Hasan (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rashed Murad Hasan; murad_eee@cuet.ac.bd
+Locator: Sheet1!A49:D49
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Rashed Md. Murad Hasan.
+Contact email as supplied: murad_eee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nipudas-cuet-ac-bd | CUET faculty contact: Dr. Nipu Kumar Das (EEE, BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nipu Kumar Das; nipudas@cuet.ac.bd; BME head; Biomedical Engineering head
+Locator: Sheet1!A50:D50; Sheet1!A348:D348
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Nipu Kumar Das.
+Contact email as supplied: nipudas@cuet.ac.bd.
+Departmental appointments in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+- Biomedical Engineering (BME): Department Head.
+The same email identifies these multiple appointments; preserve every department and its own designation.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-aksengupta-cuet-ac-bd | CUET faculty contact: Dr. Ashoke Kumar Sen Gupta (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ashoke Kumar Sen Gupta; aksengupta@cuet.ac.bd
+Locator: Sheet1!A51:D51
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Ashoke Kumar Sen Gupta.
+Contact email as supplied: aksengupta@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sampad-cuet-ac-bd | CUET faculty contact: Dr. Sampad Ghosh (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sampad Ghosh; sampad@cuet.ac.bd
+Locator: Sheet1!A52:D52
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Sampad Ghosh.
+Contact email as supplied: sampad@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mhchowdhury-cuet-ac-bd | CUET faculty contact: Dr. Mehdi Hasan Chowdhury (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mehdi Hasan Chowdhury; mhchowdhury@cuet.ac.bd
+Locator: Sheet1!A53:D53
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mehdi Hasan Chowdhury.
+Contact email as supplied: mhchowdhury@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-joychakr-cuet-ac-bd | CUET faculty contact: Dr. Joyprokash Chakrabartty (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Joyprokash Chakrabartty; joychakr@cuet.ac.bd
+Locator: Sheet1!A54:D54
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Joyprokash Chakrabartty.
+Contact email as supplied: joychakr@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-istiaque-cuet-ac-bd | CUET faculty contact: Dr. Md. Istiaque Reja (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Istiaque Reja; istiaque@cuet.ac.bd
+Locator: Sheet1!A55:D55
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Istiaque Reja.
+Contact email as supplied: istiaque@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shahjamal-cuet-ac-bd | CUET faculty contact: Ainul Anam Shahjamal Khan (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ainul Anam Shahjamal Khan; shahjamal@cuet.ac.bd
+Locator: Sheet1!A56:D56
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ainul Anam Shahjamal Khan.
+Contact email as supplied: shahjamal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-anuvachy-cuet-ac-bd | CUET faculty contact: Anuva Chowdhury (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Anuva Chowdhury; anuvachy@cuet.ac.bd
+Locator: Sheet1!A57:D57
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Anuva Chowdhury.
+Contact email as supplied: anuvachy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mrinmoy-cuet-ac-bd | CUET faculty contact: Mrinmoy Dey (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: inmoy Dey; mrinmoy@cuet.ac.bd
+Locator: Sheet1!A58:D58
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mrinmoy Dey.
+Contact email as supplied: mrinmoy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nusratjahan-cuet-ac-bd | CUET faculty contact: Dr. Nusrat Jahan (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nusrat Jahan; nusratjahan@cuet.ac.bd
+Locator: Sheet1!A59:D59
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Nusrat Jahan.
+Contact email as supplied: nusratjahan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shamsul-cuet-ac-bd | CUET faculty contact: Dr. Md. Shamsul Arifin (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shamsul Arifin; shamsul@cuet.ac.bd
+Locator: Sheet1!A60:D60
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Shamsul Arifin.
+Contact email as supplied: shamsul@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-lilyjobaida-cuet-ac-bd | CUET faculty contact: Jobaida Akhtar (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Jobaida Akhtar; lilyjobaida@cuet.ac.bd
+Locator: Sheet1!A61:D61
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Jobaida Akhtar.
+Contact email as supplied: lilyjobaida@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rabiul-islam07-cuet-ac-bd | CUET faculty contact: Rabiul Islam (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rabiul Islam; rabiul.islam07@cuet.ac.bd
+Locator: Sheet1!A62:D62
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Rabiul Islam.
+Contact email as supplied: rabiul.islam07@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sharmin-cuet-ac-bd | CUET faculty contact: Sharmin Majumder (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sharmin Majumder; sharmin@cuet.ac.bd
+Locator: Sheet1!A63:D63
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sharmin Majumder.
+Contact email as supplied: sharmin@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-saraziee-cuet-ac-bd | CUET faculty contact: Sheikh Alimur Razi (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sheikh Alimur Razi; saraziee@cuet.ac.bd
+Locator: Sheet1!A64:D64
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sheikh Alimur Razi.
+Contact email as supplied: saraziee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-gani-cuet-ac-bd | CUET faculty contact: Md. Manjurul Gani (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Manjurul Gani; gani@cuet.ac.bd
+Locator: Sheet1!A65:D65
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Manjurul Gani.
+Contact email as supplied: gani@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-naqib09-eee-cuet-ac-bd | CUET faculty contact: Naqib Sad Pathan (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Naqib Sad Pathan; naqib09.eee@cuet.ac.bd
+Locator: Sheet1!A66:D66
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Naqib Sad Pathan.
+Contact email as supplied: naqib09.eee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-jitu-cuet-ac-bd | CUET faculty contact: Jitu Prakash Dhar (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Jitu Prakash Dhar; jitu@cuet.ac.bd
+Locator: Sheet1!A67:D67
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Jitu Prakash Dhar.
+Contact email as supplied: jitu@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ikballahamed-cuet-ac-bd | CUET faculty contact: EMK Ikball Ahamed (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: EMK Ikball Ahamed; ikballahamed@cuet.ac.bd
+Locator: Sheet1!A68:D68
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: EMK Ikball Ahamed.
+Contact email as supplied: ikballahamed@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shrazo-cuet-ac-bd | CUET faculty contact: Md. Saddam Hossain Razo (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Saddam Hossain Razo; shrazo@cuet.ac.bd
+Locator: Sheet1!A69:D69
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Saddam Hossain Razo.
+Contact email as supplied: shrazo@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nipa-cuet-ac-bd | CUET faculty contact: Nipa Dhar (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nipa Dhar; nipa@cuet.ac.bd
+Locator: Sheet1!A70:D70
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nipa Dhar.
+Contact email as supplied: nipa@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mmhtareq-eee-cuet-ac-bd | CUET faculty contact: Mohammad Mahmudul Hasan Tareq (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Mahmudul Hasan Tareq; mmhtareq.eee@cuet.ac.bd
+Locator: Sheet1!A71:D71
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Mahmudul Hasan Tareq.
+Contact email as supplied: mmhtareq.eee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-fahim-cuet-ac-bd | CUET faculty contact: Fahim Mahmud (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Fahim Mahmud; fahim@cuet.ac.bd
+Locator: Sheet1!A72:D72
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Fahim Mahmud.
+Contact email as supplied: fahim@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sancoy-cuet-ac-bd | CUET faculty contact: Sancoy Barua (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sancoy Barua; sancoy@cuet.ac.bd
+Locator: Sheet1!A73:D73
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sancoy Barua.
+Contact email as supplied: sancoy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tanha-cuet-ac-bd | CUET faculty contact: Tanha Zaman (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tanha Zaman; tanha@cuet.ac.bd
+Locator: Sheet1!A74:D74
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tanha Zaman.
+Contact email as supplied: tanha@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mkh21-cuet-ac-bd | CUET faculty contact: Md. Kamrul Hasan (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kamrul Hasan; mkh21@cuet.ac.bd
+Locator: Sheet1!A75:D75
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Kamrul Hasan.
+Contact email as supplied: mkh21@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-aditta-eee-cuet-ac-bd | CUET faculty contact: Aditta Chowdhury (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Aditta Chowdhury; aditta.eee@cuet.ac.bd
+Locator: Sheet1!A76:D76
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Aditta Chowdhury.
+Contact email as supplied: aditta.eee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-diba-eee-cuet-ac-bd | CUET faculty contact: Diba Das (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Diba Das; diba.eee@cuet.ac.bd
+Locator: Sheet1!A77:D77
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Diba Das.
+Contact email as supplied: diba.eee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-kamrulhira-cuet-ac-bd | CUET faculty contact: Kamrul Hasan (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kamrul Hasan; kamrulhira@cuet.ac.bd
+Locator: Sheet1!A78:D78
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Kamrul Hasan.
+Contact email as supplied: kamrulhira@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mutsuddisagar-cuet-ac-bd | CUET faculty contact: Sagar Mutsuddi (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sagar Mutsuddi; mutsuddisagar@cuet.ac.bd
+Locator: Sheet1!A79:D79
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sagar Mutsuddi.
+Contact email as supplied: mutsuddisagar@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-iqra116-cuet-ac-bd | CUET faculty contact: Nusrat Jahan Iqra (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nusrat Jahan Iqra; iqra116@cuet.ac.bd
+Locator: Sheet1!A80:D80
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nusrat Jahan Iqra.
+Contact email as supplied: iqra116@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-kawshik2366-cuet-ac-bd | CUET faculty contact: Kawshik Nath (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kawshik Nath; kawshik2366@cuet.ac.bd
+Locator: Sheet1!A81:D81
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Kawshik Nath.
+Contact email as supplied: kawshik2366@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shafiul-cuet-ac-bd | CUET faculty contact: Md. Shafiul Islam Joy (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shafiul Islam Joy; shafiul@cuet.ac.bd
+Locator: Sheet1!A82:D82
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Shafiul Islam Joy.
+Contact email as supplied: shafiul@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ajmal-eee-cuet-ac-bd | CUET faculty contact: Ajmal Ahmed (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ajmal Ahmed; ajmal.eee@cuet.ac.bd
+Locator: Sheet1!A83:D83
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ajmal Ahmed.
+Contact email as supplied: ajmal.eee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-bibek-eee-cuet-ac-bd | CUET faculty contact: Bibekananda Nath (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Bibekananda Nath; bibek.eee@cuet.ac.bd
+Locator: Sheet1!A84:D84
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Bibekananda Nath.
+Contact email as supplied: bibek.eee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tasreek07-cuet-ac-bd | CUET faculty contact: Tasreek Ahmed (EEE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tasreek Ahmed; tasreek07@cuet.ac.bd
+Locator: Sheet1!A85:D85
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tasreek Ahmed.
+Contact email as supplied: tasreek07@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electrical and Electronic Engineering (EEE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-reazmullick-cuet-ac-bd | CUET faculty contact: Dr. Md. Reaz Akter Mullick (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Reaz Akter Mullick; reazmullick@cuet.ac.bd; CE head; Civil Engineering head
+Locator: Sheet1!A86:D86
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Reaz Akter Mullick.
+Contact email as supplied: reazmullick@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-skpbd-cuet-ac-bd | CUET faculty contact: Prof. Dr. Swapan Kumar Palit (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Swapan Kumar Palit; skpbd@cuet.ac.bd
+Locator: Sheet1!A87:D87
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Dr. Swapan Kumar Palit.
+Contact email as supplied: skpbd@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-pdrmhali-cuet-ac-bd | CUET faculty contact: Prof. Dr. Hazrat Ali (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Hazrat Ali; pdrmhali@cuet.ac.bd
+Locator: Sheet1!A88:D88
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Dr. Hazrat Ali.
+Contact email as supplied: pdrmhali@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rabiulalam-cuet-ac-bd | CUET faculty contact: Dr. Md. Rabiul Alam (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rabiul Alam; rabiulalam@cuet.ac.bd
+Locator: Sheet1!A89:D89
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Rabiul Alam.
+Contact email as supplied: rabiulalam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-arbhuiyance-cuet-ac-bd | CUET faculty contact: Dr. M. Abdur Rahman Bhuiyan (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: M. Abdur Rahman Bhuiyan; arbhuiyance@cuet.ac.bd
+Locator: Sheet1!A90:D90
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. M. Abdur Rahman Bhuiyan.
+Contact email as supplied: arbhuiyance@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mislam-cuet-ac-bd | CUET faculty contact: Dr. Md. Moinul Islam (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Moinul Islam; mislam@cuet.ac.bd
+Locator: Sheet1!A91:D91
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Moinul Islam.
+Contact email as supplied: mislam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sudip-cuet-ac-bd | CUET faculty contact: Dr. Sudip Kumar Pal (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sudip Kumar Pal; sudip@cuet.ac.bd
+Locator: Sheet1!A92:D92
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Sudip Kumar Pal.
+Contact email as supplied: sudip@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-asifulhoque-cuet-ac-bd | CUET faculty contact: Prof. Dr. Asiful Hoque (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Asiful Hoque; asifulhoque@cuet.ac.bd
+Locator: Sheet1!A93:D93
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Dr. Asiful Hoque.
+Contact email as supplied: asifulhoque@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-aysha-akter-cuet-ac-bd | CUET faculty contact: Dr. Aysha Akter (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Aysha Akter; aysha_akter@cuet.ac.bd
+Locator: Sheet1!A94:D94
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Aysha Akter.
+Contact email as supplied: aysha_akter@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-gmsislam-cuet-ac-bd | CUET faculty contact: Dr. G. M. Sadiqul Islam (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: G. M. Sadiqul Islam; gmsislam@cuet.ac.bd
+Locator: Sheet1!A95:D95
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. G. M. Sadiqul Islam.
+Contact email as supplied: gmsislam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-farzana-cuet-ac-bd | CUET faculty contact: Dr. Mst. Farzana Rahman Zuthi (CE, WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: t. Farzana Rahman Zuthi; farzana@cuet.ac.bd; WRE head; Water Resources Engineering head
+Locator: Sheet1!A96:D96; Sheet1!A204:D204
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mst. Farzana Rahman Zuthi.
+Contact email as supplied: farzana@cuet.ac.bd.
+Departmental appointments in the supplied workbook:
+- Civil Engineering (CE): Professor.
+- Water Resources Engineering (WRE): Department Head.
+The same email identifies these multiple appointments; preserve every department and its own designation.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-bipul-cuet-ac-bd | CUET faculty contact: Dr. Bipul Chandra Mondal (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Bipul Chandra Mondal; bipul@cuet.ac.bd
+Locator: Sheet1!A97:D97
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Bipul Chandra Mondal.
+Contact email as supplied: bipul@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-maftabur-cuet-ac-bd | CUET faculty contact: Md. Aftabur Rahman (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Aftabur Rahman; maftabur@cuet.ac.bd
+Locator: Sheet1!A98:D98
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Aftabur Rahman.
+Contact email as supplied: maftabur@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nusrat-hoque-cuet-ac-bd | CUET faculty contact: Dr. Nusrat Hoque (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nusrat Hoque; nusrat_hoque@cuet.ac.bd
+Locator: Sheet1!A99:D99
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Nusrat Hoque.
+Contact email as supplied: nusrat_hoque@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-basirzisan-cuet-ac-bd | CUET faculty contact: Dr. Md. Basir Zisan (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Basir Zisan; basirzisan@cuet.ac.bd
+Locator: Sheet1!A100:D100
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Basir Zisan.
+Contact email as supplied: basirzisan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mshajibuce-cuet-ac-bd | CUET faculty contact: Dr. Md. Shajib Ullah (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shajib Ullah; mshajibuce@cuet.ac.bd
+Locator: Sheet1!A101:D101
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Shajib Ullah.
+Contact email as supplied: mshajibuce@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-farooq-sm-cuet-ac-bd | CUET faculty contact: Sultan Mohammad Farooq (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sultan Mohammad Farooq; farooq_sm@cuet.ac.bd
+Locator: Sheet1!A102:D102
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sultan Mohammad Farooq.
+Contact email as supplied: farooq_sm@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tareq-cuet-ac-bd | CUET faculty contact: Mohammad Tarequl Alam (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Tarequl Alam; tareq@cuet.ac.bd
+Locator: Sheet1!A103:D103
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Tarequl Alam.
+Contact email as supplied: tareq@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-debnathopu-cuet-ac-bd | CUET faculty contact: Dr. Opu Chandra Debanath (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Opu Chandra Debanath; debnathopu@cuet.ac.bd
+Locator: Sheet1!A104:D104
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Opu Chandra Debanath.
+Contact email as supplied: debnathopu@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-acharya-shyamal-cuet-ac-bd | CUET faculty contact: Shyamal Acharya (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shyamal Acharya; acharya_shyamal@cuet.ac.bd
+Locator: Sheet1!A105:D105
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shyamal Acharya.
+Contact email as supplied: acharya_shyamal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-jhutankuri-yahoo-com | CUET faculty contact: Jhutan Chandra Kuri (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Jhutan Chandra Kuri; jhutankuri@yahoo.com
+Locator: Sheet1!A106:D106
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Jhutan Chandra Kuri.
+Contact email as supplied: jhutankuri@yahoo.com.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sanjoy07-cuet-ac-bd | CUET faculty contact: Sanjoy Das (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sanjoy Das; sanjoy07@cuet.ac.bd
+Locator: Sheet1!A107:D107
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sanjoy Das.
+Contact email as supplied: sanjoy07@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-altafsunny-cuet-ac-bd | CUET faculty contact: Mohammad Altaf Hossain (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Altaf Hossain; altafsunny@cuet.ac.bd
+Locator: Sheet1!A108:D108
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Altaf Hossain.
+Contact email as supplied: altafsunny@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nafisa-t-cuet-ac-bd | CUET faculty contact: Nafisa Tabassum (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nafisa Tabassum; nafisa_t@cuet.ac.bd
+Locator: Sheet1!A109:D109
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nafisa Tabassum.
+Contact email as supplied: nafisa_t@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-muktabanuce-cuet-ac-bd | CUET faculty contact: Most. Mukta Banu (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Most. Mukta Banu; muktabanuce@cuet.ac.bd
+Locator: Sheet1!A110:D110
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Most. Mukta Banu.
+Contact email as supplied: muktabanuce@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shovonhalder-cuet-ac-bd | CUET faculty contact: Shovon Halder (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shovon Halder; shovonhalder@cuet.ac.bd
+Locator: Sheet1!A111:D111
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shovon Halder.
+Contact email as supplied: shovonhalder@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mhossain-cuet-ac-bd | CUET faculty contact: Md Mamun Hossain (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mamun Hossain; mhossain@cuet.ac.bd
+Locator: Sheet1!A112:D112
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md Mamun Hossain.
+Contact email as supplied: mhossain@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-azamkhance-cuet-ac-bd | CUET faculty contact: Azam Khan (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Azam Khan; azamkhance@cuet.ac.bd
+Locator: Sheet1!A113:D113
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Azam Khan.
+Contact email as supplied: azamkhance@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-saiful-ce-cuet-ac-bd | CUET faculty contact: Mohammad Saiful Islam (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Saiful Islam; saiful.ce@cuet.ac.bd
+Locator: Sheet1!A114:D114
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Saiful Islam.
+Contact email as supplied: saiful.ce@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-maisha-cuet-ac-bd | CUET faculty contact: Maisha Kabir (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Maisha Kabir; maisha@cuet.ac.bd
+Locator: Sheet1!A115:D115
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Maisha Kabir.
+Contact email as supplied: maisha@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-asifur-cuet-ac-bd | CUET faculty contact: Md. Asifur Rahman (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Asifur Rahman; asifur@cuet.ac.bd
+Locator: Sheet1!A116:D116
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Asifur Rahman.
+Contact email as supplied: asifur@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-meraj-cuet-ac-bd | CUET faculty contact: Md. Merajul Islam (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Merajul Islam; meraj@cuet.ac.bd
+Locator: Sheet1!A117:D117
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Merajul Islam.
+Contact email as supplied: meraj@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-kamoldip-cuet-ac-bd | CUET faculty contact: Kamol Debnath Dip (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kamol Debnath Dip; kamoldip@cuet.ac.bd
+Locator: Sheet1!A118:D118
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Kamol Debnath Dip.
+Contact email as supplied: kamoldip@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sabikun-cuet-ac-bd | CUET faculty contact: Sabikun Nahar Nilu (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sabikun Nahar Nilu; sabikun@cuet.ac.bd
+Locator: Sheet1!A119:D119
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sabikun Nahar Nilu.
+Contact email as supplied: sabikun@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-zubair-cuet-ac-bd | CUET faculty contact: Md Zubair (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Zubair; zubair@cuet.ac.bd
+Locator: Sheet1!A120:D120
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md Zubair.
+Contact email as supplied: zubair@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-safkat-rumman-cuet-ac-bd | CUET faculty contact: Safkat Ar Rumman (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Safkat Ar Rumman; safkat.rumman@cuet.ac.bd
+Locator: Sheet1!A121:D121
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Safkat Ar Rumman.
+Contact email as supplied: safkat.rumman@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-toha-sumaya-cuet-ac-bd | CUET faculty contact: Sumaya Sadia Toha (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sumaya Sadia Toha; toha.sumaya@cuet.ac.bd
+Locator: Sheet1!A122:D122
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sumaya Sadia Toha.
+Contact email as supplied: toha.sumaya@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ehsanul-saad-cuet-ac-bd | CUET faculty contact: Md. Ehsanul Saad (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ehsanul Saad; ehsanul.saad@cuet.ac.bd
+Locator: Sheet1!A123:D123
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Ehsanul Saad.
+Contact email as supplied: ehsanul.saad@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-fahim-shahriar-cuet-ac-bd | CUET faculty contact: Fahim Shahriar (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Fahim Shahriar; fahim.shahriar@cuet.ac.bd
+Locator: Sheet1!A124:D124
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Fahim Shahriar.
+Contact email as supplied: fahim.shahriar@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-robiul-hossain-cuet-ac-bd | CUET faculty contact: Robiul Hossain Chy (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Robiul Hossain Chy; robiul.hossain@cuet.ac.bd
+Locator: Sheet1!A125:D125
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Robiul Hossain Chy.
+Contact email as supplied: robiul.hossain@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-reazul-tanvir-cuet-ac-bd | CUET faculty contact: Md. Reazul Haque Tanvir (CE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Reazul Haque Tanvir; reazul.tanvir@cuet.ac.bd
+Locator: Sheet1!A126:D126
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Reazul Haque Tanvir.
+Contact email as supplied: reazul.tanvir@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Civil Engineering (CE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mkamal-cuet-ac-bd | CUET faculty contact: Dr. Muhammad Mostafa Kamal Bhuiya (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Muhammad Mostafa Kamal Bhuiya; mkamal@cuet.ac.bd; ME head; Mechanical Engineering head
+Locator: Sheet1!A127:D127
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Muhammad Mostafa Kamal Bhuiya.
+Contact email as supplied: mkamal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-bsalam-cuet-ac-bd | CUET faculty contact: Dr. Bodius Salam (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Bodius Salam; bsalam@cuet.ac.bd
+Locator: Sheet1!A128:D128
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Bodius Salam.
+Contact email as supplied: bsalam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-malam-cuet-ac-bd | CUET faculty contact: Prof. Dr. Md. Mahbubul Alam (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mahbubul Alam; malam@cuet.ac.bd
+Locator: Sheet1!A129:D129
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Dr. Md. Mahbubul Alam.
+Contact email as supplied: malam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-baniksajal-cuet-ac-bd | CUET faculty contact: Dr. Sajal Chandra Banik (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sajal Chandra Banik; baniksajal@cuet.ac.bd
+Locator: Sheet1!A130:D130
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Sajal Chandra Banik.
+Contact email as supplied: baniksajal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-jamal-cuet-ac-bd | CUET faculty contact: Dr. Jamal Uddin Ahamed (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Jamal Uddin Ahamed; jamal@cuet.ac.bd
+Locator: Sheet1!A131:D131
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Jamal Uddin Ahamed.
+Contact email as supplied: jamal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-humayun-cuet-ac-bd | CUET faculty contact: Prof. Dr. Sheikh Muhammad Humayun Kabir (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sheikh Muhammad Humayun Kabir; humayun@cuet.ac.bd
+Locator: Sheet1!A132:D132
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Dr. Sheikh Muhammad Humayun Kabir.
+Contact email as supplied: humayun@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-afzal-cuet-ac-bd | CUET faculty contact: Dr. Kazi Afzalur Rahman (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kazi Afzalur Rahman; afzal@cuet.ac.bd
+Locator: Sheet1!A133:D133
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Kazi Afzalur Rahman.
+Contact email as supplied: afzal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mmrahman-me-cuet-ac-bd | CUET faculty contact: Dr. Mohammad Mizanur Rahman (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Mizanur Rahman; mmrahman_me@cuet.ac.bd
+Locator: Sheet1!A134:D134
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammad Mizanur Rahman.
+Contact email as supplied: mmrahman_me@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rabbi-cuet-ac-bd | CUET faculty contact: Dr. Md. Sanaul Rabbi (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sanaul Rabbi; rabbi@cuet.ac.bd
+Locator: Sheet1!A135:D135
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Sanaul Rabbi.
+Contact email as supplied: rabbi@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-arafat-cuet-ac-bd | CUET faculty contact: Dr. Md. Arafat Rahman (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Arafat Rahman; arafat@cuet.ac.bd
+Locator: Sheet1!A136:D136
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Arafat Rahman.
+Contact email as supplied: arafat@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-prasanjit-cuet-ac-bd | CUET faculty contact: Dr. Prasanjit Das (ME, MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Prasanjit Das; prasanjit@cuet.ac.bd; MIE head; Mechatronics and Industrial Engineering head
+Locator: Sheet1!A137:D137; Sheet1!A190:D190
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Prasanjit Das.
+Contact email as supplied: prasanjit@cuet.ac.bd.
+Departmental appointments in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+- Mechatronics and Industrial Engineering (MIE): Department Head.
+The same email identifies these multiple appointments; preserve every department and its own designation.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-a-sayem-cuet-ac-bd | CUET faculty contact: Dr. Abu Shadat Muhammad Sayem (ME, PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abu Shadat Muhammad Sayem; a.sayem@cuet.ac.bd; PME head; Petroleum and Mining Engineering head
+Locator: Sheet1!A138:D138; Sheet1!A214:D214
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Abu Shadat Muhammad Sayem.
+Contact email as supplied: a.sayem@cuet.ac.bd.
+Departmental appointments in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+- Petroleum and Mining Engineering (PME): Department Head.
+The same email identifies these multiple appointments; preserve every department and its own designation.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mamuncuet2003-cuet-ac-bd | CUET faculty contact: Prof. Md. Mamunur Roshid (ME, MME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mamunur Roshid; mamuncuet2003@cuet.ac.bd; MME head; Materials and Metallurgical Engineering head
+Locator: Sheet1!A139:D139; Sheet1!A236:D236
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Md. Mamunur Roshid.
+Contact email as supplied: mamuncuet2003@cuet.ac.bd.
+Departmental appointments in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+- Materials and Metallurgical Engineering (MME): Department Head.
+The same email identifies these multiple appointments; preserve every department and its own designation.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mowazzem-cuet-ac-bd | CUET faculty contact: Dr. Md. Abu Mowazzem Hossain (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abu Mowazzem Hossain; mowazzem@cuet.ac.bd
+Locator: Sheet1!A140:D140
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Abu Mowazzem Hossain.
+Contact email as supplied: mowazzem@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tilok-cuet-ac-bd | CUET faculty contact: Dr. Tilok Kumar Das (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tilok Kumar Das; tilok@cuet.ac.bd
+Locator: Sheet1!A141:D141
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Tilok Kumar Das.
+Contact email as supplied: tilok@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-aislam-cuet-ac-bd | CUET faculty contact: Md. Aminul Islam (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Aminul Islam; aislam@cuet.ac.bd
+Locator: Sheet1!A142:D142
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Aminul Islam.
+Contact email as supplied: aislam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-masrur-cuet-ac-bd | CUET faculty contact: Syed Masrur Ahmmad (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Syed Masrur Ahmmad; masrur@cuet.ac.bd
+Locator: Sheet1!A143:D143
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Syed Masrur Ahmmad.
+Contact email as supplied: masrur@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mostafiz-rasel64-cuet-ac-bd | CUET faculty contact: Dr. Mostafizur Rahman (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mostafizur Rahman; mostafiz_rasel64@cuet.ac.bd
+Locator: Sheet1!A144:D144
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mostafizur Rahman.
+Contact email as supplied: mostafiz_rasel64@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-kamrul-cuet-ac-bd | CUET faculty contact: Muhammed Kamrul Islam (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Muhammed Kamrul Islam; kamrul@cuet.ac.bd
+Locator: Sheet1!A145:D145
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Muhammed Kamrul Islam.
+Contact email as supplied: kamrul@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ratan-kumar-cuet-ac-bd | CUET faculty contact: Mr. Ratan Kumar Das (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ratan Kumar Das; ratan.kumar@cuet.ac.bd
+Locator: Sheet1!A146:D146
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mr. Ratan Kumar Das.
+Contact email as supplied: ratan.kumar@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-bably-cuet-ac-bd | CUET faculty contact: Bably Das (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Bably Das; bably@cuet.ac.bd
+Locator: Sheet1!A147:D147
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Bably Das.
+Contact email as supplied: bably@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-a-razzaq-cuet-ac-bd | CUET faculty contact: Moham Ed Abdur Razzaq (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Moham Ed Abdur Razzaq; a.razzaq@cuet.ac.bd
+Locator: Sheet1!A148:D148
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Moham Ed Abdur Razzaq.
+Contact email as supplied: a.razzaq@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-farida-cuet-ac-bd | CUET faculty contact: Farida Ahmed Koly (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Farida Ahmed Koly; farida@cuet.ac.bd
+Locator: Sheet1!A149:D149
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Farida Ahmed Koly.
+Contact email as supplied: farida@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-asma-cuet-ac-bd | CUET faculty contact: Asma Ul Hosna (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Asma Ul Hosna; asma@cuet.ac.bd
+Locator: Sheet1!A150:D150
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Asma Ul Hosna.
+Contact email as supplied: asma@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-imteaz-cuet-ac-bd | CUET faculty contact: Md. Imteaz Ahmed (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Imteaz Ahmed; imteaz@cuet.ac.bd
+Locator: Sheet1!A151:D151
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Imteaz Ahmed.
+Contact email as supplied: imteaz@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sourav-cuet-ac-bd | CUET faculty contact: Sourav Paul (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sourav Paul; sourav@cuet.ac.bd
+Locator: Sheet1!A152:D152
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sourav Paul.
+Contact email as supplied: sourav@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-safina-cuet-ac-bd | CUET faculty contact: Safina-E-Tahura Siddiqui (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Safina-E-Tahura Siddiqui; safina@cuet.ac.bd
+Locator: Sheet1!A153:D153
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Safina-E-Tahura Siddiqui.
+Contact email as supplied: safina@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-maruf-cuet-ac-bd | CUET faculty contact: Md. Maruf Billah (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Maruf Billah; maruf@cuet.ac.bd
+Locator: Sheet1!A154:D154
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Maruf Billah.
+Contact email as supplied: maruf@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-afnanhasan-cuet-ac-bd | CUET faculty contact: Dr.Afnan Hasan (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Afnan Hasan; afnanhasan@cuet.ac.bd
+Locator: Sheet1!A155:D155
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr.Afnan Hasan.
+Contact email as supplied: afnanhasan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-radheshyam-cuet-ac-bd | CUET faculty contact: Radheshyam Nath Jisu (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Radheshyam Nath Jisu; radheshyam@cuet.ac.bd
+Locator: Sheet1!A156:D156
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Radheshyam Nath Jisu.
+Contact email as supplied: radheshyam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tafsirul-hassan-cuet-ac-bd | CUET faculty contact: Tafsirul Hassan (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tafsirul Hassan; tafsirul.hassan@cuet.ac.bd
+Locator: Sheet1!A157:D157
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tafsirul Hassan.
+Contact email as supplied: tafsirul.hassan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nezam-uddin-cuet-ac-bd | CUET faculty contact: Mohammad Nezam Uddin Chy (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Nezam Uddin Chy; nezam.uddin@cuet.ac.bd
+Locator: Sheet1!A158:D158
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Nezam Uddin Chy.
+Contact email as supplied: nezam.uddin@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-meraz-cuet-ac-bd | CUET faculty contact: Redoy Masum Meraz (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Redoy Masum Meraz; meraz@cuet.ac.bd
+Locator: Sheet1!A159:D159
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Redoy Masum Meraz.
+Contact email as supplied: meraz@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-minhaz-cuet-ac-bd | CUET faculty contact: Minhaz Ahmed (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Minhaz Ahmed; minhaz@cuet.ac.bd
+Locator: Sheet1!A160:D160
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Minhaz Ahmed.
+Contact email as supplied: minhaz@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-aarifat-cuet-ac-bd | CUET faculty contact: Abdullah Al Rifat (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abdullah Al Rifat; aarifat@cuet.ac.bd
+Locator: Sheet1!A161:D161
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Abdullah Al Rifat.
+Contact email as supplied: aarifat@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-amamun-cuet-ac-bd | CUET faculty contact: Abdullah- Al- Mamun (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abdullah- Al- Mamun; amamun@cuet.ac.bd
+Locator: Sheet1!A162:D162
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Abdullah- Al- Mamun.
+Contact email as supplied: amamun@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-protick-cuet-ac-bd | CUET faculty contact: Protick Chandra Ghosh (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Protick Chandra Ghosh; protick@cuet.ac.bd
+Locator: Sheet1!A163:D163
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Protick Chandra Ghosh.
+Contact email as supplied: protick@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tanvir-cuet-ac-bd | CUET faculty contact: Md Tanvir Mahmud (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tanvir Mahmud; tanvir@cuet.ac.bd
+Locator: Sheet1!A164:D164
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md Tanvir Mahmud.
+Contact email as supplied: tanvir@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tahsin-cuet-ac-bd | CUET faculty contact: Tahsin Abid Ahmed (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tahsin Abid Ahmed; tahsin@cuet.ac.bd
+Locator: Sheet1!A165:D165
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tahsin Abid Ahmed.
+Contact email as supplied: tahsin@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-farhan-cuet-ac-bd | CUET faculty contact: Md. Farhan Imtiaz (ME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Farhan Imtiaz; farhan@cuet.ac.bd
+Locator: Sheet1!A166:D166
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Farhan Imtiaz.
+Contact email as supplied: farhan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechanical Engineering (ME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-jahed-cuet-ac-bd | CUET faculty contact: Dr. Md. Jahedul Islam (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Jahedul Islam; jahed@cuet.ac.bd; ETE head; Electronics and Telecommunication Engineering head
+Locator: Sheet1!A167:D167
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Jahedul Islam.
+Contact email as supplied: jahed@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-azad-cuet-ac-bd | CUET faculty contact: Dr. Md. Azad Hossain (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Azad Hossain; azad@cuet.ac.bd
+Locator: Sheet1!A168:D168
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Azad Hossain.
+Contact email as supplied: azad@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-saiful05eee-cuet-ac-bd | CUET faculty contact: Dr. Md. Saiful Islam (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Saiful Islam; saiful05eee@cuet.ac.bd
+Locator: Sheet1!A169:D169
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Saiful Islam.
+Contact email as supplied: saiful05eee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Professor..
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-piyas-cuet-ac-bd | CUET faculty contact: Piyas Chowdhury (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Piyas Chowdhury; piyas@cuet.ac.bd
+Locator: Sheet1!A170:D170
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Piyas Chowdhury.
+Contact email as supplied: piyas@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-anisur-rahaman-cuet-ac-bd | CUET faculty contact: Mohammad Anisur Rahman (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Anisur Rahman; anisur.rahaman@cuet.ac.bd
+Locator: Sheet1!A171:D171
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Anisur Rahman.
+Contact email as supplied: anisur.rahaman@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nursad-mamun-cuet-ac-bd | CUET faculty contact: Dr. Nursadul Mamun (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nursadul Mamun; nursad.mamun@cuet.ac.bd
+Locator: Sheet1!A172:D172
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Nursadul Mamun.
+Contact email as supplied: nursad.mamun@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-akabirece-cuet-ac-bd | CUET faculty contact: Md. Ahasan Kabir (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ahasan Kabir; akabirece@cuet.ac.bd
+Locator: Sheet1!A173:D173
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Ahasan Kabir.
+Contact email as supplied: akabirece@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sabrina-cuet-ac-bd | CUET faculty contact: Sabrina Abedin (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sabrina Abedin; sabrina@cuet.ac.bd
+Locator: Sheet1!A174:D174
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sabrina Abedin.
+Contact email as supplied: sabrina@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-taieba-athay-cuet-ac-bd | CUET faculty contact: Taieba Taher (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Taieba Taher; taieba.athay@cuet.ac.bd
+Locator: Sheet1!A175:D175
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Taieba Taher.
+Contact email as supplied: taieba.athay@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-khadija-ete-cuet-ac-bd | CUET faculty contact: Khadija Akter (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Khadija Akter; khadija.ete@cuet.ac.bd
+Locator: Sheet1!A176:D176
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Khadija Akter.
+Contact email as supplied: khadija.ete@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-farhad-hossain-cuet-ac-bd | CUET faculty contact: Md. Farhad Hossain (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Farhad Hossain; farhad.hossain@cuet.ac.bd
+Locator: Sheet1!A177:D177
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Farhad Hossain.
+Contact email as supplied: farhad.hossain@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-eftekhar-hossain-cuet-ac-bd | CUET faculty contact: Eftekhar Hossain (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Eftekhar Hossain; eftekhar.hossain@cuet.ac.bd
+Locator: Sheet1!A178:D178
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Eftekhar Hossain.
+Contact email as supplied: eftekhar.hossain@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ibrahim-khalil-cuet-ac-bd | CUET faculty contact: Md. Ibrahim Khalil (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ibrahim Khalil; ibrahim.khalil@cuet.ac.bd
+Locator: Sheet1!A179:D179
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Ibrahim Khalil.
+Contact email as supplied: ibrahim.khalil@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-priyanti-ete-cuet-ac-bd | CUET faculty contact: Priyanti Paul Tumpa (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Priyanti Paul Tumpa; priyanti.ete@cuet.ac.bd
+Locator: Sheet1!A180:D180
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Priyanti Paul Tumpa.
+Contact email as supplied: priyanti.ete@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-arif-ete-cuet-ac-bd | CUET faculty contact: Arif Istiaque (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Arif Istiaque; arif.ete@cuet.ac.bd
+Locator: Sheet1!A181:D181
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Arif Istiaque.
+Contact email as supplied: arif.ete@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-hafiza-ete-cuet-ac-bd | CUET faculty contact: Hafiza Akter Munira (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Hafiza Akter Munira; hafiza.ete@cuet.ac.bd
+Locator: Sheet1!A182:D182
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Hafiza Akter Munira.
+Contact email as supplied: hafiza.ete@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-jannatul-ferdous-cuet-ac-bd | CUET faculty contact: Gazi Jannatul Ferdous (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Gazi Jannatul Ferdous; jannatul.ferdous@cuet.ac.bd
+Locator: Sheet1!A183:D183
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Gazi Jannatul Ferdous.
+Contact email as supplied: jannatul.ferdous@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-farhin-sultana-cuet-ac-bd | CUET faculty contact: Farhin Sultana (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Farhin Sultana; farhin.sultana@cuet.ac.bd
+Locator: Sheet1!A184:D184
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Farhin Sultana.
+Contact email as supplied: farhin.sultana@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-takowa-ete-cuet-ac-bd | CUET faculty contact: Takowa Rahman (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Takowa Rahman; takowa.ete@cuet.ac.bd
+Locator: Sheet1!A185:D185
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Takowa Rahman.
+Contact email as supplied: takowa.ete@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ztmaimuna-ete-cuet-ac-bd | CUET faculty contact: Zarin Tasnim Maimuna (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Zarin Tasnim Maimuna; ztmaimuna.ete@cuet.ac.bd
+Locator: Sheet1!A186:D186
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Zarin Tasnim Maimuna.
+Contact email as supplied: ztmaimuna.ete@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shamanzachy-cuet-ac-bd | CUET faculty contact: Shamanza Chowdhury (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shamanza Chowdhury; shamanzachy@cuet.ac.bd
+Locator: Sheet1!A187:D187
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shamanza Chowdhury.
+Contact email as supplied: shamanzachy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-isratjahan-cuet-ac-bd | CUET faculty contact: Israt Jahan (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Israt Jahan; isratjahan@cuet.ac.bd
+Locator: Sheet1!A188:D188
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Israt Jahan.
+Contact email as supplied: isratjahan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shibasree-cuet-ac-bd | CUET faculty contact: Shibasree Sen (ETE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shibasree Sen; shibasree@cuet.ac.bd
+Locator: Sheet1!A189:D189
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shibasree Sen.
+Contact email as supplied: shibasree@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Electronics and Telecommunication Engineering (ETE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-homayun-cuet-ac-bd | CUET faculty contact: Dr. Homayun Kabir (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Homayun Kabir; homayun@cuet.ac.bd
+Locator: Sheet1!A191:D191
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Homayun Kabir.
+Contact email as supplied: homayun@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-abdurrahman-cuet-ac-bd | CUET faculty contact: Md. Abdur Rahman (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abdur Rahman; abdurrahman@cuet.ac.bd
+Locator: Sheet1!A192:D192
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Abdur Rahman.
+Contact email as supplied: abdurrahman@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-hridoy-cuet-ac-bd | CUET faculty contact: Monowar Wadud Hridoy (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Monowar Wadud Hridoy; hridoy@cuet.ac.bd
+Locator: Sheet1!A193:D193
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Monowar Wadud Hridoy.
+Contact email as supplied: hridoy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sanjeeb-cuet-ac-bd | CUET faculty contact: Sanjeeb Roy (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sanjeeb Roy; sanjeeb@cuet.ac.bd
+Locator: Sheet1!A194:D194
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sanjeeb Roy.
+Contact email as supplied: sanjeeb@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-fahimfaisal-cuet-ac-bd | CUET faculty contact: S. M. Fahim Faisal (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: S. M. Fahim Faisal; fahimfaisal@cuet.ac.bd
+Locator: Sheet1!A195:D195
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: S. M. Fahim Faisal.
+Contact email as supplied: fahimfaisal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tasnuvajahan-cuet-ac-bd | CUET faculty contact: Tasnuva Jahan Nuva (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tasnuva Jahan Nuva; tasnuvajahan@cuet.ac.bd
+Locator: Sheet1!A196:D196
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tasnuva Jahan Nuva.
+Contact email as supplied: tasnuvajahan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tasmia-heem-cuet-ac-bd | CUET faculty contact: Tasmia Binte Hai (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tasmia Binte Hai; tasmia_heem@cuet.ac.bd
+Locator: Sheet1!A197:D197
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tasmia Binte Hai.
+Contact email as supplied: tasmia_heem@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-miraizhossain-cuet-ac-bd | CUET faculty contact: Md. Miraiz Hossain (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Miraiz Hossain; miraizhossain@cuet.ac.bd
+Locator: Sheet1!A198:D198
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Miraiz Hossain.
+Contact email as supplied: miraizhossain@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-naimur-cuet-ac-bd | CUET faculty contact: Kazi Naimur Rahman (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kazi Naimur Rahman; naimur@cuet.ac.bd
+Locator: Sheet1!A199:D199
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Kazi Naimur Rahman.
+Contact email as supplied: naimur@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nusratsultana-cuet-ac-bd | CUET faculty contact: Nusrat Sultana (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nusrat Sultana; nusratsultana@cuet.ac.bd
+Locator: Sheet1!A200:D200
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nusrat Sultana.
+Contact email as supplied: nusratsultana@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-emran-hasan-cuet-ac-bd | CUET faculty contact: Emran Hasan (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Emran Hasan; emran.hasan@cuet.ac.bd
+Locator: Sheet1!A201:D201
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Emran Hasan.
+Contact email as supplied: emran.hasan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mimona-cuet-ac-bd | CUET faculty contact: Mimona Akther (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mimona Akther; mimona@cuet.ac.bd
+Locator: Sheet1!A202:D202
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mimona Akther.
+Contact email as supplied: mimona@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-aniksaha-cuet-ac-bd | CUET faculty contact: Anik Saha (MIE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Anik Saha; aniksaha@cuet.ac.bd
+Locator: Sheet1!A203:D203
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Anik Saha.
+Contact email as supplied: aniksaha@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mechatronics and Industrial Engineering (MIE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-msbasirwre-cuet-ac-bd | CUET faculty contact: Md. Samiun Basir (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Samiun Basir; msbasirwre@cuet.ac.bd
+Locator: Sheet1!A205:D205
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Samiun Basir.
+Contact email as supplied: msbasirwre@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-pollenchakma-cuet-ac-bd | CUET faculty contact: Pollen Chakma (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Pollen Chakma; pollenchakma@cuet.ac.bd
+Locator: Sheet1!A206:D206
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Pollen Chakma.
+Contact email as supplied: pollenchakma@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mukdiul-cuet-ac-bd | CUET faculty contact: Md. Mukdiul Islam (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mukdiul Islam; mukdiul@cuet.ac.bd
+Locator: Sheet1!A207:D207
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Mukdiul Islam.
+Contact email as supplied: mukdiul@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-md-ashraful-cuet-ac-bd | CUET faculty contact: Md. Ashraful Islam (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ashraful Islam; md_ashraful@cuet.ac.bd
+Locator: Sheet1!A208:D208
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Ashraful Islam.
+Contact email as supplied: md_ashraful@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mtamim-cuet-ac-bd | CUET faculty contact: Md. Tamim (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tamim; mtamim@cuet.ac.bd
+Locator: Sheet1!A209:D209
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Tamim.
+Contact email as supplied: mtamim@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-priya-chowdhury-cuet-ac-bd | CUET faculty contact: Priya Chowdhury (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Priya Chowdhury; priya_chowdhury@cuet.ac.bd
+Locator: Sheet1!A210:D210
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Priya Chowdhury.
+Contact email as supplied: priya_chowdhury@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ashraf-khan-cuet-ac-bd | CUET faculty contact: Md. Ashraf Khan (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ashraf Khan; ashraf.khan@cuet.ac.bd
+Locator: Sheet1!A211:D211
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Ashraf Khan.
+Contact email as supplied: ashraf.khan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ronjan-cuet-ac-bd | CUET faculty contact: Ronjan Kumar Paul (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ronjan Kumar Paul; ronjan@cuet.ac.bd
+Locator: Sheet1!A212:D212
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ronjan Kumar Paul.
+Contact email as supplied: ronjan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mahmud-cuet-ac-bd | CUET faculty contact: Abdullah Al Mahmud (WRE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abdullah Al Mahmud; mahmud@cuet.ac.bd
+Locator: Sheet1!A213:D213
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Abdullah Al Mahmud.
+Contact email as supplied: mahmud@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Water Resources Engineering (WRE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-islam-m-cuet-ac-bd | CUET faculty contact: Dr. Mohammad Islam Miah (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Islam Miah; islam.m@cuet.ac.bd
+Locator: Sheet1!A215:D215
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammad Islam Miah.
+Contact email as supplied: islam.m@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-zbs-cuet-ac-bd | CUET faculty contact: Zayed Bin Sultan (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Zayed Bin Sultan; zbs@cuet.ac.bd
+Locator: Sheet1!A216:D216
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Zayed Bin Sultan.
+Contact email as supplied: zbs@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mizanurpe-cuet-ac-bd | CUET faculty contact: Md. Mizanur Rahman (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mizanur Rahman; mizanurpe@cuet.ac.bd
+Locator: Sheet1!A217:D217
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Mizanur Rahman.
+Contact email as supplied: mizanurpe@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mostafijpme-cuet-ac-bd | CUET faculty contact: Md. Mostafijul Karim (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mostafijul Karim; mostafijpme@cuet.ac.bd
+Locator: Sheet1!A218:D218
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Mostafijul Karim.
+Contact email as supplied: mostafijpme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-isti33-cuet-ac-bd | CUET faculty contact: Istiaque Muhammad Khan (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Istiaque Muhammad Khan; isti33@cuet.ac.bd
+Locator: Sheet1!A219:D219
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Istiaque Muhammad Khan.
+Contact email as supplied: isti33@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nahin2582-cuet-ac-bd | CUET faculty contact: Md. Nahin Mahmood (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nahin Mahmood; nahin2582@cuet.ac.bd
+Locator: Sheet1!A220:D220
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Nahin Mahmood.
+Contact email as supplied: nahin2582@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nadia-pme11-cuet-ac-bd | CUET faculty contact: Nadia Mahjabin (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nadia Mahjabin; nadia.pme11@cuet.ac.bd
+Locator: Sheet1!A221:D221
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nadia Mahjabin.
+Contact email as supplied: nadia.pme11@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nezam-cuet-ac-bd | CUET faculty contact: Mohammad Nezam Uddin (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Nezam Uddin; nezam@cuet.ac.bd
+Locator: Sheet1!A222:D222
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Nezam Uddin.
+Contact email as supplied: nezam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-hosainaqif-cuet-ac-bd | CUET faculty contact: Aqif Hosain Khan (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Aqif Hosain Khan; hosainaqif@cuet.ac.bd
+Locator: Sheet1!A223:D223
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Aqif Hosain Khan.
+Contact email as supplied: hosainaqif@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mamunpme-cuet-ac-bd | CUET faculty contact: Mohammad Mamun-Ur-Rashid (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Mamun-Ur-Rashid; mamunpme@cuet.ac.bd
+Locator: Sheet1!A224:D224
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Mamun-Ur-Rashid.
+Contact email as supplied: mamunpme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sarwat-pme019-cuet-ac-bd | CUET faculty contact: Sarwat Tanjil (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sarwat Tanjil; sarwat.pme019@cuet.ac.bd
+Locator: Sheet1!A225:D225
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sarwat Tanjil.
+Contact email as supplied: sarwat.pme019@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-amitdas-pme008-cuet-ac-bd | CUET faculty contact: Amit Das (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Amit Das; amitdas.pme008@cuet.ac.bd
+Locator: Sheet1!A226:D226
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Amit Das.
+Contact email as supplied: amitdas.pme008@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-adnan-cuet-ac-bd | CUET faculty contact: Mohammed Adnan Noor Abir (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammed Adnan Noor Abir; adnan@cuet.ac.bd
+Locator: Sheet1!A227:D227
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammed Adnan Noor Abir.
+Contact email as supplied: adnan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-kakonpme-cuet-ac-bd | CUET faculty contact: Kakon Sultana (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kakon Sultana; kakonpme@cuet.ac.bd
+Locator: Sheet1!A228:D228
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Kakon Sultana.
+Contact email as supplied: kakonpme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-aurpitapme-cuet-ac-bd | CUET faculty contact: Aurpita Sen Gupta (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Aurpita Sen Gupta; aurpitapme@cuet.ac.bd
+Locator: Sheet1!A229:D229
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Aurpita Sen Gupta.
+Contact email as supplied: aurpitapme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ashiqulshuvo-cuet-ac-bd | CUET faculty contact: Md. Ashiqul Islam Shuvo (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ashiqul Islam Shuvo; ashiqulshuvo@cuet.ac.bd
+Locator: Sheet1!A230:D230
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Ashiqul Islam Shuvo.
+Contact email as supplied: ashiqulshuvo@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-bintunzaman-cuet-ac-bd | CUET faculty contact: Bintun Zaman (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Bintun Zaman; bintunzaman@cuet.ac.bd
+Locator: Sheet1!A231:D231
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Bintun Zaman.
+Contact email as supplied: bintunzaman@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-zahidulpme-cuet-ac-bd | CUET faculty contact: Mohammad Zahidul Islam (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Zahidul Islam; zahidulpme@cuet.ac.bd
+Locator: Sheet1!A232:D232
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Zahidul Islam.
+Contact email as supplied: zahidulpme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-raselpme-cuet-ac-bd | CUET faculty contact: Md. Rasel Rana (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rasel Rana; raselpme@cuet.ac.bd
+Locator: Sheet1!A233:D233
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Rasel Rana.
+Contact email as supplied: raselpme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shaim-cuet-ac-bd | CUET faculty contact: Abu Shaim Biswas (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abu Shaim Biswas; shaim@cuet.ac.bd
+Locator: Sheet1!A234:D234
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Abu Shaim Biswas.
+Contact email as supplied: shaim@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shrabony-cuet-ac-bd | CUET faculty contact: Shrabony Talukdar (PME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shrabony Talukdar; shrabony@cuet.ac.bd
+Locator: Sheet1!A235:D235
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shrabony Talukdar.
+Contact email as supplied: shrabony@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Petroleum and Mining Engineering (PME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sazzad-cuet-ac-bd | CUET faculty contact: Dr. Sazzad Ahmad (MME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sazzad Ahmad; sazzad@cuet.ac.bd
+Locator: Sheet1!A237:D237
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Sazzad Ahmad.
+Contact email as supplied: sazzad@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Materials and Metallurgical Engineering (MME): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mdsayem-cuet-ac-bd | CUET faculty contact: Abu Sadat Md. Sayem Rahman (MME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abu Sadat Sayem Rahman; mdsayem@cuet.ac.bd
+Locator: Sheet1!A238:D238
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Abu Sadat Md. Sayem Rahman.
+Contact email as supplied: mdsayem@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Materials and Metallurgical Engineering (MME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mkhumaun-cuet-ac-bd | CUET faculty contact: Mohammad Humaun Kabir (MME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Humaun Kabir; mkhumaun@cuet.ac.bd
+Locator: Sheet1!A239:D239
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Humaun Kabir.
+Contact email as supplied: mkhumaun@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Materials and Metallurgical Engineering (MME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-wasif-cuet-ac-bd | CUET faculty contact: Wasif Abu Dujana (MME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Wasif Abu Dujana; wasif@cuet.ac.bd
+Locator: Sheet1!A240:D240
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Wasif Abu Dujana.
+Contact email as supplied: wasif@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Materials and Metallurgical Engineering (MME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-saif-cuet-ac-bd | CUET faculty contact: Md. Saif Hasan (MME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Saif Hasan; saif@cuet.ac.bd
+Locator: Sheet1!A241:D241
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Saif Hasan.
+Contact email as supplied: saif@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Materials and Metallurgical Engineering (MME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-jesia-cuet-ac-bd | CUET faculty contact: Jesia Alam Jui (MME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Jesia Alam Jui; jesia@cuet.ac.bd
+Locator: Sheet1!A242:D242
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Jesia Alam Jui.
+Contact email as supplied: jesia@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Materials and Metallurgical Engineering (MME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-atiq-cuet-ac-bd | CUET faculty contact: Md. Atiqul Islam (MME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Atiqul Islam; atiq@cuet.ac.bd
+Locator: Sheet1!A243:D243
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Atiqul Islam.
+Contact email as supplied: atiq@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Materials and Metallurgical Engineering (MME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-lopafowzia-cuet-ac-bd | CUET faculty contact: Dr. Fowzia Gulshana Rashid lopa (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Fowzia Gulshana Rashid lopa; lopafowzia@cuet.ac.bd; URP head; Urban and Regional Planning head
+Locator: Sheet1!A244:D244
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Fowzia Gulshana Rashid lopa.
+Contact email as supplied: lopafowzia@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mrhasan-cuet-ac-bd | CUET faculty contact: Dr. Muhammad Rashidul Hasan (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Muhammad Rashidul Hasan; mrhasan@cuet.ac.bd
+Locator: Sheet1!A245:D245
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Muhammad Rashidul Hasan.
+Contact email as supplied: mrhasan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-debasishroy-cuet-ac-bd | CUET faculty contact: Debasish Roy Raja (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Debasish Roy Raja; debasishroy@cuet.ac.bd
+Locator: Sheet1!A246:D246
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Debasish Roy Raja.
+Contact email as supplied: debasishroy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rokshana-urp-cuet-ac-bd | CUET faculty contact: Rokshana Binta Samad (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rokshana Binta Samad; rokshana_urp@cuet.ac.bd
+Locator: Sheet1!A247:D247
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Rokshana Binta Samad.
+Contact email as supplied: rokshana_urp@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-israt-jahan-cuet-ac-bd | CUET faculty contact: Israt Jahan (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Israt Jahan; israt_jahan@cuet.ac.bd
+Locator: Sheet1!A248:D248
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Israt Jahan.
+Contact email as supplied: israt_jahan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shahjahan-urp-cuet-ac-bd | CUET faculty contact: A.T.M. Shahjahan (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: A.T.M. Shahjahan; shahjahan_urp@cuet.ac.bd
+Locator: Sheet1!A249:D249
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: A.T.M. Shahjahan.
+Contact email as supplied: shahjahan_urp@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sharmin-ara14-cuet-ac-bd | CUET faculty contact: Sharmin Ara (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sharmin Ara; sharmin.ara14@cuet.ac.bd
+Locator: Sheet1!A250:D250
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sharmin Ara.
+Contact email as supplied: sharmin.ara14@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rabiul-urp-cuet-ac-bd | CUET faculty contact: Md. Rabiul Islam (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rabiul Islam; rabiul.urp@cuet.ac.bd
+Locator: Sheet1!A251:D251
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Rabiul Islam.
+Contact email as supplied: rabiul.urp@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-souravurp09-cuet-ac-bd | CUET faculty contact: Sourav Das (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sourav Das; souravurp09@cuet.ac.bd
+Locator: Sheet1!A252:D252
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sourav Das.
+Contact email as supplied: souravurp09@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shahjalalmisuk-cuet-ac-bd | CUET faculty contact: Md. Shah Jalal Misuk (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shah Jalal Misuk; shahjalalmisuk@cuet.ac.bd
+Locator: Sheet1!A253:D253
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Shah Jalal Misuk.
+Contact email as supplied: shahjalalmisuk@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tandradas-urp-cuet-ac-bd | CUET faculty contact: Tandra Das (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tandra Das; tandradas.urp@cuet.ac.bd
+Locator: Sheet1!A254:D254
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tandra Das.
+Contact email as supplied: tandradas.urp@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-kamrul-islam-cuet10-cuet-ac-bd | CUET faculty contact: Md. Kamrul Islam (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kamrul Islam; kamrul.islam.cuet10@cuet.ac.bd
+Locator: Sheet1!A255:D255
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Kamrul Islam.
+Contact email as supplied: kamrul.islam.cuet10@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ashraful-urp-cuet-ac-bd | CUET faculty contact: K. M. Ashraful Islam (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: K. M. Ashraful Islam; ashraful.urp@cuet.ac.bd
+Locator: Sheet1!A256:D256
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: K. M. Ashraful Islam.
+Contact email as supplied: ashraful.urp@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mrhkauser-cuet-ac-bd | CUET faculty contact: Md. Rakibul Hasan Kauser (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rakibul Hasan Kauser; mrhkauser@cuet.ac.bd
+Locator: Sheet1!A257:D257
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Rakibul Hasan Kauser.
+Contact email as supplied: mrhkauser@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-naim-mnh-cuet-ac-bd | CUET faculty contact: Md. Nazmul Huda Naim (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nazmul Huda Naim; naim.mnh@cuet.ac.bd
+Locator: Sheet1!A258:D258
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Nazmul Huda Naim.
+Contact email as supplied: naim.mnh@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sajibsarker-cuet-ac-bd | CUET faculty contact: Sajib Sarker (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sajib Sarker; sajibsarker@cuet.ac.bd
+Locator: Sheet1!A259:D259
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sajib Sarker.
+Contact email as supplied: sajibsarker@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-jobyda-urp-cuet-ac-bd | CUET faculty contact: Jobyda Sultana (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Jobyda Sultana; jobyda.urp@cuet.ac.bd
+Locator: Sheet1!A260:D260
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Jobyda Sultana.
+Contact email as supplied: jobyda.urp@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tanvirmahmood-cuet-ac-bd | CUET faculty contact: Tanvir Mahmood (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Tanvir Mahmood; tanvirmahmood@cuet.ac.bd
+Locator: Sheet1!A261:D261
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Tanvir Mahmood.
+Contact email as supplied: tanvirmahmood@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-amritadas-cuet-ac-bd | CUET faculty contact: Amrita Das (URP)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Amrita Das; amritadas@cuet.ac.bd
+Locator: Sheet1!A262:D262
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Amrita Das.
+Contact email as supplied: amritadas@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Urban and Regional Planning (URP): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sajal-c-cuet-ac-bd | CUET faculty contact: Prof. Dr. Sajal Chowdhury (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sajal Chowdhury; sajal_c@cuet.ac.bd; Architecture head
+Locator: Sheet1!A263:D263
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Prof. Dr. Sajal Chowdhury.
+Contact email as supplied: sajal_c@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sreekanu-cuet-ac-bd | CUET faculty contact: Ar. Kanu Kumar Das (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ar. Kanu Kumar Das; sreekanu@cuet.ac.bd
+Locator: Sheet1!A264:D264
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ar. Kanu Kumar Das.
+Contact email as supplied: sreekanu@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mustiafiz-cuet-ac-bd | CUET faculty contact: Md. Mustiafiz Al-Mamun (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mustiafiz Al-Mamun; mustiafiz@cuet.ac.bd
+Locator: Sheet1!A265:D265
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Mustiafiz Al-Mamun.
+Contact email as supplied: mustiafiz@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nusratkeya-cuet-ac-bd | CUET faculty contact: Dr. Nusrat Jannat (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nusrat Jannat; nusratkeya@cuet.ac.bd
+Locator: Sheet1!A266:D266
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Nusrat Jannat.
+Contact email as supplied: nusratkeya@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shajib-arch-cuet-ac-bd | CUET faculty contact: Shajib Paul (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shajib Paul; shajib_arch@cuet.ac.bd
+Locator: Sheet1!A267:D267
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shajib Paul.
+Contact email as supplied: shajib_arch@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-arch-debsree-cuet-ac-bd | CUET faculty contact: Debsree Mandal (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Debsree Mandal; arch.debsree@cuet.ac.bd
+Locator: Sheet1!A268:D268
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Debsree Mandal.
+Contact email as supplied: arch.debsree@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rezuanaislam-cuet-ac-bd | CUET faculty contact: Rezuana Islam (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rezuana Islam; rezuanaislam@cuet.ac.bd
+Locator: Sheet1!A269:D269
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Rezuana Islam.
+Contact email as supplied: rezuanaislam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-biplobkantibiswas-cuet-ac-bd | CUET faculty contact: Biplob Kanti Biswas (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Biplob Kanti Biswas; biplobkantibiswas@cuet.ac.bd
+Locator: Sheet1!A270:D270
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Biplob Kanti Biswas.
+Contact email as supplied: biplobkantibiswas@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shaila-sharmin-cuet-ac-bd | CUET faculty contact: Shaila Sharmin (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shaila Sharmin; shaila.sharmin@cuet.ac.bd
+Locator: Sheet1!A271:D271
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shaila Sharmin.
+Contact email as supplied: shaila.sharmin@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-amitimtiaz-cuet-ac-bd | CUET faculty contact: Amit Imtiaz (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Amit Imtiaz; amitimtiaz@cuet.ac.bd
+Locator: Sheet1!A272:D272
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Amit Imtiaz.
+Contact email as supplied: amitimtiaz@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-arch-sarah026-cuet-ac-bd | CUET faculty contact: Sarah Binte Haque (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sarah Binte Haque; arch.sarah026@cuet.ac.bd
+Locator: Sheet1!A273:D273
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sarah Binte Haque.
+Contact email as supplied: arch.sarah026@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shuvra-das-cuet-ac-bd | CUET faculty contact: Shuvra Das (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shuvra Das; shuvra_das@cuet.ac.bd
+Locator: Sheet1!A274:D274
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shuvra Das.
+Contact email as supplied: shuvra_das@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-moon-tahmina-cuet-ac-bd | CUET faculty contact: Syeda Tahmina Tasnim (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Syeda Tahmina Tasnim; moon.tahmina@cuet.ac.bd
+Locator: Sheet1!A275:D275
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Syeda Tahmina Tasnim.
+Contact email as supplied: moon.tahmina@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-zakia-cuet-ac-bd | CUET faculty contact: Zakia Sultana (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Zakia Sultana; zakia@cuet.ac.bd
+Locator: Sheet1!A276:D276
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Zakia Sultana.
+Contact email as supplied: zakia@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nurmkhan-cuet-ac-bd | CUET faculty contact: Nur Mohammad Khan (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nur Mohammad Khan; nurmkhan@cuet.ac.bd
+Locator: Sheet1!A277:D277
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nur Mohammad Khan.
+Contact email as supplied: nurmkhan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-samira-proytee-cuet-ac-bd | CUET faculty contact: Samira Binte Bashar (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Samira Binte Bashar; samira.proytee@cuet.ac.bd
+Locator: Sheet1!A278:D278
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Samira Binte Bashar.
+Contact email as supplied: samira.proytee@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-pranjibpaul-cuet-ac-bd | CUET faculty contact: Pranjib Paul (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Pranjib Paul; pranjibpaul@cuet.ac.bd
+Locator: Sheet1!A279:D279
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Pranjib Paul.
+Contact email as supplied: pranjibpaul@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-asifur-rahman-cuet-ac-bd | CUET faculty contact: Md. Asifur Rahman (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Asifur Rahman; asifur_rahman@cuet.ac.bd
+Locator: Sheet1!A280:D280
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Asifur Rahman.
+Contact email as supplied: asifur_rahman@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nasif-arch-cuet-ac-bd | CUET faculty contact: Md. Nasif Sadman (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nasif Sadman; nasif.arch@cuet.ac.bd
+Locator: Sheet1!A281:D281
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Nasif Sadman.
+Contact email as supplied: nasif.arch@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sadia-ibnat-cuet-ac-bd | CUET faculty contact: Sadia Ibnat Raisa (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sadia Ibnat Raisa; sadia.ibnat@cuet.ac.bd
+Locator: Sheet1!A282:D282
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sadia Ibnat Raisa.
+Contact email as supplied: sadia.ibnat@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ridhy-das-cuet-ac-bd | CUET faculty contact: Ridhy Das Gupta (Architecture)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ridhy Das Gupta; ridhy-das@cuet.ac.bd
+Locator: Sheet1!A283:D283
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ridhy Das Gupta.
+Contact email as supplied: ridhy-das@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Architecture (Architecture): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-roksana-cuet-ac-bd | CUET faculty contact: Dr. Mst. Roksana Khatun (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: t. Roksana Khatun; roksana@cuet.ac.bd; Chemistry head
+Locator: Sheet1!A284:D284
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mst. Roksana Khatun.
+Contact email as supplied: roksana@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ranajit-cuet-ac-bd | CUET faculty contact: Dr. Ranajit Kumar Sutradhar (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ranajit Kumar Sutradhar; ranajit@cuet.ac.bd
+Locator: Sheet1!A285:D285
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Ranajit Kumar Sutradhar.
+Contact email as supplied: ranajit@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-karim-cuet-ac-bd | CUET faculty contact: Dr. Md. Rezaul Karim (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rezaul Karim; karim@cuet.ac.bd
+Locator: Sheet1!A286:D286
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Rezaul Karim.
+Contact email as supplied: karim@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rashad-cuet-ac-bd | CUET faculty contact: Dr. A. H. Rashadul Hossain (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: A. H. Rashadul Hossain; rashad@cuet.ac.bd
+Locator: Sheet1!A287:D287
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. A. H. Rashadul Hossain.
+Contact email as supplied: rashad@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rajiasultana-cuet-ac-bd | CUET faculty contact: Dr. Rajia Sultana (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rajia Sultana; rajiasultana@cuet.ac.bd
+Locator: Sheet1!A288:D288
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Rajia Sultana.
+Contact email as supplied: rajiasultana@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ziaulhyder-cuet-ac-bd | CUET faculty contact: Dr. M. K. Mohammad Ziaul Hyder (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: M. K. Mohammad Ziaul Hyder; ziaulhyder@cuet.ac.bd
+Locator: Sheet1!A289:D289
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. M. K. Mohammad Ziaul Hyder.
+Contact email as supplied: ziaulhyder@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rkn-chem-cuet-ac-bd | CUET faculty contact: Dr. Ranjit Kumar Nath (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ranjit Kumar Nath; rkn_chem@cuet.ac.bd
+Locator: Sheet1!A290:D290
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Ranjit Kumar Nath.
+Contact email as supplied: rkn_chem@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-yunusahmed-cuet-ac-bd | CUET faculty contact: Professor Dr. Yunus Ahmed (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Yunus Ahmed; yunusahmed@cuet.ac.bd
+Locator: Sheet1!A291:D291
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Professor Dr. Yunus Ahmed.
+Contact email as supplied: yunusahmed@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-arupkumer-cuet-ac-bd | CUET faculty contact: Dr. Arup Kumer Roy (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Arup Kumer Roy; arupkumer@cuet.ac.bd
+Locator: Sheet1!A292:D292
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Arup Kumer Roy.
+Contact email as supplied: arupkumer@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rabichem16-cuet-ac-bd | CUET faculty contact: Dr. Saswata Rabi (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Saswata Rabi; rabichem16@cuet.ac.bd
+Locator: Sheet1!A293:D293
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Saswata Rabi.
+Contact email as supplied: rabichem16@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-dinislam-chem-cuet-ac-bd | CUET faculty contact: Md. Din Islam (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Din Islam; dinislam_chem@cuet.ac.bd
+Locator: Sheet1!A294:D294
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Din Islam.
+Contact email as supplied: dinislam_chem@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ratulchem88-cuet-ac-bd | CUET faculty contact: Ratul Kumar Shil (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ratul Kumar Shil; ratulchem88@cuet.ac.bd
+Locator: Sheet1!A295:D295
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ratul Kumar Shil.
+Contact email as supplied: ratulchem88@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sanjida-mukut-cuet-ac-bd | CUET faculty contact: Sanjida mukut (Chemistry)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sanjida mukut; sanjida_mukut@cuet.ac.bd
+Locator: Sheet1!A296:D296
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sanjida mukut.
+Contact email as supplied: sanjida_mukut@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Chemistry (Chemistry): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ashrafphy31-cuet-ac-bd | CUET faculty contact: Dr. Md. Ashraf Ali (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ashraf Ali; ashrafphy31@cuet.ac.bd; Physics head
+Locator: Sheet1!A297:D297
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Ashraf Ali.
+Contact email as supplied: ashrafphy31@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-hasnat-maruf10-cuet-ac-bd | CUET faculty contact: Dr. H. M. A. R. Maruf (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: H. M. A. R. Maruf; hasnat_maruf10@cuet.ac.bd
+Locator: Sheet1!A298:D298
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. H. M. A. R. Maruf.
+Contact email as supplied: hasnat_maruf10@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mohi-cuet-ac-bd | CUET faculty contact: Dr. Md. Mohi Uddin (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohi Uddin; mohi@cuet.ac.bd
+Locator: Sheet1!A299:D299
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Mohi Uddin.
+Contact email as supplied: mohi@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mbhossen-cuet-ac-bd | CUET faculty contact: Dr. Mohammad Belal Hossen (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Belal Hossen; mbhossen@cuet.ac.bd
+Locator: Sheet1!A300:D300
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammad Belal Hossen.
+Contact email as supplied: mbhossen@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-skroy-cuet-ac-bd | CUET faculty contact: Dr. Swapan Kumar Roy (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Swapan Kumar Roy; skroy@cuet.ac.bd
+Locator: Sheet1!A301:D301
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Swapan Kumar Roy.
+Contact email as supplied: skroy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-akc-physics-cuet-ac-bd | CUET faculty contact: Dr. Animesh Kumer Chakraborty (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Animesh Kumer Chakraborty; akc_physics@cuet.ac.bd
+Locator: Sheet1!A302:D302
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Animesh Kumer Chakraborty.
+Contact email as supplied: akc_physics@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nusrat83-cuet-ac-bd | CUET faculty contact: Nusrat Jahan (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nusrat Jahan; nusrat83@cuet.ac.bd
+Locator: Sheet1!A303:D303
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nusrat Jahan.
+Contact email as supplied: nusrat83@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mukter-phy-cuet-ac-bd | CUET faculty contact: Dr. Md. Mukter Hossain (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mukter Hossain; mukter_phy@cuet.ac.bd
+Locator: Sheet1!A304:D304
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Mukter Hossain.
+Contact email as supplied: mukter_phy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shaifulkabir-cuet-ac-bd | CUET faculty contact: Dr. Shaiful Kabir (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shaiful Kabir; shaifulkabir@cuet.ac.bd
+Locator: Sheet1!A305:D305
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Shaiful Kabir.
+Contact email as supplied: shaifulkabir@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-arjumancuetphy-cuet-ac-bd | CUET faculty contact: Mosammat Arjumanara Bagum (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mosammat Arjumanara Bagum; arjumancuetphy@cuet.ac.bd
+Locator: Sheet1!A306:D306
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mosammat Arjumanara Bagum.
+Contact email as supplied: arjumancuetphy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-majalil-cuet-ac-bd | CUET faculty contact: Md. Abdul Jalil (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abdul Jalil; majalil@cuet.ac.bd
+Locator: Sheet1!A307:D307
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Abdul Jalil.
+Contact email as supplied: majalil@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mzahidhasan-cuet-ac-bd | CUET faculty contact: Md. Zahid Hasan (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Zahid Hasan; mzahidhasan@cuet.ac.bd
+Locator: Sheet1!A308:D308
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Zahid Hasan.
+Contact email as supplied: mzahidhasan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sinthiabintekholil-cuet-ac-bd | CUET faculty contact: Sinthia Binte Kholil (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sinthia Binte Kholil; sinthiabintekholil@cuet.ac.bd
+Locator: Sheet1!A309:D309
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sinthia Binte Kholil.
+Contact email as supplied: sinthiabintekholil@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nobinphy-cuet-ac-bd | CUET faculty contact: Md. Nadim Mahamud Nobin (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nadim Mahamud Nobin; nobinphy@cuet.ac.bd
+Locator: Sheet1!A310:D310
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Nadim Mahamud Nobin.
+Contact email as supplied: nobinphy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nafisaphy-cuet-ac-bd | CUET faculty contact: Nafisa Tabassum (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nafisa Tabassum; nafisaphy@cuet.ac.bd
+Locator: Sheet1!A311:D311
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nafisa Tabassum.
+Contact email as supplied: nafisaphy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-md-abdul-aziz-phy-cuet-ac-bd | CUET faculty contact: Md. Abdul Aziz (Physics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abdul Aziz; md.abdul.aziz.phy@cuet.ac.bd
+Locator: Sheet1!A312:D312
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Abdul Aziz.
+Contact email as supplied: md.abdul.aziz.phy@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Physics (Physics): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-shah-cuet-ac-bd | CUET faculty contact: Dr. Mohammad Shah Alam (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Shah Alam; shah@cuet.ac.bd; Mathematics head
+Locator: Sheet1!A313:D313
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammad Shah Alam.
+Contact email as supplied: shah@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-asaha61-cuet-ac-bd | CUET faculty contact: Dr. Ashutose Saha (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ashutose Saha; asaha61@cuet.ac.bd
+Locator: Sheet1!A314:D314
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Ashutose Saha.
+Contact email as supplied: asaha61@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sdhar-cuet-ac-bd | CUET faculty contact: Dr. Sunil Dhar (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sunil Dhar; sdhar@cuet.ac.bd
+Locator: Sheet1!A315:D315
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Sunil Dhar.
+Contact email as supplied: sdhar@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-yeakub-cuet-ac-bd | CUET faculty contact: Dr. Md. Yeakub Ali (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Yeakub Ali; yeakub@cuet.ac.bd
+Locator: Sheet1!A316:D316
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Yeakub Ali.
+Contact email as supplied: yeakub@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-kauser-cuet-ac-bd | CUET faculty contact: Dr. Mohammad Abu Kauser (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Abu Kauser; kauser@cuet.ac.bd
+Locator: Sheet1!A317:D317
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammad Abu Kauser.
+Contact email as supplied: kauser@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ukdebmath-cuet-ac-bd | CUET faculty contact: Dr. Ujjwal Kumar Deb (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ujjwal Kumar Deb; ukdebmath@cuet.ac.bd
+Locator: Sheet1!A318:D318
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Ujjwal Kumar Deb.
+Contact email as supplied: ukdebmath@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-tahmina13-cuet-ac-bd | CUET faculty contact: Dr. Musammet Tahmina Akter (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Musammet Tahmina Akter; tahmina13@cuet.ac.bd
+Locator: Sheet1!A319:D319
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Musammet Tahmina Akter.
+Contact email as supplied: tahmina13@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-delowar-cuet-ac-bd | CUET faculty contact: Dr. Md. Delowar Hossain (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Delowar Hossain; delowar@cuet.ac.bd
+Locator: Sheet1!A320:D320
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Delowar Hossain.
+Contact email as supplied: delowar@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-hafez-cuet-ac-bd | CUET faculty contact: Dr. Md. Golam Hafez (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Golam Hafez; hafez@cuet.ac.bd
+Locator: Sheet1!A321:D321
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Golam Hafez.
+Contact email as supplied: hafez@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mahethe75-cuet-ac-bd | CUET faculty contact: Dr. Mohammad Ali (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Ali; mahethe75@cuet.ac.bd
+Locator: Sheet1!A322:D322
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammad Ali.
+Contact email as supplied: mahethe75@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nahar-cuet-ac-bd | CUET faculty contact: Nurun Nahar (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nurun Nahar; nahar@cuet.ac.bd
+Locator: Sheet1!A323:D323
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nurun Nahar.
+Contact email as supplied: nahar@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mkchowdury-cuet-ac-bd | CUET faculty contact: Md. Kamrul Hasan Chowdury (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kamrul Hasan Chowdury; mkchowdury@cuet.ac.bd
+Locator: Sheet1!A324:D324
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Kamrul Hasan Chowdury.
+Contact email as supplied: mkchowdury@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sushmita-cuet-ac-bd | CUET faculty contact: Sushmita Banerjee (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sushmita Banerjee; sushmita@cuet.ac.bd
+Locator: Sheet1!A325:D325
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Sushmita Banerjee.
+Contact email as supplied: sushmita@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-umma-imon-cuet-ac-bd | CUET faculty contact: Umma Imon (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Umma Imon; umma.imon@cuet.ac.bd
+Locator: Sheet1!A326:D326
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Umma Imon.
+Contact email as supplied: umma.imon@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ummehani-cuet-ac-bd | CUET faculty contact: Umme Hani (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Umme Hani; ummehani@cuet.ac.bd
+Locator: Sheet1!A327:D327
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Umme Hani.
+Contact email as supplied: ummehani@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-selimmath-cuet-ac-bd | CUET faculty contact: Selim Hussen (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Selim Hussen; selimmath@cuet.ac.bd
+Locator: Sheet1!A328:D328
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Selim Hussen.
+Contact email as supplied: selimmath@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-msbpalash-cuet-ac-bd | CUET faculty contact: Muhammad Shahnewaz Bhuyan (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Muhammad Shahnewaz Bhuyan; msbpalash@cuet.ac.bd
+Locator: Sheet1!A329:D329
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Muhammad Shahnewaz Bhuyan.
+Contact email as supplied: msbpalash@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-msmath-cuet-ac-bd | CUET faculty contact: Md. Mamun Sarkar (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mamun Sarkar; msmath@cuet.ac.bd
+Locator: Sheet1!A330:D330
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Mamun Sarkar.
+Contact email as supplied: msmath@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-samen-cuet-ac-bd | CUET faculty contact: Samen Bairagi (Mathematics)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Samen Bairagi; samen@cuet.ac.bd
+Locator: Sheet1!A331:D331
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Samen Bairagi.
+Contact email as supplied: samen@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Mathematics (Mathematics): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-suman-cuet-ac-bd | CUET faculty contact: Dr. Suman Dey (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Suman Dey; suman@cuet.ac.bd; HUM head; Humanities head
+Locator: Sheet1!A332:D332
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Suman Dey.
+Contact email as supplied: suman@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Department Head, Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mdmostafa-kamal-cuet-ac-bd | CUET faculty contact: Dr. Mohammed Mostafa Kamal (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammed Mostafa Kamal; mdmostafa_kamal@cuet.ac.bd
+Locator: Sheet1!A333:D333
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammed Mostafa Kamal.
+Contact email as supplied: mdmostafa_kamal@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mkhassan-cuet-ac-bd | CUET faculty contact: Dr. Mohammad Kamrul Hassan (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Kamrul Hassan; mkhassan@cuet.ac.bd
+Locator: Sheet1!A334:D334
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Mohammad Kamrul Hassan.
+Contact email as supplied: mkhassan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-sadekinmba-cuet-ac-bd | CUET faculty contact: Mohammad Shamsus Sadekin (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Shamsus Sadekin; sadekinmba@cuet.ac.bd
+Locator: Sheet1!A335:D335
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Shamsus Sadekin.
+Contact email as supplied: sadekinmba@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-forhadjamila-cuet-ac-bd | CUET faculty contact: Mrs. Forhad Jamila (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: s. Forhad Jamila; forhadjamila@cuet.ac.bd
+Locator: Sheet1!A336:D336
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mrs. Forhad Jamila.
+Contact email as supplied: forhadjamila@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-hai-cuet-ac-bd | CUET faculty contact: Dr. Md. Abdul Hai (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Abdul Hai; hai@cuet.ac.bd
+Locator: Sheet1!A337:D337
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Md. Abdul Hai.
+Contact email as supplied: hai@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Associate Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-rigan-cuet-ac-bd | CUET faculty contact: Rigan Mazumder (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Rigan Mazumder; rigan@cuet.ac.bd
+Locator: Sheet1!A338:D338
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Rigan Mazumder.
+Contact email as supplied: rigan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nazma-afroz-cuet-ac-bd | CUET faculty contact: Nazma Afroz (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nazma Afroz; nazma.afroz@cuet.ac.bd
+Locator: Sheet1!A339:D339
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nazma Afroz.
+Contact email as supplied: nazma.afroz@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nesa-cuet-ac-bd | CUET faculty contact: Nurun Nesa (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nurun Nesa; nesa@cuet.ac.bd
+Locator: Sheet1!A340:D340
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nurun Nesa.
+Contact email as supplied: nesa@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-enamsoc-cuet-ac-bd | CUET faculty contact: A.B.M Enamol Hassan (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: A.B.M Enamol Hassan; enamsoc@cuet.ac.bd
+Locator: Sheet1!A341:D341
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: A.B.M Enamol Hassan.
+Contact email as supplied: enamsoc@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-apu-nazmulislam-cuet-ac-bd | CUET faculty contact: Nazmul Islam (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nazmul Islam; apu.nazmulislam@cuet.ac.bd
+Locator: Sheet1!A342:D342
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nazmul Islam.
+Contact email as supplied: apu.nazmulislam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-s-mukta91-cuet-ac-bd | CUET faculty contact: Shamima Nasrin Mukta (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Shamima Nasrin Mukta; s.mukta91@cuet.ac.bd
+Locator: Sheet1!A343:D343
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Shamima Nasrin Mukta.
+Contact email as supplied: s.mukta91@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-chaityengdu-cuet-ac-bd | CUET faculty contact: Nahida Sultana (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nahida Sultana; chaityengdu@cuet.ac.bd
+Locator: Sheet1!A344:D344
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nahida Sultana.
+Contact email as supplied: chaityengdu@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mahmuda-econ-cuet-ac-bd | CUET faculty contact: Mahmuda Akhter Khanam (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mahmuda Akhter Khanam; mahmuda.econ@cuet.ac.bd
+Locator: Sheet1!A345:D345
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mahmuda Akhter Khanam.
+Contact email as supplied: mahmuda.econ@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mashiuralif-cuet-ac-bd | CUET faculty contact: S M Mashiur Rahman (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: S M Mashiur Rahman; mashiuralif@cuet.ac.bd
+Locator: Sheet1!A346:D346
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: S M Mashiur Rahman.
+Contact email as supplied: mashiuralif@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mowsumi22-cuet-ac-bd | CUET faculty contact: Mowsumi Rani Dey (HUM)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mowsumi Rani Dey; mowsumi22@cuet.ac.bd
+Locator: Sheet1!A347:D347
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mowsumi Rani Dey.
+Contact email as supplied: mowsumi22@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Humanities (HUM): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-s-majumder-cuet-ac-bd | CUET faculty contact: Dr. Sumit Majumder (BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Sumit Majumder; s.majumder@cuet.ac.bd
+Locator: Sheet1!A349:D349
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Dr. Sumit Majumder.
+Contact email as supplied: s.majumder@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Biomedical Engineering (BME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-fazlul-cuet-ac-bd | CUET faculty contact: Md. Fazlul Karim Khondakar (BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Fazlul Karim Khondakar; fazlul@cuet.ac.bd
+Locator: Sheet1!A350:D350
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Fazlul Karim Khondakar.
+Contact email as supplied: fazlul@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Biomedical Engineering (BME): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-joynulabedin-cuet-ac-bd | CUET faculty contact: Md. Joynul Abedin (BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Joynul Abedin; joynulabedin@cuet.ac.bd
+Locator: Sheet1!A351:D351
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Joynul Abedin.
+Contact email as supplied: joynulabedin@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Biomedical Engineering (BME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-hasib-bme-cuet-ac-bd | CUET faculty contact: Hasib Sarowar (BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Hasib Sarowar; hasib.bme@cuet.ac.bd
+Locator: Sheet1!A352:D352
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Hasib Sarowar.
+Contact email as supplied: hasib.bme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Biomedical Engineering (BME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-reana-bme-cuet-ac-bd | CUET faculty contact: Reana Raen (BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Reana Raen; reana.bme@cuet.ac.bd
+Locator: Sheet1!A353:D353
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Reana Raen.
+Contact email as supplied: reana.bme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Biomedical Engineering (BME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-ayesha-bme-cuet-ac-bd | CUET faculty contact: Ayesha Binth Humayun (BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Ayesha Binth Humayun; ayesha.bme@cuet.ac.bd
+Locator: Sheet1!A354:D354
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Ayesha Binth Humayun.
+Contact email as supplied: ayesha.bme@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Biomedical Engineering (BME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-nusrat-cuet-ac-bd | CUET faculty contact: Nusrat Jahan Usha (BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Nusrat Jahan Usha; nusrat@cuet.ac.bd
+Locator: Sheet1!A355:D355
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Nusrat Jahan Usha.
+Contact email as supplied: nusrat@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Biomedical Engineering (BME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mzhasan-cuet-ac-bd | CUET faculty contact: Md. Zahid Hasan (BME)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Zahid Hasan; mzhasan@cuet.ac.bd
+Locator: Sheet1!A356:D356
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Zahid Hasan.
+Contact email as supplied: mzhasan@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Biomedical Engineering (BME): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mdmasum-cuet-ac-bd | CUET faculty contact: Md. Masum Rana Pramanik (NE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Masum Rana Pramanik; mdmasum@cuet.ac.bd
+Locator: Sheet1!A358:D358
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Md. Masum Rana Pramanik.
+Contact email as supplied: mdmasum@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Nuclear Engineering (NE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-msalam-cuet-ac-bd | CUET faculty contact: Mohammad Shafiqul Alam (NE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Mohammad Shafiqul Alam; msalam@cuet.ac.bd
+Locator: Sheet1!A359:D359
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Mohammad Shafiqul Alam.
+Contact email as supplied: msalam@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Nuclear Engineering (NE): Assistant Professor.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-kazi-ononna-cuet-ac-bd | CUET faculty contact: Kazi Kamrun Naher Ononna (NE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Kazi Kamrun Naher Ononna; kazi.ononna@cuet.ac.bd
+Locator: Sheet1!A360:D360
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Kazi Kamrun Naher Ononna.
+Contact email as supplied: kazi.ononna@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Nuclear Engineering (NE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.
+
+## faculty-mntasnim-cuet-ac-bd | CUET faculty contact: Moshammed Nishat Tasnim (NE)
+Reviewed: 2026-11-02
+Review after: 2026-12-02
+Kind: faculty-person
+Aliases: Moshammed Nishat Tasnim; mntasnim@cuet.ac.bd
+Locator: Sheet1!A361:D361
+Sources:
+- attachment://faculty-workbook
+
+Facts:
+Faculty name as supplied: Moshammed Nishat Tasnim.
+Contact email as supplied: mntasnim@cuet.ac.bd.
+Departmental appointment in the supplied workbook:
+- Nuclear Engineering (NE): Lecturer.
+The file is an undated supplied snapshot imported 2026-11-02. Employment, rank and headship have not been independently verified as current. No phone number, office room, biography or research specialty is supplied.

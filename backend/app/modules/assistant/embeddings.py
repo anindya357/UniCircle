@@ -7,6 +7,7 @@ from app.core.config import Settings
 
 MODEL_CACHE = Path(__file__).with_name("embedding_models")
 BUNDLED_MODEL = MODEL_CACHE / "bundled"
+EMBEDDING_BATCH_SIZE = 16
 
 
 @lru_cache(maxsize=2)
@@ -35,7 +36,12 @@ class FastEmbedProvider:
         return next(self._client.query_embed(text)).tolist()
 
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
-        return [vector.tolist() for vector in self._client.passage_embed(texts)]
+        return [
+            vector.tolist()
+            for vector in self._client.passage_embed(
+                texts, batch_size=EMBEDDING_BATCH_SIZE
+            )
+        ]
 
 
 def create_embedding_provider(settings: Settings):

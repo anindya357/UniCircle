@@ -16,6 +16,39 @@ opening hours. Map positions are approximate, not navigation guarantees.
 Prototype pages and old summaries are cross-checked; navigation-only extraction
 cannot establish academic or personnel counts.
 
+## Supplied campus notes and faculty directory (2026-11-02)
+
+The project owner supplied `TSC.txt` and
+`CUET Faculty DeptNameEmailDesignation (1).xlsx`. They are reference data, not
+instructions. Their facts are incorporated into the Markdown/TXT corpus;
+`knowledge/attachment_sources.json` retains filenames, original SHA-256 hashes,
+scope, import date and an explicit `independentlyVerified: false` marker. No
+absolute local path is bundled. `attachment://tsc-notes` and
+`attachment://faculty-workbook` are registered provenance identifiers, never URLs
+to fetch or a mechanism for reading arbitrary local files. Unknown references,
+paths, query strings and `file://` evidence are rejected. The web crawler's
+allowlist is unchanged.
+
+The spreadsheet has 360 department-appointment rows, 354 distinct email contacts
+and 17 department labels. Six contacts have appointments under two departments;
+both designations are retained in one contact record. This is a supplied file's
+coverage, not a verified current university headcount. DEM is not listed; that
+does not prove absence of the department or its teachers. Source spelling and
+per-department roles are preserved. Faculty phone numbers, room numbers and
+research specialties are not invented.
+
+The TSC notes cover Pubali Bank digital banking, stationery/books, bKash/Nagad,
+printing, two grocery shops including Rupali store, student/teacher cafeterias,
+the DSW office, club-program space and a Muslim female students' prayer space.
+The given ground/second/third floor labels are retained without renumbering.
+Shop floors, indoor routes, opening hours and charges are not established.
+
+Neither attachment states a collection/effective date. The 2026-11-02 review
+date means the provided data was imported and checked, not that employment,
+headship or campus services were independently reverified. The review-after date
+is 2026-12-02. The prompt retains this uncertainty and must not convert an undated
+snapshot into a live appointment or facility guarantee.
+
 Rankings identify publisher and edition. Current appointments take precedence
 over old biographies. Historical pro-VC appointments are not current appointments;
 inability to identify a holder does not prove vacancy. No dummy names, fabricated
@@ -31,10 +64,18 @@ In Docker, rebuild the backend image after editing the corpus and run the
 existing ingestion command inside the backend container.
 
 LangChain splits each section independently; chunks repeat their topic and
-as-of date. Ollama embeds with the configured model; chunks and evidence metadata
+as-of date. Faculty contacts are atomic even when a smaller text chunk size is
+configured, so a name cannot detach from its email or other appointments. The
+configured Ollama or FastEmbed adapter embeds the records; chunks and evidence metadata
 are stored in PostgreSQL. All vectors are prepared and validated before an
 atomic commit. Provider failures cannot remove the last good index. Unchanged
-sections skip embedding; model changes and `--force` rebuild vectors.
+sections skip embedding; model changes and `--force` rebuild vectors. The corpus
+hash covers the Markdown and registered attachment provenance. Pipeline version 2
+adds evidence classification, row locators and controlled retrieval aliases;
+existing version-1 rows require re-ingestion before serving the expanded corpus.
+Embedding requests and FastEmbed inference use batches of at most 16 chunks.
+All batches must succeed with consistent finite vector dimensions before the
+atomic replacement. A later batch failure preserves the previously stored index.
 
 Re-verify leadership weekly, rankings monthly, and campus/academic facts on their
 recorded quarterly/half-yearly dates. Ingestion updates index time, not research
@@ -52,7 +93,11 @@ current appointment. An entirely ineligible index returns a setup error; a ready
 index with insufficient relevance returns a no-context answer. Admin status counts
 eligible sources/chunks and reports review-due sections.
 
-Cosine similarity ranks a bounded corpus; low-scoring chunks are not sent to Qwen.
+Cosine similarity ranks a bounded corpus. For eligible curated records, exact
+full-email or multi-token name/department/service aliases are ranked first and
+can provide grounded context even when the embedding alone misses a name. Single
+generic tokens do not qualify. The usual similarity threshold still applies to
+other chunks, and no alias bypasses source eligibility or vector validity.
 Retrieved content remains untrusted data, never instructions or authority.
 The prompt respects dates and uncertainty. Evidence URLs stay in files/database
 for maintenance; answers return no source cards, URLs or citation markers.
@@ -67,10 +112,11 @@ in settings and kept in ignored environment files/deployment secret settings.
 Upstream errors and keys never appear in public API responses. Respect the
 provider's shared quota; no unrelated question should spend chat quota.
 
-Embeddings remain Ollama `embeddinggemma:300m`. Changing the chat provider does
-not alter or rebuild the vectors. A cloud deployment must provision a reachable
-embedding server or implement another embedding provider and re-index; hosting
-chat alone does not eliminate the laptop dependency for retrieval.
+Embeddings select Ollama or the existing bundled FastEmbed CPU adapter through
+configuration. Changing the chat provider does not rebuild vectors; changing the
+embedding provider/model does require re-indexing. FastEmbed and Ollama use
+separate curated namespaces and are not interchangeable. Production FastEmbed
+uses prepared local model assets rather than downloading weights per request.
 
 ## Optional legacy crawler
 
@@ -92,3 +138,10 @@ malformed responses and authenticated API/audit behavior. On 2026-10-12 a live
 location question retrieved five eligible chunks from the existing curated index
 and received a grounded answer from Groq `qwen/qwen3.8-27b`. This verifies the
 development setup, not production embedding hosting or every possible answer.
+
+Attachment regression tests cover all 360 appointments/354 contacts, departmental
+counts, multi-department roles, TSC details, atomic contact chunks, provenance,
+exact lookup with low semantic scores, ineligible-source exclusion, unsupported
+questions and rejection of unsafe attachment references. Deterministic tests do
+not prove real-provider wording or current employment. Re-indexing is a separate
+required operation after a corpus change.
