@@ -5,6 +5,7 @@ UniCircle is a smart digital campus platform for Chittagong University of Engine
 ## Current status
 
 The project is being implemented incrementally from the approved project context and feature-wise plan. The current repository foundation separates the Next.js frontend, FastAPI backend, documentation, scripts, and deployment assets so each layer can evolve without mixing responsibilities.
+Visit the current version at the live site: [UniCircle-CUET](https://unicircle-cuet.vercel.app)
 
 ## Planned technology stack
 
