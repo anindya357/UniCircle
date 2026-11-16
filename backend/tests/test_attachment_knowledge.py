@@ -261,7 +261,7 @@ def test_registered_attachment_loading_never_fetches_the_reference(monkeypatch):
         pytest.fail("Bundled evidence references must never be fetched")
 
     monkeypatch.setattr("requests.get", no_network)
-    assert len(load_knowledge().sections) == 390
+    assert len(load_knowledge().sections) == 419
     assert KNOWLEDGE_FILE.with_suffix(".txt").read_text(encoding="utf-8") == plain_text(
         KNOWLEDGE_FILE.read_text(encoding="utf-8")
     )

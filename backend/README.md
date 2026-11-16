@@ -343,9 +343,10 @@ To build the knowledge index, run from `backend/`:
 
 The default corpus is `app/modules/assistant/knowledge/CUET_Knowledge_Base.md`,
 with a matching `.txt` companion and `knowledge/attachment_sources.json` for
-attachment provenance. The corpus now has 390 sections: the original 16 campus
+attachment provenance. The corpus now has 419 sections: the original 16 campus
 topics, two additional TSC service/floor sections, a faculty-workbook scope note,
-17 department rosters, and 354 faculty-contact records. These preserve all 360
+17 department rosters, 354 faculty-contact records, and 29 transport sections.
+The faculty records preserve all 360
 department appointments from the supplied workbook, including six contacts with
 roles in two departments. Coverage is 17 department labels, not a verified total
 of all currently employed CUET teachers. DEM is absent from the supplied list.
@@ -361,8 +362,10 @@ There are no website requests during local ingestion or question answering.
 Edit the Markdown, run `python -m app.modules.assistant.ingest --export-txt`
 using your activated project environment, check both files, then run ingestion.
 Re-indexing is atomic; model failure leaves the previous index intact. Unchanged
-sections skip embedding; model changes or `--force` rebuild vectors. Docker
-images include the Markdown, TXT and provenance registry, so rebuild the backend
+sections skip embedding and retain their prior corpus identity. A section
+fingerprint lets the next release use unchanged, unexpired evidence while
+changed facts require a fresh index. Model changes or `--force` rebuild vectors.
+Docker images include the Markdown, TXT and provenance registry, so rebuild the backend
 after editing the corpus. Pipeline version 2 requires a fresh index; run ingestion
 for each embedding provider used by the deployment. Do not copy Ollama vectors
 into the FastEmbed namespace.
@@ -373,6 +376,19 @@ questions. Specific name, full-email, department/role and TSC service aliases
 complement semantic ranking; generic single words do not bypass the relevance
 gate. Alias matches still require an eligible corpus, review window, pipeline
 version and embedding model, and invalid vectors are rejected.
+
+Transport knowledge includes four daily service windows in Bangladesh time,
+the regular and Chawkbazar routes, the Rastar Matha return loop, all 20 fleet
+names, and 25 English driver/contact records from PDF rows 7-31. The routine and
+driver roster were checked against the app's active transport records on
+2026-11-16. The evening departure from CUET is 4:15-5:45 PM; the night return
+from Bottoli is 8:30-10:00 PM. Driver contacts stay in atomic chunks. Bus counts
+and window assignments are recorded separately. The supplied PDF and routine
+have bundled provenance; driver-bus mappings retain their app-managed status.
+After changing schedules or assignments in the admin panel, review these
+sections, refresh the TXT mirror, and run ingestion for each deployed embedding
+provider. Review dates describe the knowledge check, rather than the source's
+effective date.
 Embedding requests are capped at 16 chunks, including the local FastEmbed batch,
 to bound memory for the larger faculty corpus. Vectors are validated across all
 batches before any index replacement; CLI logs report progress, not content.

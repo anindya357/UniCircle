@@ -2,6 +2,7 @@
 
 Public-source research snapshot: 2026-10-08 (Asia/Dhaka).
 User-supplied TSC notes and faculty workbook imported: 2026-11-02 (Asia/Dhaka).
+User-supplied transport routine and driver roster checked against UniCircle Transport: 2026-11-16 (Asia/Dhaka).
 This is a maintained knowledge summary, not a live scrape or an official announcement.
 Markdown is authoritative; the TXT companion is its plain-text mirror.
 Source links are maintenance evidence, not material to display in chat answers.
@@ -289,8 +290,7 @@ campus services. Students participate in sports, cultural and technical
 activities; recent reporting documents events at the central playground.
 IEEE CUET Student Branch is a documented campus student organization with
 activities at TSC. Specific clubs' membership, fees, recruitment dates, event
-registrations and bus assignments change and are not a live part of this
-knowledge base. Use the corresponding UniCircle feature or responsible office
+registrations change and are not a live part of this knowledge base. Use the corresponding UniCircle feature or responsible office
 for current application data instead of inventing it.
 
 ## limits | What this CUET knowledge base does not verify
@@ -303,11 +303,498 @@ Facts:
 This knowledge base does not establish a current individual faculty-member
 headcount, a current pro-VC appointment, a live list of every officeholder,
 current admission cutoffs, tuition totals, exam dates, room availability,
-cafeteria opening hours, or live transport timetables. It does not verify indoor
+cafeteria opening hours, or minute-by-minute transport changes. Transport
+sections contain the supplied routine and app assignments reviewed on 2026-11-16;
+date-specific changes are available in UniCircle Transport. It does not verify indoor
 room numbers or exact navigation routes. Absence of information is not proof
 that a service or position does not exist. Answers should explicitly say when
 the reviewed knowledge lacks enough information. No scraping, online search
 or private university-portal access occurs while answering a question.
+
+## transport-schedules | CUET bus timetable, evening departure and night return
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: campus-service
+Aliases: CUET bus schedule; CUET bus timing; CUET bus timetable; evening bus; afternoon bus; morning bus; night bus; midday bus; bus routine; bus departure; bus return; bus station; Bottoli CUET bus
+Locator: Owner-supplied routine and UniCircle Transport, checked 2026-11-16
+Sources:
+- attachment://transport-routine
+
+Facts:
+The regular CUET timetable configured in UniCircle has four daily service windows. All times use Bangladesh Standard Time (Asia/Dhaka, UTC+6).
+1. Morning arrival: 7:00 AM to 8:20 AM (07:00-08:20), Bottoli Rail Station to CUET, 11 buses.
+2. Midday return loop: 1:30 PM to 3:00 PM (13:30-15:00), CUET to Rastar Matha and back to CUET, 4 buses.
+3. Afternoon/evening departure: 4:15 PM to 5:45 PM (16:15-17:45), CUET to Bottoli Rail Station, 11 buses.
+4. Night return: 8:30 PM to 10:00 PM (20:30-22:00), Bottoli Rail Station to CUET, 11 buses.
+The evening bus from CUET to Bottoli starts at 4:15 PM and its service window ends at 5:45 PM. The 8:30 PM service travels from Bottoli back to CUET.
+These are whole-route service windows. Individual stop arrival times are unspecified. The 11/4/11/11 counts are assignments per window; the fleet contains 20 buses. Check the Transport page for date-specific changes.
+
+## transport-routes | CUET regular route, Chawkbazar route and Rastar Matha loop
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: campus-service
+Aliases: CUET bus route; regular bus route; Chawkbazar route; Chakbazar route; Chawk Bazar route; GEC Muradpur; Kotowali bus; Rastar Matha loop
+Locator: Owner-supplied routine and UniCircle Transport, checked 2026-11-16
+Sources:
+- attachment://transport-routine
+
+Facts:
+The regular route runs Bottoli Rail Station -> GEC -> Muradpur -> Bahaddarhat -> Rastar Matha -> CUET. The outbound trip from CUET follows the reverse order.
+The Chawkbazar route runs Bottoli Rail Station -> Kotowali -> Chawkbazar -> Bahaddarhat -> Rastar Matha -> CUET. The outbound trip from CUET follows the reverse order. The owner also writes this area as Chakbazar.
+Each 11-bus morning, afternoon/evening and night window has 9 regular-route buses and 2 Chawkbazar-route buses in the configured routine.
+The 1:30 PM-3:00 PM midday service uses 4 buses on the CUET -> Rastar Matha -> CUET return loop.
+Both city routes connect CUET in Raozan with Bottoli Rail Station in Chattogram. Per-stop arrival times and unlisted stops have not been supplied.
+
+## transport-fleet | CUET total buses and complete fleet names
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: campus-service
+Aliases: CUET buses; CUET bus count; total buses; bus fleet; bus names; how many buses; number of buses
+Locator: Owner-supplied routine and UniCircle Transport, checked 2026-11-16
+Sources:
+- attachment://transport-routine
+
+Facts:
+The UniCircle Transport fleet has 20 active named buses: Tista, Gomoti, Podma, Surma, Jamuna, Sangu, Ichamoti, Buriganga, Halda, Meghna, BRTC-1, BRTC-2, BRTC-3, BRTC-4, Kortoa, Chitra, Brahmaputra, Kopotakkho, Dhanshiri, Dhaleshwari.
+Fleet total is 20. Each morning, afternoon/evening and night service window uses 11 buses; the midday loop uses 4. Counts from different windows must not be added to infer the number of distinct vehicles. The driver's roster contains 25 contacts. App-assigned registration labels and driver-bus mappings are maintained by the main app admin. Physical fleet status, holiday changes and reassignment should be checked on the Transport page.
+
+## transport-drivers | CUET driver count, names, phone numbers and bus assignments
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: campus-service
+Aliases: CUET driver contacts; CUET drivers list; all bus drivers; driver contact list; transport driver count; how many drivers; drivers phone numbers
+Locator: 6829717dae095.pdf, rows 7-31; UniCircle Transport, checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+The supplied driver roster used by UniCircle contains 25 driver contacts, taken from PDF rows 7-31. The first six people are excluded. There are 14 heavy-vehicle and 11 light-vehicle drivers in this roster. There are 20 buses, so the driver count is separate from the fleet count.
+- Md. Khorshed Alam: 01672735883; assigned bus Gomoti.
+- Md. Barkat Ullah: 01713109928; assigned bus Sangu.
+- Md. Abdur Rahim: 01818222017; assigned bus Podma.
+- Prabhat Barua: 01673346402; assigned bus BRTC-4.
+- Ananda Barua: 01835191686; assigned bus Kopotakkho.
+- Ranjan Mitra: 01866182872; assigned bus Kortoa.
+- Md. Hosen: 01814980547; assigned bus Jamuna.
+- Md. Ibrahim Hosen: 01819617529; assigned bus BRTC-3.
+- Mithu Barua: 01812827542; assigned bus Halda.
+- Md. Akbar Hosen: 01869298841; assigned bus Brahmaputra.
+- Ratan De: 01818562267; assigned bus BRTC-1.
+- Md. Zahedul Islam: 01819542054; assigned bus Tista.
+- Md. Helal Uddin: 01970076556; assigned bus Surma.
+- Suman Das: 01818136557; assigned bus Chitra.
+- Md. Mohiuddin: 01823823586; assigned bus Ichamoti.
+- Md. Harun: 01838257030; assigned bus Dhanshiri.
+- Md. Hasan: 01842385555; assigned bus Dhaleshwari.
+- Md. Sahab Uddin: 01819084569; assigned bus Meghna.
+- Md. Jahangir Alam: 01812075496; assigned bus Buriganga.
+- Md. Nazim Uddin: 01815698013; assigned bus BRTC-2.
+- Mohammad Ali: 01831420794; assigned bus Gomoti.
+- Md. Abdul Sobhan: 01818909409; assigned bus Sangu.
+- Md. Moin Uddin (Shanku): 01813164896; assigned bus Podma.
+- Md. Al-Amin: 01814479574; assigned bus BRTC-4.
+- Md. Rashed: 01828909585; assigned bus Kopotakkho.
+Names and telephone digits above use the English transliterations already present in UniCircle Transport. Multiple drivers can be assigned to one bus. Initial assignments were randomized for the app at the owner's request; main app admins can update them. These are reviewed app assignments, with the source document's effective date unspecified.
+
+## transport-driver-7 | CUET driver Md. Khorshed Alam, Gomoti bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Khorshed Alam; Md. Khorshed Alam driver; Gomoti driver; Gomoti bus driver; Khorshed Alam
+Locator: 6829717dae095.pdf, row 7; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Khorshed Alam.
+Driver phone number: 01672735883.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Gomoti. Source PDF row: 7.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-8 | CUET driver Md. Barkat Ullah, Sangu bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Barkat Ullah; Md. Barkat Ullah driver; Sangu driver; Sangu bus driver; Barkat Ullah
+Locator: 6829717dae095.pdf, row 8; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Barkat Ullah.
+Driver phone number: 01713109928.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Sangu. Source PDF row: 8.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-9 | CUET driver Md. Abdur Rahim, Podma bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Abdur Rahim; Md. Abdur Rahim driver; Podma driver; Podma bus driver; Abdur Rahim
+Locator: 6829717dae095.pdf, row 9; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Abdur Rahim.
+Driver phone number: 01818222017.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Podma. Source PDF row: 9.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-10 | CUET driver Prabhat Barua, BRTC-4 bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Prabhat Barua; Prabhat Barua driver; BRTC-4 driver; BRTC-4 bus driver; BRTC4 driver
+Locator: 6829717dae095.pdf, row 10; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Prabhat Barua.
+Driver phone number: 01673346402.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: BRTC-4. Source PDF row: 10.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-11 | CUET driver Ananda Barua, Kopotakkho bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Ananda Barua; Ananda Barua driver; Kopotakkho driver; Kopotakkho bus driver
+Locator: 6829717dae095.pdf, row 11; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Ananda Barua.
+Driver phone number: 01835191686.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Kopotakkho. Source PDF row: 11.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-12 | CUET driver Ranjan Mitra, Kortoa bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Ranjan Mitra; Ranjan Mitra driver; Kortoa driver; Kortoa bus driver
+Locator: 6829717dae095.pdf, row 12; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Ranjan Mitra.
+Driver phone number: 01866182872.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Kortoa. Source PDF row: 12.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-13 | CUET driver Md. Hosen, Jamuna bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Hosen; Md. Hosen driver; Jamuna driver; Jamuna bus driver; Hosen
+Locator: 6829717dae095.pdf, row 13; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Hosen.
+Driver phone number: 01814980547.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Jamuna. Source PDF row: 13.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-14 | CUET driver Md. Ibrahim Hosen, BRTC-3 bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Ibrahim Hosen; Md. Ibrahim Hosen driver; BRTC-3 driver; BRTC-3 bus driver; Ibrahim Hosen; BRTC3 driver
+Locator: 6829717dae095.pdf, row 14; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Ibrahim Hosen.
+Driver phone number: 01819617529.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: BRTC-3. Source PDF row: 14.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-15 | CUET driver Mithu Barua, Halda bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Mithu Barua; Mithu Barua driver; Halda driver; Halda bus driver
+Locator: 6829717dae095.pdf, row 15; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Mithu Barua.
+Driver phone number: 01812827542.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Halda. Source PDF row: 15.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-16 | CUET driver Md. Akbar Hosen, Brahmaputra bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Akbar Hosen; Md. Akbar Hosen driver; Brahmaputra driver; Brahmaputra bus driver; Akbar Hosen
+Locator: 6829717dae095.pdf, row 16; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Akbar Hosen.
+Driver phone number: 01869298841.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Brahmaputra. Source PDF row: 16.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-17 | CUET driver Ratan De, BRTC-1 bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Ratan De; Ratan De driver; BRTC-1 driver; BRTC-1 bus driver; BRTC1 driver
+Locator: 6829717dae095.pdf, row 17; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Ratan De.
+Driver phone number: 01818562267.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: BRTC-1. Source PDF row: 17.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-18 | CUET driver Md. Zahedul Islam, Tista bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Zahedul Islam; Md. Zahedul Islam driver; Tista driver; Tista bus driver; Zahedul Islam
+Locator: 6829717dae095.pdf, row 18; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Zahedul Islam.
+Driver phone number: 01819542054.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Tista. Source PDF row: 18.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-19 | CUET driver Md. Helal Uddin, Surma bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Helal Uddin; Md. Helal Uddin driver; Surma driver; Surma bus driver; Helal Uddin
+Locator: 6829717dae095.pdf, row 19; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Helal Uddin.
+Driver phone number: 01970076556.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Surma. Source PDF row: 19.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-20 | CUET driver Suman Das, Chitra bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Suman Das; Suman Das driver; Chitra driver; Chitra bus driver
+Locator: 6829717dae095.pdf, row 20; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Suman Das.
+Driver phone number: 01818136557.
+Driver class in the supplied roster: heavy-vehicle driver.
+Assigned bus in UniCircle: Chitra. Source PDF row: 20.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-21 | CUET driver Md. Mohiuddin, Ichamoti bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Mohiuddin; Md. Mohiuddin driver; Ichamoti driver; Ichamoti bus driver; Mohiuddin
+Locator: 6829717dae095.pdf, row 21; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Mohiuddin.
+Driver phone number: 01823823586.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Ichamoti. Source PDF row: 21.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-22 | CUET driver Md. Harun, Dhanshiri bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Harun; Md. Harun driver; Dhanshiri driver; Dhanshiri bus driver; Harun
+Locator: 6829717dae095.pdf, row 22; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Harun.
+Driver phone number: 01838257030.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Dhanshiri. Source PDF row: 22.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-23 | CUET driver Md. Hasan, Dhaleshwari bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Hasan; Md. Hasan driver; Dhaleshwari driver; Dhaleshwari bus driver; Hasan
+Locator: 6829717dae095.pdf, row 23; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Hasan.
+Driver phone number: 01842385555.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Dhaleshwari. Source PDF row: 23.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-24 | CUET driver Md. Sahab Uddin, Meghna bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Sahab Uddin; Md. Sahab Uddin driver; Meghna driver; Meghna bus driver; Sahab Uddin
+Locator: 6829717dae095.pdf, row 24; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Sahab Uddin.
+Driver phone number: 01819084569.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Meghna. Source PDF row: 24.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-25 | CUET driver Md. Jahangir Alam, Buriganga bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Jahangir Alam; Md. Jahangir Alam driver; Buriganga driver; Buriganga bus driver; Jahangir Alam
+Locator: 6829717dae095.pdf, row 25; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Jahangir Alam.
+Driver phone number: 01812075496.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Buriganga. Source PDF row: 25.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-26 | CUET driver Md. Nazim Uddin, BRTC-2 bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Nazim Uddin; Md. Nazim Uddin driver; BRTC-2 driver; BRTC-2 bus driver; Nazim Uddin; BRTC2 driver
+Locator: 6829717dae095.pdf, row 26; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Nazim Uddin.
+Driver phone number: 01815698013.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: BRTC-2. Source PDF row: 26.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-27 | CUET driver Mohammad Ali, Gomoti bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Mohammad Ali; Mohammad Ali driver; Gomoti driver; Gomoti bus driver
+Locator: 6829717dae095.pdf, row 27; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Mohammad Ali.
+Driver phone number: 01831420794.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Gomoti. Source PDF row: 27.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-28 | CUET driver Md. Abdul Sobhan, Sangu bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Abdul Sobhan; Md. Abdul Sobhan driver; Sangu driver; Sangu bus driver; Abdul Sobhan
+Locator: 6829717dae095.pdf, row 28; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Abdul Sobhan.
+Driver phone number: 01818909409.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Sangu. Source PDF row: 28.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-29 | CUET driver Md. Moin Uddin (Shanku), Podma bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Moin Uddin (Shanku); Md. Moin Uddin (Shanku) driver; Podma driver; Podma bus driver; Moin Uddin (Shanku)
+Locator: 6829717dae095.pdf, row 29; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Moin Uddin (Shanku).
+Driver phone number: 01813164896.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Podma. Source PDF row: 29.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-30 | CUET driver Md. Al-Amin, BRTC-4 bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Al-Amin; Md. Al-Amin driver; BRTC-4 driver; BRTC-4 bus driver; Al-Amin; BRTC4 driver
+Locator: 6829717dae095.pdf, row 30; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Al-Amin.
+Driver phone number: 01814479574.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: BRTC-4. Source PDF row: 30.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
+
+## transport-driver-31 | CUET driver Md. Rashed, Kopotakkho bus contact
+Reviewed: 2026-11-16
+Review after: 2026-12-16
+Kind: transport-driver
+Aliases: Md. Rashed; Md. Rashed driver; Kopotakkho driver; Kopotakkho bus driver; Rashed
+Locator: 6829717dae095.pdf, row 31; UniCircle Transport assignment checked 2026-11-16
+Sources:
+- attachment://transport-driver-roster
+
+Facts:
+Driver name: Md. Rashed.
+Driver phone number: 01828909585.
+Driver class in the supplied roster: light-vehicle driver.
+Assigned bus in UniCircle: Kopotakkho. Source PDF row: 31.
+Bus assignments are app-admin-managed and were initially randomized at the owner's request. This mapping was checked on 2026-11-16. Confirm later changes on the Transport page.
 
 ## tsc-services | CUET TSC services: Pubali Bank, printing, shops and mobile banking
 Reviewed: 2026-11-02

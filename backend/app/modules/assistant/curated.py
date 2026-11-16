@@ -55,6 +55,25 @@ class KnowledgeSection:
     locator: str | None = None
 
     @property
+    def fingerprint(self) -> str:
+        content = json.dumps(
+            {
+                "key": self.key,
+                "title": self.title,
+                "reviewed": self.reviewed.isoformat(),
+                "reviewAfter": self.review_after.isoformat(),
+                "sources": self.sources,
+                "text": self.text,
+                "kind": self.kind,
+                "aliases": self.aliases,
+                "locator": self.locator,
+            },
+            sort_keys=True,
+            ensure_ascii=True,
+        )
+        return hashlib.sha256(content.encode()).hexdigest()
+
+    @property
     def evidence_type(self) -> str:
         return (
             "user-supplied-snapshot"
@@ -152,6 +171,7 @@ def load_knowledge(path: Path = KNOWLEDGE_FILE) -> KnowledgeSnapshot:
             "faculty-person",
             "faculty-department",
             "faculty-overview",
+            "transport-driver",
         }:
             raise ValueError(f"Invalid section kind for {key}")
         aliases_match = re.search(r"(?m)^Aliases: (.+)$", metadata)
@@ -170,8 +190,8 @@ def load_knowledge(path: Path = KNOWLEDGE_FILE) -> KnowledgeSnapshot:
         locator = locator_match.group(1) if locator_match else None
         if locator is not None and len(locator) > 300:
             raise ValueError(f"Invalid source locator for {key}")
-        if kind == "faculty-person" and len(facts.strip()) > 4000:
-            raise ValueError(f"Faculty contact record is too large for {key}")
+        if kind in {"faculty-person", "transport-driver"} and len(facts.strip()) > 4000:
+            raise ValueError(f"Contact record is too large for {key}")
         sections.append(
             KnowledgeSection(
                 key,
@@ -204,7 +224,7 @@ def source_is_eligible(
         return False
     if settings.rag_knowledge_mode == "web":
         return not source.url.startswith(CURATED_PREFIX)
-    if snapshot is None or metadata.get("corpusHash") != snapshot.digest:
+    if snapshot is None:
         return False
     section = next(
         (
@@ -216,6 +236,10 @@ def source_is_eligible(
     )
     return bool(
         section
+        and (
+            metadata.get("corpusHash") == snapshot.digest
+            or metadata.get("sectionHash") == section.fingerprint
+        )
         and metadata.get("pipelineVersion") == PIPELINE_VERSION
         and section.reviewed <= (today or knowledge_today()) <= section.review_after
     )
@@ -257,10 +281,10 @@ def ingest_curated(
     for section in snapshot.sections:
         source = existing.get(prefix + section.key)
         # Repeated headings preserve topic context even in long split sections.
-        # A faculty record is atomic: never detach a name from its contact or roles.
+        # Contact records keep each name together with its details and roles.
         parts = (
             [section.text]
-            if section.kind == "faculty-person"
+            if section.kind in {"faculty-person", "transport-driver"}
             else splitter.split_text(section.text)
         )
         evidence = (
@@ -330,7 +354,14 @@ def ingest_curated(
             source.source_metadata = {
                 "loader": "CuratedLocalKnowledge",
                 "embeddingModel": settings.assistant_embedding_model,
-                "corpusHash": snapshot.digest,
+                # An unchanged record retains its original corpus identity so
+                # the preceding deployment can keep serving it during release.
+                "corpusHash": (
+                    source.source_metadata.get("corpusHash", snapshot.digest)
+                    if unchanged
+                    else snapshot.digest
+                ),
+                "sectionHash": section.fingerprint,
                 "pipelineVersion": PIPELINE_VERSION,
                 "reviewedAt": section.reviewed.isoformat(),
                 "reviewAfter": section.review_after.isoformat(),

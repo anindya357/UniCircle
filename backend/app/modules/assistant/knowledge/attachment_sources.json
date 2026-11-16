@@ -18,5 +18,21 @@
     "distinctEmailContacts": 354,
     "departmentLabels": 17,
     "scope": "User-supplied CUET Department/Name/Email/Designation snapshot; not independently verified live appointments."
+  },
+  "transport-routine": {
+    "filename": "WhatsApp Image 2026-09-02 at 21.01.57.jpeg",
+    "sha256": "dd92fd614a8ad8c9712fa964edf135efae68dfcca42cca8a49b0d05c263b8770",
+    "importedAt": "2026-11-16",
+    "sourceEffectiveDate": null,
+    "independentlyVerified": false,
+    "scope": "Owner-supplied bus routine and explicit four-window timetable, checked against UniCircle Transport on 2026-11-16. Route and bus assignments are app-managed configuration."
+  },
+  "transport-driver-roster": {
+    "filename": "6829717dae095.pdf",
+    "sha256": "50f6820e4aed06c8b576843a171931b6f5cfb39d9f8c6a120f443721d459b9ca",
+    "importedAt": "2026-11-16",
+    "sourceEffectiveDate": null,
+    "independentlyVerified": false,
+    "scope": "English transliterations and telephone digits from driver rows 7-31 used by UniCircle Transport. Rows 1-6 are excluded. Bus assignments were initially randomized at the owner's request and are managed in the app."
   }
 }

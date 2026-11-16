@@ -354,9 +354,14 @@ def test_ineligible_index_is_a_setup_error_not_an_unanswered_question(
             "app.modules.assistant.curated.knowledge_today", lambda: date(2028, 1, 1)
         )
     else:
-        key = "corpusHash" if problem == "snapshot" else "embeddingModel"
+        key = "sectionHash" if problem == "snapshot" else "embeddingModel"
         for source in db.scalars(select(RagSource)):
             source.source_metadata = {**source.source_metadata, key: "out-of-date"}
+            if problem == "snapshot":
+                source.source_metadata = {
+                    **source.source_metadata,
+                    "corpusHash": "out-of-date",
+                }
         db.commit()
     with pytest.raises(AppError) as caught:
         RagAssistantService(db, settings).ask(str(user.id), "Where is CUET?")
@@ -432,7 +437,7 @@ def curated_settings(settings):
 
 def test_curated_documents_are_synced_and_cover_requested_topics():
     snapshot = load_knowledge()
-    assert len(snapshot.sections) == 390
+    assert len(snapshot.sections) == 419
     topics = {section.key: section.text for section in snapshot.sections}
     assert "18 academic departments" in topics["academic-counts"]
     assert "five academic faculties" in topics["academic-counts"]
@@ -566,7 +571,11 @@ def test_eligibility_excludes_expired_changed_and_mismatched_model_sections(
     snapshot = load_knowledge()
     assert not source_is_eligible(source, settings, snapshot, today=date(2026, 10, 16))
     assert not source_is_eligible(source, settings, snapshot, today=date(2026, 10, 7))
-    source.source_metadata = {**source.source_metadata, "corpusHash": "old"}
+    source.source_metadata = {
+        **source.source_metadata,
+        "corpusHash": "old",
+        "sectionHash": "old",
+    }
     assert not source_is_eligible(source, settings, snapshot, today=date(2026, 10, 8))
     source.source_metadata = {
         **source.source_metadata,

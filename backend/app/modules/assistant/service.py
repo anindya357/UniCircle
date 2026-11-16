@@ -83,6 +83,11 @@ def matches_retrieval_alias(question: str, aliases: list[str]) -> bool:
         "namaz": "prayer",
         "female": "women",
         "females": "women",
+        "buses": "bus",
+        "busses": "bus",
+        "drivers": "driver",
+        "drives": "driver",
+        "schedules": "schedule",
     }
     stopwords = {"a", "an", "and", "the", "of", "in", "at", "for", "to", "is", "are"}
 
