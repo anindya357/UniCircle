@@ -52,7 +52,7 @@ export async function runChecks(sha, fetcher = fetch) {
   const data = await health.json();
   if (data.status !== "ok" || data.revision !== sha)
     throw new Error("Production is not serving the expected commit");
-  for (const path of ["/", "/login", "/register", "/admin/login"]) {
+  for (const path of ["/", "/login", "/register", "/admin/login", "/directory", "/campus-explorer"]) {
     const response = await get(path, fetcher);
     if (
       response.status !== 200 ||
@@ -65,7 +65,6 @@ export async function runChecks(sha, fetcher = fetch) {
       throw new Error(`Unexpected page at ${path}`);
   }
   for (const path of [
-    "/directory",
     "/clubs",
     "/resources",
     "/transport",

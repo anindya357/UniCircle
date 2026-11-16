@@ -260,11 +260,11 @@ and does not fabricate General User email/ID fields.
 
 | Method | Path | Access | Success / result |
 | --- | --- | --- | --- |
-| GET | `/departments` | T | 200; department array, including faculty DTOs |
-| GET | `/departments/{code}` | T | 200; selected department |
-| GET | `/departments/{code}/faculty` | T | 200; department's faculty array |
-| GET | `/faculty/{entry_id}` | T | 200; faculty listing/contact DTO |
-| GET | `/faculty/{entry_id}/profile` | T | 200; in-app faculty profile with source status/fallback |
+| GET | `/departments` | P | 200; department array, including faculty DTOs |
+| GET | `/departments/{code}` | P | 200; selected department |
+| GET | `/departments/{code}/faculty` | P | 200; department's faculty array |
+| GET | `/faculty/{entry_id}` | P | 200; faculty listing/contact DTO |
+| GET | `/faculty/{entry_id}/profile` | P | 200; in-app faculty profile with source status/fallback |
 
 Faculty contacts may be `null` when unavailable. Profile `source_status` is
 `current` or `unavailable`; fetching the source failing must not be mistaken for
@@ -275,9 +275,9 @@ research, awards, and related profile entries can be empty arrays.
 
 | Method | Path | Access | Success / result |
 | --- | --- | --- | --- |
-| GET | `/campus/map` | T | 200; CUET map center, bounds, boundary, tiles, attribution |
-| GET | `/campus/locations` | T | 200; campus location array |
-| GET | `/campus/locations/{location_id}` | T | 200; location details and coordinates |
+| GET | `/campus/map` | P | 200; CUET map center, bounds, boundary, tiles, attribution |
+| GET | `/campus/locations` | P | 200; campus location array |
+| GET | `/campus/locations/{location_id}` | P | 200; location details and coordinates |
 
 Map coordinate pairs are `[latitude, longitude]`. Location DTOs include category,
 description/details, optional image, and source metadata. The UI constrains its

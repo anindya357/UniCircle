@@ -23,7 +23,7 @@ function fixture({ revision = SHA, latest = SHA, override = () => null } = {}) {
     assert.equal(url.origin, ORIGIN);
     if (url.pathname === "/api/health")
       return Response.json({ status: "ok", revision });
-    if (["/", "/login", "/register", "/admin/login"].includes(url.pathname)) {
+    if (["/", "/login", "/register", "/admin/login", "/directory", "/campus-explorer"].includes(url.pathname)) {
       return new Response("<html>UniCircle</html>", {
         headers: { "content-type": "text/html" },
       });
@@ -49,7 +49,7 @@ test("rejects invalid and injected commit values", () => {
 test("checks public pages, backend health and protected routes without user credentials", async () => {
   const { fetcher, calls } = fixture();
   await runChecks(SHA, fetcher);
-  assert.equal(calls.length, 14);
+  assert.equal(calls.length, 15);
   for (const { options } of calls) {
     assert.equal(options.redirect, "manual");
     assert.equal(options.headers.Authorization, undefined);

@@ -2,14 +2,12 @@ import { notFound } from "next/navigation";
 
 import { AppShell } from "@/components/shared/app-shell";
 import { ErrorState } from "@/components/ui/feedback/error-state";
-import { requireServerSessionUser } from "@/features/auth/lib/server-session";
 import { FacultyProfilePage } from "@/features/directory/components/faculty-profile-page";
 import { getFacultyProfile } from "@/services/api/server-faculty-profile";
 
 export default async function FacultyProfileRoute({
   params,
 }: Readonly<{ params: Promise<{ entryId: string }> }>) {
-  await requireServerSessionUser();
   const { entryId } = await params;
   const result = await getFacultyProfile(entryId);
 

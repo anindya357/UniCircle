@@ -1,18 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const token = request.cookies.get("unicircle_session")?.value;
-  if (!token) {
-    return NextResponse.json(
-      { error: { message: "Please sign in to view the directory." } },
-      { status: 401 },
-    );
-  }
-
+export async function GET() {
   try {
     const backendBase = process.env.BACKEND_API_URL ?? "http://127.0.0.1:8000";
     const upstream = await fetch(new URL("/api/v1/departments", backendBase), {
-      headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
       signal: AbortSignal.timeout(10_000),
     });

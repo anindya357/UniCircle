@@ -34,11 +34,11 @@ export function HomePageContent({
               </>
             ) : (
               <>
-                <Link className={styles.primaryAction} href={routes.auth.login}>
-                  Login to explore <span aria-hidden="true">&#8599;</span>
+                <Link className={styles.primaryAction} href={routes.campusExplorer}>
+                  Explore the campus <span aria-hidden="true">&#8599;</span>
                 </Link>
-                <Link className={styles.secondaryAction} href={routes.auth.register}>
-                  Create an account
+                <Link className={styles.secondaryAction} href={routes.directory}>
+                  Browse departments
                 </Link>
               </>
             )}

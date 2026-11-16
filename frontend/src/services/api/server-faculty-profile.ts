@@ -1,7 +1,5 @@
 import "server-only";
 
-import { cookies } from "next/headers";
-
 import type {
   FacultyProfile,
   ProfileEntry,
@@ -46,11 +44,9 @@ export type FacultyProfileResult =
 async function getSavedFacultyProfile(
   entryId: string,
   backendBase: string,
-  token: string,
 ): Promise<FacultyProfileResult> {
   try {
     const response = await fetch(new URL(`/api/v1/faculty/${entryId}`, backendBase), {
-      headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
       signal: AbortSignal.timeout(12_000),
     });
@@ -100,27 +96,24 @@ export async function getFacultyProfile(
   entryId: string,
 ): Promise<FacultyProfileResult> {
   if (!/^[a-z]+-[0-9]+$/.test(entryId)) return { kind: "not-found" };
-  const token = (await cookies()).get("unicircle_session")?.value;
-  if (!token) return { kind: "unavailable" };
 
   try {
     const backendBase = process.env.BACKEND_API_URL ?? "http://127.0.0.1:8000";
     const response = await fetch(
       new URL(`/api/v1/faculty/${entryId}/profile`, backendBase),
       {
-        headers: { Authorization: `Bearer ${token}` },
         cache: "no-store",
         signal: AbortSignal.timeout(12_000),
       },
     );
     if (response.status === 404 || response.status >= 500) {
-      return getSavedFacultyProfile(entryId, backendBase, token);
+      return getSavedFacultyProfile(entryId, backendBase);
     }
     if (!response.ok) return { kind: "unavailable" };
     const result: { data?: ApiProfile } = await response.json();
     const data = result.data;
     if (!data || data.id !== entryId) {
-      return getSavedFacultyProfile(entryId, backendBase, token);
+      return getSavedFacultyProfile(entryId, backendBase);
     }
     return {
       kind: "ok",
@@ -152,6 +145,6 @@ export async function getFacultyProfile(
     };
   } catch {
     const backendBase = process.env.BACKEND_API_URL ?? "http://127.0.0.1:8000";
-    return getSavedFacultyProfile(entryId, backendBase, token);
+    return getSavedFacultyProfile(entryId, backendBase);
   }
 }

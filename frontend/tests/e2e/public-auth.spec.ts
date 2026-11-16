@@ -9,7 +9,7 @@ test("public home exposes account entry points and protected routes redirect", a
   await expect(page.getByRole("link", { name: "Sign up", exact: true })).toBeVisible();
   await expect(page.getByText("Welcome to CUET Campus")).toBeVisible();
 
-  await page.goto("/directory");
+  await page.goto("/clubs");
   await expect(page).toHaveURL(/\/login$/);
   await expect(
     page.getByRole("heading", { name: "Sign in to UniCircle" }),

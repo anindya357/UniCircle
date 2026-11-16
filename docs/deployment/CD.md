@@ -118,7 +118,8 @@ out and fail. Jobs are serialized and are not abruptly cancelled mid-check.
 Read-only checks cover:
 
 - Backend liveness through the private frontend service binding.
-- Home, login, registration and the separate admin login returning HTML.
+- Home, directory, campus explorer, login, registration and the separate admin
+  login returning HTML.
 - Anonymous access to authenticated routes redirecting to same-origin login.
 - The served revision remaining unchanged during the checks.
 

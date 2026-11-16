@@ -1,21 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const token = request.cookies.get("unicircle_session")?.value;
-  if (!token) {
-    return NextResponse.json(
-      { error: { message: "Please sign in to view the campus map." } },
-      { status: 401 },
-    );
-  }
-
+export async function GET() {
   try {
     const backendBase = process.env.BACKEND_API_URL ?? "http://127.0.0.1:8000";
-    const headers = { Authorization: `Bearer ${token}` };
     const [mapResponse, locationsResponse] = await Promise.all(
       ["/api/v1/campus/map", "/api/v1/campus/locations"].map((path) =>
         fetch(new URL(path, backendBase), {
-          headers,
           cache: "no-store",
           signal: AbortSignal.timeout(10_000),
         }),

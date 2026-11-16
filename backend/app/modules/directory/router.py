@@ -1,4 +1,4 @@
-"""Authenticated CUET department and current-faculty directory."""
+"""Public CUET department and current-faculty directory."""
 
 from typing import Annotated
 
@@ -7,7 +7,6 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
 from app.api.schemas import ApiResponse
-from app.core.auth import AuthIdentity, get_current_user
 from app.core.errors import AppError
 from app.db.models import Department, FacultyDirectoryEntry
 from app.db.session import get_db
@@ -20,7 +19,6 @@ from app.modules.directory.schemas import DepartmentOut, FacultyOut, FacultyProf
 
 router = APIRouter(tags=["directory"])
 Db = Annotated[Session, Depends(get_db)]
-CurrentUser = Annotated[AuthIdentity, Depends(get_current_user)]
 
 
 def _department_or_404(db: Session, code: str) -> Department:
@@ -39,7 +37,7 @@ def _department_or_404(db: Session, code: str) -> Department:
 
 
 @router.get("/departments", response_model=ApiResponse[list[DepartmentOut]])
-def list_departments(db: Db, _user: CurrentUser) -> ApiResponse[list[DepartmentOut]]:
+def list_departments(db: Db) -> ApiResponse[list[DepartmentOut]]:
     departments = db.scalars(
         select(Department)
         .options(selectinload(Department.faculty))
@@ -54,7 +52,6 @@ def list_departments(db: Db, _user: CurrentUser) -> ApiResponse[list[DepartmentO
 def get_department(
     code: Annotated[str, Path(pattern=r"^[a-z]{2,32}$")],
     db: Db,
-    _user: CurrentUser,
 ) -> ApiResponse[DepartmentOut]:
     return ApiResponse(data=DepartmentOut.model_validate(_department_or_404(db, code)))
 
@@ -63,7 +60,6 @@ def get_department(
 def list_department_faculty(
     code: Annotated[str, Path(pattern=r"^[a-z]{2,32}$")],
     db: Db,
-    _user: CurrentUser,
 ) -> ApiResponse[list[FacultyOut]]:
     department = _department_or_404(db, code)
     return ApiResponse(
@@ -77,7 +73,6 @@ def get_faculty(
         str, Path(min_length=3, max_length=64, pattern=r"^[a-z]+-[0-9]+$")
     ],
     db: Db,
-    _user: CurrentUser,
 ) -> ApiResponse[FacultyOut]:
     faculty = db.get(FacultyDirectoryEntry, entry_id)
     if faculty is None:
@@ -97,7 +92,6 @@ def get_faculty_profile(
         str, Path(min_length=3, max_length=64, pattern=r"^[a-z]+-[0-9]+$")
     ],
     db: Db,
-    _user: CurrentUser,
 ) -> ApiResponse[FacultyProfileOut]:
     faculty = db.get(FacultyDirectoryEntry, entry_id)
     if faculty is None:

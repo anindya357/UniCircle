@@ -100,10 +100,24 @@ def test_directory_endpoints_and_validation(directory_stack) -> None:
     assert client.get("/api/v1/faculty/not-valid-id").status_code == 422
 
 
-def test_directory_requires_authentication(directory_stack) -> None:
-    client, _ = directory_stack
+def test_directory_and_profiles_are_public(directory_stack, monkeypatch) -> None:
+    client, db = directory_stack
+    seed_directory(db)
+    monkeypatch.setattr(
+        "app.modules.directory.router.fetch_cuet_profile", lambda slug: None
+    )
     client.app.dependency_overrides.pop(get_current_user)
-    assert client.get("/api/v1/departments").status_code == 401
+    response = client.get("/api/v1/departments")
+    assert response.status_code == 200
+    entry_id = response.json()["data"][0]["faculty"][0]["id"]
+    for path in (
+        "/departments/cse",
+        "/departments/cse/faculty",
+        f"/faculty/{entry_id}",
+        f"/faculty/{entry_id}/profile",
+    ):
+        assert client.get("/api/v1" + path).status_code == 200
+    assert client.get("/api/v1/clubs").status_code == 401
 
 
 def test_faculty_profile_loads_cuet_details_without_leaking_private_fields(

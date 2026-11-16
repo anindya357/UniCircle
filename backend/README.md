@@ -114,7 +114,7 @@ listings retrieved on 21 September 2026 from the public CUET department pages
 and their underlying API. It is a snapshot, not a live sync; recheck CUET before
 relying on it as current. Missing fields remain null. No faculty login accounts
 are created. A person listed in multiple departments has one directory entry
-per department. The read-only directory routes require an authenticated account:
+per department. The read-only directory and faculty-profile routes are public:
 `GET /api/v1/departments`, `GET /api/v1/departments/{code}`,
 `GET /api/v1/departments/{code}/faculty`, `GET /api/v1/faculty/{entry_id}`,
 and `GET /api/v1/faculty/{entry_id}/profile`. The profile route fetches that

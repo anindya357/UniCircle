@@ -102,8 +102,10 @@ def test_seed_and_campus_endpoints(campus_stack) -> None:
     assert client.get("/api/v1/campus/locations/off-campus").status_code == 404
 
 
-def test_campus_requires_authentication(campus_stack) -> None:
-    client, _ = campus_stack
+def test_campus_map_and_locations_are_public(campus_stack) -> None:
+    client, db = campus_stack
+    seed_campus(db)
     client.app.dependency_overrides.pop(get_current_user)
-    assert client.get("/api/v1/campus/map").status_code == 401
-    assert client.get("/api/v1/campus/locations").status_code == 401
+    for path in ("/campus/map", "/campus/locations", "/campus/locations/tsc"):
+        assert client.get("/api/v1" + path).status_code == 200
+    assert client.get("/api/v1/transport/snapshot").status_code == 401
