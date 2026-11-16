@@ -17,6 +17,7 @@ import type {
   ClubCreationRequest,
   ClubCreationRequestInput,
   ClubEventSnapshot,
+  ClubMembership,
   ClubProfileInput,
   ClubRequestStatus,
   EventRegistration,
@@ -50,6 +51,8 @@ type ClubEventContextValue = Readonly<{
   listMembershipRequests: (clubId: string) => Promise<readonly MembershipRequest[]>;
   approveMembershipRequest: (clubId: string, requestId: string) => Promise<void>;
   removeMembershipRequest: (clubId: string, requestId: string) => Promise<void>;
+  listClubMembers: (clubId: string) => Promise<readonly ClubMembership[]>;
+  removeClubMember: (clubId: string, userId: string, feedback: string) => Promise<void>;
   saveEvent: (
     clubId: string,
     input: CampusEventInput,
@@ -283,6 +286,26 @@ export function ClubEventProvider({
     [assertClubAdmin],
   );
 
+  const listClubMembers = useCallback(
+    (clubId: string) => {
+      assertClubAdmin(clubId);
+      return clubEventService.listClubMembers(clubId);
+    },
+    [assertClubAdmin],
+  );
+
+  const removeClubMember = useCallback(
+    async (clubId: string, userId: string, feedback: string) => {
+      assertClubAdmin(clubId);
+      const updated = await clubEventService.removeClubMember(clubId, userId, feedback);
+      setSnapshot((current) => ({
+        ...current,
+        clubs: current.clubs.map((item) => (item.id === updated.id ? updated : item)),
+      }));
+    },
+    [assertClubAdmin],
+  );
+
   const saveEvent = useCallback(
     async (clubId: string, input: CampusEventInput, current?: CampusEvent) => {
       assertClubAdmin(clubId);
@@ -403,6 +426,8 @@ export function ClubEventProvider({
       listMembershipRequests,
       approveMembershipRequest,
       removeMembershipRequest,
+      listClubMembers,
+      removeClubMember,
       saveEvent,
       deleteEvent,
       setInterest,
@@ -422,6 +447,8 @@ export function ClubEventProvider({
       listMembershipRequests,
       approveMembershipRequest,
       removeMembershipRequest,
+      listClubMembers,
+      removeClubMember,
       reviewClubRequest,
       saveEvent,
       snapshot,

@@ -1245,11 +1245,12 @@
   gap: 0.35rem;
   border: 1px solid var(--color-border);
   border-radius: 0.85rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   background: #ffffff;
 }
 
-.clubAdminNavigation button {
+.clubAdminNavigation button,
+.clubAdminNavigation a {
   min-height: 2.8rem;
   border: 0;
   border-radius: 0.62rem;
@@ -1257,6 +1258,14 @@
   background: transparent;
   font-size: 0.72rem;
   font-weight: 780;
+}
+
+.clubAdminNavigation a {
+  display: grid;
+  padding: 0.5rem;
+  place-items: center;
+  text-align: center;
+  text-decoration: none;
 }
 
 .clubAdminNavigation button[aria-pressed="true"] {
@@ -1890,6 +1899,119 @@
 .membershipRequestList footer button:disabled {
   cursor: wait;
   opacity: 0.6;
+}
+
+.memberSearch,
+.memberRemovalForm label {
+  display: grid;
+  margin-top: 1rem;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+
+.memberSearch input,
+.memberRemovalForm textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  color: var(--color-text);
+  background: #fff;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.memberRemovalForm textarea {
+  resize: vertical;
+}
+
+.memberList article > header {
+  flex-wrap: wrap;
+}
+
+.memberList article > header > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.memberRemoveButton,
+.memberRemovalForm button,
+.memberLoadError button {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  background: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.memberRemoveButton {
+  border-color: #d8aaa6;
+  color: var(--color-danger);
+  background: #fff5f4;
+}
+
+.memberRemoveButton:disabled,
+.memberRemovalForm button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.memberRemovalForm {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  background: var(--color-canvas);
+}
+
+.memberRemovalForm > div {
+  display: flex;
+  margin-top: 1rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.memberRemovalForm p {
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.memberHelp,
+.memberRemovalForm small {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.memberSuccess,
+.memberLoadError {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.memberSuccess {
+  color: var(--color-brand);
+  background: var(--color-surface-muted);
+}
+
+.memberLoadError button {
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 40rem) {
+  .memberRemoveButton,
+  .memberRemovalForm button {
+    width: 100%;
+  }
 }
 
 @media (max-width: 68rem) {

@@ -15,6 +15,7 @@ const notificationTypeLabels = {
   "event-started": "Event started",
   "event-finished": "Event finished",
   "club-membership-approved": "Membership approved",
+  "club-membership-removed": "Membership removed",
   "campus-announcement": "Announcement",
   "campus-update": "Campus update",
 } as const satisfies Record<NotificationType, string>;

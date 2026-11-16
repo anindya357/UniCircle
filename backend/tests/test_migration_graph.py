@@ -13,5 +13,5 @@ def test_migration_graph_has_one_base_and_one_head():
     assert len(scripts.get_bases()) == 1
     assert len(scripts.get_heads()) == 1
     revisions = list(scripts.walk_revisions())
-    assert len(revisions) == 13
+    assert len(revisions) == 14
     assert all(revision.is_branch_point is False for revision in revisions)

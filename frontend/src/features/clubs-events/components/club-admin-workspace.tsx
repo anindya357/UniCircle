@@ -71,6 +71,7 @@ export function ClubAdminWorkspace({ club }: Readonly<{ club: CampusClub }>) {
       </header>
 
       <nav className={styles.clubAdminNavigation} aria-label="Club admin sections">
+        <Link href={`/clubs/${club.id}/members`}>See club members</Link>
         {(
           [
             ["profile", "Club details"],
@@ -248,6 +249,16 @@ function MembershipManagement({
           </button>
         </div>
       </form>
+      <Link
+        className={styles.membershipRequestsLink}
+        href={`/clubs/${club.id}/members`}
+      >
+        <span>
+          <strong>See all club members</strong>
+          <small>Manage members and send feedback when removing membership.</small>
+        </span>
+        <b>{club.memberCount}</b>
+      </Link>
       <Link
         className={styles.membershipRequestsLink}
         href={`/clubs/${club.id}/membership-requests`}

@@ -6,6 +6,7 @@ import type {
   ClubCreationRequest,
   ClubCreationRequestInput,
   ClubEventSnapshot,
+  ClubMembership,
   ClubProfileInput,
   ClubRequestStatus,
   EventRegistration,
@@ -427,6 +428,22 @@ export class ApiClubEventService implements ClubEventService {
       `clubs/${clubId}/membership-requests/${requestId}`,
       "DELETE",
     );
+  }
+
+  async listClubMembers(clubId: string): Promise<readonly ClubMembership[]> {
+    const result = await requestData<{ total: number; members: ClubMembership[] }>(
+      `clubs/${clubId}/members`,
+    );
+    return result.members;
+  }
+
+  async removeClubMember(clubId: string, userId: string, feedback: string) {
+    const result = await requestData<{ club: ClubRecord }>(
+      `clubs/${clubId}/members/${userId}/remove`,
+      "POST",
+      { feedback },
+    );
+    return mapClub(result.club);
   }
 
   async saveEvent(

@@ -4,6 +4,7 @@ export type NotificationType =
   | "event-started"
   | "event-finished"
   | "club-membership-approved"
+  | "club-membership-removed"
   | "campus-announcement"
   | "campus-update";
 

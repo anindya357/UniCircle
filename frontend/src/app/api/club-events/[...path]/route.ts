@@ -17,6 +17,7 @@ const allowed: Record<string, RegExp[]> = {
     /^notifications\/me$/,
     new RegExp(`^clubs/${club}$`),
     new RegExp(`^clubs/${club}/membership-requests$`),
+    new RegExp(`^clubs/${club}/members$`),
   ],
   POST: [
     /^clubs\/requests$/,
@@ -25,6 +26,7 @@ const allowed: Record<string, RegExp[]> = {
     new RegExp(`^clubs/${club}/events$`),
     new RegExp(`^clubs/${club}/membership-requests$`),
     new RegExp(`^clubs/${club}/membership-requests/${uuid}/approve$`),
+    new RegExp(`^clubs/${club}/members/${uuid}/remove$`),
     new RegExp(`^events/${uuid}/registrations$`),
   ],
   PUT: [

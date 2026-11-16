@@ -295,7 +295,8 @@ map to the supplied CUET bounds/boundary rather than providing a whole-city map.
 | POST | `/admin/club-requests/{request_id}/review` | A | `ReviewIn` | 200; approve/reject request |
 | GET | `/clubs/{club_id}` | T | — | 200; club details |
 | PUT | `/clubs/{club_id}` | C | `ClubUpdateIn` | 200; update club fields |
-| GET | `/clubs/{club_id}/members` | T | — | 200; member collection |
+| GET | `/clubs/{club_id}/members` | C | — | 200; member collection with student IDs, departments, and admin status |
+| POST | `/clubs/{club_id}/members/{target_id}/remove` | C | `MemberRemovalIn` | 200; remove membership and notify member with feedback |
 | PUT | `/clubs/{club_id}/membership-settings` | C | `MembershipSettingsIn` | 200; recruitment/payment settings |
 | POST | `/clubs/{club_id}/membership-requests` | S | `MembershipRequestIn` | 201; paid membership request |
 | GET | `/clubs/{club_id}/membership-requests` | C | — | 200; pending requests only |
@@ -317,11 +318,15 @@ Business rules:
   membership fee is server-enforced at **Tk 200**; clients cannot choose it.
 - A request requires account-matching email/student ID, department, phone,
   motivation, payment method, and transaction ID. Existing members, duplicate
-  requests, and closed recruitment are rejected.
+  pending requests, and closed recruitment are rejected. Reviewed applications
+  remain available when a former member submits a new request.
 - Membership approval and its notification commit together. This is a manual
   payment/recruitment workflow, not automatic bKash/Nagad transaction verification.
 - Club Admins must transfer/remove their admin access before leaving; the last
   admin cannot be removed.
+- Member removal requires nonblank feedback of up to 1,000 characters. Membership
+  deletion, any associated admin mapping deletion, and the removed member's
+  private `club-membership-removed` notification commit in one transaction.
 
 ### 5.5 Events and registrations
 

@@ -6,6 +6,7 @@ import type {
   ClubCreationRequest,
   ClubCreationRequestInput,
   ClubEventSnapshot,
+  ClubMembership,
   ClubProfileInput,
   ClubRequestStatus,
   EventRegistration,
@@ -44,6 +45,12 @@ export interface ClubEventService {
     requestId: string,
   ): Promise<{ request: MembershipRequest; club: CampusClub }>;
   removeMembershipRequest(clubId: string, requestId: string): Promise<void>;
+  listClubMembers(clubId: string): Promise<readonly ClubMembership[]>;
+  removeClubMember(
+    clubId: string,
+    userId: string,
+    feedback: string,
+  ): Promise<CampusClub>;
   saveEvent(
     input: CampusEventInput,
     clubId: string,

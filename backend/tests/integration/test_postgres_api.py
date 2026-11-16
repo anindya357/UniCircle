@@ -6,6 +6,7 @@ test owns a newly generated schema, applies Alembic, and removes only that schem
 
 import os
 import secrets
+from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -22,9 +23,16 @@ from app.core.config import Settings, get_settings
 from app.core.email import get_verification_email_sender
 from app.core.security import hash_password
 from app.db.base import Base
-from app.db.models import Notification, User
+from app.db.models import (
+    ClubAdmin,
+    ClubMember,
+    ClubMembershipRequest,
+    Notification,
+    User,
+)
 from app.db.session import get_db
 from app.main import create_app
+from app.modules.clubs.seed import seed_clubs
 from tests import test_auth_integration as auth_cases
 from tests import test_email_auth_flows as recovery_cases
 from tests.fakes import FakeVerificationEmailSender
@@ -32,6 +40,162 @@ from tests.test_news import payload
 
 pytestmark = pytest.mark.integration
 BACKEND_ROOT = Path(__file__).resolve().parents[2]
+
+
+@pytest.fixture
+def club_accounts(postgres_stack):
+    client, db, _ = postgres_stack
+    people = [
+        User(
+            username=f"club-student-{index}",
+            email=f"club-{index}@student.cuet.ac.bd",
+            university_id=f"club-{index}",
+            first_name="Club",
+            last_name=f"Student {index}",
+            home_address="CUET",
+            department_name="CSE",
+            role="student",
+            password_hash=hash_password("ClubTestPass123!"),
+            verified_at=datetime.now(UTC),
+            is_active=True,
+        )
+        for index in range(2)
+    ]
+    db.add_all(people)
+    db.commit()
+    seed_clubs(db, people[0].id)
+    headers = []
+    for person in people:
+        response = client.post(
+            "/api/v1/auth/login",
+            json={
+                "identifier": person.username,
+                "password": "ClubTestPass123!",
+            },
+        )
+        assert response.status_code == 200
+        headers.append({"Authorization": f"Bearer {response.json()['data']['token']}"})
+    return client, db, people, headers
+
+
+def test_membership_migration_preserves_legacy_approval_and_reapplication(
+    club_accounts,
+):
+    client, db, people, headers = club_accounts
+    club_id = "cuet-computer-club"
+    member = people[1]
+    member_id, owner_id = member.id, people[0].id
+    config = Config(str(BACKEND_ROOT / "alembic.ini"))
+    config.set_main_option("script_location", str(BACKEND_ROOT / "migrations"))
+    db.commit()
+    command.downgrade(config, "e42a7b1c9d50")
+    old_request = ClubMembershipRequest(
+        club_id=club_id,
+        user_id=member_id,
+        applicant_name="Club Student 1",
+        email=member.email,
+        student_id=member.university_id,
+        department_name="CSE",
+        phone="01912345678",
+        motivation="I want to volunteer and learn with the club.",
+        payment_method="bkash",
+        transaction_id="LEGACY-TRX",
+        fee=200,
+        status="approved",
+        reviewer_id=owner_id,
+        reviewed_at=datetime.now(UTC),
+    )
+    db.add_all([old_request, ClubMember(club_id=club_id, user_id=member_id)])
+    db.commit()
+    old_id = old_request.id
+    db.commit()
+    command.upgrade(config, "head")
+    db.expire_all()
+    assert db.get(ClubMembershipRequest, old_id).transaction_id == "LEGACY-TRX"
+    removed = client.post(
+        f"/api/v1/clubs/{club_id}/members/{member_id}/remove",
+        headers=headers[0],
+        json={"feedback": "Please meet the attendance requirement."},
+    )
+    assert removed.status_code == 200
+    assert (
+        client.get(f"/api/v1/clubs/{club_id}/members", headers=headers[1]).status_code
+        == 403
+    )
+    notifications = client.get("/api/v1/notifications/me", headers=headers[1]).json()[
+        "data"
+    ]
+    assert notifications[0]["message"] == "Please meet the attendance requirement."
+    client.put(
+        f"/api/v1/clubs/{club_id}/membership-settings",
+        headers=headers[0],
+        json={
+            "recruitment_open": True,
+            "bkash_number": "01712345678",
+            "nagad_number": "01812345678",
+        },
+    )
+    body = {
+        "applicant_name": "Club Student 1",
+        "email": "club-1@student.cuet.ac.bd",
+        "student_id": "club-1",
+        "department_name": "CSE",
+        "phone": "01912345678",
+        "motivation": "I want to volunteer and learn with the club.",
+        "payment_method": "nagad",
+        "transaction_id": "NEW-TRX",
+    }
+    reapplied = client.post(
+        f"/api/v1/clubs/{club_id}/membership-requests", headers=headers[1], json=body
+    )
+    assert reapplied.status_code == 201
+    assert reapplied.json()["data"]["id"] != str(old_id)
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/membership-requests",
+            headers=headers[1],
+            json=body,
+        ).status_code
+        == 409
+    )
+    db.expire_all()
+    history = db.scalars(
+        select(ClubMembershipRequest).where(ClubMembershipRequest.user_id == member_id)
+    ).all()
+    assert {row.transaction_id for row in history} == {"LEGACY-TRX", "NEW-TRX"}
+
+
+def test_simultaneous_member_removals_preserve_an_authorized_admin(club_accounts):
+    client, db, people, headers = club_accounts
+    club_id = "cuet-computer-club"
+    ids = [person.id for person in people]
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/admins",
+            headers=headers[0],
+            json={"user_id": str(ids[1])},
+        ).status_code
+        == 200
+    )
+
+    def remove_other(index):
+        return client.post(
+            f"/api/v1/clubs/{club_id}/members/{ids[1 - index]}/remove",
+            headers=headers[index],
+            json={"feedback": "Club leadership has changed."},
+        ).status_code
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(pool.map(remove_other, [0, 1]))
+    assert sorted(results) == [200, 403]
+    db.expire_all()
+    admins = db.scalars(select(ClubAdmin).where(ClubAdmin.club_id == club_id)).all()
+    assert len(admins) == 1
+    assert db.get(ClubMember, (club_id, admins[0].user_id)) is not None
+    notices = db.scalars(
+        select(Notification).where(Notification.type == "club-membership-removed")
+    ).all()
+    assert len(notices) == 1
 
 
 @pytest.fixture

@@ -21,6 +21,14 @@ export type RegisteredStudent = Readonly<{
   department: string;
 }>;
 
+export type ClubMembership = Readonly<{
+  userId: EntityId;
+  name: string;
+  studentId: string;
+  department: string;
+  isAdmin: boolean;
+}>;
+
 export type CampusClub = Readonly<{
   id: EntityId;
   shortName: string;

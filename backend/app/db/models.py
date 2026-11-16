@@ -321,7 +321,14 @@ class ClubAdmin(Base):
 class ClubMembershipRequest(Base, TimestampMixin):
     __tablename__ = "club_membership_requests"
     __table_args__ = (
-        UniqueConstraint("club_id", "user_id", name="uq_club_membership_request_user"),
+        Index(
+            "uq_club_membership_pending_user",
+            "club_id",
+            "user_id",
+            unique=True,
+            postgresql_where=text("status = 'pending'"),
+            sqlite_where=text("status = 'pending'"),
+        ),
         CheckConstraint("status IN ('pending','approved')", name="valid_status"),
         CheckConstraint(
             "payment_method IN ('bkash','nagad')", name="valid_payment_method"

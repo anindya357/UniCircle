@@ -80,6 +80,15 @@ class MembershipSettingsIn(Input):
         return self
 
 
+class MemberRemovalIn(Input):
+    feedback: str = Field(min_length=1, max_length=1000)
+
+    @field_validator("feedback")
+    @classmethod
+    def nonblank_feedback(cls, value: str) -> str:
+        return require_nonblank(value, field="Feedback", max_length=1000)
+
+
 class MembershipRequestIn(Input):
     applicant_name: str = Field(min_length=2, max_length=200)
     email: str

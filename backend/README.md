@@ -158,9 +158,19 @@ atomically creates a club and grants the requester initial admin access.
 Revision `7b6f0c2d91aa` adds the membership-recruitment workflow. Recruitment is
 closed by default. A mapped Club Admin must save valid bKash and Nagad numbers
 before opening it. The fee is fixed at BDT 200 by both API validation and a
-database check constraint. A student can submit one request per club; approval
-creates the membership and a persistent unread notification in one transaction.
+database check constraint. A student can submit one pending request per club.
+Approval creates the membership and a persistent unread notification in one
+transaction.
 Only that club's admins may view, approve, or remove pending requests.
+
+Mapped Club Admins can open **See club members** on a club's management panel.
+`GET /api/v1/clubs/{id}/members` lists that club's members for its admins.
+`POST /api/v1/clubs/{id}/members/{user_id}/remove` requires a JSON `feedback`
+string of 1-1000 nonblank characters. Removal and the recipient's
+`club-membership-removed` notification commit together. Removing an admin member
+also removes their admin mapping, with the final-admin rule enforced under a
+club row lock. Apply revision `f6c2d83a9041` before release to preserve reviewed
+applications and allow a removed member to apply again while recruitment is open.
 
 Protected endpoints are under `/api/v1`: `GET /clubs`, `GET /clubs/{id}`,
 `GET /clubs/{id}/members`, `GET /clubs/{id}/events`, `GET /events`,

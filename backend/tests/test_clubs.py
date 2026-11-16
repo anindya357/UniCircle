@@ -416,6 +416,223 @@ def test_membership_recruitment_approval_and_notification(stack):
     )
 
 
+def test_member_removal_feedback_is_private_atomic_and_allows_reapplication(stack):
+    client, db, first, second, _, current = stack
+    seed_clubs(db, first.id)
+    club_id = "cuet-computer-club"
+    other_club = db.scalar(select(Club.id).where(Club.id != club_id))
+    db.add(ClubMember(club_id=other_club, user_id=second.id))
+    db.commit()
+    client.put(
+        f"/api/v1/clubs/{club_id}/membership-settings",
+        json={
+            "recruitment_open": True,
+            "bkash_number": "01712345678",
+            "nagad_number": "01812345678",
+        },
+    )
+    application = {
+        "applicant_name": "Second Student",
+        "email": second.email,
+        "student_id": second.university_id,
+        "department_name": "CSE",
+        "phone": "01912345678",
+        "motivation": "I want to volunteer in club activities and learn.",
+        "payment_method": "bkash",
+        "transaction_id": "TRX-FIRST",
+    }
+    current["user"] = second
+    request_id = client.post(
+        f"/api/v1/clubs/{club_id}/membership-requests", json=application
+    ).json()["data"]["id"]
+    current["user"] = first
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/membership-requests/{request_id}/approve"
+        ).status_code
+        == 200
+    )
+    members = client.get(f"/api/v1/clubs/{club_id}/members").json()["data"]
+    assert members["total"] == 2
+    assert any(
+        item["userId"] == str(second.id) and not item["isAdmin"]
+        for item in members["members"]
+    )
+    assert (
+        next(item for item in members["members"] if item["userId"] == str(second.id))[
+            "department"
+        ]
+        == "CSE"
+    )
+    feedback = "Please complete the attendance requirements before applying again."
+    endpoint = f"/api/v1/clubs/{club_id}/members/{second.id}/remove"
+    response = client.post(endpoint, json={"feedback": f"  {feedback}  "})
+    assert response.status_code == 200
+    assert response.json()["data"]["club"]["memberCount"] == 1
+    assert db.get(ClubMember, (club_id, second.id)) is None
+    assert db.get(ClubMember, (other_club, second.id)) is not None
+    assert db.get(ClubMembershipRequest, uuid.UUID(request_id)).status == "approved"
+    assert client.post(endpoint, json={"feedback": feedback}).status_code == 404
+    assert not any(
+        item["type"] == "club-membership-removed"
+        for item in client.get("/api/v1/notifications/me").json()["data"]
+    )
+    current["user"] = second
+    notifications = client.get("/api/v1/notifications/me").json()["data"]
+    removal = [
+        item for item in notifications if item["type"] == "club-membership-removed"
+    ]
+    assert len(removal) == 1
+    assert removal[0]["message"] == feedback
+    assert removal[0]["isRead"] is False
+    assert removal[0]["href"] == f"/clubs/{club_id}"
+    assert (
+        client.put(f"/api/v1/notifications/{removal[0]['id']}/read").status_code == 200
+    )
+    club = client.get(f"/api/v1/clubs/{club_id}").json()["data"]
+    assert club["isMember"] is False
+    assert club["membershipRequestStatus"] is None
+    application["transaction_id"] = "TRX-SECOND"
+    reapplied = client.post(
+        f"/api/v1/clubs/{club_id}/membership-requests", json=application
+    )
+    assert reapplied.status_code == 201
+    next_id = reapplied.json()["data"]["id"]
+    assert next_id != request_id
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/membership-requests", json=application
+        ).status_code
+        == 409
+    )
+    assert (
+        client.get(f"/api/v1/clubs/{club_id}").json()["data"]["membershipRequestStatus"]
+        == "pending"
+    )
+    current["user"] = first
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/membership-requests/{next_id}/approve"
+        ).status_code
+        == 200
+    )
+    assert (
+        db.scalar(
+            select(func.count())
+            .select_from(ClubMembershipRequest)
+            .where(ClubMembershipRequest.user_id == second.id)
+        )
+        == 2
+    )
+    current["user"] = second
+    assert (
+        len(
+            [
+                n
+                for n in client.get("/api/v1/notifications/me").json()["data"]
+                if n["type"] == "club-membership-approved"
+            ]
+        )
+        == 2
+    )
+
+
+@pytest.mark.parametrize("feedback", ["", " \n\t ", "x" * 1001])
+def test_member_removal_requires_valid_feedback(stack, feedback):
+    client, db, first, second, _, _ = stack
+    seed_clubs(db, first.id)
+    club_id = "cuet-computer-club"
+    db.add(ClubMember(club_id=club_id, user_id=second.id))
+    db.commit()
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/members/{second.id}/remove",
+            json={"feedback": feedback},
+        ).status_code
+        == 422
+    )
+    assert db.get(ClubMember, (club_id, second.id)) is not None
+    assert db.scalar(select(func.count()).select_from(Notification)) == 0
+
+
+def test_member_removal_permissions_and_last_admin_are_enforced(stack):
+    client, db, first, second, owner, current = stack
+    seed_clubs(db, first.id)
+    club_id = "cuet-computer-club"
+    endpoint = f"/api/v1/clubs/{club_id}/members/{first.id}/remove"
+    current["user"] = second
+    assert client.get(f"/api/v1/clubs/{club_id}/members").status_code == 403
+    assert (
+        client.post(endpoint, json={"feedback": "Remove this member"}).status_code
+        == 403
+    )
+    current["user"] = owner
+    assert (
+        client.post(endpoint, json={"feedback": "Remove this member"}).status_code
+        == 403
+    )
+    current["user"] = first
+    assert (
+        client.post(endpoint, json={"feedback": "Remove this member"}).status_code
+        == 409
+    )
+    assert db.get(ClubAdmin, (club_id, first.id)) is not None
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/members/{uuid.uuid4()}/remove",
+            json={"feedback": "No longer attending"},
+        ).status_code
+        == 404
+    )
+    assert (
+        client.post(
+            f"/api/v1/clubs/{club_id}/admins", json={"user_id": str(second.id)}
+        ).status_code
+        == 200
+    )
+    current["user"] = second
+    assert (
+        client.post(
+            endpoint, json={"feedback": "Club leadership has changed."}
+        ).status_code
+        == 200
+    )
+    assert db.get(ClubAdmin, (club_id, first.id)) is None
+    assert db.get(ClubMember, (club_id, first.id)) is None
+    assert db.get(ClubAdmin, (club_id, second.id)) is not None
+    current["user"] = first
+    assert client.get(f"/api/v1/clubs/{club_id}/members").status_code == 403
+    assert (
+        client.post(f"/api/v1/clubs/{club_id}/events", json=event_body()).status_code
+        == 403
+    )
+    other_club = db.scalar(select(Club.id).where(Club.id != club_id))
+    assert client.get(f"/api/v1/clubs/{other_club}/members").status_code == 200
+
+
+def test_failed_removal_notification_rolls_back_membership(stack, monkeypatch):
+    client, db, first, second, _, _ = stack
+    seed_clubs(db, first.id)
+    club_id = "cuet-computer-club"
+    db.add(ClubMember(club_id=club_id, user_id=second.id))
+    db.commit()
+
+    def fail_publish(*_args):
+        raise RuntimeError("Notification write failed")
+
+    monkeypatch.setattr(
+        "app.modules.clubs.router.NotificationService.publish", fail_publish
+    )
+    with pytest.raises(RuntimeError, match="Notification write failed"):
+        client.post(
+            f"/api/v1/clubs/{club_id}/members/{second.id}/remove",
+            json={"feedback": "Membership ended."},
+        )
+    db.rollback()
+    assert db.get(ClubMember, (club_id, second.id)) is not None
+    assert db.scalar(select(func.count()).select_from(Notification)) == 0
+
+
 def test_closed_recruitment_and_admin_removal(stack):
     client, db, first, second, _, current = stack
     seed_clubs(db, first.id)

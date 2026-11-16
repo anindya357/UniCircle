@@ -6,6 +6,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { AuthenticatedUserProvider } from "@/features/auth/context/authenticated-user-context";
 import type { GeneralSessionUser } from "@/features/auth/types/session-user";
 import { ClubAdminWorkspace } from "@/features/clubs-events/components/club-admin-workspace";
+import { ClubMembersPage } from "@/features/clubs-events/components/club-members-page";
 import { ClubCreationRequestForm } from "@/features/clubs-events/components/club-creation-request-form";
 import { ClubEventHub } from "@/features/clubs-events/components/club-event-hub";
 import { EventCard } from "@/features/clubs-events/components/event-card";
@@ -25,9 +26,13 @@ const mocks = vi.hoisted(() => ({
   saveClub: vi.fn(),
   updateMembershipSettings: vi.fn(),
   listMembershipRequests: vi.fn(),
+  listClubMembers: vi.fn(),
+  removeClubMember: vi.fn(),
   saveEvent: vi.fn(),
   deleteEvent: vi.fn(),
 }));
+
+vi.mock("next/navigation", () => ({ useRouter: () => ({ replace: vi.fn() }) }));
 
 vi.mock("next/link", () => ({
   default: ({
@@ -221,6 +226,110 @@ describe("club and event behavior", () => {
     expect(screen.getByLabelText("Registered student ID")).toBeVisible();
     expect(screen.getByRole("button", { name: "Remove my access" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Make club admin" })).toBeDisabled();
+    expect(screen.getByRole("link", { name: "See club members" })).toHaveAttribute(
+      "href",
+      `/clubs/${club.id}/members`,
+    );
+  });
+
+  test("member removal requires feedback, supports cancellation and refreshes the count", async () => {
+    const user = userEvent.setup();
+    const admin = {
+      userId: student.id,
+      name: student.displayName,
+      studentId: student.universityId,
+      department: "CSE",
+      isAdmin: true,
+    };
+    const member = {
+      userId: "student-2",
+      name: "Member Two",
+      studentId: "2204002",
+      department: "EEE",
+      isAdmin: false,
+    };
+    mocks.listClubMembers
+      .mockResolvedValueOnce([admin, member])
+      .mockResolvedValue([admin]);
+    mocks.removeClubMember.mockResolvedValue({ ...club, memberCount: 1 });
+    renderWithClubContext(<ClubMembersPage clubId={club.id} />);
+    expect(await screen.findByRole("heading", { name: "Member Two" })).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: `Remove ${student.displayName}` }),
+    ).toBeDisabled();
+    await user.click(screen.getByRole("button", { name: "Remove Member Two" }));
+    expect(
+      screen.getByRole("button", { name: "Confirm removal and notify" }),
+    ).toBeDisabled();
+    await user.type(
+      screen.getByLabelText("Feedback for Member Two"),
+      "  Please complete attendance requirements.  ",
+    );
+    await user.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(mocks.removeClubMember).not.toHaveBeenCalled();
+    await user.click(screen.getByRole("button", { name: "Remove Member Two" }));
+    await user.type(
+      screen.getByLabelText("Feedback for Member Two"),
+      "  Please complete attendance requirements.  ",
+    );
+    await user.click(
+      screen.getByRole("button", { name: "Confirm removal and notify" }),
+    );
+    expect(await screen.findByRole("status")).toHaveTextContent(
+      "Member Two was removed and sent your feedback notification.",
+    );
+    expect(mocks.removeClubMember).toHaveBeenCalledWith(
+      club.id,
+      member.userId,
+      "Please complete attendance requirements.",
+    );
+    expect(
+      screen.queryByRole("heading", { name: "Member Two" }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByText(/1 member\./)).toBeVisible();
+  });
+
+  test("a failed removal keeps the member and feedback available for retry", async () => {
+    const user = userEvent.setup();
+    mocks.listClubMembers.mockResolvedValue([
+      {
+        userId: "student-2",
+        name: "Member Two",
+        studentId: "2204002",
+        department: "EEE",
+        isAdmin: false,
+      },
+    ]);
+    mocks.removeClubMember.mockRejectedValue(
+      new Error("Membership could not be removed."),
+    );
+    renderWithClubContext(<ClubMembersPage clubId={club.id} />);
+    await user.click(await screen.findByRole("button", { name: "Remove Member Two" }));
+    await user.type(
+      screen.getByLabelText("Feedback for Member Two"),
+      "Attendance requirements were not met.",
+    );
+    await user.click(
+      screen.getByRole("button", { name: "Confirm removal and notify" }),
+    );
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "Membership could not be removed.",
+    );
+    expect(screen.getByRole("heading", { name: "Member Two" })).toBeVisible();
+    expect(screen.getByLabelText("Feedback for Member Two")).toHaveValue(
+      "Attendance requirements were not met.",
+    );
+  });
+
+  test("member list access is hidden from students outside the club admin mapping", () => {
+    renderWithClubContext(<ClubMembersPage clubId={club.id} />, {
+      ...snapshot(),
+      clubs: [{ ...club, adminUserIds: [] }],
+    });
+    expect(
+      screen.getByRole("heading", { name: "Club Admin access required" }),
+    ).toBeVisible();
+    expect(mocks.listClubMembers).not.toHaveBeenCalled();
   });
 
   test("free registration stores one record and updates the count UI", async () => {

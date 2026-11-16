@@ -32,6 +32,7 @@ from app.modules.clubs.schemas import (
     ClubUpdateIn,
     EventIn,
     InterestIn,
+    MemberRemovalIn,
     MembershipRequestIn,
     MembershipSettingsIn,
     PaymentReviewIn,
@@ -130,9 +131,15 @@ def club_data(db: Session, club: Club, user: AuthIdentity) -> dict:
     )
     membership_request = (
         db.scalar(
-            select(ClubMembershipRequest).where(
+            select(ClubMembershipRequest)
+            .where(
                 ClubMembershipRequest.club_id == club.id,
                 ClubMembershipRequest.user_id == uid(user),
+            )
+            .order_by(
+                (ClubMembershipRequest.status == "pending").desc(),
+                ClubMembershipRequest.created_at.desc(),
+                ClubMembershipRequest.id.desc(),
             )
         )
         if user.role == "student"
@@ -167,7 +174,10 @@ def club_data(db: Session, club: Club, user: AuthIdentity) -> dict:
         "isAdmin": is_club_admin,
         "isMember": membership is not None,
         "membershipRequestStatus": (
-            membership_request.status if membership_request else None
+            membership_request.status
+            if membership_request
+            and (membership or membership_request.status == "pending")
+            else None
         ),
         "pendingMembershipRequestCount": pending_count,
         "membershipRecruitment": {
@@ -416,31 +426,92 @@ def get_club(club_id: str, db: Db, user: CurrentUser) -> ApiResponse[dict]:
 
 
 @router.get("/clubs/{club_id}/members", response_model=ApiResponse[dict])
-def get_members(club_id: str, db: Db, _user: CurrentUser) -> ApiResponse[dict]:
-    club_or_404(db, club_id)
-    ids = db.scalars(
-        select(ClubMember.user_id).where(ClubMember.club_id == club_id)
+def get_members(club_id: str, db: Db, user: CurrentUser) -> ApiResponse[dict]:
+    club_admin(db, club_id, user)
+    approved_department = (
+        select(ClubMembershipRequest.department_name)
+        .where(
+            ClubMembershipRequest.club_id == club_id,
+            ClubMembershipRequest.user_id == User.id,
+            ClubMembershipRequest.status == "approved",
+        )
+        .order_by(
+            ClubMembershipRequest.created_at.desc(), ClubMembershipRequest.id.desc()
+        )
+        .limit(1)
+        .correlate(User)
+        .scalar_subquery()
+    )
+    people = db.execute(
+        select(User, approved_department)
+        .join(ClubMember, ClubMember.user_id == User.id)
+        .where(ClubMember.club_id == club_id)
+        .order_by(User.first_name, User.last_name, User.id)
     ).all()
     admin_ids = set(
         db.scalars(select(ClubAdmin.user_id).where(ClubAdmin.club_id == club_id)).all()
     )
     return ApiResponse(
         data={
-            "total": len(ids),
+            "total": len(people),
             "members": [
-                {**display_user(db, ident), "isAdmin": ident in admin_ids}
-                for ident in ids
+                {
+                    **display_user(db, person.id),
+                    "department": person.department_name or department or "",
+                    "isAdmin": person.id in admin_ids,
+                }
+                for person, department in people
             ],
         }
     )
+
+
+@router.post(
+    "/clubs/{club_id}/members/{target_id}/remove", response_model=ApiResponse[dict]
+)
+def remove_member(
+    club_id: str, target_id: uuid.UUID, body: MemberRemovalIn, db: Db, user: CurrentUser
+) -> ApiResponse[dict]:
+    student(user)
+    club = club_or_404(db, club_id, lock=True)
+    club_admin(db, club_id, user)
+    member = db.get(ClubMember, (club_id, target_id))
+    if member is None:
+        fail(404, "member_not_found", "This student is not a member of this club.")
+    admin = db.get(ClubAdmin, (club_id, target_id))
+    if admin is not None:
+        admin_count = db.scalar(
+            select(func.count())
+            .select_from(ClubAdmin)
+            .where(ClubAdmin.club_id == club_id)
+        )
+        if admin_count <= 1:
+            fail(409, "last_club_admin", "A club must keep at least one student admin.")
+        db.delete(admin)
+    db.delete(member)
+    NotificationService(SqlNotificationRepository(db)).publish(
+        NotificationDraft(
+            user_id=str(target_id),
+            kind="club-membership-removed",
+            title=f"Membership removed from {club.short_name}",
+            body=body.feedback,
+            dedupe_key=f"membership-removed:{uuid.uuid4()}",
+            link=f"/clubs/{club_id}",
+            related_object_type="club",
+            related_object_id=club_id,
+        )
+    )
+    db.commit()
+    return ApiResponse(data={"club": club_data(db, club, user)})
 
 
 @router.put("/clubs/{club_id}/membership-settings", response_model=ApiResponse[dict])
 def update_membership_settings(
     club_id: str, body: MembershipSettingsIn, db: Db, user: CurrentUser
 ) -> ApiResponse[dict]:
+    student(user)
+    club = club_or_404(db, club_id, lock=True)
     club_admin(db, club_id, user)
-    club = club_or_404(db, club_id)
     club.membership_recruitment_open = body.recruitment_open
     club.membership_bkash_number = body.bkash_number
     club.membership_nagad_number = body.nagad_number
@@ -458,7 +529,7 @@ def submit_membership_request(
     club_id: str, body: MembershipRequestIn, db: Db, user: CurrentUser
 ) -> ApiResponse[dict]:
     student(user)
-    club = club_or_404(db, club_id)
+    club = club_or_404(db, club_id, lock=True)
     user_id = uid(user)
     if db.get(ClubMember, (club_id, user_id)) is not None:
         fail(409, "already_a_member", "You are already a member of this club.")
@@ -470,6 +541,7 @@ def submit_membership_request(
         select(ClubMembershipRequest).where(
             ClubMembershipRequest.club_id == club_id,
             ClubMembershipRequest.user_id == user_id,
+            ClubMembershipRequest.status == "pending",
         )
     )
     if existing is not None:
@@ -518,6 +590,8 @@ def list_membership_requests(
 def approve_membership_request(
     club_id: str, request_id: uuid.UUID, db: Db, user: CurrentUser
 ) -> ApiResponse[dict]:
+    student(user)
+    club = club_or_404(db, club_id, lock=True)
     club_admin(db, club_id, user)
     item = db.scalar(
         select(ClubMembershipRequest)
@@ -536,7 +610,6 @@ def approve_membership_request(
     item.status = "approved"
     item.reviewer_id = uid(user)
     item.reviewed_at = datetime.now(UTC)
-    club = club_or_404(db, club_id)
     NotificationService(SqlNotificationRepository(db)).publish(
         NotificationDraft(
             user_id=str(item.user_id),
@@ -562,6 +635,8 @@ def approve_membership_request(
 def remove_membership_request(
     club_id: str, request_id: uuid.UUID, db: Db, user: CurrentUser
 ) -> None:
+    student(user)
+    club_or_404(db, club_id, lock=True)
     club_admin(db, club_id, user)
     item = db.get(ClubMembershipRequest, request_id)
     if item is None or item.club_id != club_id:
@@ -575,7 +650,7 @@ def remove_membership_request(
 @router.delete("/clubs/{club_id}/members/me", response_model=ApiResponse[dict])
 def leave_club(club_id: str, db: Db, user: CurrentUser) -> ApiResponse[dict]:
     student(user)
-    club = club_or_404(db, club_id)
+    club = club_or_404(db, club_id, lock=True)
     if db.get(ClubAdmin, (club_id, uid(user))) is not None:
         fail(
             409, "admin_cannot_leave", "A Club Admin must first transfer admin access."
@@ -603,6 +678,8 @@ def update_club(
 def add_admin(
     club_id: str, body: AdminIn, db: Db, user: CurrentUser
 ) -> ApiResponse[dict]:
+    student(user)
+    club_or_404(db, club_id, lock=True)
     club_admin(db, club_id, user)
     if body.student_id:
         target = db.scalar(
