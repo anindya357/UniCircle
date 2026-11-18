@@ -10,9 +10,8 @@ type ScheduleDetailsRouteProps = Readonly<{
   params: Promise<{ scheduleId: string }>;
 }>;
 
-export async function generateStaticParams() {
-  return [];
-}
+// Schedule assignments depend on the signed-in session and current transport data.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
